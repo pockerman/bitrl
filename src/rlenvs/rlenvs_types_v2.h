@@ -55,6 +55,18 @@ template<typename T>
 using DynMat = Eigen::MatrixX<T>;
 
 ///
+/// \brief Square matrix with elements of type T
+///
+template<typename T, uint_t N>
+using SquareMat = Eigen::Matrix<T, N, N>;
+
+///
+/// \brief General fixed size matrix
+///
+template<typename T, uint_t N, uint_t M>
+using Mat = Eigen::Matrix<T, N, M>;
+
+///
 /// \brief Dynamic×3 matrix of type double. 
 /// 
 using RealMat3d = Eigen::Matrix3<real_t>;
