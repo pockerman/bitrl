@@ -2,8 +2,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
 MESSAGE(STATUS "Using CMake ${CMAKE_VERSION}")
 
 SET(RLENVSCPP_VERSION_MAJOR 1)
-SET(RLENVSCPP_VERSION_MINOR 16)
-SET(RLENVSCPP_VERSION_PATCH 1)
+SET(RLENVSCPP_VERSION_MINOR 17)
+SET(RLENVSCPP_VERSION_PATCH 0)
 
 
 SET(RLENVSCPP_VERSION "${RLENVSCPP_VERSION_MAJOR}.${RLENVSCPP_VERSION_MINOR}.${RLENVSCPP_VERSION_PATCH}")
@@ -134,6 +134,8 @@ FILE(GLOB SRCS src/rlenvs/*.cpp
                src/rlenvs/envs/grid_world/*.cpp
 			   src/rlenvs/envs/connect2/*.cpp
 			   src/rlenvs/envs/webots_envs/*.cpp
+			   src/rlenvs/envs/gymnasium/box2d/*.cpp
+		       src/rlenvs/boards/arduino/*.cpp
 			   src/rlenvs/rigid_bodies/*.cpp
 			   src/rlenvs/rigid_bodies/webots_robots/*.cpp
 			   src/rlenvs/dynamics/*.cpp
@@ -148,15 +150,7 @@ FILE(GLOB SRCS src/rlenvs/*.cpp
 		       src/rlenvs/boards/arduino/*.cpp
    )
 
-ADD_LIBRARY(rlenvscpplib SHARED ${SRCS}
-		src/rlenvs/envs/gymnasium/box2d/lunar_lander_env.h
-		src/rlenvs/envs/gymnasium/box2d/lunar_lander_env.cpp
-		examples/box2d/box2d_example.cpp
-		src/rlenvs/boards/arduino/arduino_connector_base.h
-		src/rlenvs/boards/arduino/arduino_connector_usb_base.h
-		src/rlenvs/boards/arduino/arduino_connector_usb_base.cpp
-		src/rlenvs/boards/arduino/arduino_connector_wifi_base.h
-		src/rlenvs/boards/arduino/arduino_connector_wifi_base.cpp)
+ADD_LIBRARY(rlenvscpplib SHARED ${SRCS})
 
 SET_TARGET_PROPERTIES(rlenvscpplib PROPERTIES LINKER_LANGUAGE CXX)
 INSTALL(TARGETS rlenvscpplib DESTINATION ${CMAKE_INSTALL_PREFIX})
