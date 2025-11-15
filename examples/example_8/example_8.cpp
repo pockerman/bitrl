@@ -1,7 +1,7 @@
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/envs/gymnasium/classic_control/vector/acrobot_vec_env.h"
-#include "rlenvs/envs/api_server/apiserver.h"
-#include "rlenvs/rlenvs_consts.h"
+#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/envs/gymnasium/classic_control/vector/acrobot_vec_env.h"
+#include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/bitrl_consts.h"
 
 #include <iostream>
 #include <string>
@@ -13,9 +13,9 @@
 
 int main(){
 
-	using namespace rlenvscpp::envs::gymnasium;
-	using rlenvscpp::uint_t;
-	using rlenvscpp::envs::RESTApiServerWrapper;
+	using namespace bitrl::envs::gymnasium;
+	using bitrl::uint_t;
+	using bitrl::envs::RESTApiServerWrapper;
 	
 	const std::string SERVER_URL = "http://0.0.0.0:8001/api";
     

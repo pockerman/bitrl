@@ -2,8 +2,8 @@
 // Created by alex on 7/5/25.
 //
 
-#include "rlenvs/envs/gymnasium/box2d/lunar_lander_env.h"
-#include "rlenvs/envs/api_server/apiserver.h"
+#include "bitrl/envs/gymnasium/box2d/lunar_lander_env.h"
+#include "bitrl/envs/api_server/apiserver.h"
 
 #include <unordered_map>
 #include <vector>
@@ -12,10 +12,10 @@
 namespace box2d_example
 {
     const std::string SERVER_URL = "http://0.0.0.0:8001/api";
-    using rlenvscpp::real_t;
-    using rlenvscpp::envs::RESTApiServerWrapper;
-    using rlenvscpp::envs::gymnasium::LunarLanderDiscreteEnv;
-    using rlenvscpp::envs::gymnasium::LunarLanderContinuousEnv;
+    using bitrl::real_t;
+    using bitrl::envs::RESTApiServerWrapper;
+    using bitrl::envs::gymnasium::LunarLanderDiscreteEnv;
+    using bitrl::envs::gymnasium::LunarLanderContinuousEnv;
 }
 
 int main()
@@ -25,10 +25,10 @@ int main()
     RESTApiServerWrapper server(SERVER_URL, true);
 
     std::unordered_map<std::string, std::any> options;
-    options["wind_power"] = std::any(static_cast<rlenvscpp::real_t>(10.0));
+    options["wind_power"] = std::any(static_cast<bitrl::real_t>(10.0));
     options["enable_wind"] = std::any(static_cast<bool>(true));
-    options["gravity"] = std::any(static_cast<rlenvscpp::real_t>(-9.86));
-    options["turbulence_power"] = std::any(static_cast<rlenvscpp::real_t>(1.5));
+    options["gravity"] = std::any(static_cast<bitrl::real_t>(-9.86));
+    options["turbulence_power"] = std::any(static_cast<bitrl::real_t>(1.5));
 
 
     /*{

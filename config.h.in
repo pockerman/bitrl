@@ -2,16 +2,13 @@
 #define GYMFCPP_CONFIG_H
 
 /*DEBUG*/
-#cmakedefine RLENVSCPP_DEBUG
-
-/*Use PyTorch */
-#cmakedefine USE_PYTORCH
+#cmakedefine BITRL_DEBUG
 
 /*Use Webots*/
-#cmakedefine RLENVSCPP_WEBOTS
+#cmakedefine BITRL_WEBOTS
 
-/*Use Ray*/
-#cmakedefine RLENVSCPP_RAY
+/*Use Chron*/
+#cmakedefine BITRL_CHRONO
 
 #endif
 

@@ -2,8 +2,10 @@
 // Created by alex on 7/5/25.
 //
 
-#include  "rlenvs/boards/arduino/arduino_connector_wifi_base.h"
+#include  "bitrl/boards/arduino/arduino_connector_wifi_base.h"
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 /**
  * // Code for Arduino
@@ -87,8 +89,8 @@ void loop() {
  */
 namespace example
 {
-  using rlenvscpp::boards::arduino::ArduinoCMDBase;
-  using rlenvscpp::boards::arduino::ArduinoConnectorWIFIBase;
+  using bitrl::boards::arduino::ArduinoCMDBase;
+  using bitrl::boards::arduino::ArduinoConnectorWIFIBase;
 
   struct ArduinoONCMD: public ArduinoCMDBase
   {

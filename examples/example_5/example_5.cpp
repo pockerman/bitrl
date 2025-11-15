@@ -1,10 +1,10 @@
 
-#include "rlenvs/envs/grid_world/grid_world_env.h"
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/rlenvs_consts.h"
+#include "bitrl/envs/grid_world/grid_world_env.h"
+#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_consts.h"
 
 
-#ifdef RLENVSCPP_DEBUG
+#ifdef BITRL_DEBUG
 #include <cassert>
 #endif
 
@@ -16,13 +16,13 @@
 
 namespace example_5{
 	
-	using namespace rlenvscpp::envs::grid_world;
+	using namespace bitrl::envs::grid_world;
 	
 	void create_static(){
 		
 		std::cout<<"Creating STATIC Gridworld..."<<std::endl;
 		
-		rlenvscpp::envs::grid_world::Gridworld<4> env;
+		bitrl::envs::grid_world::Gridworld<4> env;
 
         std::unordered_map<std::string, std::any> options;
         options["mode"] = std::any(GridWorldInitType::STATIC);
@@ -46,7 +46,7 @@ namespace example_5{
 		
 		std::cout<<"Creating RANDOM Gridworld..."<<std::endl;
 		
-		rlenvscpp::envs::grid_world::Gridworld<4> env;
+		bitrl::envs::grid_world::Gridworld<4> env;
 
         std::unordered_map<std::string, std::any> options;
         options["mode"] = std::any(GridWorldInitType::RANDOM);

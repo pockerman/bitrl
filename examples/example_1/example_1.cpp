@@ -1,9 +1,9 @@
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "rlenvs/envs/gymnasium/toy_text/taxi_env.h"
-#include "rlenvs/envs/gymnasium/toy_text/black_jack_env.h"
-#include "rlenvs/envs/gymnasium/toy_text/cliff_world_env.h"
-#include "rlenvs/envs/api_server/apiserver.h"
+#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "bitrl/envs/gymnasium/toy_text/taxi_env.h"
+#include "bitrl/envs/gymnasium/toy_text/black_jack_env.h"
+#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "bitrl/envs/api_server/apiserver.h"
 
 #include <iostream>
 #include <string>
@@ -14,11 +14,11 @@ namespace example_1{
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
-using rlenvscpp::envs::gymnasium::FrozenLake;
-using rlenvscpp::envs::gymnasium::Taxi;
-using rlenvscpp::envs::gymnasium::BlackJack;
-using rlenvscpp::envs::gymnasium::CliffWorld;
-using rlenvscpp::envs::RESTApiServerWrapper;
+using bitrl::envs::gymnasium::FrozenLake;
+using bitrl::envs::gymnasium::Taxi;
+using bitrl::envs::gymnasium::BlackJack;
+using bitrl::envs::gymnasium::CliffWorld;
+using bitrl::envs::RESTApiServerWrapper;
 
 
 void test_frozen_lake(const RESTApiServerWrapper& server){
@@ -199,7 +199,7 @@ void test_cliff_world(const RESTApiServerWrapper& server){
 
     // make the environment
     std::unordered_map<std::string, std::any> options;
-	options["max_episode_steps"] = std::any(static_cast<rlenvscpp::uint_t>(10));
+	options["max_episode_steps"] = std::any(static_cast<bitrl::uint_t>(10));
     env.make("v0", options);
 
     std::cout<<"Is environment created? "<<env.is_created()<<std::endl;

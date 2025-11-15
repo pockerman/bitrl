@@ -1,4 +1,4 @@
-#include "rlenvs/boards/arduino/arduino_connector_usb_base.h"
+#include "bitrl/boards/arduino/arduino_connector_usb_base.h"
 
 #include <iostream>
 #include <string>
@@ -36,8 +36,8 @@
 
 namespace example
 {
-    using rlenvscpp::boards::arduino::ArduinoCMDBase;
-    using rlenvscpp::boards::arduino::ArduinoConnectorUSBBase;
+    using bitrl::boards::arduino::ArduinoCMDBase;
+    using bitrl::boards::arduino::ArduinoConnectorUSBBase;
 
     struct ArduinoONCMD: public ArduinoCMDBase
     {
