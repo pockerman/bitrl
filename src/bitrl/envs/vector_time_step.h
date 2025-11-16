@@ -2,7 +2,7 @@
 #define VECTOR_TIME_STEP_H
 
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step_type.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 

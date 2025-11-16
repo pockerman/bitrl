@@ -1,8 +1,8 @@
 #include "bitrl/envs/gymnasium/classic_control/pendulum_env.h"
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/time_step_type.h"
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_config.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 

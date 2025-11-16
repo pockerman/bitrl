@@ -6,11 +6,12 @@
 ///
 
 
-#include "bitrl/bitrl_types_v2.h"
-#include "bitrl/rlenvscpp_config.h"
-#include "bitrl/extern/nlohmann/json/json.hpp"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/bitrl_config.h"
 #include "bitrl/envs/env_base.h"
 #include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/extern/nlohmann/json/json.hpp"
+
 
 #include <string>
 #include <unordered_map>

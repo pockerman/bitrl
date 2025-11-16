@@ -5,18 +5,18 @@
 #ifndef DOUBLE_PENDULUM_SYSTEM_H
 #define DOUBLE_PENDULUM_SYSTEM_H
 
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_config.h"
 
 #ifdef BITRL_CHRONO
 
 /**
  *Chrono includes
  */
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include <chrono/physics/ChSystemNSC.h>
-#include <chrono/physics/ChBodyEasy.h>
-#include <chrono/physics/ChLinkRevolute.h>
-#include <chrono/utils/ChUtilsCreators.h>
+//#include <chrono/physics/ChBodyEasy.h>
+//#include <chrono/physics/ChLinkRevolute.h>
+//#include <chrono/utils/ChUtilsCreators.h>
 
 namespace bitrl
 {
@@ -34,6 +34,7 @@ namespace bitrl
         class DoublePendulumSystem
         {
         public:
+
             DoublePendulumSystem();
 
             /**
@@ -45,9 +46,13 @@ namespace bitrl
 
             /**
              * Enable the gravity vector
-             *
              */
             void enable_gravity();
+
+            bool has_gravity_enabled() const noexcept{return gravity_enabled_;}
+            bool is_initialized() const noexcept{return is_initialized_;}
+
+
 
         protected:
 

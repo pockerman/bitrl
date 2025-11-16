@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/geometry/geom_point.h"
 #include "bitrl/utils/geometry/mesh/face_element.h"
 

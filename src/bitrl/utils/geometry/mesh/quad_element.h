@@ -1,7 +1,7 @@
 #ifndef QUAD_ELEMENT_H
 #define QUAD_ELEMENT_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/geometry/mesh/element.h"
 
 #include <any>

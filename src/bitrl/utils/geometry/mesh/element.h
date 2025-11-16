@@ -1,7 +1,7 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/utils/geometry/mesh/mesh_entity.h"
 #include "bitrl/utils/geometry/mesh/edge_face_selector.h"

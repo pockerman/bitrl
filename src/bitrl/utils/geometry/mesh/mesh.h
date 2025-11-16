@@ -1,7 +1,7 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/utils/filtered_iterator.h"
 #include "bitrl/utils/geometry/mesh/mesh_topology.h"

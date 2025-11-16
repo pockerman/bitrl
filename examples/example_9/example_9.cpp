@@ -1,4 +1,4 @@
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/dynamics/diff_drive_dynamics.h"
 
 #include <iostream>

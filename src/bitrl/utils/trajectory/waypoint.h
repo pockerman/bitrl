@@ -1,7 +1,7 @@
 #ifndef WAYPOINT_H
 #define WAYPOINT_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/geometry/geom_point.h"
 #include "bitrl/bitrl_consts.h"
 namespace bitrl{

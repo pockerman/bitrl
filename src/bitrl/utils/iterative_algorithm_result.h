@@ -1,7 +1,7 @@
 #ifndef ITERATIVE_ALGORITHM_RESULT_H
 #define ITERATIVE_ALGORITHM_RESULT_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include <ostream>
 #include <chrono>
 #include <vector>

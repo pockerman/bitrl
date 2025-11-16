@@ -1,7 +1,7 @@
 #ifndef BODY_TRANSLATION_H
 #define BODY_TRANSLATION_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
 #include <initializer_list>
 #include <ostream>

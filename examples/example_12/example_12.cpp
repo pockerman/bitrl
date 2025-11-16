@@ -15,7 +15,7 @@
  */ 
 
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/io/json_file_reader.h"
 #include "bitrl/utils/io/tensor_board_server/tensorboard_server.h"
 

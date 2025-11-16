@@ -6,9 +6,9 @@
 ///
 
 
-#include "rlenvs/rlenvscpp_config.h"
+#include "bitrl//bitrl_config.h"
 
-#ifdef RLENVSCPP_WEBOTS
+#ifdef BITRL_WEBOTS
                  
 #include "rlenvs/rlenvs_types_v2.h"
 #include "rlenvs/rigid_bodies/body_translation.h"

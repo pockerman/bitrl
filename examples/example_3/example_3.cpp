@@ -1,9 +1,9 @@
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/envs/api_server/apiserver.h"
 #include "bitrl/envs/envs_utils.h"
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_config.h"
 
 #ifdef BITRL_DEBUG
 #include <cassert>
@@ -64,7 +64,6 @@ int main(){
      assert(!trajectory.empty() && "Trajectory is empty");
      assert(trajectory.size() <= MAX_TRAJECTORY_SIZE && "Invalid trajectory size");
 #endif
-
 
     std::cout<<"Trajectory size: "<<trajectory.size()<<std::endl;
 

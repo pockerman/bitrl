@@ -4,8 +4,8 @@
 #ifndef ENVS_UTILS_H
 #define ENVS_UTILS_H
 
-#include "bitrl/bitrl_types_v2.h"
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/bitrl_config.h"
 
 #include <vector>
 

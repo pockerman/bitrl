@@ -9,9 +9,9 @@
 #ifndef GYMNASIUM_VECTOR_ENV_BASE_H
 #define GYMNASIUM_VECTOR_ENV_BASE_H
 
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_config.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/env_types.h"
 #include "bitrl/envs/api_server/apiserver.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"

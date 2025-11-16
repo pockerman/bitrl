@@ -1,7 +1,7 @@
 #ifndef PREDICATES_H
 #define PREDICATES_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
 namespace bitrl{
  

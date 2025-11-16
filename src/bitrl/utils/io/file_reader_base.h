@@ -4,7 +4,7 @@
 #ifndef FILE_READER_BASE_H
 #define FILE_READER_BASE_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils//io/file_formats.h"
 #include "bitrl/utils//io/file_handler_base.h"
 #include "boost/noncopyable.hpp"

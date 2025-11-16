@@ -1,7 +1,7 @@
 #ifndef MESH_TOPOLOGY_H
 #define MESH_TOPOLOGY_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/geometry/mesh/mesh_connectivity.h"
 #include "bitrl/utils/geometry/mesh/element_traits.h"
 

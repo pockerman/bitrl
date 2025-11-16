@@ -1,7 +1,7 @@
 #ifndef MOTION_MODEL_BASE_H
 #define MOTION_MODEL_BASE_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 
 #include "boost/noncopyable.hpp"

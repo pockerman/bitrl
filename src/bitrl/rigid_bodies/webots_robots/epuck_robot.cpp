@@ -1,7 +1,7 @@
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_config.h"
 
 
-#ifdef RLENVSCPP_WEBOTS
+#ifdef BITRL_WEBOTS
 
 #include "rlenvs/rigid_bodies/webots_robots/epuck_robot.h"
 

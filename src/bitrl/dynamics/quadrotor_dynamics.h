@@ -1,7 +1,7 @@
 #ifndef QUADROTOR_DYNAMICS_H
 #define QUADROTOR_DYNAMICS_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/dynamics/system_state.h"
 #include "bitrl/dynamics/motion_model_base.h"
 #include "bitrl/dynamics/dynamics_matrix_descriptor.h"

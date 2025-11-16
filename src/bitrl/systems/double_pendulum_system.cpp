@@ -3,7 +3,7 @@
 //
 
 
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_config.h"
 
 
 #ifdef BITRL_CHRONO
@@ -11,15 +11,27 @@
 #include "bitrl/systems/double_pendulum_system.h"
 #include "bitrl/bitrl_consts.h"
 
-#include <chrono/physics/ChBodyEasy.h>
+//#include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChLinkRevolute.h>
 #include <chrono/utils/ChUtilsCreators.h>
-# include <chrono/core/ChQuaternion.h>
+#include <chrono/core/ChQuaternion.h>
 
 namespace bitrl
 {
     namespace systems
     {
+        DoublePendulumSystem::DoublePendulumSystem()
+            :
+        system_()
+        {}
+
+        void
+        DoublePendulumSystem::enable_gravity()
+        {
+            system_.SetGravitationalAcceleration(chrono::ChVector3d(0, -9.81, 0));
+            gravity_enabled_ = true;
+        }
+
         void
         DoublePendulumSystem::build_system(const DoublePendulumProperties& props)
         {
@@ -95,6 +107,7 @@ namespace bitrl
                 chrono::ChFrame<>(chrono::ChVector3d(0, -props.l1, 0), chrono::QUNIT)
             );
             system_.AddLink(joint2);
+            is_initialized_ = true;
 
         }
     }

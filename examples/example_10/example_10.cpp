@@ -4,7 +4,7 @@
  * https://sal.aalto.fi/publications/pdf-files/eluu11_public.pdf
  */ 
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/dynamics/quadrotor_dynamics.h"
 #include "bitrl/utils/io/csv_file_writer.h"
 #include "bitrl/utils/unit_converter.h"

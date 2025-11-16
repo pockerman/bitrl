@@ -1,7 +1,7 @@
 #ifndef CSV_FILE_READER_H
 #define CSV_FILE_READER_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/io/file_reader_base.h"
 
 #include <boost/noncopyable.hpp>

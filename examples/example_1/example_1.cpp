@@ -1,4 +1,4 @@
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/envs/gymnasium/toy_text/taxi_env.h"
 #include "bitrl/envs/gymnasium/toy_text/black_jack_env.h"

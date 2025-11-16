@@ -4,7 +4,7 @@
 ///
 /// \file env_base.h
 ///
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/envs/synchronized_env_mixin.h"
 

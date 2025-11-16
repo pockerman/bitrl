@@ -1,6 +1,6 @@
 
 #include "bitrl/envs/grid_world/grid_world_env.h"
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 
 

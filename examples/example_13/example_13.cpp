@@ -1,4 +1,4 @@
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/geometry/geom_point.h"
 #include "bitrl/utils/geometry/mesh/mesh.h"
 #include "bitrl/utils/geometry/mesh/quad_mesh_generation.h"

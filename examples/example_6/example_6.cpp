@@ -1,7 +1,7 @@
 
 #include "bitrl/envs/gymnasium/classic_control/pendulum_env.h"
 #include "bitrl/envs/api_server/apiserver.h"
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 
 

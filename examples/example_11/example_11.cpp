@@ -7,7 +7,7 @@
  * 
  */ 
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/trajectory/waypoint_trajectory.h"
 #include "bitrl/utils/trajectory/waypoint.h"
 #include "bitrl/utils/trajectory/line_segment_link.h"

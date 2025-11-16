@@ -30,7 +30,6 @@ OPTION(ENABLE_TESTS OFF)
 OPTION(ENABLE_EXAMPLES OFF)
 OPTION(ENABLE_DOCS OFF)
 OPTION(ENABLE_WEBOTS OFF)
-OPTION(ENABLE_RAY OFF)
 OPTION(ENABLE_CHRONO OFF)
 
 SET(CMAKE_BUILD_TYPE "Debug")
@@ -50,6 +49,18 @@ ELSE(CMAKE_BUILD_TYPE STREQUAL "Release")
 	SET(CMAKE_CXX_FLAGS "-O2 -fPIC")
     SET(BITRL_DEBUG OFF)
 	
+ENDIF()
+
+# Find packages that we need
+FIND_PACKAGE(Boost 1.74.0 REQUIRED)
+FIND_PACKAGE(BLAS REQUIRED)
+FIND_PACKAGE(Eigen3 REQUIRED)
+
+IF(Boost_FOUND)
+	MESSAGE( STATUS  "Found needed Boost C++ library.")
+	SET(Boost_USE_SHARED_LIBS ON)
+ELSE()
+	MESSAGE( FATAL_ERROR  "Boost C++ library is required but not found.")
 ENDIF()
 
 # where to install the library
@@ -81,7 +92,6 @@ ENDIF()
 IF(ENABLE_CHRONO)
 
 	FIND_PACKAGE(Chrono)
-
 	IF (NOT Chrono_FOUND)
   		MESSAGE("Could not find Chrono or one of its required modules")
   		RETURN()
@@ -94,25 +104,15 @@ ENDIF()
 configure_file(config.h.in ${PROJECT_SOURCE_DIR}/src/bitrl/bitrl_config.h @ONLY)
 configure_file(version.h.in ${PROJECT_SOURCE_DIR}/src/bitrl/bitrl_version.h @ONLY)
 
-
-# Find packages that we need
-FIND_PACKAGE(Boost 1.74.0 REQUIRED)
-FIND_PACKAGE(BLAS REQUIRED)
-FIND_PACKAGE(Eigen3 REQUIRED)
-IF(Boost_FOUND)
-	MESSAGE( STATUS  "Found needed Boost C++ library.")
-	SET(Boost_USE_SHARED_LIBS ON)
-ELSE()
-	MESSAGE( FATAL_ERROR  "Boost C++ library is required but not found.")
-ENDIF()
-
 MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 MESSAGE(STATUS "C++ Compiler: ${CMAKE_CXX_COMPILER}")
 MESSAGE(STATUS "C Compiler: ${CMAKE_C_COMPILER}")
 MESSAGE(STATUS "Boost lib: ${Boost_LIBRARY_DIR}")
 MESSAGE(STATUS "Boost include: ${Boost_INCLUDE_DIRS}")
 MESSAGE(STATUS "Install dst: ${CMAKE_INSTALL_PREFIX}")
+MESSAGE(STATUS "Eigen3_INCLUDE_DIRS: ${EIGEN3_INCLUDE_DIR}")
 
+INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(src/)
 
@@ -142,6 +142,7 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/utils/geometry/mesh/*.cpp
 		src/bitrl/utils/trajectory/*.cpp
 		src/bitrl/boards/arduino/*.cpp
+		src/bitrl/systems/*.cpp
    )
 
 ADD_LIBRARY(bitrllib SHARED ${SRCS})

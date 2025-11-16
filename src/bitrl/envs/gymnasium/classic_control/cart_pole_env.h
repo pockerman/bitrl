@@ -37,8 +37,8 @@
   *      195.0 over 100 consecutive trials.
   **/
 
-#include "bitrl/rlenvscpp_config.h"
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_config.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
 #include "bitrl/envs/env_types.h"
@@ -47,7 +47,6 @@
 
 #include <string>
 #include <vector>
-#include <tuple>
 #include <any>
 
 

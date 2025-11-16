@@ -1,7 +1,7 @@
 #ifndef ITERATIVE_ALGORITHM_CONTROLLER_H
 #define ITERATIVE_ALGORITHM_CONTROLLER_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/iterative_algorithm_result.h"
 #include <limits>
 

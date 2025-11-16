@@ -8,8 +8,8 @@
   * https://github.com/DeepReinforcementLearning/DeepReinforcementLearningInAction
   * */
 
-#include "bitrl/rlenvscpp_config.h"
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_config.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/env_base.h"
@@ -161,33 +161,33 @@ namespace envs::grid_world
 			void close();
 
 			///
-        /// \brief build_static_mode
-        ///
+	        /// \brief build_static_mode
+	        ///
 			void build_static_mode();
 
 			///
-        /// \brief build_random_mode
-        ///
+	        /// \brief build_random_mode
+	        ///
 			void build_random_mode();
 
 			///
-        /// \brief build_player_mode
-        ///
+	        /// \brief build_player_mode
+	        ///
 			void build_player_mode(uint_t seed);
 
 			///
-        /// \brief check if the given move is valid and
-        /// change the position of the player if the move
-        /// either causes the game to be lost (PIT) or is a valid
-        /// move i.e. not stepping into the WALL or out of the board
-        ///
+	        /// \brief check if the given move is valid and
+	        /// change the position of the player if the move
+	        /// either causes the game to be lost (PIT) or is a valid
+	        /// move i.e. not stepping into the WALL or out of the board
+	        ///
 			void check_and_move(int_t row, int_t col);
 
 			///
-        /// \brief validate_move_
-        /// \param piece
-        /// \param pos
-        ///
+	        /// \brief validate_move_
+	        /// \param piece
+	        /// \param pos
+	        ///
 			[[nodiscard]] board_move_type validate_move(board_component_type piece, board_position pos)const;
 		};
 
@@ -200,24 +200,23 @@ namespace envs::grid_world
 			typedef detail::board_state_type state_type;
 
 			///
-		/// \brief state space size
-		///
+			/// \brief state space size
+			///
 			static constexpr uint_t STATE_SPACE_SIZE = size_size * size_size;
 
 			///
-        /// \brief the action space type
-        ///
+	        /// \brief the action space type
+	        ///
 			typedef ScalarDiscreteSpace<0, 4> action_space;
 
 			///
-		/// \brief the Action type
-		///
+			/// \brief the Action type
+			///
 			typedef action_space::space_item_type action_type;
 
-
 			///
-		/// \brief action space size
-		///
+			/// \brief action space size
+			///
 			static constexpr uint_t ACTION_SPACE_SIZE = action_space::size;
 		};
 	}
@@ -243,168 +242,168 @@ namespace envs::grid_world
 		               "The side size should be greater than or equal to 4");
 
 		///
-    /// \brief name
-    ///
+	    /// \brief name
+	    ///
 		static  const std::string name;
 
 		///
-    /// \brief n_components
-    ///
+	    /// \brief n_components
+	    ///
 		static const uint_t n_components;
 
 		///
-    /// \brief side_size
-    ///
+	    /// \brief side_size
+	    ///
 		static const uint_t side_size;
 
 		///
-	/// \brief The base_type
-	///
+		/// \brief The base_type
+		///
 		typedef EnvBase<TimeStep<detail::board_state_type>,
 		                detail::GridWorldEnv<side_size_>> base_type;
 
 		///
-	/// \brief The time step type we return every time a step in the
-	/// environment is performed
-	///
+		/// \brief The time step type we return every time a step in the
+		/// environment is performed
+		///
 		typedef typename base_type::time_step_type time_step_type;
 
 		///
-	/// \brief The type describing the state space for the environment
-	///
+		/// \brief The type describing the state space for the environment
+		///
 		typedef typename base_type::state_space_type state_space_type;
 
 		///
-	/// \brief The type of the action space for the environment
-	///
+		/// \brief The type of the action space for the environment
+		///
 		typedef typename base_type::action_space_type action_space_type;
 
 		///
-	/// \brief The type of the action to be undertaken in the environment
-	///
+		/// \brief The type of the action to be undertaken in the environment
+		///
 		typedef typename base_type::action_type action_type;
 
 		///
-	/// \brief The type of the action to be undertaken in the environment
-	///
+		/// \brief The type of the action to be undertaken in the environment
+		///
 		typedef typename base_type::state_type state_type;
 
 		///
-	/// \brief Expose the various reset methods we use from base class
-	///
+		/// \brief Expose the various reset methods we use from base class
+		///
 		using base_type::reset;
 
 		///
-    /// \brief Constructor
-    ///
+	    /// \brief Constructor
+	    ///
 		Gridworld();
 
 		///
-    /// \brief Gridworld. Constructor
-    ///
+	    /// \brief Gridworld. Constructor
+	    ///
 		explicit Gridworld(const uint_t cidx);
 
 		///
-    /// \brief Gridworld. Constructor
-    ///
+	    /// \brief Gridworld. Constructor
+	    ///
 		Gridworld(const Gridworld& other);
 
 		///
-    /// \brief make. Builds the environment. Optionally we can choose if the
-    /// environment will be slippery
-    ///
+	    /// \brief make. Builds the environment. Optionally we can choose if the
+	    /// environment will be slippery
+	    ///
 		void make(const std::string& version,
 		          const std::unordered_map<std::string, std::any>& options) override final;
 
 		///
-	/// \brief Reset the environment
-	///
+		/// \brief Reset the environment
+		///
 		time_step_type reset(uint_t /*seed*/,
 		                     const std::unordered_map<std::string, std::any>& /*options*/) override final;
 
 		///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
+		/// \brief Create a new copy of the environment with the given
+		/// copy index
+		///
 		Gridworld make_copy(uint_t cidx)const;
 
 		///
-    /// \brief step
-    /// \param action
-    /// \return
-    ///
+	    /// \brief step
+	    /// \param action
+	    /// \return
+	    ///
 		time_step_type step(const action_type& action) override final;
 
 		///
-    /// \brief close
-    ///
+	    /// \brief close
+	    ///
 		void close()override final;
 
 		///
-    /// \brief has_random_state
-    /// \return
-    ///
+	    /// \brief has_random_state
+	    /// \return
+	    ///
 		[[nodiscard]] bool has_random_state()const noexcept{return randomize_state_;}
 
 		///
-    /// \brief n_states. Returns the number of states
-    ///
+	    /// \brief n_states. Returns the number of states
+	    ///
 		[[nodiscard]] uint_t n_states()const noexcept{ return side_size_ * side_size_; }
 
 		///
-    /// \brief n_actions. Returns the number of actions
-    ///
+	    /// \brief n_actions. Returns the number of actions
+	    ///
 		[[nodiscard]] uint_t n_actions()const noexcept{return action_space_type::size;}
 
 		///
-    /// \brief seed
-    /// \return
-    ///
+	    /// \brief seed
+	    /// \return
+	    ///
 		[[nodiscard]] uint_t seed()const noexcept{return seed_;}
 
 		///
-    /// \brief noise_factor
-    /// \return
-    ///
+	    /// \brief noise_factor
+	    /// \return
+	    ///
 		[[nodiscard]] real_t noise_factor()const noexcept{return noise_factor_;}
 
 		///
-	/// \brief Returns true if the PLAYER position is the same
-	///as the PIT position
-	///
+		/// \brief Returns true if the PLAYER position is the same
+		///as the PIT position
+		///
 		[[nodiscard]] bool is_game_lost()const;
 
 		///
-    /// \brief init_type
-    /// \return
-    ///
+	    /// \brief init_type
+	    /// \return
+	    ///
 		[[nodiscard]] GridWorldInitType init_type()const noexcept{return init_mode_;}
 
 	private:
 
 		///
-    /// \brief init_mode_
-    ///
+	    /// \brief init_mode_
+	    ///
 		GridWorldInitType init_mode_;
 
 		///
-    /// \brief randomize_state_
-    ///
+	    /// \brief randomize_state_
+	    ///
 		bool randomize_state_;
 
 		///
-    /// \brief seed_
-    ///
+	    /// \brief seed_
+	    ///
 		uint_t seed_;
 
 		///
-    /// \brief noise_factor_
-    ///
+	    /// \brief noise_factor_
+	    ///
 		real_t noise_factor_;
 
 		///
-    /// \brief board_
-    ///
+	    /// \brief board_
+	    ///
 		detail::board board_;
 	};
 

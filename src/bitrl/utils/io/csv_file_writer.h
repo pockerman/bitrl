@@ -1,7 +1,7 @@
 #ifndef CSV_FILE_WRITER_H
 #define CSV_FILE_WRITER_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/utils/io/file_writer_base.h"
 
 #include <vector>

@@ -1,7 +1,7 @@
 #ifndef MESH_ENTITY_H
 #define MESH_ENTITY_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 
 #include <type_traits>

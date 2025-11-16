@@ -1,7 +1,7 @@
 #ifndef BERNOULLI_DIST_H
 #define BERNOULLI_DIST_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 
 #include <vector>

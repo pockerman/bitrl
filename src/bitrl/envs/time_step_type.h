@@ -1,7 +1,7 @@
 #ifndef TIME_STEP_TYPE_H
 #define TIME_STEP_TYPE_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include <string>
 #include <vector>
 

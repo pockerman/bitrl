@@ -1,4 +1,4 @@
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/connect2/connect2_env.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/utils/io/io_utils.h"

@@ -1,9 +1,9 @@
 #ifndef WEBOTS_BASE_ENV_H
 #define WEBOTS_BASE_ENV_H
 
-#include "rlenvs/rlenvscpp_config.h"
+#include "rlenvs/bitrl_config.h"
 
-#ifdef RLENVSCPP_WEBOTS
+#ifdef BITRL_WEBOTS
 
 #include "rlenvs/rlenvs_types_v2.h"
 #include "rlenvs/envs/time_step.h"

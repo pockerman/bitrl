@@ -1,7 +1,7 @@
 #ifndef FACE_ELEMENT_H
 #define FACE_ELEMENT_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/utils/geometry/geom_point.h"
 #include "bitrl/utils/geometry/mesh/mesh_entity.h"

@@ -1,7 +1,7 @@
 #ifndef MULTI_ARMED_BANDITS_H
 #define MULTI_ARMED_BANDITS_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/env_base.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/utils/maths/statistics/distributions/bernoulli_dist.h"

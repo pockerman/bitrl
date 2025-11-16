@@ -1,7 +1,7 @@
 #ifndef GEOM_POINT_H
 #define GEOM_POINT_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
 #include <vector>
 #include <array>

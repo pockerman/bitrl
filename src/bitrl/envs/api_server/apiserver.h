@@ -3,7 +3,7 @@
 #ifndef APISERVER_H
 #define APISERVER_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/extern/HTTPRequest.hpp"

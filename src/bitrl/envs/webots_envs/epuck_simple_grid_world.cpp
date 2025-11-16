@@ -1,6 +1,6 @@
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_config.h"
 
-#ifdef RLENVSCPP_WEBOTS
+#ifdef BITRL_WEBOTS
 
 #include "rlenvs/envs/webots_envs/epuck_simple_grid_world.h"
 #include "rlenvs/envs/time_step.h"

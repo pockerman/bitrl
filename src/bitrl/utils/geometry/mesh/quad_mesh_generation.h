@@ -1,7 +1,7 @@
 #ifndef QUAD_MESH_GENERATION_H
 #define QUAD_MESH_GENERATION_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
 namespace bitrl{
 namespace utils{

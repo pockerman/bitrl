@@ -5,7 +5,7 @@
 #ifndef LUNAR_LANDER_ENV_H
 #define LUNAR_LANDER_ENV_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
 #include "bitrl/envs/api_server/apiserver.h"

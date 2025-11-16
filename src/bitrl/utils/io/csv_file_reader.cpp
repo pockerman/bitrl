@@ -1,11 +1,11 @@
-#include "bitrl/bitrl_types_v2.h"
-#include "bitrl/rlenvscpp_config.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/bitrl_config.h"
 #include "bitrl/utils/io/csv_file_reader.h"
 #include "bitrl/utils/io/file_formats.h"
 
 #include <boost/algorithm/string.hpp>
 
-#ifdef CUBEAI_DEBUG
+#ifdef BITRL_DEBUG
 #include <cassert>
 #endif
 

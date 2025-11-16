@@ -1,7 +1,7 @@
 #ifndef DYNAMICS_MATRIX_DESCRIPTOR_H
 #define DYNAMICS_MATRIX_DESCRIPTOR_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
 #include <map>
 #include <string>

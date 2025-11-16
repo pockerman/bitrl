@@ -1,6 +1,6 @@
 #ifndef WAYPOINT_TRAJECTORY_H
 #define WAYPOINT_TRAJECTORY_H
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
 #include <vector>
 #include <utility>

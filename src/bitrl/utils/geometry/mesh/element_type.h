@@ -1,7 +1,7 @@
 #ifndef ELEMENT_TYPE_H
 #define ELEMENT_TYPE_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
 namespace bitrl{
 namespace utils{

@@ -7,7 +7,7 @@
 /// Various unit conversion utilities
 ///
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 
 namespace bitrl{

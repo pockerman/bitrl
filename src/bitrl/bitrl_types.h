@@ -6,9 +6,9 @@
  * 
  */
 
-#include "bitrl/rlenvscpp_config.h"
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/Dense>
+//#include "bitrl/bitrl_config.h"
+#include "Eigen/Core"
+
 
 #include <string>
 #include <cstddef>

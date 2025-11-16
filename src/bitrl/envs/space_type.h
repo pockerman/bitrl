@@ -1,7 +1,7 @@
 #ifndef SPACE_TYPE_H
 #define SPACE_TYPE_H
 
-#include "bitrl/bitrl_types_v2.h"
+#include "bitrl/bitrl_types.h"
 #include <random>
 #include <vector>
 
