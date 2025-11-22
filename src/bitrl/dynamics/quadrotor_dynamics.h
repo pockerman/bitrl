@@ -37,7 +37,7 @@ struct QuadrotorDynamicsConfig
 	
 	///
 	/// \brief Proportionality constant
-	/// to scale the morot velocity
+	/// to scale the motor velocity
 	///
 	real_t k_1;
 	

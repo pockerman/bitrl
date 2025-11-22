@@ -6,12 +6,8 @@
  * 
  */
 
-//#include "bitrl/bitrl_config.h"
 #include "Eigen/Core"
 
-
-#include <string>
-#include <cstddef>
 #include <vector>
 #include <ostream>
 

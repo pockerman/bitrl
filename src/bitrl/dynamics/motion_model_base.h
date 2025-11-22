@@ -200,6 +200,141 @@ MotionModelDynamicsBase<StateTp,
 {}
 
 
+template<typename StateTp, typename InputTp>
+class MotionModelDynamicsBase<StateTp, Null, InputTp>: private boost::noncopyable
+{
+public:
+
+    typedef StateTp state_type;
+    typedef state_type output_type;
+    typedef InputTp input_type;
+
+    ///
+    /// \brief The dimension of the state
+    ///
+    static const uint_t state_dimension = StateTp::dimension;
+
+    ///
+    /// \brief Destructor
+    ///
+    virtual ~MotionModelDynamicsBase()=default;
+
+    ///
+    /// \brief Updates and returns
+    /// the value of the state given the input
+    ///
+    virtual state_type& evaluate(const input_type& input)=0;
+
+    ///
+    /// \brief Read access to the state
+    ///
+    const state_type& get_state()const{return state_;}
+
+    ///
+    /// \brief Read/write access to the state
+    ///
+    state_type& get_state(){return state_;}
+
+    ///
+    /// \brief get_state_variables_names. Returns the name of the
+    /// variables in the state
+    ///
+    std::vector<std::string_view> get_state_variables_names()const
+    {return state_.get_names();}
+
+
+    ///
+    /// \brief Returns the state property with the given name
+    ///
+    real_t get_state_property(const std::string& name)const{return state_.get(name);}
+
+    ///
+    /// \brief Set the name-th value of the state
+    ///
+    void set_state_property(const std::string& name, real_t value)
+    {state_.set(name,value);}
+
+    /// \brief Set the state names
+    void set_state_name_value(uint_t i, const std::string& name, real_t val)
+    {state_.set(i, {name, val});}
+
+    ///
+    /// \brief Set the state names
+    ///
+    void set_state_name_value(uint_t i, const std::pair<std::string, real_t>&  val)
+    {state_.set(i, val);}
+
+    ///
+    /// \brief Set the time step
+    ///
+    void set_time_step(real_t dt){dt_ = dt;}
+
+    ///
+    /// \brief get_time_step Returns the sampling time the
+    /// dynamics model is using
+    ///
+    real_t get_time_step()const{return dt_;}
+
+    ///
+    /// \brief get_tolerance Returns the general
+    /// tolerance used in the calculations
+    ///
+    real_t get_tolerance()const{return tol_;}
+
+    ///
+    /// \brief set_tolerance Set the general tolerance used
+    /// in the calculations. Default is KernelConsts::tolerance()
+    ///
+    void set_tolerance(real_t tol){tol_ = tol;}
+
+protected:
+
+    /// \brief Constructor
+    MotionModelDynamicsBase();
+
+	/// \brief Constructor
+    explicit MotionModelDynamicsBase(const state_type& init_state);
+
+    ///
+    /// \brief The object describing the state
+    /// of the object of which its dynamics are
+    /// described/modeled by this MotionModel
+    ///
+    state_type state_;
+
+    ///
+    /// \brief The time step the integrator uses
+    ///
+    real_t dt_;
+
+    ///
+    /// \brief tolerance
+    ///
+    real_t tol_;
+
+};
+
+template<typename StateTp, typename InputTp>
+MotionModelDynamicsBase<StateTp, Null, InputTp>::MotionModelDynamicsBase()
+    :
+      state_(),
+      dt_(0.0),
+      tol_(bitrl::consts::TOLERANCE)
+{}
+
+template<typename StateTp, typename InputTp>
+MotionModelDynamicsBase<StateTp, Null,
+						InputTp>::MotionModelDynamicsBase(const typename MotionModelDynamicsBase<StateTp,
+																								 Null,
+																								 InputTp>::state_type& init_state)
+	:
+	state_(init_state),
+	dt_(0.0),
+	tol_(bitrl::consts::TOLERANCE)
+{}
+
+
+
 }
 }
 
