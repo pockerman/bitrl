@@ -56,7 +56,7 @@ namespace bitrl
 
         protected:
 
-            chrono::ChSystem system_;
+            chrono::ChSystemNSC system_;
 
         private:
 

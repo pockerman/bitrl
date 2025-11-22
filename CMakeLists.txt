@@ -27,28 +27,27 @@ IF(COMMAND cmake_policy)
 ENDIF(COMMAND cmake_policy)
 
 OPTION(ENABLE_TESTS OFF)
-OPTION(ENABLE_EXAMPLES OFF)
+#OPTION(ENABLE_EXAMPLES OFF)
 OPTION(ENABLE_DOCS OFF)
 OPTION(ENABLE_WEBOTS OFF)
-OPTION(ENABLE_CHRONO OFF)
+#OPTION(ENABLE_CHRONO OFF)
 
-SET(CMAKE_BUILD_TYPE "Debug")
+SET(ENABLE_EXAMPLES ON)
+SET(ENABLE_CHRONO ON)
+SET(CMAKE_BUILD_TYPE "Release")
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
 SET(CMAKE_LINKER_FLAGS "-pthread")
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-	
 	SET(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR}/install/dbg)
 	SET(CMAKE_CXX_FLAGS "-g -fPIC") # -Wall -Wextra")
     SET(BITRL_DEBUG ON)
 	
 ELSE(CMAKE_BUILD_TYPE STREQUAL "Release")
-
 	SET(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR}/install/opt)
 	SET(CMAKE_CXX_FLAGS "-O2 -fPIC")
     SET(BITRL_DEBUG OFF)
-	
 ENDIF()
 
 # Find packages that we need
@@ -91,7 +90,7 @@ ENDIF()
 
 IF(ENABLE_CHRONO)
 
-	FIND_PACKAGE(Chrono)
+	FIND_PACKAGE(Chrono  REQUIRED)
 	IF (NOT Chrono_FOUND)
   		MESSAGE("Could not find Chrono or one of its required modules")
   		RETURN()
@@ -99,6 +98,12 @@ IF(ENABLE_CHRONO)
 
 	SET(BITRL_CHRONO ON)
 	SET(BITRL_CHRONO_TARGETS ${CHRONO_TARGETS})
+
+	# Manually set this as for some reason it does not work
+	# otherwise
+    INCLUDE_DIRECTORIES(/usr/local/include/chrono_thirdparty/HACD)
+	INCLUDE_DIRECTORIES(/usr/local/include/chrono/collision/bullet)
+	LINK_DIRECTORIES(/usr/local/lib)
 ENDIF()
 
 configure_file(config.h.in ${PROJECT_SOURCE_DIR}/src/bitrl/bitrl_config.h @ONLY)
@@ -148,6 +153,8 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 ADD_LIBRARY(bitrllib SHARED ${SRCS})
 
 SET_TARGET_PROPERTIES(bitrllib PROPERTIES LINKER_LANGUAGE CXX)
+#target_link_libraries(bitrllib PUBLIC Eigen3::Eigen)
+
 INSTALL(TARGETS bitrllib DESTINATION ${CMAKE_INSTALL_PREFIX})
 MESSAGE(STATUS "Installation destination at: ${CMAKE_INSTALL_PREFIX}")
 

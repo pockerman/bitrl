@@ -11,8 +11,10 @@
 #include "bitrl/systems/double_pendulum_system.h"
 #include "bitrl/bitrl_consts.h"
 
-//#include <chrono/physics/ChBodyEasy.h>
+
+#include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChLinkRevolute.h>
+
 #include <chrono/utils/ChUtilsCreators.h>
 #include <chrono/core/ChQuaternion.h>
 
@@ -51,11 +53,11 @@ namespace bitrl
             // -------------------------
             // Create first pendulum body
             // -------------------------
-            auto pend1 = chrono_types::make_shared<chrono::ChBodyEasyCylinder>(props.r1, props.l1,
+            auto pend1 = chrono_types::make_shared<chrono::ChBodyEasyCylinder>(chrono::ChAxis::Z, props.r1, props.l1,
                 props.density, true, true);
 
             // hanging from origin downward
-            pend1->SetPos(chrono::ChVector3d(0, props.l1 * 0.5));
+            pend1->SetPos(chrono::ChVector3d(0.0, 0.0,props.l1 * 0.5));
 
             {
                 // align cylinder along Y
@@ -72,7 +74,7 @@ namespace bitrl
             // -------------------------
             // Create second pendulum body
             // -------------------------
-            auto pend2 = chrono_types::make_shared<chrono::ChBodyEasyCylinder>(props.r2, props.l2,
+            auto pend2 = chrono_types::make_shared<chrono::ChBodyEasyCylinder>(chrono::ChAxis::Z,props.r2, props.l2,
                 props.density, true, true);
             {
                 pend2->SetPos(chrono::ChVector3d(0, -props.l1 - props.l2 * 0.5, 0));

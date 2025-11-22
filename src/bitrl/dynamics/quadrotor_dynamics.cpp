@@ -1,14 +1,12 @@
 #include "bitrl/dynamics/quadrotor_dynamics.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/utils/maths/math_utils.h"
+
+#include <Eigen/Geometry> // need this for cross otherwise we get linking errors
 #include <cmath>
 
 namespace bitrl{
 namespace dynamics {
-	
-	
-
-
 
 QuadrotorDynamics::QuadrotorDynamics(QuadrotorDynamicsConfig config,
 					  SysState<12>& state)
