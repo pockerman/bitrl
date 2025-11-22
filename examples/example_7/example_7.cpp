@@ -1,7 +1,7 @@
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/envs/connect2/connect2_env.h"
-#include "rlenvs/rlenvs_consts.h"
-#include "rlenvs/utils/io/io_utils.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/envs/connect2/connect2_env.h"
+#include "bitrl/bitrl_consts.h"
+#include "bitrl/utils/io/io_utils.h"
 
 #include <iostream>
 #include <string>
@@ -13,9 +13,9 @@
 
 int main(){
 
-	using namespace rlenvscpp::utils::io;
-	using namespace rlenvscpp::envs::connect2;
-	using rlenvscpp::uint_t;
+	using namespace bitrl::utils::io;
+	using namespace bitrl::envs::connect2;
+	using bitrl::uint_t;
 	
 	Connect2 env;
 	

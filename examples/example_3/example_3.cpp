@@ -1,11 +1,11 @@
 
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "rlenvs/envs/api_server/apiserver.h"
-#include "rlenvs/envs/envs_utils.h"
-#include "rlenvs/rlenvscpp_config.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/envs/envs_utils.h"
+#include "bitrl/bitrl_config.h"
 
-#ifdef RLENVSCPP_DEBUG
+#ifdef BITRL_DEBUG
 #include <cassert>
 #endif
 
@@ -16,12 +16,12 @@
 
 namespace example{
 
-using rlenvscpp::uint_t;
-using rlenvscpp::envs::RESTApiServerWrapper;
+using bitrl::uint_t;
+using bitrl::envs::RESTApiServerWrapper;
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 const uint_t MAX_TRAJECTORY_SIZE = 10;
 
-typedef rlenvscpp::envs::gymnasium::FrozenLake<4> env_type;
+typedef bitrl::envs::gymnasium::FrozenLake<4> env_type;
 
 
 auto random_action_selector = [](auto /*state*/){
@@ -56,15 +56,14 @@ int main(){
     std::cout<<"Number of valid actions? "<<env.n_actions()<<std::endl;
     std::cout<<"Number of states? "<<env.n_states()<<std::endl;
 
-    auto trajectory = rlenvscpp::envs::create_trajectory(env,
+    auto trajectory = bitrl::envs::create_trajectory(env,
 														 random_action_selector,
 														 MAX_TRAJECTORY_SIZE);
 
-#ifdef RLENVSCPP_DEBUG
+#ifdef BITRL_DEBUG
      assert(!trajectory.empty() && "Trajectory is empty");
      assert(trajectory.size() <= MAX_TRAJECTORY_SIZE && "Invalid trajectory size");
 #endif
-
 
     std::cout<<"Trajectory size: "<<trajectory.size()<<std::endl;
 

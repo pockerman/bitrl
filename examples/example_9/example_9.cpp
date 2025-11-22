@@ -1,5 +1,5 @@
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/dynamics/diff_drive_dynamics.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/dynamics/diff_drive_dynamics.h"
 
 #include <iostream>
 #include <string>
@@ -10,9 +10,9 @@
 
 int main(){
 
-	using namespace rlenvscpp::dynamics;
-	using rlenvscpp::uint_t;
-	using rlenvscpp::real_t;
+	using namespace bitrl::dynamics;
+	using bitrl::uint_t;
+	using bitrl::real_t;
 	
 	
 	// don't update the matrices describing this

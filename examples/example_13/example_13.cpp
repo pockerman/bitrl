@@ -1,7 +1,7 @@
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/utils/geometry/geom_point.h"
-#include "rlenvs/utils/geometry/mesh/mesh.h"
-#include "rlenvs/utils/geometry/mesh/quad_mesh_generation.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/utils/geometry/geom_point.h"
+#include "bitrl/utils/geometry/mesh/mesh.h"
+#include "bitrl/utils/geometry/mesh/quad_mesh_generation.h"
 
 #include <random>
 #include <filesystem>
@@ -10,7 +10,7 @@
 
 namespace example_13
 {
-using namespace rlenvscpp;
+using namespace bitrl;
 using utils::geom::Mesh;
 using utils::geom::GeomPoint;
 

@@ -1,5 +1,0 @@
-Box2D==2.3.10
-fastapi==0.115.9
-fastapi-cli==0.0.7
-gymnasium==1.0.0
-swig==4.3.1

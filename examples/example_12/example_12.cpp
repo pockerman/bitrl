@@ -15,9 +15,9 @@
  */ 
 
 
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/utils/io/json_file_reader.h"
-#include "rlenvs/utils/io/tensor_board_server/tensorboard_server.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/utils/io/json_file_reader.h"
+#include "bitrl/utils/io/tensor_board_server/tensorboard_server.h"
 
 #include <random>
 #include <filesystem>
@@ -26,7 +26,7 @@
 
 namespace example_12
 {
-using namespace rlenvscpp;
+using namespace bitrl;
 using utils::io::JSONFileReader;
 using utils::io::TensorboardServer;
 

@@ -7,12 +7,12 @@
  * 
  */ 
 
-#include "rlenvs/rlenvs_types_v2.h"
-#include "rlenvs/utils/trajectory/waypoint_trajectory.h"
-#include "rlenvs/utils/trajectory/waypoint.h"
-#include "rlenvs/utils/trajectory/line_segment_link.h"
-#include "rlenvs/utils/geometry/geom_point.h"
-#include "rlenvs/utils/unit_converter.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/utils/trajectory/waypoint_trajectory.h"
+#include "bitrl/utils/trajectory/waypoint.h"
+#include "bitrl/utils/trajectory/line_segment_link.h"
+#include "bitrl/utils/geometry/geom_point.h"
+#include "bitrl/utils/unit_converter.h"
 
 #include <iostream>
 #include <string>
@@ -23,13 +23,13 @@
 
 namespace example_11{
 	
-	using rlenvscpp::real_t;
-	using rlenvscpp::uint_t;
-	using rlenvscpp::utils::trajectory::WaypointTrajectory;
-	using rlenvscpp::utils::trajectory::LineSegmentLink;
-	using rlenvscpp::utils::trajectory::WayPoint;
-	using rlenvscpp::utils::geom::GeomPoint;
-	using rlenvscpp::Null;
+	using bitrl::real_t;
+	using bitrl::uint_t;
+	using bitrl::utils::trajectory::WaypointTrajectory;
+	using bitrl::utils::trajectory::LineSegmentLink;
+	using bitrl::utils::trajectory::WayPoint;
+	using bitrl::utils::geom::GeomPoint;
+	using bitrl::Null;
 	
 struct LineSegmentData
 {
@@ -77,12 +77,12 @@ int main(){
 	
 	w_point_type p2(GeomPoint<2>({1.0, 0.0}), static_cast<uint_t>(2));
 	w_point_type p3(GeomPoint<2>({2.0, 2.0}), static_cast<uint_t>(3));
-	data.theta = rlenvscpp::utils::unit_converter::degrees_to_rad(45.0); 
+	data.theta = bitrl::utils::unit_converter::degrees_to_rad(45.0); 
 	link_type l1(p2, p3, static_cast<uint_t>(1), data);
 	
 	w_point_type p4(GeomPoint<2>({2.0, 2.0}), static_cast<uint_t>(4));
 	w_point_type p5(GeomPoint<2>({2.0, 3.0}), static_cast<uint_t>(5));
-	data.theta = rlenvscpp::utils::unit_converter::degrees_to_rad(90.0); 
+	data.theta = bitrl::utils::unit_converter::degrees_to_rad(90.0); 
 	link_type l2(p2, p3, static_cast<uint_t>(2), data);
 	
 	trajectory[0] = l0;
