@@ -34,6 +34,8 @@ OPTION(ENABLE_WEBOTS OFF)
 
 SET(ENABLE_EXAMPLES ON)
 SET(ENABLE_CHRONO ON)
+SET(ENABLE_OPENCV ON)
+SET(ENABLE_MQTT ON)
 SET(CMAKE_BUILD_TYPE "Release")
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -55,6 +57,10 @@ FIND_PACKAGE(Boost 1.74.0 REQUIRED)
 FIND_PACKAGE(BLAS REQUIRED)
 FIND_PACKAGE(Eigen3 REQUIRED)
 FIND_PACKAGE(PahoMqttCpp REQUIRED)
+FIND_PACKAGE(OpenCV REQUIRED)
+
+SET(BITRL_OPENCV ON)
+SET(BITRL_MQTT ON)
 
 IF(Boost_FOUND)
 	MESSAGE( STATUS  "Found needed Boost C++ library.")
@@ -120,10 +126,13 @@ MESSAGE(STATUS "Eigen3_INCLUDE_DIRS: ${EIGEN3_INCLUDE_DIR}")
 
 INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(/usr/local/include/) # mqtt
 INCLUDE_DIRECTORIES(src/)
 
 FILE(GLOB SRCS src/bitrl/*.cpp
+		src/bitrl/network/*.cpp
+		src/bitrl/sensors/*cpp
 		src/bitrl/envs/*.cpp
 		src/bitrl/envs/api_server/*.cpp
 		src/bitrl/envs/gymnasium/*.cpp
@@ -144,10 +153,10 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/utils/io/*.cpp
 		src/bitrl/utils/io/tensor_board_server/*.cpp
 		src/bitrl/utils/maths/statistics/distributions/*.cpp
-		src/bitrl/utils/geometry/*.cpp
-		src/bitrl/utils/geometry/shapes/*.cpp
-		src/bitrl/utils/geometry/mesh/*.cpp
-		src/bitrl/utils/trajectory/*.cpp
+		#src/bitrl/utils/geometry/*.cpp
+		#src/bitrl/utils/geometry/shapes/*.cpp
+		#src/bitrl/utils/geometry/mesh/*.cpp
+		#src/bitrl/utils/trajectory/*.cpp
 		src/bitrl/boards/arduino/*.cpp
 		src/bitrl/systems/*.cpp
    )
