@@ -40,18 +40,12 @@ ADD_SUBDIRECTORY(example_13)
 ADD_SUBDIRECTORY(box2d)
 ADD_SUBDIRECTORY(arduino)
 ADD_SUBDIRECTORY(arduino_wifi)
+ADD_SUBDIRECTORY(mqtt)
 
-IF(RLENVSCPP_WEBOTS)
+IF(BITRL_WEBOTS)
 	ADD_SUBDIRECTORY(webots/world_1)
 ENDIF()
 
-
-# We follow a different approach when working with
-# Ray so we don't compile the example with CMake
-IF(RLENVSCPP_RAY)
-	ADD_SUBDIRECTORY(ray/ray_example_2)
-ENDIF()
-
-IF(RLENVSCPP_CHRONO)
-	ADD_SUBDIRECTORY(chrono_examples/chrono_exe_1)
-ENDIF()
+#IF(BITRL_CHRONO)
+#	ADD_SUBDIRECTORY(chrono_examples/chrono_exe_1)
+#ENDIF()
