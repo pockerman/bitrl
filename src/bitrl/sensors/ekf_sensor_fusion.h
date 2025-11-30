@@ -2,8 +2,8 @@
 // Created by alex on 11/23/25.
 //
 
-#ifndef SENSOR_FUSION_H
-#define SENSOR_FUSION_H
+#ifndef EKF_SENSOR_FUSION_H
+#define EKF_SENSOR_FUSION_H
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/sensors/sensor_type_enum.h"
@@ -23,7 +23,7 @@ namespace bitrl
     namespace sensors
     {
 
-        class SensorFusion
+        class EKFSensorFusion
         {
         public:
 
@@ -31,8 +31,8 @@ namespace bitrl
 
             ///
             ///
-            SensorFusion();
-            ~SensorFusion();
+            EKFSensorFusion();
+            ~EKFSensorFusion();
 
             void step(real_t dt);
 
