@@ -16,8 +16,6 @@ namespace bitrl
         struct UltrasoundReading {
             real_t distance_m;
             real_t timestamp;
-
-
             static std::optional<UltrasoundReading> parse(const std::string& msg);
         };
     }

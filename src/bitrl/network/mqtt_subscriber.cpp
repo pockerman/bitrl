@@ -66,5 +66,30 @@ namespace bitrl {
 
         }
 
+        std::optional<std::string>
+        MqttSubscriber::read(std::chrono::milliseconds timeout)
+        {
+            std::unique_lock<std::mutex> lock(mutex_);
+
+            if (timeout == std::chrono::milliseconds::zero()) {
+
+                // Block indefinitely
+                cv_.wait(lock, [&]{ return !queue_.empty(); });
+
+                std::string msg = std::move(queue_.front());
+                queue_.pop();
+                return msg;
+            }
+            else {
+                // Block with timeout
+                if (!cv_.wait_for(lock, timeout, [&]{ return !queue_.empty(); }))
+                    return std::nullopt;
+
+                std::string msg = std::move(queue_.front());
+                queue_.pop();
+                return msg;
+            }
+        }
+
     }
 }

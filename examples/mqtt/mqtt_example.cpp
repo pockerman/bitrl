@@ -5,7 +5,7 @@
 
 #include "bitrl/network/mqtt_subscriber.h"
 #include "bitrl/sensors/camera.h"
-#include "bitrl/sensors/sensor_fusion.h"
+#include "bitrl/sensors/ekf_sensor_fusion.h"
 #include "bitrl/sensors/sensor_type_enum.h"
 
 #include <iostream>
@@ -16,7 +16,7 @@ int main() {
 
     using namespace bitrl;
 
-    sensors::SensorFusion sensor_fusion;
+    sensors::EKFSensorFusion sensor_fusion;
     sensor_fusion.add_sensor_topic("tcp://localhost:1883", "camera", sensors::SensorTypeEnum::CAMERA);
 
     while (true)

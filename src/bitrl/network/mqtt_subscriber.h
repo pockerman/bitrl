@@ -27,6 +27,9 @@ namespace bitrl
             void connect();
             std::optional<std::string> poll(std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
 
+            std::optional<std::string> read(std::chrono::milliseconds timeout =
+                                            std::chrono::milliseconds::zero());
+
             void message_arrived(mqtt::const_message_ptr msg) override;
         private:
 

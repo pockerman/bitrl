@@ -10,7 +10,14 @@ namespace bitrl
 {
     namespace sensors
     {
-        enum class SensorTypeEnum: uint_t {INVALID_TYPE=0, CAMERA=1, ULTRASOUND=2, ODMETRY=3, };
+        enum class SensorTypeEnum: uint_t
+        {
+            INVALID_TYPE=0,
+            CAMERA=1,
+            ULTRASOUND=2,
+            ODMETRY=3,
+            VECTOR_SENSOR=4
+        };
     }
 }
 
