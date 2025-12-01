@@ -10,5 +10,11 @@
 /*Use Chron*/
 #cmakedefine BITRL_CHRONO
 
+/*Use OpenCV*/
+#cmakedefine BITRL_OPENCV
+
+/*Use MQTT/Paho*/
+#cmakedefine BITRL_MQTT
+
 #endif
 
