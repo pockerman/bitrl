@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------------
 
 PROJECT_NAME           = "@PROJECT_NAME@"
-OUTPUT_DIRECTORY       = "@DOXYGEN_OUTPUT_DIR@"
+OUTPUT_DIRECTORY       = @PROJECT_SOURCE_DIR@/docs
 GENERATE_LATEX         = NO
 RECURSIVE              = YES
 
@@ -12,6 +12,8 @@ FILE_PATTERNS          = *.h *.hpp *.cpp
 
 GENERATE_HTML          = YES
 HTML_OUTPUT            = .
+# Use a Markdown file as the main page
+USE_MDFILE_AS_MAINPAGE = @CMAKE_SOURCE_DIR@/docs/index.md
 
 EXTRACT_ALL            = YES
 EXCLUDE = @PROJECT_SOURCE_DIR@/src/bitrl/extern
