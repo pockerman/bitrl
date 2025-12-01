@@ -1,9 +1,0 @@
-<map id="bitrl::envs::gymnasium::LunarLanderContinuousEnv" name="bitrl::envs::gymnasium::LunarLanderContinuousEnv">
-<area shape="rect" id="node1" title="LunarLanderDiscreteEnv environment with discrete action space." alt="" coords="1215,75,1421,117"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html" title=" " alt="" coords="877,46,1165,146"/>
-<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="class GymnasiumEnvBase. Base class for all Gymnasium wrappers The class has two parameters:" alt="" coords="585,68,828,124"/>
-<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments." alt="" coords="236,27,457,69"/>
-<area shape="rect" id="node5" title=" " alt="" coords="51,5,141,32"/>
-<area shape="rect" id="node6" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="5,57,187,98"/>
-<area shape="rect" id="node7" href="$classbitrl_1_1envs_1_1RESTApiServerWrapper.html" title="Utility class to facilitate HTTP requests between the environments REST API and C++ drivers." alt="" coords="251,93,442,134"/>
-</map>

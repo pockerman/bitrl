@@ -1,5 +1,0 @@
-<map id="bitrl::envs::DiscreteVectorStateDiscreteActionEnv&lt; StateSpaceSize, AS, AE, StateSpaceItemType &gt;" name="bitrl::envs::DiscreteVectorStateDiscreteActionEnv&lt; StateSpaceSize, AS, AE, StateSpaceItemType &gt;">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,196,83"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="244,5,485,91"/>
-<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1connect2_1_1Connect2.html" title="Implementation of Connect2 environment from https://github.com/JoshVarty/AlphaZeroSimple Initially th..." alt="" coords="533,27,688,69"/>
-</map>

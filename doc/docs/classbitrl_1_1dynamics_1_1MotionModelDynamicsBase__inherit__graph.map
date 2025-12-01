@@ -1,4 +1,0 @@
-<map id="bitrl::dynamics::MotionModelDynamicsBase&lt; StateTp, MatrixDescriptor, InputTp &gt;" name="bitrl::dynamics::MotionModelDynamicsBase&lt; StateTp, MatrixDescriptor, InputTp &gt;">
-<area shape="rect" id="node1" title="Base class for deriving motion models. Motion models describe the dynamics or kinematics of a rigid b..." alt="" coords="5,80,311,136"/>
-<area shape="rect" id="node2" title=" " alt="" coords="83,5,233,32"/>
-</map>

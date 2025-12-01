@@ -1,7 +1,0 @@
-<map id="bitrl::utils::io::FileReaderBase" name="bitrl::utils::io::FileReaderBase">
-<area shape="rect" id="node1" title=" " alt="" coords="73,169,286,196"/>
-<area shape="rect" id="node4" href="$classbitrl_1_1utils_1_1io_1_1CSVFileReader.html" title="The CSVFileReader class." alt="" coords="5,244,167,285"/>
-<area shape="rect" id="node5" href="$classbitrl_1_1utils_1_1io_1_1JSONFileReader.html" title=" " alt="" coords="191,244,357,285"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1utils_1_1io_1_1FileHandlerBase.html" title=" " alt="" coords="86,80,273,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="105,5,254,32"/>
-</map>

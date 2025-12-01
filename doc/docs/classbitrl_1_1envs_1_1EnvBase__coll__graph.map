@@ -1,5 +1,0 @@
-<map id="bitrl::envs::EnvBase&lt; TimeStepType, SpaceType &gt;" name="bitrl::envs::EnvBase&lt; TimeStepType, SpaceType &gt;">
-<area shape="rect" id="node1" title="Base class for environments." alt="" coords="20,95,241,136"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,13,96,39"/>
-<area shape="rect" id="node3" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="120,5,301,47"/>
-</map>

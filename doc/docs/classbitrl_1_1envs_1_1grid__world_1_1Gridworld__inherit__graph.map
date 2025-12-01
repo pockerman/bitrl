@@ -1,6 +1,0 @@
-<map id="bitrl::envs::grid_world::Gridworld&lt; side_size_ &gt;" name="bitrl::envs::grid_world::Gridworld&lt; side_size_ &gt;">
-<area shape="rect" id="node1" title=" " alt="" coords="513,39,704,80"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="235,24,465,95"/>
-<area shape="rect" id="node3" title=" " alt="" coords="19,5,173,47"/>
-<area shape="rect" id="node4" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="5,71,187,112"/>
-</map>

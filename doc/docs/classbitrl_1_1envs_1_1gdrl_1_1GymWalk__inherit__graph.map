@@ -1,6 +1,0 @@
-<map id="bitrl::envs::gdrl::GymWalk&lt; state_size &gt;" name="bitrl::envs::gdrl::GymWalk&lt; state_size &gt;">
-<area shape="rect" id="node1" title="class GymWalk. Interface for the GymWalk environment" alt="" coords="501,50,683,91"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="261,35,453,106"/>
-<area shape="rect" id="node3" href="$structbitrl_1_1envs_1_1ScalarDiscreteEnv.html" title=" " alt="" coords="5,5,213,61"/>
-<area shape="rect" id="node4" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="19,86,200,127"/>
-</map>
