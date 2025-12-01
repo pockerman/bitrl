@@ -1,0 +1,19 @@
+#---------------------------------------------------------------------------
+
+PROJECT_NAME           = "@PROJECT_NAME@"
+OUTPUT_DIRECTORY       = "@DOXYGEN_OUTPUT_DIR@"
+GENERATE_LATEX         = NO
+RECURSIVE              = YES
+
+# Adjust to your source path(s)
+INPUT                  = @PROJECT_SOURCE_DIR@/src/bitrl
+
+FILE_PATTERNS          = *.h *.hpp *.cpp
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = .
+
+EXTRACT_ALL            = YES
+
+#---------------------------------------------------------------------------
+
