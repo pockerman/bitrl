@@ -1,0 +1,40 @@
+<map id="bitrl::envs::synchronized_env_mixin" name="bitrl::envs::synchronized_env_mixin">
+<area shape="rect" id="node1" title="class synchronized_env_mixin" alt="" coords="5,225,187,267"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="240,5,471,76"/>
+<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="235,101,476,186"/>
+<area shape="rect" id="node6" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="259,211,451,281"/>
+<area shape="rect" id="node8" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="235,306,476,362"/>
+<area shape="rect" id="node10" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments." alt="" coords="245,640,466,681"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1grid__world_1_1Gridworld.html" title=" " alt="" coords="572,20,763,61"/>
+<area shape="rect" id="node5" href="$classbitrl_1_1envs_1_1connect2_1_1Connect2.html" title="Implementation of Connect2 environment from https://github.com/JoshVarty/AlphaZeroSimple Initially th..." alt="" coords="590,123,745,164"/>
+<area shape="rect" id="node7" href="$classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html" title="class GymWalk. Interface for the GymWalk environment" alt="" coords="577,225,758,267"/>
+<area shape="rect" id="node9" href="$classbitrl_1_1envs_1_1bandits_1_1MultiArmedBandits.html" title="class MultiArmedBandits. Environment for simulating armed&#45;bandits The bandits are represented as Bern..." alt="" coords="590,301,745,343"/>
+<area shape="rect" id="node11" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="533,367,802,453"/>
+<area shape="rect" id="node13" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="533,477,802,562"/>
+<area shape="rect" id="node15" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="540,586,795,642"/>
+<area shape="rect" id="node17" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="533,666,802,751"/>
+<area shape="rect" id="node19" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="546,776,789,847"/>
+<area shape="rect" id="node21" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="524,871,811,971"/>
+<area shape="rect" id="node23" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="class GymnasiumEnvBase. Base class for all Gymnasium wrappers The class has two parameters:" alt="" coords="546,1233,789,1289"/>
+<area shape="rect" id="node12" href="$classbitrl_1_1envs_1_1gymnasium_1_1CartPole.html" title="The CartPole class Interface for CartPole environment." alt="" coords="917,389,1089,431"/>
+<area shape="rect" id="node14" href="$classbitrl_1_1envs_1_1gymnasium_1_1MountainCar.html" title="The MountainCar class." alt="" coords="917,499,1089,540"/>
+<area shape="rect" id="node16" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumVecEnvBase.html" title=" " alt="" coords="871,586,1134,642"/>
+<area shape="rect" id="node18" href="$classbitrl_1_1envs_1_1gymnasium_1_1Acrobot.html" title="class Acrobot. The Acrobot class. Interface for Gymnasium::Acrobot environment." alt="" coords="917,688,1089,729"/>
+<area shape="rect" id="node20" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title="ToyTextEnvBase class. Base class for toy environments from Gymnasium. These environments have a discr..." alt="" coords="879,783,1126,839"/>
+<area shape="rect" id="node22" href="$classbitrl_1_1envs_1_1gymnasium_1_1Pendulum.html" title="The Pendulum class. Interface for Pendulum environment." alt="" coords="917,881,1089,923"/>
+<area shape="rect" id="node24" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumVecEnvBase.html" title=" " alt="" coords="905,947,1101,1033"/>
+<area shape="rect" id="node26" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="897,1057,1109,1113"/>
+<area shape="rect" id="node28" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="897,1137,1109,1208"/>
+<area shape="rect" id="node30" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="897,1233,1109,1289"/>
+<area shape="rect" id="node32" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="897,1313,1109,1369"/>
+<area shape="rect" id="node34" href="$classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html" title=" " alt="" coords="868,1392,1137,1492"/>
+<area shape="rect" id="node36" href="$classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html" title=" " alt="" coords="859,1516,1147,1616"/>
+<area shape="rect" id="node38" href="$classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html" title=" " alt="" coords="877,1640,1129,1711"/>
+<area shape="rect" id="node25" href="$classbitrl_1_1envs_1_1gymnasium_1_1AcrobotV.html" title="The CartPole class Interface for CartPole environment." alt="" coords="1212,969,1384,1011"/>
+<area shape="rect" id="node27" href="$classbitrl_1_1envs_1_1gymnasium_1_1BlackJack.html" title="The BlackJack class. Wrapper to the Blackjack OpenAI&#45;Gym environment." alt="" coords="1212,1064,1384,1105"/>
+<area shape="rect" id="node29" href="$classbitrl_1_1envs_1_1gymnasium_1_1FrozenLake.html" title="The FrozenLake class. Wrapper to Gymnasium FrozenLake environment." alt="" coords="1201,1152,1395,1193"/>
+<area shape="rect" id="node31" href="$classbitrl_1_1envs_1_1gymnasium_1_1CliffWorld.html" title="The CliffWorld class." alt="" coords="1212,1240,1384,1281"/>
+<area shape="rect" id="node33" href="$classbitrl_1_1envs_1_1gymnasium_1_1Taxi.html" title="The Taxi class." alt="" coords="1212,1320,1384,1361"/>
+<area shape="rect" id="node35" href="$classbitrl_1_1envs_1_1gymnasium_1_1LunarLanderDiscreteEnv.html" title="LunarLanderDiscreteEnv environment with discrete action space." alt="" coords="1204,1421,1392,1463"/>
+<area shape="rect" id="node37" href="$classbitrl_1_1envs_1_1gymnasium_1_1LunarLanderContinuousEnv.html" title="LunarLanderDiscreteEnv environment with discrete action space." alt="" coords="1195,1545,1401,1587"/>
+</map>

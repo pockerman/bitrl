@@ -1,0 +1,14 @@
+<map id="/home/alex/qi3/bitrl/src/bitrl" name="/home/alex/qi3/bitrl/src/bitrl">
+<area shape="rect" id="node2" href="dir_f78997d6281600c865ed6f844d8fb10f.html" title="boards" alt="" coords="664,63,736,111"/>
+<area shape="rect" id="node3" href="dir_85bd7ed9d9038cc7e28c5ce9cb0ed3c6.html" title="dynamics" alt="" coords="555,63,640,111"/>
+<area shape="rect" id="node9" href="dir_5ab2c504561afc548194e39aeb0fcde2.html" title="utils" alt="" coords="509,159,581,207"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000004_000023.html" title="4" alt="" coords="570,139,579,154"/>
+<area shape="rect" id="node4" href="dir_ba75a4079615490c88a3485991a1d18c.html" title="envs" alt="" coords="459,63,531,111"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000005_000023.html" title="2" alt="" coords="527,131,536,146"/>
+<area shape="rect" id="node5" href="dir_7d31db776e1119956fabf641e5b833c8.html" title="network" alt="" coords="360,63,435,111"/>
+<area shape="rect" id="node6" href="dir_b5c5ed90a4566a4324463b7bc90228b8.html" title="rigid_bodies" alt="" coords="235,63,336,111"/>
+<area shape="rect" id="node7" href="dir_c7ec1a6d28fbb726a6d3442fdacb794a.html" title="sensors" alt="" coords="139,63,211,111"/>
+<area shape="rect" id="node8" href="dir_1b24b6b0e34e7c37364a2f8cf764b787.html" title="systems" alt="" coords="37,63,115,111"/>
+<area shape="rect" id="clust2" href="dir_5e51fd69dcfec9ade64bff36b5771ca6.html" alt="" coords="27,52,843,217"/>
+<area shape="rect" id="clust1" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html" title="src" alt="" coords="16,16,853,228"/>
+</map>

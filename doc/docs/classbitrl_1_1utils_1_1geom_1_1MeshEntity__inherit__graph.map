@@ -1,0 +1,9 @@
+<map id="bitrl::utils::geom::MeshEntity" name="bitrl::utils::geom::MeshEntity">
+<area shape="rect" id="node1" title="Helper class that wraps non template dependent parameters and common to every mesh entity." alt="" coords="5,104,135,145"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1utils_1_1geom_1_1Element.html" title=" " alt="" coords="229,5,359,47"/>
+<area shape="rect" id="node4" href="$classbitrl_1_1utils_1_1geom_1_1Element.html" title=" " alt="" coords="229,71,359,112"/>
+<area shape="rect" id="node6" href="$classbitrl_1_1utils_1_1geom_1_1Element.html" title="Wraps the notion of an element." alt="" coords="225,136,363,177"/>
+<area shape="rect" id="node7" href="$classbitrl_1_1utils_1_1geom_1_1FaceElement_3_01spacedim_00_010_01_4.html" title=" " alt="" coords="183,201,405,243"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1utils_1_1geom_1_1EdgeElem_3_011_01_4.html" title=" " alt="" coords="453,5,587,47"/>
+<area shape="rect" id="node5" href="$classbitrl_1_1utils_1_1geom_1_1Quad_3_012_01_4.html" title=" " alt="" coords="455,71,585,112"/>
+</map>

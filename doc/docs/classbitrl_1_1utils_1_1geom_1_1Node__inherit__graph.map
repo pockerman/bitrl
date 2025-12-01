@@ -1,0 +1,4 @@
+<map id="bitrl::utils::geom::Node&lt; dim &gt;" name="bitrl::utils::geom::Node&lt; dim &gt;">
+<area shape="rect" id="node1" title="Wraps the notion of a node. A node is simply a point in dim&#45;space that can hold dofs." alt="" coords="33,95,162,136"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1utils_1_1geom_1_1FaceElement.html" title=" " alt="" coords="5,5,189,47"/>
+</map>

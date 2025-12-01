@@ -1,0 +1,8 @@
+<map id="bitrl::envs::gymnasium::FrozenLake&lt; side_size &gt;" name="bitrl::envs::gymnasium::FrozenLake&lt; side_size &gt;">
+<area shape="rect" id="node1" title="The FrozenLake class. Wrapper to Gymnasium FrozenLake environment." alt="" coords="1055,27,1248,69"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="795,13,1007,83"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="class GymnasiumEnvBase. Base class for all Gymnasium wrappers The class has two parameters:" alt="" coords="504,20,747,76"/>
+<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments." alt="" coords="235,27,456,69"/>
+<area shape="rect" id="node5" title=" " alt="" coords="51,5,141,32"/>
+<area shape="rect" id="node6" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="5,57,187,98"/>
+</map>
