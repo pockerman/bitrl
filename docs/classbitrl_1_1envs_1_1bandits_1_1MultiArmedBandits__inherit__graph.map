@@ -1,0 +1,6 @@
+<map id="bitrl::envs::bandits::MultiArmedBandits" name="bitrl::envs::bandits::MultiArmedBandits">
+<area shape="rect" id="node1" title="class MultiArmedBandits. Environment for simulating armed&#45;bandits The bandits are represented as Bern..." alt="" coords="125,199,280,240"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="82,95,323,151"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,13,192,39"/>
+<area shape="rect" id="node4" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="216,5,397,47"/>
+</map>

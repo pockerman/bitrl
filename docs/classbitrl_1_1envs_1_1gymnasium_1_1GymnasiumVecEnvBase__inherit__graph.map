@@ -1,0 +1,7 @@
+<map id="bitrl::envs::gymnasium::GymnasiumVecEnvBase&lt; VectorTimeStepType, SpaceType &gt;" name="bitrl::envs::gymnasium::GymnasiumVecEnvBase&lt; VectorTimeStepType, SpaceType &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,288,268,344"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="9,184,264,240"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments." alt="" coords="26,95,247,136"/>
+<area shape="rect" id="node4" title=" " alt="" coords="11,13,102,39"/>
+<area shape="rect" id="node5" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="126,5,307,47"/>
+</map>

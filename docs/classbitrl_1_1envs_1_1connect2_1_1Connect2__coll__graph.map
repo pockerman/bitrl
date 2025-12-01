@@ -1,0 +1,6 @@
+<map id="bitrl::envs::connect2::Connect2" name="bitrl::envs::connect2::Connect2">
+<area shape="rect" id="node1" title="Implementation of Connect2 environment from https://github.com/JoshVarty/AlphaZeroSimple Initially th..." alt="" coords="533,60,688,101"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="244,38,485,123"/>
+<area shape="rect" id="node3" href="$structbitrl_1_1envs_1_1DiscreteVectorStateDiscreteActionEnv.html" title=" " alt="" coords="5,5,196,76"/>
+<area shape="rect" id="node4" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="10,100,191,141"/>
+</map>

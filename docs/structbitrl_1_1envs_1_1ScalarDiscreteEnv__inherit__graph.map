@@ -1,0 +1,5 @@
+<map id="bitrl::envs::ScalarDiscreteEnv&lt; state_end, action_end, state_start, action_start &gt;" name="bitrl::envs::ScalarDiscreteEnv&lt; state_end, action_end, state_start, action_start &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,13,213,69"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1EnvBase.html" title=" " alt="" coords="261,5,453,76"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html" title="class GymWalk. Interface for the GymWalk environment" alt="" coords="501,20,683,61"/>
+</map>
