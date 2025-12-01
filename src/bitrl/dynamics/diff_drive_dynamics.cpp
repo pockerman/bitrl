@@ -59,7 +59,6 @@ DiffDriveDynamics::integrate_state_v2(const SysState<3>& state, real_t dt, real_
     other[0] += xincrement;
     other[1] += yincrement;
     other[2] += dt*w;
-
     return other;
 }
 
