@@ -74,28 +74,24 @@ $(function() {
 <div class="contents">
 <div class="textblock"><p><a href="https://github.com/pockerman/rlenvs_from_cpp/actions/workflows/build.yml"><img src="https://github.com/pockerman/rlenvs_from_cpp/actions/workflows/build.yml/badge.svg" alt="Build rlenvs" style="pointer-events: none;" class="inline"/></a> </p>
 <h1><a class="anchor" id="autotoc_md0"></a>
-rlenvscpp</h1>
-<div class="fragment"><div class="line"> {rlenvscpp```}</div>
+bitrl</h1>
+<div class="fragment"><div class="line"> {bitrl```}</div>
 <div class="line">using  C++. </div>
-<div class="line"> </div>
-<div class="line">In addition, the library provides various utilities such as experiment tracking,</div>
-<div class="line">representing trajectories  via waypoints and simple implementation of popular dynamics such as </div>
-<div class="line">quadrotor dynamics.</div>
 <div class="line"> </div>
 <div class="line">Furthermore, there is some minimal support for working with Arduino UNO boards over USB or WiFi.</div>
 <div class="line">See also &lt;a href=&quot;https://rlenvscpp.readthedocs.io/en/latest/working_with_webots.html&quot;&gt;Working with Webots&lt;/a&gt;</div>
-<div class="line">for how to integrate ```rlenvscpp``` with &lt;a href=&quot;https://cyberbotics.com/doc/guide/installing-webots&quot;&gt;Webots&lt;/a&gt;.</div>
-<div class="line">Example &lt;a href=&quot;https://rlenvscpp.readthedocs.io/en/latest/examples/ray/ray_example_2.html&quot;&gt;Using rlenvscpp with Ray&lt;/a&gt;</div>
-<div class="line">shows how to use &lt;a href=&quot;https://www.ray.io/&quot;&gt;Ray&lt;/a&gt; with the ```rlenvscpp```.</div>
+<div class="line">for how to integrate ```bitrl``` with &lt;a href=&quot;https://cyberbotics.com/doc/guide/installing-webots&quot;&gt;Webots&lt;/a&gt;.</div>
 <div class="line"> </div>
 <div class="line">Various RL algorithms using the environments can be found at &lt;a href=&quot;https://github.com/pockerman/cuberl/tree/master&quot;&gt;cuberl&lt;/a&gt;.</div>
 <div class="line"> </div>
 <div class="line">The documentation for the library can be found &lt;a href=&quot;https://rlenvscpp.readthedocs.io/en/latest/&quot;&gt;here&lt;/a&gt;.</div>
 <div class="line">The following is an example how to use the </div>
 <div class="line">``FrozenLake``   environment from &lt;a href=&quot;https://github.com/Farama-Foundation/Gymnasium/tree/main&quot;&gt;Gymnasium&lt;/a&gt;.</div>
-</div><!-- fragment --><p>#include "rlenvs/rlenvs_types_v2.h" #include "rlenvs/envs/gymnasium/toy_text/frozen_lake_env.h" #include "rlenvs/envs/api_server/apiserver.h"</p>
+</div><!-- fragment --><p>#include "bitrl/bitrl_types.h" #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h" #include "bitrl/envs/api_server/apiserver.h"</p>
 <p>#include &lt;iostream&gt; #include &lt;string&gt; #include &lt;unordered_map&gt; #include &lt;any&gt;</p>
-<p>namespace example_1{ const std::string SERVER_URL = "http://0.0.0.0:8001/api"; using rlenvscpp::envs::gymnasium::FrozenLake; using rlenvscpp::envs::RESTApiServerWrapper;</p>
+<p>namespace example_1{</p>
+<p>const std::string SERVER_URL = "http://0.0.0.0:8001/api";</p>
+<p>using bitrl::envs::gymnasium::FrozenLake; using bitrl::envs::gymnasium::Taxi; using bitrl::envs::gymnasium::BlackJack; using bitrl::envs::gymnasium::CliffWorld; using bitrl::envs::RESTApiServerWrapper;</p>
 <p>void test_frozen_lake(const RESTApiServerWrapper&amp; server){ </p><pre class="fragment">FrozenLake&lt;4&gt; env(server);
 
 std::cout&lt;&lt;"Environame URL: "&lt;&lt;env.get_url()&lt;&lt;std::endl;
@@ -142,24 +138,17 @@ for(auto item:dynamics){
 }
 
 action = env.sample_action();
-new_time_step = env.step(action);
+std::cout&lt;&lt;"Action sampled: "&lt;&lt;action&lt;&lt;std::endl;
 
+new_time_step = env.step(action);
 std::cout&lt;&lt;new_time_step&lt;&lt;std::endl;
 
-// synchronize the environment
-env.sync(std::unordered_map&lt;std::string, std::any&gt;());
-
-auto copy_env = env.make_copy(1);
-copy_env.reset();
-
-std::cout&lt;&lt;"Org env cidx: "&lt;&lt;env.cidx()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Copy env cidx: "&lt;&lt;copy_env.cidx()&lt;&lt;std::endl;
-
-copy_env.close();
+std::cout&lt;&lt;"env cidx: "&lt;&lt;env.cidx()&lt;&lt;std::endl;
 
 // close the environment
 env.close();
-</pre><p> } }</p>
+</pre><p> }</p>
+<p>}</p>
 <p>int main(){ </p><pre class="fragment">using namespace example_1;
 
 RESTApiServerWrapper server(SERVER_URL, true);
@@ -167,8 +156,10 @@ RESTApiServerWrapper server(SERVER_URL, true);
 std::cout&lt;&lt;"Testing FrozenLake..."&lt;&lt;std::endl;
 example_1::test_frozen_lake(server);
 std::cout&lt;&lt;"===================="&lt;&lt;std::endl;
+
 return 0;
-</pre><p> } ``` </p>
+</pre><p> }</p>
+<p>``` </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
