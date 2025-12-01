@@ -84,14 +84,14 @@ bitrl</h1>
 <div class="line"> </div>
 <div class="line">Various RL algorithms using the environments can be found at &lt;a href=&quot;https://github.com/pockerman/cuberl/tree/master&quot;&gt;cuberl&lt;/a&gt;.</div>
 <div class="line"> </div>
-<div class="line">The documentation for the library can be found &lt;a href=&quot;https://rlenvscpp.readthedocs.io/en/latest/&quot;&gt;here&lt;/a&gt;.</div>
+<div class="line">The documentation for the library can be found &lt;a href=&quot;https://pockerman.github.io/bitrl/index.html&quot;&gt;here&lt;/a&gt;.</div>
 <div class="line">The following is an example how to use the </div>
 <div class="line">``FrozenLake``   environment from &lt;a href=&quot;https://github.com/Farama-Foundation/Gymnasium/tree/main&quot;&gt;Gymnasium&lt;/a&gt;.</div>
 </div><!-- fragment --><p>#include "bitrl/bitrl_types.h" #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h" #include "bitrl/envs/api_server/apiserver.h"</p>
 <p>#include &lt;iostream&gt; #include &lt;string&gt; #include &lt;unordered_map&gt; #include &lt;any&gt;</p>
 <p>namespace example_1{</p>
 <p>const std::string SERVER_URL = "http://0.0.0.0:8001/api";</p>
-<p>using bitrl::envs::gymnasium::FrozenLake; using bitrl::envs::gymnasium::Taxi; using bitrl::envs::gymnasium::BlackJack; using bitrl::envs::gymnasium::CliffWorld; using bitrl::envs::RESTApiServerWrapper;</p>
+<p>using bitrl::envs::gymnasium::FrozenLake; using bitrl::envs::RESTApiServerWrapper;</p>
 <p>void test_frozen_lake(const RESTApiServerWrapper&amp; server){ </p><pre class="fragment">FrozenLake&lt;4&gt; env(server);
 
 std::cout&lt;&lt;"Environame URL: "&lt;&lt;env.get_url()&lt;&lt;std::endl;
