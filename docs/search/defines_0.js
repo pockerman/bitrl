@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bitrl_5fchrono_2148',['BITRL_CHRONO',['../bitrl__config_8h.html#a250cca8e0fb7b801f05c5d1345bbc553',1,'bitrl_config.h']]],
-  ['bitrl_5fmqtt_2149',['BITRL_MQTT',['../bitrl__config_8h.html#ad45fa065d8fe81f42ba378cb7bf3c1ef',1,'bitrl_config.h']]],
-  ['bitrl_5fopencv_2150',['BITRL_OPENCV',['../bitrl__config_8h.html#a9289d5a8884468f97bf1d66455ccf4dd',1,'bitrl_config.h']]]
+  ['bitrl_5fchrono_2150',['BITRL_CHRONO',['../bitrl__config_8h.html#a250cca8e0fb7b801f05c5d1345bbc553',1,'bitrl_config.h']]],
+  ['bitrl_5fmqtt_2151',['BITRL_MQTT',['../bitrl__config_8h.html#ad45fa065d8fe81f42ba378cb7bf3c1ef',1,'bitrl_config.h']]],
+  ['bitrl_5fopencv_2152',['BITRL_OPENCV',['../bitrl__config_8h.html#a9289d5a8884468f97bf1d66455ccf4dd',1,'bitrl_config.h']]]
 ];
