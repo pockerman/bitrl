@@ -14,6 +14,6 @@ GENERATE_HTML          = YES
 HTML_OUTPUT            = .
 
 EXTRACT_ALL            = YES
-
+EXCLUDE = @PROJECT_SOURCE_DIR@/src/bitrl/extern
 #---------------------------------------------------------------------------
 
