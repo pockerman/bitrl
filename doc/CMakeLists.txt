@@ -1,4 +1,4 @@
-find_package(Doxygen)
+FIND_PACKAGE(Doxygen)
 
 IF (NOT DOXYGEN_FOUND)
 	return()
