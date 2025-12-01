@@ -203,7 +203,8 @@ def main():
 
         print(f"Send message={z_str} to topic={GPS_TOPIC}")
 
-        u_str = json.dumps(u.tolist())
+        u_flat = u.flatten()
+        u_str = json.dumps(u_flat.tolist())
         client.publish(topic=INPUT_TOPIC, payload=u_str)
 
         # compute the estimation here

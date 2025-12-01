@@ -389,13 +389,10 @@ SysState<dim>::get(const std::string& name)const{
 template<int dim>
 DynVec<real_t>
 SysState<dim>::as_vector()const{
-
-    DynVec<real_t> vec(dim, 0.0);
-
+    DynVec<real_t> vec(dim);
     for(uint_t v=0; v<values_.size(); ++v){
-        vec[v] = values_[v].second;
+        vec(v) = values_[v].second;
     }
-
     return vec;
 }
 
