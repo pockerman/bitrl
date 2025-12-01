@@ -10,7 +10,7 @@ for how to integrate ```bitrl``` with <a href="https://cyberbotics.com/doc/guide
 
 Various RL algorithms using the environments can be found at <a href="https://github.com/pockerman/cuberl/tree/master">cuberl</a>.
 
-The documentation for the library can be found <a href="https://rlenvscpp.readthedocs.io/en/latest/">here</a>.
+The documentation for the library can be found <a href="https://pockerman.github.io/bitrl/index.html">here</a>.
 The following is an example how to use the 
 ``FrozenLake``   environment from <a href="https://github.com/Farama-Foundation/Gymnasium/tree/main">Gymnasium</a>.
 
@@ -30,9 +30,6 @@ namespace example_1{
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
 using bitrl::envs::gymnasium::FrozenLake;
-using bitrl::envs::gymnasium::Taxi;
-using bitrl::envs::gymnasium::BlackJack;
-using bitrl::envs::gymnasium::CliffWorld;
 using bitrl::envs::RESTApiServerWrapper;
 
 
