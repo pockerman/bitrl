@@ -5,13 +5,15 @@
 #ifndef VECTOR_MESSAGE_H
 #define VECTOR_MESSAGE_H
 
+#include "bitrl/bitrl_types.h"
+
 #include <iosfwd>
 #include <locale>
 #include <optional>
 #include <string>
 #include <vector>
+#include <iostream>
 
-#include "bitrl/bitrl_types.h"
 
 namespace bitrl
 {
@@ -38,6 +40,7 @@ namespace bitrl
             };
 
             std::string s = trim(msg);
+
             if (s.empty() || s.front() != '[' || s.back() != ']')
                 return std::nullopt;
 
@@ -61,6 +64,8 @@ namespace bitrl
 
                 values.push_back(value);
             }
+
+
 
             EigenVectorMessage<T> result;
             result.message = DynVec<T>::Zero(values.size());

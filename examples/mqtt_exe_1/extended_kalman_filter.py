@@ -7,15 +7,11 @@ author: Atsushi Sakai (@Atsushi_twi)
 This file is edited from
 https://github.com/AtsushiSakai/PythonRobotics/blob/master/Localization/extended_kalman_filter/extended_kalman_filter.py
 """
-import sys
-import pathlib
-import base64
+
 import time
 import json
 import paho.mqtt.client as mqtt
 from collections import namedtuple
-
-sys.path.append(str(pathlib.Path(__file__).parent.parent.parent))
 
 import math
 import matplotlib.pyplot as plt
@@ -27,6 +23,13 @@ BROKER = "localhost"
 PORT = 1883
 GPS_TOPIC = "GPS_TOPIC"
 INPUT_TOPIC = "U_TOPIC"
+STATE_TOPIC = "STATE_TOPIC"
+SHOW_ANIMATION = False
+
+INPUT_NOISE = np.diag([1.0, np.deg2rad(30.0)]) ** 2
+GPS_NOISE = np.diag([0.5, 0.5]) ** 2
+DT = 0.1  # time tick [s]
+SIM_TIME = 50.0  # simulation time [s]
 
 # EKF matrices
 
@@ -57,7 +60,7 @@ GPS_NOISE = np.diag([0.5, 0.5]) ** 2
 DT = 0.1  # time tick [s]
 SIM_TIME = 50.0  # simulation time [s]
 
-show_animation = True
+
 
 
 def get_u() -> list[float]:
@@ -166,9 +169,22 @@ def ekf_estimation(xEst, PEst, z, u) -> EKFEstimationOutput:
 def main():
     print(__file__ + " start!!")
 
+    # The state we receive from C++ driver
+    last_state = None
+    def on_message(client, userdata, msg) -> None:
+        nonlocal last_state
+        try:
+            values = json.loads(msg.payload.decode())
+            last_state = values
+        except Exception as e:
+            print("Decode error:", e)
+
     # we will be sending sensor data here:
     client = mqtt.Client()
     client.connect(BROKER, PORT, 60)
+    client.subscribe(STATE_TOPIC)
+    client.on_message = on_message
+    client.loop_start() # enable message reception
 
     sim_time = 0.0
 
@@ -201,9 +217,7 @@ def main():
         z_str = json.dumps(z_flat.tolist())
         client.publish(topic=GPS_TOPIC, payload=z_str)
 
-        print(f"Send message={z_str} to topic={GPS_TOPIC}")
-
-        u_flat = u.flatten()
+        u_flat = ud.flatten()
         u_str = json.dumps(u_flat.tolist())
         client.publish(topic=INPUT_TOPIC, payload=u_str)
 
@@ -214,13 +228,24 @@ def main():
         xEst = ekf_estimation_result.x_est
         pEst = ekf_estimation_result.p_est
 
+        if last_state is not None:
+            print(f"X   (est/received): {xEst[0][0]}/{last_state['X']}")
+            print(f"Y   (est/received): {xEst[1][0]}/{last_state['Y']}")
+            print(f"YAW (est/received): {xEst[2][0]}/{last_state['YAW']}")
+            print(f"V   (est/received): {xEst[3][0]}/{last_state['V']}")
+        else:
+            print(f"X   (est/received): {xEst[0][0]}/<no data yet>")
+            print(f"Y   (est/received): {xEst[1][0]}/<no data yet>")
+            print(f"YAW (est/received): {xEst[2][0]}/<no data yet>")
+            print(f"V   (est/received): {xEst[3][0]}/<no data yet>")
+
         # store data history
         hxEst = np.hstack((hxEst, xEst))
         hxDR = np.hstack((hxDR, xDR))
         hxTrue = np.hstack((hxTrue, xTrue))
         hz = np.hstack((hz, z))
 
-        if show_animation:
+        if SHOW_ANIMATION:
             plt.cla()
             # for stopping simulation with the esc key.
             plt.gcf().canvas.mpl_connect('key_release_event',
@@ -237,8 +262,8 @@ def main():
             plt.grid(True)
             plt.pause(0.001)
 
-        time.sleep(2.0)
-
+        time.sleep(1.0)
+    client.loop_stop()
 
 if __name__ == '__main__':
     main()

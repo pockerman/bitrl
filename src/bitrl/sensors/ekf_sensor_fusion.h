@@ -14,6 +14,7 @@
 #include <memory>
 #include <unordered_map>
 #include <map>
+#include <iostream>
 
 
 namespace bitrl
@@ -42,7 +43,14 @@ namespace bitrl
                             observation_model_type& observation_model);
             ~EKFSensorFusion();
 
-            void step(real_t dt);
+            void step();
+
+            /// Predict the next state
+            /// @param dt
+            void predict(const std::string& input_message,
+                         const std::string& sensor_message, const topic_type& topic);
+
+            void update(const std::string& sensor_message, const topic_type& topic);
 
             EKFSensorFusion& with_matrix(const std::string& name, const matrix_type& mat);
 
@@ -54,18 +62,6 @@ namespace bitrl
             void add_sensor_topic(const std::string& mqtt_url,
                                   const topic_type& topic,
                                   SensorTypeEnum sensor_type);
-
-            ///  Add the modelled sensor noise
-            /// @param topic
-            /// @param noise
-            void add_sensor_noise(const topic_type& topic, const DynMat<real_t>& noise);
-
-            /// Predict the next state
-            /// @param dt
-            void predict(real_t dt, const std::string& input_message,
-                         const std::string& sensor_message, const topic_type& topic);
-
-            void update(real_t dr, const std::string& sensor_message, const topic_type& topic);
 
             /// \brief Returns the name-th matrix
             const matrix_type& operator[](const std::string& name)const;
@@ -173,7 +169,6 @@ namespace bitrl
         {
 
             auto topic_itr = sensors_.find(topic);
-
             if (topic_itr == sensors_.end())
             {
                 return std::nullopt;
@@ -190,11 +185,10 @@ namespace bitrl
 
         template<typename MotionModelType, typename ObservationModelType>
         void
-        EKFSensorFusion<MotionModelType, ObservationModelType>::step(real_t dt)
+        EKFSensorFusion<MotionModelType, ObservationModelType>::step()
         {
 
-            // loop over the sensor topics and perform
-            // and update
+            // loop over the sensor topics and perform and update
             for (auto& sensor : sensors_)
             {
                 auto sensor_message = read_from_topic(sensor.first, std::chrono::milliseconds(200));
@@ -205,22 +199,31 @@ namespace bitrl
                 {
                     // read the input assocoate with the sensor read
                     auto input_message = input_subscriber_ -> poll(std::chrono::milliseconds(1000));
-                    predict(dt, input_message.value(), sensor_message.value(), sensor.first);
-                    update(dt, sensor_message.value(), sensor.first);
+
+                    if (input_message.has_value())
+                    {
+                        predict(input_message.value(), sensor_message.value(), sensor.first);
+                        update(sensor_message.value(), sensor.first);
+                    }
+                    else
+                    {
+                        std::cout<<"No input message received: "<<std::endl;
+                    }
                 }
             }
         }
 
         template<typename MotionModelType, typename ObservationModelType>
         void
-        EKFSensorFusion<MotionModelType, ObservationModelType>::predict(real_t dt,
-                                                                         const std::string& input_message,
+        EKFSensorFusion<MotionModelType, ObservationModelType>::predict(const std::string& input_message,
                                                                          const std::string& sensor_message,
                                                                          const topic_type& topic)
         {
-            /// make a state prediction using the
-            /// motion model
-            motion_model_->evaluate(dt, input_message, sensor_message, topic);
+
+            // make a state prediction using the motion model
+            motion_model_->evaluate(input_message, sensor_message, topic);
+
+            std::cout<<"Model evaluation finished...: "<<std::endl;
 
             auto& P = (*this)["P"];
             auto& Q = (*this)["Q"];
@@ -236,7 +239,6 @@ namespace bitrl
             {
                 auto& L = motion_model_->get_matrix("L");
                 auto L_T = L.transpose();
-
                 P += L * Q * L_T;
             }
             else
@@ -248,10 +250,10 @@ namespace bitrl
 
         template<typename MotionModelType, typename ObservationModelType>
         void
-        EKFSensorFusion<MotionModelType, ObservationModelType>::update(real_t dt,
-                                                                         const std::string& sensor_message,
+        EKFSensorFusion<MotionModelType, ObservationModelType>::update(const std::string& sensor_message,
                                                                          const topic_type& topic)
         {
+            std::cout<<"Update sensor message: "<<sensor_message<<std::endl;
             auto& state = motion_model_->get_state();
             auto& P = (*this)["P"];
             auto& R = (*this)["R"];
@@ -259,18 +261,27 @@ namespace bitrl
             auto z = observation_model_ -> convert_sensor_message(sensor_message, topic);
             auto zpred = observation_model_ -> evaluate(state.as_vector());
 
+            // get the Jacobian of the observation
+            // model
             auto& H = observation_model_->get_matrix("H");
             auto H_T = H.transpose();
 
             // compute \partial{h}/\partial{v} the jacobian of the observation model
             // w.r.t the error vector
-            auto& M = observation_model_->get_matrix("M");
-            auto M_T = M.transpose(); //trans(M);
-
             try{
 
-                // S = H*P*H^T + M*R*M^T
-                auto S = H*P*H_T + M*R*M_T;
+                DynMat<real_t> S = H*P*H_T;
+                if (observation_model_ -> has_matrix("M"))
+                {
+                    auto& M = observation_model_->get_matrix("M");
+                    auto M_T = M.transpose();
+                    S += M*R*M_T;
+                }
+                else
+                {
+                    S += R;
+                }
+
                 auto S_inv = S.inverse();
 
                 if(has_matrix("K")){

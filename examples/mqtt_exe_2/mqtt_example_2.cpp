@@ -3,10 +3,13 @@
 //
 
 
+
+#include "bitrl/bitrl_config.h"
+
+# ifdef BITRL_MQTT
+
 #include "bitrl/network/mqtt_subscriber.h"
 #include "bitrl/sensors/camera.h"
-#include "bitrl/sensors/ekf_sensor_fusion.h"
-#include "bitrl/sensors/sensor_type_enum.h"
 
 #include <iostream>
 #include <thread>
@@ -16,13 +19,12 @@ int main() {
 
     using namespace bitrl;
 
-    sensors::EKFSensorFusion sensor_fusion;
-    sensor_fusion.add_sensor_topic("tcp://localhost:1883", "camera", sensors::SensorTypeEnum::CAMERA);
+    network::MqttSubscriber camera_subscriber("tcp://localhost:1883", "camera");
+    camera_subscriber.connect();
 
     while (true)
     {
-        auto message = sensor_fusion.read_from_topic("camera",
-            std::chrono::milliseconds(3000));
+        auto message = camera_subscriber.poll(std::chrono::milliseconds(3000));
 
         if (message.has_value())
         {
@@ -51,3 +53,12 @@ int main() {
     return 0;
 }
 
+#else
+#include <iostream>
+int main()
+{
+    std::cerr<<"This example requires MQTT and OpenCV to be enable. "
+               "Reconfigure bitrl with ENABLE_MQTT=ON and ENABLE_OPENCV=ON"<<std::endl;
+    return 1;
+}
+#endif

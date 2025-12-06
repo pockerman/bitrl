@@ -2,6 +2,7 @@
 #define SYSTEM_STATE_H
 
 #include "bitrl/bitrl_types.h"
+#include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <string>
 #include <array>
@@ -11,6 +12,7 @@
 #include <ostream>
 #include <stdexcept>
 #include <iomanip> // std::setprecision
+
 
 namespace bitrl{
 namespace dynamics{
@@ -104,11 +106,6 @@ public:
     ///
     real_t get(const std::string& name)const;
 
-	///
-    /// \brief Returns the entries of this state as a DynVec
-	///
-    DynVec<real_t> as_vector()const;
-
     ///
     /// \brief Set the value for the variable name
     ///
@@ -197,9 +194,18 @@ public:
     std::ostream& print(std::ostream& out)const;
 
     ///
+    /// \brief Returns the entries of this state as a DynVec
+    ///
+    DynVec<real_t> as_vector()const;
+
+    ///
     /// \brief Return the state as string
     ///
     const std::string as_string()const;
+
+    ///  Convert to json format
+    /// @return
+    nlohmann::json  as_json() const;
 
     ///
     /// \brief Scale the values of the state
@@ -236,7 +242,6 @@ SysState<dim>::extract(const SysState<dim1>& state, SysState<dim2>& other){
     static_assert (dim2 <= dim1, "Invalid dimension dim2 > dim1");
 
     for(auto& name:other.get_names()){
-
         auto value = state(name);
         other.set(std::string(name), value);
     }
@@ -372,7 +377,6 @@ SysState<dim>::get(const std::string& name)const{
         auto names = get_names();
         std::string name_strs("[");
         for(auto& name:names){
-
             name_strs += std::string(name);
             name_strs += std::string(",");
         }
@@ -572,17 +576,29 @@ const std::string
 SysState<dim>::as_string()const{
 
     std::string result;
+    bool first = true;
 
-    std::for_each(values_.begin(), values_.end(),
-              [&](const std::pair<std::string, real_t>& vals){
-       result += vals.first;
-       result += ":";
-       result += std::to_string(vals.second);
-       result += ",";
-    });
+    for (const auto& [name, value] : values_) {
+        if (!first)
+            result += ",";   // add comma before the next element
+        first = false;
+
+        result += name;
+        result += ":";
+        result += std::to_string(value);
+    }
 
     return result;
-
+}
+template<int dim>
+nlohmann::json
+    SysState<dim>::as_json() const
+{
+    nlohmann::json j;
+    for (const auto& [name, value] : values_) {
+        j[name] = value;
+    }
+    return j;
 }
 
 template<int dim>
