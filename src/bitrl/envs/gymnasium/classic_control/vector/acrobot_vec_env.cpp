@@ -29,7 +29,7 @@ namespace envs::gymnasium
 	}
 
 
-	AcrobotV::AcrobotV(const RESTApiServerWrapper& api_server )
+	AcrobotV::AcrobotV(const RESTRLEnvClient& api_server )
 		:
 		GymnasiumVecEnvBase<VectorTimeStep<detail_::AcrobotVEnv::state_type>,
 		                    detail_::AcrobotVEnv>(api_server, 0, AcrobotV::name)
@@ -37,7 +37,7 @@ namespace envs::gymnasium
 		this -> get_api_server().register_if_not(AcrobotV::name,AcrobotV::URI);
 	}
 
-	AcrobotV::AcrobotV(const RESTApiServerWrapper& api_server , const uint_t cidx)
+	AcrobotV::AcrobotV(const RESTRLEnvClient& api_server , const uint_t cidx)
 		:
 		GymnasiumVecEnvBase<VectorTimeStep<detail_::AcrobotVEnv::state_type>,
 		                    detail_::AcrobotVEnv>(api_server, cidx,

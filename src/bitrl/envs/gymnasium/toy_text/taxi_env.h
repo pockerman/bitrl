@@ -5,7 +5,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
 #include "bitrl/envs/time_step.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <string>
@@ -19,35 +19,35 @@ namespace envs::gymnasium
 	///
 /// \brief The Taxi class
 ///
-	class Taxi final: public  ToyTextEnvBase<TimeStep<uint_t>, 500, 6>
-	{
-	public:
+class Taxi final: public  ToyTextEnvBase<TimeStep<uint_t>, 500, 6>
+{
+public:
 
-		///
+	///
     /// \brief name
     ///
-		static  const std::string name;
+	static  const std::string name;
 
-		///
+	///
 	/// \brief The URI for accessing the environment
 	///
-		static const std::string URI;
+	static const std::string URI;
 
-		///
+	///
 	/// \brief The base type
 	///
-		typedef typename ToyTextEnvBase<TimeStep<uint_t>, 500, 6>::base_type base_type;
+	typedef typename ToyTextEnvBase<TimeStep<uint_t>, 500, 6>::base_type base_type;
 
-		///
+	///
 	/// \brief The time step type we return every time a step in the
 	/// environment is performed
 	///
-		typedef typename base_type::time_step_type time_step_type;
+	typedef typename base_type::time_step_type time_step_type;
 
-		///
+	///
 	/// \brief The type describing the state space for the environment
 	///
-		typedef typename base_type::state_space_type state_space_type;
+	typedef typename base_type::state_space_type state_space_type;
 
 		///
 	/// \brief The type of the action space for the environment
@@ -67,12 +67,12 @@ namespace envs::gymnasium
 		///
     /// \brief Taxi
     ///
-		Taxi(const RESTApiServerWrapper& api_server);
+		Taxi(const RESTRLEnvClient& api_server);
 
 		///
 	/// \brief Constructor
 	///
-		Taxi(const RESTApiServerWrapper& api_server,
+		Taxi(const RESTRLEnvClient& api_server,
 		     const uint_t cidx);
 
 		///

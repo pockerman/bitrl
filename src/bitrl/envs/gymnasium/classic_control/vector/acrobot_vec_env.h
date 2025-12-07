@@ -12,7 +12,7 @@
 #include "bitrl/envs/vector_time_step.h"
 #include "bitrl/envs/space_type.h"
 #include "bitrl/envs/gymnasium/gymnasium_vector_env_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../../network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 
@@ -112,12 +112,12 @@ namespace envs::gymnasium
 		///
     /// \brief Acrobot. Constructor
     ///
-		AcrobotV(const RESTApiServerWrapper& api_server );
+		AcrobotV(const RESTRLEnvClient& api_server );
 
 		///
     /// \brief CartPole. Constructor
     ///
-		AcrobotV(const RESTApiServerWrapper& api_server ,
+		AcrobotV(const RESTRLEnvClient& api_server ,
 		         const uint_t cidx);
 
 		///

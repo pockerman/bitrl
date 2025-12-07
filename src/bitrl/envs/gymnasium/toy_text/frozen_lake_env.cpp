@@ -22,7 +22,7 @@ namespace envs::gymnasium
 	const std::string FrozenLake<side_size>::URI = "/gymnasium/frozen-lake-env";
 
 	template<uint_t side_size>
-	FrozenLake<side_size>::FrozenLake(const RESTApiServerWrapper& api_server)
+	FrozenLake<side_size>::FrozenLake(const RESTRLEnvClient& api_server)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>,
 		               frozenlake_state_size<side_size>::size,
@@ -33,7 +33,7 @@ namespace envs::gymnasium
 	}
 
 	template<uint_t side_size>
-	FrozenLake<side_size>::FrozenLake(const RESTApiServerWrapper& api_server,
+	FrozenLake<side_size>::FrozenLake(const RESTRLEnvClient& api_server,
 	                                  const uint_t cidx, bool slippery)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>,

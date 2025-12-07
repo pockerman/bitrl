@@ -28,7 +28,7 @@ Pendulum::create_time_step_from_response_(const nlohmann::json& response)const{
 }
 
 
-Pendulum::Pendulum(const RESTApiServerWrapper& api_server)
+Pendulum::Pendulum(const RESTRLEnvClient& api_server)
 :
 GymnasiumEnvBase<TimeStep<std::vector<real_t>>, 
 				 ContinuousVectorStateContinuousScalarBoundedActionEnv<3, 
@@ -40,7 +40,7 @@ GymnasiumEnvBase<TimeStep<std::vector<real_t>>,
 	this -> get_api_server().register_if_not(Pendulum::name,Pendulum::URI);
 }
 
-Pendulum::Pendulum(const RESTApiServerWrapper& api_server, 
+Pendulum::Pendulum(const RESTRLEnvClient& api_server, 
 	               const uint_t cidx)
 :
 GymnasiumEnvBase<TimeStep<std::vector<real_t>>, 

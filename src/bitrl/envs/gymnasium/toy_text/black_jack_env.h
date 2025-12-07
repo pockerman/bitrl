@@ -8,7 +8,7 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
@@ -76,12 +76,12 @@ namespace envs::gymnasium
 		///
     /// \brief BlackJack. Constructor.
     ///
-		BlackJack(const RESTApiServerWrapper& api_server);
+		BlackJack(const RESTRLEnvClient& api_server);
 
 		///
 	/// \brief Constructor
 	///
-		BlackJack(const RESTApiServerWrapper& api_server, const uint_t cidx);
+		BlackJack(const RESTRLEnvClient& api_server, const uint_t cidx);
 
 		///
 	///

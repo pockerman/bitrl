@@ -81,7 +81,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/envs/env_types.h"
 
@@ -156,12 +156,12 @@ namespace envs::gymnasium
 		///
 		/// \brief Pendulum. Constructor
 		///
-		Pendulum(const RESTApiServerWrapper& api_server );
+		Pendulum(const RESTRLEnvClient& api_server );
 
 		///
 		/// \brief Constructor
 		///
-		Pendulum(const RESTApiServerWrapper& api_server,
+		Pendulum(const RESTRLEnvClient& api_server,
 		         const uint_t cidx);
 
 		///

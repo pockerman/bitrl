@@ -122,7 +122,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/envs/env_types.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
@@ -194,14 +194,14 @@ public:
     /// \brief Acrobot. Constructor
 	/// \param api_server. The RESTApiServerWrapper instance to use
     ///
-    Acrobot(const RESTApiServerWrapper& api_server );
+    Acrobot(const RESTRLEnvClient& api_server );
 	
 	///
     /// \brief Acrobot. Constructor
 	/// \param api_server. The RESTApiServerWrapper instance to use
 	/// \param cidx. The index to assign to the created environment
     ///
-    Acrobot(const RESTApiServerWrapper& api_server, 
+    Acrobot(const RESTRLEnvClient& api_server, 
 		     const uint_t cidx);
 			 
 	///

@@ -1,6 +1,6 @@
 
 #include "bitrl/envs/gymnasium/classic_control/pendulum_env.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../src/bitrl/network/rest_rl_env_client.h"
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
 
@@ -20,11 +20,11 @@
 int main(){
 
 	using namespace bitrl::envs::gymnasium;
-	using bitrl::envs::RESTApiServerWrapper;
+	using bitrl::envs::RESTRLEnvClient;
 	
 	const std::string SERVER_URL = "http://0.0.0.0:8001/api";
     
-	RESTApiServerWrapper server(SERVER_URL, true);
+	RESTRLEnvClient server(SERVER_URL, true);
 	
 	Pendulum env(server);
 	

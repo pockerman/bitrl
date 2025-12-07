@@ -1,7 +1,7 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../src/bitrl/network/rest_rl_env_client.h"
 #include "bitrl/envs/envs_utils.h"
 #include "bitrl/bitrl_config.h"
 
@@ -17,7 +17,7 @@
 namespace example{
 
 using bitrl::uint_t;
-using bitrl::envs::RESTApiServerWrapper;
+using bitrl::envs::RESTRLEnvClient;
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 const uint_t MAX_TRAJECTORY_SIZE = 10;
 
@@ -40,7 +40,7 @@ int main(){
 
     using namespace example;
 
-	RESTApiServerWrapper server(SERVER_URL, true);
+	RESTRLEnvClient server(SERVER_URL, true);
     env_type env(server);
 
     std::cout<<"Environame URL: "<<env.get_url()<<std::endl;

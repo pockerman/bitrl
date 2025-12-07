@@ -1,4 +1,4 @@
-#include "bitrl/envs/api_server/apiserver.h"
+#include "rest_rl_env_client.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/extern/HTTPRequest.hpp"
 #include "bitrl/extern/nlohmann/json/json.hpp"
@@ -9,7 +9,7 @@
 namespace bitrl{
 namespace envs{
 
-RESTApiServerWrapper::RESTApiServerWrapper(const std::string& url, const bool initialize)
+RESTRLEnvClient::RESTRLEnvClient(const std::string& url, const bool initialize)
 :
 url_(url),
 is_init_(false),
@@ -21,7 +21,7 @@ envs_()
 }
 
 void 
-RESTApiServerWrapper::init_(){
+RESTRLEnvClient::init_(){
 	
 	envs_["FrozenLake"] = "/gymnasium/frozen-lake-env";
 	envs_["Taxi"] = "/gymnasium/taxi-env";
@@ -37,7 +37,7 @@ RESTApiServerWrapper::init_(){
 }
 
 void 
-RESTApiServerWrapper::register_new(const std::string& name, const std::string& uri){
+RESTRLEnvClient::register_new(const std::string& name, const std::string& uri){
 	
 	auto env_itr = envs_.find(name);
 	
@@ -51,7 +51,7 @@ RESTApiServerWrapper::register_new(const std::string& name, const std::string& u
 }
 
 void 
-RESTApiServerWrapper::register_if_not(const std::string& name, 
+RESTRLEnvClient::register_if_not(const std::string& name,
 									  const std::string& uri){
 	
 	try{
@@ -64,7 +64,7 @@ RESTApiServerWrapper::register_if_not(const std::string& name,
 }
 
 std::string 
-RESTApiServerWrapper::get_uri(const std::string& name)const noexcept{
+RESTRLEnvClient::get_uri(const std::string& name)const noexcept{
 	
 	auto env_itr = envs_.find(name);
 	
@@ -76,7 +76,7 @@ RESTApiServerWrapper::get_uri(const std::string& name)const noexcept{
 }
 
 std::string 
-RESTApiServerWrapper::get_env_url(const std::string& name)const noexcept{
+RESTRLEnvClient::get_env_url(const std::string& name)const noexcept{
 	
 	auto uri_ = get_uri(name);
 	
@@ -88,7 +88,7 @@ RESTApiServerWrapper::get_env_url(const std::string& name)const noexcept{
 }
 
 nlohmann::json 
-RESTApiServerWrapper::is_alive(const std::string& env_name, 
+RESTRLEnvClient::is_alive(const std::string& env_name,
                                const uint_t cidx)const{
 	
 	// find the source
@@ -111,7 +111,7 @@ RESTApiServerWrapper::is_alive(const std::string& env_name,
 }
 
 nlohmann::json 
-RESTApiServerWrapper::close(const std::string& env_name, 
+RESTRLEnvClient::close(const std::string& env_name,
                             const uint_t cidx)const{
 	
 	// find the source
@@ -135,7 +135,7 @@ RESTApiServerWrapper::close(const std::string& env_name,
 }
 
 nlohmann::json 
-RESTApiServerWrapper::reset(const std::string& env_name, 
+RESTRLEnvClient::reset(const std::string& env_name,
                             const uint_t cidx,
                             const uint_t seed,
 	                        const nlohmann::json& options)const{
@@ -170,7 +170,7 @@ RESTApiServerWrapper::reset(const std::string& env_name,
 
 
 nlohmann::json 
-RESTApiServerWrapper::make(const std::string& env_name, 
+RESTRLEnvClient::make(const std::string& env_name,
                            const uint_t cidx,
 						   const std::string& version,
 						   const nlohmann::json& options)const{
@@ -203,7 +203,7 @@ RESTApiServerWrapper::make(const std::string& env_name,
 }
 
 nlohmann::json 
-RESTApiServerWrapper::dynamics(const std::string& env_name, 
+RESTRLEnvClient::dynamics(const std::string& env_name,
 							   const uint_t cidx,
 	                           const uint_t sidx, 
 							   const uint_t aidx)const{
@@ -227,7 +227,7 @@ RESTApiServerWrapper::dynamics(const std::string& env_name,
 }
 
 bool
-RESTApiServerWrapper::has_gymnasium()const{
+RESTRLEnvClient::has_gymnasium()const{
 
     const auto request_url = url_ + "/api-info/gymnasium";
     http::Request request{request_url};
@@ -238,7 +238,7 @@ RESTApiServerWrapper::has_gymnasium()const{
 }
 
 std::vector<std::string>
-RESTApiServerWrapper::gymnasium_envs()const{
+RESTRLEnvClient::gymnasium_envs()const{
 
     const auto request_url = url_ + "/api-info/gymnasium/envs";
     http::Request request{request_url};

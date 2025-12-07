@@ -26,7 +26,7 @@ namespace envs::gymnasium
 	}
 
 
-	Acrobot::Acrobot(const RESTApiServerWrapper& api_server)
+	Acrobot::Acrobot(const RESTRLEnvClient& api_server)
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t> >,
 		                 ContinuousVectorStateDiscreteActionEnv<6, 2, 0, real_t >
@@ -37,7 +37,7 @@ namespace envs::gymnasium
 		this -> get_api_server().register_if_not(Acrobot::name, Acrobot::URI);
 	}
 
-	Acrobot::Acrobot(const RESTApiServerWrapper& api_server,
+	Acrobot::Acrobot(const RESTRLEnvClient& api_server,
 	                 const uint_t cidx)
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t> >,

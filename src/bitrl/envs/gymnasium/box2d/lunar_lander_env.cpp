@@ -16,12 +16,12 @@ namespace bitrl
         const std::string LunarLanderContinuousEnv::name = "LunarLanderContinuous";
         const std::string LunarLanderContinuousEnv::URI = "/gymnasium/lunar-lander-continuous-env";
 
-        LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(const RESTApiServerWrapper& api_server)
+        LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(const RESTRLEnvClient& api_server)
         :
         LunarLanderDiscreteEnv::base_type(api_server, 0, LunarLanderDiscreteEnv::name, LunarLanderDiscreteEnv::URI)
         {}
 
-        LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(const RESTApiServerWrapper& api_server, const uint_t cidx)
+        LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(const RESTRLEnvClient& api_server, const uint_t cidx)
         :
         LunarLanderDiscreteEnv::base_type(api_server, cidx, LunarLanderDiscreteEnv::name, LunarLanderDiscreteEnv::URI)
         {}
@@ -42,12 +42,12 @@ namespace bitrl
 
         }
 
-        LunarLanderContinuousEnv::LunarLanderContinuousEnv(const RESTApiServerWrapper& api_server)
+        LunarLanderContinuousEnv::LunarLanderContinuousEnv(const RESTRLEnvClient& api_server)
         :
         LunarLanderContinuousEnv::base_type(api_server, 0, LunarLanderContinuousEnv::name, LunarLanderContinuousEnv::URI)
         {}
 
-        LunarLanderContinuousEnv::LunarLanderContinuousEnv(const RESTApiServerWrapper& api_server, const uint_t cidx)
+        LunarLanderContinuousEnv::LunarLanderContinuousEnv(const RESTRLEnvClient& api_server, const uint_t cidx)
         :
         LunarLanderContinuousEnv::base_type(api_server, cidx, LunarLanderContinuousEnv::name, LunarLanderContinuousEnv::URI)
         {}

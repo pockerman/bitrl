@@ -38,5 +38,4 @@ resolve(const std::string& name,
 	}
 }
 
-
 #endif 

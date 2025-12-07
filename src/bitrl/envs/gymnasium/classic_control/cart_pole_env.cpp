@@ -29,7 +29,7 @@ namespace envs::gymnasium
 		                                std::unordered_map<std::string, std::any>());
 	}
 
-	CartPole::CartPole(const RESTApiServerWrapper& api_server)
+	CartPole::CartPole(const RESTRLEnvClient& api_server)
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t> >,
 		                 ContinuousVectorStateDiscreteActionEnv<4, 2, 0, real_t >>(api_server, 0, CartPole::name)
@@ -37,7 +37,7 @@ namespace envs::gymnasium
 		this -> get_api_server().register_if_not(CartPole::name, CartPole::URI);
 	}
 
-	CartPole::CartPole(const RESTApiServerWrapper& api_server,
+	CartPole::CartPole(const RESTRLEnvClient& api_server,
 	                   const uint_t cidx)
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t> >,

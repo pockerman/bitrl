@@ -58,7 +58,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <string>
@@ -159,12 +159,12 @@ namespace envs::gymnasium
 		///
     /// \brief Constructor.
     ///
-		FrozenLake(const RESTApiServerWrapper& api_server);
+		FrozenLake(const RESTRLEnvClient& api_server);
 
 		///
 	/// \brief Constructor
 	///
-		FrozenLake(const RESTApiServerWrapper& api_server,
+		FrozenLake(const RESTRLEnvClient& api_server,
 		           const uint_t cidx, bool slippery);
 
 		///

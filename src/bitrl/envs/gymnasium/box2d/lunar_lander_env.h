@@ -8,7 +8,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/envs/env_types.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
@@ -59,7 +59,7 @@ namespace bitrl
                 /// @param name
                 /// @param uri
                 ///
-                _LunarLanderEnv(const RESTApiServerWrapper& api_server, uint_t cidx,
+                _LunarLanderEnv(const RESTRLEnvClient& api_server, uint_t cidx,
                                 const std::string& name, const std::string& uri);
 
                 ///
@@ -98,7 +98,7 @@ namespace bitrl
             };
 
             template<typename TimeStepType, typename SpaceType>
-            _LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(const RESTApiServerWrapper& api_server, uint_t cidx,
+            _LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(const RESTRLEnvClient& api_server, uint_t cidx,
                 const std::string& name, const std::string& uri)
                 :
             GymnasiumEnvBase<TimeStepType, SpaceType >(api_server, cidx, name)
@@ -248,12 +248,12 @@ namespace bitrl
             /// Constructor
             /// @param api_server
             ///
-            LunarLanderDiscreteEnv(const RESTApiServerWrapper& api_server);
+            LunarLanderDiscreteEnv(const RESTRLEnvClient& api_server);
 
             ///
             /// \brief Constructor
             ///
-            LunarLanderDiscreteEnv(const RESTApiServerWrapper& api_server, const uint_t cidx);
+            LunarLanderDiscreteEnv(const RESTRLEnvClient& api_server, const uint_t cidx);
 
             ///
             /// @param other
@@ -325,12 +325,12 @@ namespace bitrl
             /// Constructor
             /// @param api_server
             ///
-            LunarLanderContinuousEnv(const RESTApiServerWrapper& api_server);
+            LunarLanderContinuousEnv(const RESTRLEnvClient& api_server);
 
             ///
             /// \brief Constructor
             ///
-            LunarLanderContinuousEnv(const RESTApiServerWrapper& api_server, const uint_t cidx);
+            LunarLanderContinuousEnv(const RESTRLEnvClient& api_server, const uint_t cidx);
 
             ///
             /// @param other

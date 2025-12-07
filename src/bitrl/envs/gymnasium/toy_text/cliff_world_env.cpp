@@ -39,7 +39,7 @@ namespace envs::gymnasium
 	}
 
 
-	CliffWorld::CliffWorld(const RESTApiServerWrapper& api_server)
+	CliffWorld::CliffWorld(const RESTRLEnvClient& api_server)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>, 37, 4>(api_server, 0, CliffWorld::name),
 		max_episode_steps_(200)
@@ -47,7 +47,7 @@ namespace envs::gymnasium
 		this ->get_api_server().register_if_not(CliffWorld::name,CliffWorld::URI);
 	}
 
-	CliffWorld::CliffWorld(const RESTApiServerWrapper& api_server,
+	CliffWorld::CliffWorld(const RESTRLEnvClient& api_server,
 	                       const uint_t cidx)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>, 37, 4>(api_server, cidx, CliffWorld::name),

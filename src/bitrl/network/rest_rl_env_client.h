@@ -1,7 +1,7 @@
 
 
-#ifndef APISERVER_H
-#define APISERVER_H
+#ifndef REST_RL_ENV_CLIENT_H
+#define REST_RL_ENV_CLIENT_H
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
@@ -25,15 +25,15 @@ namespace envs{
 /// HTTP requests between the environments REST API 
 /// and C++ drivers
 ///
-class RESTApiServerWrapper
+class RESTRLEnvClient
 {
 public:
 
     ///
     /// \brief Constructor
     ///
-    explicit RESTApiServerWrapper(const std::string& url="http://0.0.0.0:8001/api",
-	                              const bool initialize=true);
+    explicit RESTRLEnvClient(const std::string& url="http://0.0.0.0:8001/api",
+                             const bool initialize=true);
 								  
 	///
 	/// \brief Returns true if the server is initialised
@@ -116,7 +116,6 @@ public:
 	/// Throws std::runtime_error if the server response is not 202
 	///
 	nlohmann::json make(const std::string& env_name, 
-	                    const uint_t cidx,
 	                    const std::string& version,
 	                    const nlohmann::json& options)const;
 
@@ -175,7 +174,7 @@ private:
 
 template<typename ActionType>
 nlohmann::json 
-RESTApiServerWrapper::step(const std::string& env_name, const uint_t cidx,
+RESTRLEnvClient::step(const std::string& env_name, const uint_t cidx,
 	                       const ActionType& action)const{
 							   
 		

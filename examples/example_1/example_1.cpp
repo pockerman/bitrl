@@ -3,7 +3,7 @@
 #include "bitrl/envs/gymnasium/toy_text/taxi_env.h"
 #include "bitrl/envs/gymnasium/toy_text/black_jack_env.h"
 #include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../src/bitrl/network/rest_rl_env_client.h"
 
 #include <iostream>
 #include <string>
@@ -18,10 +18,10 @@ using bitrl::envs::gymnasium::FrozenLake;
 using bitrl::envs::gymnasium::Taxi;
 using bitrl::envs::gymnasium::BlackJack;
 using bitrl::envs::gymnasium::CliffWorld;
-using bitrl::envs::RESTApiServerWrapper;
+using bitrl::envs::RESTRLEnvClient;
 
 
-void test_frozen_lake(const RESTApiServerWrapper& server){
+void test_frozen_lake(const RESTRLEnvClient& server){
 
     FrozenLake<4> env(server);
 
@@ -92,7 +92,7 @@ void test_frozen_lake(const RESTApiServerWrapper& server){
 
 }
 
-void test_taxi(const RESTApiServerWrapper& server){
+void test_taxi(const RESTRLEnvClient& server){
 
     Taxi env(server);
 
@@ -156,7 +156,7 @@ void test_taxi(const RESTApiServerWrapper& server){
 }
 
 
-void test_black_jack(const RESTApiServerWrapper& server){
+void test_black_jack(const RESTRLEnvClient& server){
 
     BlackJack env(server);
     std::unordered_map<std::string, std::any> options;
@@ -191,7 +191,7 @@ void test_black_jack(const RESTApiServerWrapper& server){
 }
 
 
-void test_cliff_world(const RESTApiServerWrapper& server){
+void test_cliff_world(const RESTRLEnvClient& server){
 
 	CliffWorld env(server);
 
@@ -260,7 +260,7 @@ int main(){
 
 	using namespace example_1;
 	
-	RESTApiServerWrapper server(SERVER_URL, true);
+	RESTRLEnvClient server(SERVER_URL, true);
 
     std::cout<<"Testing FrozenLake..."<<std::endl;
     example_1::test_frozen_lake(server);

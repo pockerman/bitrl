@@ -13,7 +13,7 @@
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/env_types.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 #ifdef BITRL_DEBUG
@@ -89,7 +89,7 @@ protected:
 	///
     /// \brief Constructor
     ///
-    GymnasiumVecEnvBase(const RESTApiServerWrapper& api_server,
+    GymnasiumVecEnvBase(const RESTRLEnvClient& api_server,
 						const uint_t cidx,
 	                    const std::string& name);
 						
@@ -110,7 +110,7 @@ private:
 
 
 template<typename VectorTimeStepType, typename SpaceType>
-GymnasiumVecEnvBase<VectorTimeStepType, SpaceType>::GymnasiumVecEnvBase(const RESTApiServerWrapper& api_server,
+GymnasiumVecEnvBase<VectorTimeStepType, SpaceType>::GymnasiumVecEnvBase(const RESTRLEnvClient& api_server,
                                                                         const uint_t cidx,
 															            const std::string& name)
 :

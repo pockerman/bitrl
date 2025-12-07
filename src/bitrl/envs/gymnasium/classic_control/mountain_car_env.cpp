@@ -36,7 +36,7 @@ namespace envs::gymnasium
 	}
 
 
-	MountainCar::MountainCar(const RESTApiServerWrapper& api_server )
+	MountainCar::MountainCar(const RESTRLEnvClient& api_server )
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t>>,
 		                 ContinuousVectorStateDiscreteActionEnv<3, 2, 0, real_t >
@@ -46,7 +46,7 @@ namespace envs::gymnasium
 	}
 
 
-	MountainCar::MountainCar(const RESTApiServerWrapper& api_server ,
+	MountainCar::MountainCar(const RESTRLEnvClient& api_server ,
 	                         const uint_t cidx)
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t>>,

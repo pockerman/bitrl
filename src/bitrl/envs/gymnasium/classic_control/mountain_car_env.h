@@ -6,7 +6,7 @@
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/env_types.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <string>
@@ -79,13 +79,13 @@ namespace envs::gymnasium
     /// \param gym_namespace The boost::python open-ai gym namespace
     /// \param do_create If true it calls make
     ///
-		MountainCar(const RESTApiServerWrapper& api_server );
+		MountainCar(const RESTRLEnvClient& api_server );
 
 		///
 	/// \brief Constructor. Protected so that applications
 	/// cannot explicitly instantiate copies
 	///
-		MountainCar(const RESTApiServerWrapper& api_server ,
+		MountainCar(const RESTRLEnvClient& api_server ,
 		            const uint_t cidx);
 
 		///

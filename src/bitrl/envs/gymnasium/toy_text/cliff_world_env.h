@@ -38,7 +38,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "../../../network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 
@@ -109,12 +109,12 @@ namespace envs::gymnasium
 		///
     /// \brief CliffWorld
     ///
-		CliffWorld(const RESTApiServerWrapper& api_server);
+		CliffWorld(const RESTRLEnvClient& api_server);
 
 		///
 	/// \brief Constructor
 	///
-		CliffWorld(const RESTApiServerWrapper& api_server,
+		CliffWorld(const RESTRLEnvClient& api_server,
 		           const uint_t cidx);
 
 		///

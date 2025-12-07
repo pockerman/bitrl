@@ -18,7 +18,7 @@ namespace envs::gymnasium
 	const std::string Taxi::name = "Taxi";
 	const std::string Taxi::URI = "/gymnasium/taxi-env";
 
-	Taxi::Taxi(const RESTApiServerWrapper& api_server)
+	Taxi::Taxi(const RESTRLEnvClient& api_server)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>, 500, 6>(api_server, 0, Taxi::name)
 	{
@@ -26,7 +26,7 @@ namespace envs::gymnasium
 		this ->get_api_server().register_if_not(Taxi::name,Taxi::URI);
 	}
 
-	Taxi::Taxi(const RESTApiServerWrapper& api_server, const uint_t cidx)
+	Taxi::Taxi(const RESTRLEnvClient& api_server, const uint_t cidx)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>, 500, 6>(api_server, cidx,Taxi::name)
 	{
@@ -60,7 +60,7 @@ namespace envs::gymnasium
 		}
 
 		this -> get_api_server().make(this->env_name(),
-		                              this->cidx(),
+
 		                              version,
 		                              nlohmann::json());
 
@@ -77,11 +77,11 @@ namespace envs::gymnasium
 #endif
 
 		if(this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
+			return this->reset();
 		}
 
 		auto response = this -> get_api_server().step(this->env_name(),
-		                                              this->cidx(),
+		                                              this->idx(),
 		                                              action);
 
 		this->get_current_time_step_() = this->create_time_step_from_response_(response);
