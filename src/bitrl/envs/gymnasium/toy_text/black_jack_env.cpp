@@ -39,15 +39,7 @@ namespace envs::gymnasium
 
 	BlackJack::BlackJack(const RESTRLEnvClient& api_server)
 		:
-		ToyTextEnvBase<TimeStep<uint_t>, 48, 2>(api_server, 0, BlackJack::name)
-	{
-		this ->get_api_server().register_if_not(BlackJack::name, BlackJack::URI);
-	}
-
-	BlackJack::BlackJack(const RESTRLEnvClient& api_server,
-	                     const uint_t cidx)
-		:
-		ToyTextEnvBase<TimeStep<uint_t>, 48, 2>(api_server, cidx, BlackJack::name)
+		ToyTextEnvBase<TimeStep<uint_t>, 48, 2>(api_server, BlackJack::name)
 	{
 		this ->get_api_server().register_if_not(BlackJack::name, BlackJack::URI);
 	}
@@ -61,7 +53,8 @@ namespace envs::gymnasium
 
 	void
 	BlackJack::make(const std::string& version,
-	                const std::unordered_map<std::string, std::any>& options){
+	                const std::unordered_map<std::string, std::any>& options,
+	                const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this->is_created()){
 			return;
@@ -81,12 +74,13 @@ namespace envs::gymnasium
 		ops["natural"] = is_natural_;
 		ops["sab"] = is_sab_;
 		auto response = this -> get_api_server().make(this -> env_name(),
-		                                              this -> cidx(),
-		                                              version,
-		                                              ops);
+		                                                  version,
+		                                                  ops);
 
-		this->set_version_(version);
-		this->make_created_();
+		auto idx = response["idx"];
+		this -> set_idx_(idx);
+		this -> base_type::make(version, options, reset_options);
+		this -> make_created_();
 
 	}
 
@@ -98,32 +92,15 @@ namespace envs::gymnasium
 #endif
 
 		if(this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
+			return this->reset();
 		}
 
 		auto response = this -> get_api_server().step(this -> env_name(),
-		                                              this -> cidx(),
+		                                              this -> idx(),
 		                                              action);
 
 		this->get_current_time_step_() = this->create_time_step_from_response_(response);
 		return this->get_current_time_step_();
 	}
-
-
-	BlackJack
-	BlackJack::make_copy(uint_t cidx)const{
-
-		BlackJack copy(this -> get_api_server(), cidx);
-
-		std::unordered_map<std::string, std::any> ops;
-		ops["natural"] = this->is_natural();
-		ops["sab"] = this->is_sab();
-
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
-
-	}
-
 }
 }

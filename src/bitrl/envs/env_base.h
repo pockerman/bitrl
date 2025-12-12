@@ -158,6 +158,12 @@ protected:
 	 * @note Should be called only inside make()
 	 */
     void set_version_(const std::string& version )noexcept{version_ = version;}
+
+	/**
+	 * @brief Set the id of the environment
+	 * @param idx
+	 */
+	void set_idx_(const std::string& idx)noexcept{idx_ = idx;}
 	
 	/** @brief Store make() options for future access */
 	void set_make_options_(const std::unordered_map<std::string, std::any>& options) noexcept{make_options_ = options;}
@@ -227,6 +233,16 @@ EnvBase<TimeStepType, SpaceType>::read_option(const std::string& op_name)const{
 	}
 	
 	throw std::logic_error("Option: " + op_name + " not found");
+}
+
+template<typename TimeStepType, typename SpaceType>
+void EnvBase<TimeStepType, SpaceType>::make(const std::string& version,
+						  const std::unordered_map<std::string, std::any>& make_options,
+						  const std::unordered_map<std::string, std::any>& reset_options)
+{
+	version_ = version;
+	make_options_ = make_options;
+	reset_options_ = reset_options;
 }
 
 }

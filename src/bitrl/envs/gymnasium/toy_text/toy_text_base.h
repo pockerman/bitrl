@@ -98,8 +98,7 @@ protected:
     /// \brief Constructor
     ///
 	ToyTextEnvBase(const RESTRLEnvClient& api_server,
-		               const std::string& idx,
-		               const std::string& name);
+		           const std::string& name);
 
 	///
 	/// \brief Copy constructor
@@ -114,13 +113,10 @@ protected:
 };
 
 template<typename TimeStepType, uint_t state_end,  uint_t action_end>
-ToyTextEnvBase<TimeStepType, state_end, action_end>::ToyTextEnvBase(const RESTRLEnvClient& api_server,
-	                                                                    const std::string& idx,
-	                                                                    const std::string& name)
+ToyTextEnvBase<TimeStepType, state_end, action_end>::ToyTextEnvBase(const RESTRLEnvClient& api_server,const std::string& name)
 		:
 		GymnasiumEnvBase<TimeStepType,
 		                 ScalarDiscreteEnv<state_end, action_end>>(api_server,
-		                                                           idx,
 		                                                           name)
 	{}
 

@@ -107,9 +107,7 @@ protected:
 	 * @param cidx        Index of this environment instance within a simulation.
 	 * @param name        Name of the environment.
 	*/
-	GymnasiumEnvBase(RESTRLEnvClient& api_server,
-		                 const std::string& idx,
-		                 const std::string& name);
+	GymnasiumEnvBase(RESTRLEnvClient& api_server, const std::string& name);
 
 	/**
 	 * @brief Copy constructor.
@@ -137,10 +135,9 @@ protected:
 	template<typename TimeStepType, typename SpaceType>
 	GymnasiumEnvBase<TimeStepType,
 	                 SpaceType>::GymnasiumEnvBase(RESTRLEnvClient& api_server,
-	                                              const std::string& idx,
 	                                              const std::string& name)
 		:
-		EnvBase<TimeStepType, SpaceType>(idx, name),
+		EnvBase<TimeStepType, SpaceType>(name),
 		api_server_(&api_server)
 	{}
 

@@ -100,32 +100,31 @@ namespace envs::gymnasium
 /// \brief The FrozenLake class. Wrapper to Gymnasium FrozenLake
 /// environment
 ///
-	template<uint_t side_size>
-	class FrozenLake final: public ToyTextEnvBase<TimeStep<uint_t>,
+template<uint_t side_size>
+class FrozenLake final: public ToyTextEnvBase<TimeStep<uint_t>,
 	                                              frozenlake_state_size<side_size>::size,
 	                                              3>
-	{
-	public:
+{
+public:
 
 		///
-    /// \brief name
-    ///
+		/// \brief name
+		///
 		static  const std::string name;
 
 		///
-	/// \brief The URI for accessing the environment
-	///
+		/// \brief The URI for accessing the environment
+		///
 		static const std::string URI;
 
 		///
-    /// \brief dynamics_t
-    ///
+		/// \brief dynamics_t
+		///
 		typedef std::vector<std::tuple<real_t, uint_t, real_t, bool>> dynamics_t;
 
-
 		///
-	/// \brief The base type
-	///
+		/// \brief The base type
+		///
 		typedef typename ToyTextEnvBase<TimeStep<uint_t>,
 		                                frozenlake_state_size<side_size>::size,
 		                                3>::base_type base_type;
@@ -147,90 +146,71 @@ namespace envs::gymnasium
 		typedef typename base_type::action_space_type action_space_type;
 
 		///
-	/// \brief The type of the action to be undertaken in the environment
-	///
+		/// \brief The type of the action to be undertaken in the environment
+		///
 		typedef typename base_type::action_type action_type;
 
 		///
-	/// \brief The type of the action to be undertaken in the environment
-	///
+		/// \brief The type of the action to be undertaken in the environment
+		///
 		typedef typename base_type::state_type state_type;
 
 		///
-    /// \brief Constructor.
-    ///
-		FrozenLake(const RESTRLEnvClient& api_server);
+		/// \brief Constructor
+		///
+		FrozenLake(const RESTRLEnvClient& api_server, bool slippery);
 
 		///
-	/// \brief Constructor
-	///
-		FrozenLake(const RESTRLEnvClient& api_server,
-		           const uint_t cidx, bool slippery);
-
+		/// \brief copy constructor
 		///
-	/// \brief copy constructor
-	///
 		FrozenLake(const FrozenLake& other);
 
 		///
-    /// \brief ~FrozenLake. Destructor.
-    ///
-		~FrozenLake()=default;
+		/// \brief ~FrozenLake. Destructor.
+		///
+		~FrozenLake() override =default;
 
 		///
-    /// \brief make. Builds the environment. Optionally we can choose if the
-    /// environment will be slippery
-    ///
+		/// \brief make. Builds the environment. Optionally we can choose if the
+		/// environment will be slippery
+		///
 		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& options) override final;
+		                  const std::unordered_map<std::string, std::any>& options,
+		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
 
 		///
-	/// \brief Step in the environment following the given action
-	///
+		/// \brief Step in the environment following the given action
+		///
 		virtual time_step_type step(const action_type& action) override final;
 
 		///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
-		FrozenLake<side_size> make_copy(uint_t cidx)const;
-
-
+		/// \brief map_type
+		/// \return
 		///
-    /// \brief map_type
-    /// \return
-    ///
 		std::string map_type()const noexcept{return side_size == 4 ? "4x4" : "8x8";}
 
 		///
-    /// \brief is_slipery
-    /// \return
-    ///
+		/// \brief is_slipery
+		/// \return
+		///
 		bool is_slippery()const noexcept{return is_slippery_;}
 
 
-	protected:
-
-
+protected:
 
 		///
-    /// \brief build the dynamics from response
-    ///
-		//virtual dynamics_t build_dynamics_from_response_(const nlohmann::json& response)const override final;
-
+		/// \brief Handle the reset response from the environment server
 		///
-    /// \brief Handle the reset response from the environment server
-    ///
 		virtual time_step_type create_time_step_from_response_(const nlohmann::json& response) const override final;
 
-	private:
+private:
 
 		///
-    /// \brief is_slipery_
-    ///
+		/// \brief is_slipery_
+		///
 		bool is_slippery_;
 
-	};
+};
 
 }
 }

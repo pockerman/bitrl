@@ -8,7 +8,7 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
-#include "../../../network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
@@ -27,10 +27,10 @@ namespace envs::gymnasium
 /// \brief The BlackJack class. Wrapper to the Blackjack
 /// OpenAI-Gym environment.
 ///
-	class BlackJack final: public ToyTextEnvBase<TimeStep<uint_t>, 48, 2>
-	{
+class BlackJack final: public ToyTextEnvBase<TimeStep<uint_t>, 48, 2>
+{
 
-	public:
+public:
 
 		///
     /// \brief name
@@ -78,10 +78,7 @@ namespace envs::gymnasium
     ///
 		BlackJack(const RESTRLEnvClient& api_server);
 
-		///
-	/// \brief Constructor
-	///
-		BlackJack(const RESTRLEnvClient& api_server, const uint_t cidx);
+
 
 		///
 	///
@@ -94,52 +91,44 @@ namespace envs::gymnasium
 		~BlackJack()=default;
 
 		///
-    /// \brief make. Builds the environment. Optionally we can choose if the
-    /// environment will be slippery
-    ///
+		/// \brief make. Builds the environment. Optionally we can choose if the
+		/// environment will be slippery
+		///
 		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& options) override final;
+		                  const std::unordered_map<std::string, std::any>& options,
+		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
 
 		///
-    /// \brief step
-    /// \param action
-    /// \return
-    ///
+		/// \brief step
+		/// \param action
+		/// \return
+		///
 		virtual time_step_type step(const action_type& action)override final;
 
 		///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
-		BlackJack make_copy(uint_t cidx)const;
-
 		///
-    ///
-    ///
+		///
 		bool is_natural()const noexcept{return is_natural_;}
 
 		///
-    ///
-    ///
+		///
+		///
 		bool is_sab()const noexcept{return is_sab_;}
 
-
-	protected:
+protected:
 
 
 		///
-    /// \brief build the dynamics from response
-    ///
+		/// \brief build the dynamics from response
+		///
 		virtual dynamics_t build_dynamics_from_response_(const nlohmann::json&)const override final;
 
 		///
-    /// \brief Handle the reset response from the environment server
-    ///
+		/// \brief Handle the reset response from the environment server
+		///
 		virtual time_step_type create_time_step_from_response_(const nlohmann::json&) const override final;
 
-
-
-	private:
+private:
 
 		///
     /// \brief Flag indicating if the environment has been

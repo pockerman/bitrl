@@ -88,8 +88,7 @@ RESTRLEnvClient::get_env_url(const std::string& name)const noexcept{
 }
 
 nlohmann::json 
-RESTRLEnvClient::is_alive(const std::string& env_name,
-                               const uint_t cidx)const{
+RESTRLEnvClient::is_alive(const std::string& env_name, const std::string& idx)const{
 	
 	// find the source
 	auto url_ = get_env_url(env_name);
@@ -97,11 +96,8 @@ RESTRLEnvClient::is_alive(const std::string& env_name,
 	if(url_ == bitrl::consts::INVALID_STR){
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
-	
-	
-	auto copy_idx_str = std::to_string(cidx);
-	
-    http::Request request{url_ + "/is-alive?cidx="+copy_idx_str};
+
+    http::Request request{url_ + "/" + idx + "/is-alive"};
     const auto response = request.send("GET");
     
 	auto str_response = std::string(response.body.begin(), response.body.end());
@@ -111,8 +107,7 @@ RESTRLEnvClient::is_alive(const std::string& env_name,
 }
 
 nlohmann::json 
-RESTRLEnvClient::close(const std::string& env_name,
-                            const uint_t cidx)const{
+RESTRLEnvClient::close(const std::string& env_name, const std::string& idx)const{
 	
 	// find the source
 	auto url_ = get_env_url(env_name);
@@ -121,7 +116,7 @@ RESTRLEnvClient::close(const std::string& env_name,
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
 	
-    http::Request request{url_ + "/close?cidx="+std::to_string(cidx)};
+    http::Request request{url_ + "/" + idx + "/close"};
     const auto response = request.send("POST");
     
 	
@@ -135,10 +130,8 @@ RESTRLEnvClient::close(const std::string& env_name,
 }
 
 nlohmann::json 
-RESTRLEnvClient::reset(const std::string& env_name,
-                            const uint_t cidx,
-                            const uint_t seed,
-	                        const nlohmann::json& options)const{
+RESTRLEnvClient::reset(const std::string& env_name, const std::string& idx,
+                            const uint_t seed, const nlohmann::json& options)const{
 								
 	
     // find the source
@@ -148,12 +141,11 @@ RESTRLEnvClient::reset(const std::string& env_name,
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
 
-	const auto request_url = url_ + "/reset";
+	const auto request_url = url_ + "/" + idx + "/reset";
     http::Request request{request_url};
 
     nlohmann::json request_body;
     request_body["seed"] = seed;
-	request_body["cidx"] = cidx;
 	request_body["options"] = options;
 	
     const auto response = request.send("POST", request_body.dump());
@@ -171,9 +163,8 @@ RESTRLEnvClient::reset(const std::string& env_name,
 
 nlohmann::json 
 RESTRLEnvClient::make(const std::string& env_name,
-                           const uint_t cidx,
-						   const std::string& version,
-						   const nlohmann::json& options)const{
+					  const std::string& version,
+					  const nlohmann::json& options)const{
 
 	// find the source
 	auto url_ = get_env_url(env_name);
@@ -187,7 +178,6 @@ RESTRLEnvClient::make(const std::string& env_name,
 	
     nlohmann::json request_body;
     request_body["version"] = version;
-	request_body["cidx"] = cidx;
 	request_body["options"] = options;
 	
     const auto response = request.send("POST", request_body.dump());
@@ -203,10 +193,8 @@ RESTRLEnvClient::make(const std::string& env_name,
 }
 
 nlohmann::json 
-RESTRLEnvClient::dynamics(const std::string& env_name,
-							   const uint_t cidx,
-	                           const uint_t sidx, 
-							   const uint_t aidx)const{
+RESTRLEnvClient::dynamics(const std::string& env_name, const std::string& idx,
+                          const uint_t sidx, const uint_t aidx)const{
 								   
 	// find the source
 	auto url_ = get_env_url(env_name);
@@ -215,8 +203,7 @@ RESTRLEnvClient::dynamics(const std::string& env_name,
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
 	
-	const auto request_url = url_ + "/dynamics?cidx="+std::to_string(cidx)
-	                                                +"&stateId="+std::to_string(sidx)
+	const auto request_url = url_ + "/" + idx + "/dynamics?stateId="+std::to_string(sidx)
 													+"&actionId="+std::to_string(aidx);
     http::Request request{request_url};
     const auto response = request.send("GET");

@@ -20,23 +20,11 @@ namespace envs::gymnasium
 
 	Taxi::Taxi(const RESTRLEnvClient& api_server)
 		:
-		ToyTextEnvBase<TimeStep<uint_t>, 500, 6>(api_server, 0, Taxi::name)
+		ToyTextEnvBase<TimeStep<uint_t>, 500, 6>(api_server, Taxi::name)
 	{
 
 		this ->get_api_server().register_if_not(Taxi::name,Taxi::URI);
 	}
-
-	Taxi::Taxi(const RESTRLEnvClient& api_server, const uint_t cidx)
-		:
-		ToyTextEnvBase<TimeStep<uint_t>, 500, 6>(api_server, cidx,Taxi::name)
-	{
-		this ->get_api_server().register_if_not(Taxi::name,Taxi::URI);
-	}
-	Taxi::Taxi(const Taxi& other)
-		:
-		ToyTextEnvBase<TimeStep<uint_t>, 500, 6>(other)
-	{}
-
 
 	Taxi::time_step_type
 	Taxi::create_time_step_from_response_(const nlohmann::json& response)const{
@@ -53,19 +41,20 @@ namespace envs::gymnasium
 
 	void
 	Taxi::make(const std::string& version,
-	           const std::unordered_map<std::string, std::any>& /*options*/){
+	           const std::unordered_map<std::string, std::any>& options,
+	           const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this->is_created()){
 			return;
 		}
 
-		this -> get_api_server().make(this->env_name(),
+		auto response = this -> get_api_server().make(this->env_name(),version,
+			                                       nlohmann::json());
 
-		                              version,
-		                              nlohmann::json());
-
-		this->set_version_(version);
-		this->make_created_();
+		auto idx = response["idx"];
+		this -> set_idx_(idx);
+		this -> base_type::make(version, options, reset_options);
+		this -> make_created_();
 	}
 
 
@@ -88,16 +77,7 @@ namespace envs::gymnasium
 		return this->get_current_time_step_();
 	}
 
-	Taxi
-	Taxi::make_copy(uint_t cidx)const{
 
-		Taxi copy(this -> get_api_server(), cidx);
-		std::unordered_map<std::string, std::any> ops;
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
-
-	}
 
 }
 }

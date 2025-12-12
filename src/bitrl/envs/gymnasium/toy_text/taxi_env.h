@@ -69,11 +69,6 @@ public:
     ///
 		Taxi(const RESTRLEnvClient& api_server);
 
-		///
-	/// \brief Constructor
-	///
-		Taxi(const RESTRLEnvClient& api_server,
-		     const uint_t cidx);
 
 		///
 	/// \brief copy constructor
@@ -90,7 +85,8 @@ public:
     /// environment will be slippery
     ///
 		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& /*options*/) override final;
+		                  const std::unordered_map<std::string, std::any>& /*options*/,
+		                  const std::unordered_map<std::string, std::any>& /*reset_options*/) override final;
 
 
 		///
@@ -98,11 +94,6 @@ public:
     ///
 		virtual time_step_type step(const action_type& action) override final;
 
-		///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
-		Taxi make_copy(uint_t cidx)const;
 
 	protected:
 

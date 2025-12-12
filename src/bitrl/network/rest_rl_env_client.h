@@ -76,7 +76,7 @@ public:
 	/// Throws std::logic_error is the environment is not registered
 	///
 	nlohmann::json is_alive(const std::string& env_name, 
-							const uint_t cidx)const;
+							const std::string& idx)const;
 	
 	///
 	/// \brief Close the environment with the given name.
@@ -84,7 +84,7 @@ public:
 	/// Throws std::runtime_error if the server response is not 201
 	///
 	nlohmann::json close(const std::string& env_name, 
-	                     const uint_t cidx)const;
+	                     const std::string& idx)const;
 	
 	///
 	/// \brief Step in the environment with the given name
@@ -95,7 +95,7 @@ public:
 	///
 	template<typename ActionType>
 	nlohmann::json step(const std::string& env_name, 
-	                    const uint_t cidx,
+	                    const std::string& idx,
 	                    const ActionType& action)const;
 						
 	///
@@ -105,7 +105,7 @@ public:
 	/// Throws std::runtime_error if the server response is not 202
 	///
 	nlohmann::json reset(const std::string& env_name, 
-	                     const uint_t cidx,
+	                     const std::string& idx,
 	                     const uint_t seed,
 						 const nlohmann::json& options)const;
 						 
@@ -125,17 +125,9 @@ public:
 	/// does not expose such an endpoint it returns 404
 	///
 	nlohmann::json dynamics(const std::string& env_name, 
-							const uint_t cidx,
+							const std::string& idx,
 	                        const uint_t sidx, 
 							const uint_t aidx)const;
-	
-	///
-	/// \brief Make the cidx copy of the environment
-	///
-	nlohmann::json copy(const std::string& env_name,
-						const uint_t cidx,
-	                    const std::string& version,
-	                    const nlohmann::json& options)const{return make(env_name, cidx, version, options);}
 
     ///
     ///
@@ -174,7 +166,7 @@ private:
 
 template<typename ActionType>
 nlohmann::json 
-RESTRLEnvClient::step(const std::string& env_name, const uint_t cidx,
+RESTRLEnvClient::step(const std::string& env_name, const std::string& idx,
 	                       const ActionType& action)const{
 							   
 		
@@ -185,11 +177,10 @@ RESTRLEnvClient::step(const std::string& env_name, const uint_t cidx,
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
 	
-	const auto request_url = url_ + "/step";
+	const auto request_url = url_ +  "/" + idx + "/step";
     http::Request request{request_url};
 	
 	nlohmann::json body;
-	body["cidx"] = cidx;
 	body["action"] = action;
 	
 	const auto response = request.send("POST", body.dump());
