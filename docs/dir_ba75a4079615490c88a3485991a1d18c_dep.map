@@ -1,16 +1,21 @@
 <map id="/home/alex/qi3/bitrl/src/bitrl/envs" name="/home/alex/qi3/bitrl/src/bitrl/envs">
-<area shape="rect" id="node1" href="dir_5ab2c504561afc548194e39aeb0fcde2.html" title="utils" alt="" coords="1072,159,1144,207"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000005_000023.html" title="2" alt="" coords="1074,132,1083,147"/>
-<area shape="rect" id="node3" href="dir_6538267b7bece2960cdc24d132daacbc.html" title="api_server" alt="" coords="172,159,263,207"/>
-<area shape="rect" id="node4" href="dir_24d15398d432e52191a46c8665a68d5a.html" title="connect2" alt="" coords="873,63,954,111"/>
-<area shape="rect" id="node5" href="dir_5bd7f502de39965fb6ccbf149b78530c.html" title="gdrl" alt="" coords="776,63,848,111"/>
-<area shape="rect" id="node6" href="dir_b19bd81c0ac0ecd74f9c328dde06b707.html" title="grid_world" alt="" coords="661,63,752,111"/>
-<area shape="rect" id="node7" href="dir_910dc738a299d3d3f0d4b836ea75f8eb.html" title="gym_pybullet_drones" alt="" coords="475,63,637,111"/>
-<area shape="rect" id="node8" href="dir_be5bf341b72c908cefc322f8af02e42e.html" title="gymnasium" alt="" coords="168,63,267,111"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000011_000006.html" title="13" alt="" coords="217,133,234,148"/>
-<area shape="rect" id="node9" href="dir_7c19725b030db7c76aefe84ead93646d.html" title="multi_armed_bandits" alt="" coords="291,63,451,111"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000016_000023.html" title="1" alt="" coords="1052,140,1062,155"/>
-<area shape="rect" id="node10" href="dir_93f441a9d9ca73c52bdf9d4b670865b1.html" title="webots_envs" alt="" coords="37,63,144,111"/>
-<area shape="rect" id="clust2" href="dir_ba75a4079615490c88a3485991a1d18c.html" alt="" coords="27,52,1061,217"/>
-<area shape="rect" id="clust1" href="dir_5e51fd69dcfec9ade64bff36b5771ca6.html" title="bitrl" alt="" coords="16,16,1155,228"/>
+<area shape="rect" id="node1" href="dir_5ab2c504561afc548194e39aeb0fcde2.html" title="utils" alt="" coords="505,159,577,207"/>
+<area shape="rect" id="node2" href="dir_7d31db776e1119956fabf641e5b833c8.html" title="network" alt="" coords="827,255,901,303"/>
+<area shape="rect" id="node3" href="dir_c7ec1a6d28fbb726a6d3442fdacb794a.html" title="sensors" alt="" coords="871,159,943,207"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000020_000017.html" title="1" alt="" coords="885,234,894,249"/>
+<area shape="rect" id="node5" href="dir_24d15398d432e52191a46c8665a68d5a.html" title="connect2" alt="" coords="353,63,434,111"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000006_000022.html" title="1" alt="" coords="489,134,499,149"/>
+<area shape="rect" id="node6" href="dir_5bd7f502de39965fb6ccbf149b78530c.html" title="gdrl" alt="" coords="883,63,955,111"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000007_000020.html" title="1" alt="" coords="916,134,925,149"/>
+<area shape="rect" id="node7" href="dir_b19bd81c0ac0ecd74f9c328dde06b707.html" title="grid_world" alt="" coords="645,63,736,111"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000008_000022.html" title="1" alt="" coords="593,149,602,164"/>
+<area shape="rect" id="node8" href="dir_910dc738a299d3d3f0d4b836ea75f8eb.html" title="gym_pybullet_drones" alt="" coords="459,63,621,111"/>
+<area shape="rect" id="node9" href="dir_be5bf341b72c908cefc322f8af02e42e.html" title="gymnasium" alt="" coords="760,63,859,111"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000010_000022.html" title="1" alt="" coords="593,170,602,185"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000010_000017.html" title="13" alt="" coords="852,227,869,242"/>
+<area shape="rect" id="node10" href="dir_7c19725b030db7c76aefe84ead93646d.html" title="multi_armed_bandits" alt="" coords="168,63,328,111"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000015_000022.html" title="1" alt="" coords="485,151,495,165"/>
+<area shape="rect" id="node11" href="dir_93f441a9d9ca73c52bdf9d4b670865b1.html" title="webots_envs" alt="" coords="37,63,144,111"/>
+<area shape="rect" id="clust2" href="dir_ba75a4079615490c88a3485991a1d18c.html" alt="" coords="27,52,1061,121"/>
+<area shape="rect" id="clust1" href="dir_5e51fd69dcfec9ade64bff36b5771ca6.html" title="bitrl" alt="" coords="16,16,1072,313"/>
 </map>

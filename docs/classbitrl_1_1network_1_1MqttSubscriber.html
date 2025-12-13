@@ -101,6 +101,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3d962e2dba5358b106a37e34bd0b7919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2167668c32bb5a0a17879a01613941e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1MqttSubscriber.html#ac2167668c32bb5a0a17879a01613941e">topic</a> () const noexcept</td></tr>
 <tr class="separator:ac2167668c32bb5a0a17879a01613941e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa0bd01032038e42c117233dde15ff4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1MqttSubscriber.html#a9fa0bd01032038e42c117233dde15ff4">is_connected</a> () const noexcept</td></tr>
+<tr class="separator:a9fa0bd01032038e42c117233dde15ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0849a7a4614c453c0c18ac94bfb8570"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1MqttSubscriber.html#ae0849a7a4614c453c0c18ac94bfb8570">connect</a> ()</td></tr>
 <tr class="separator:ae0849a7a4614c453c0c18ac94bfb8570"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85af3075016685d495f21b9f83cfd1ce"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1MqttSubscriber.html#a85af3075016685d495f21b9f83cfd1ce">poll</a> (std::chrono::milliseconds timeout=std::chrono::milliseconds(1000))</td></tr>
@@ -109,8 +111,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2590b4ef25193ebfc7a911c6a2ab293e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a499cb840f059e7fb8f41ab6539cf08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1MqttSubscriber.html#a7a499cb840f059e7fb8f41ab6539cf08">message_arrived</a> (mqtt::const_message_ptr msg) override</td></tr>
 <tr class="separator:a7a499cb840f059e7fb8f41ab6539cf08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53736edcc495b471922fa6551923ce7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1MqttSubscriber.html#a53736edcc495b471922fa6551923ce7a">publish</a> (const std::string &amp;payload, <a class="el" href="namespacebitrl.html#a0cac0d7ccc6723231e71a79a903283e6">int_t</a> qos=1, bool retained=false)</td></tr>
+<tr class="separator:a53736edcc495b471922fa6551923ce7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8eaed30befc4c37d8abfcf1e4d6a098"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1MqttSubscriber.html#aa8eaed30befc4c37d8abfcf1e4d6a098">publish</a> (const nlohmann::json &amp;payload, <a class="el" href="namespacebitrl.html#a0cac0d7ccc6723231e71a79a903283e6">int_t</a> qos=1, bool retained=false)</td></tr>
+<tr class="separator:aa8eaed30befc4c37d8abfcf1e4d6a098"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A thin wrapper over mqtt::async_client </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a61fed33bf122a97a2160c972db920ccb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a61fed33bf122a97a2160c972db920ccb">&#9670;&nbsp;</a></span>MqttSubscriber()</h2>
 
@@ -182,6 +190,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a9fa0bd01032038e42c117233dde15ff4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fa0bd01032038e42c117233dde15ff4">&#9670;&nbsp;</a></span>is_connected()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bitrl::network::MqttSubscriber::is_connected </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a7a499cb840f059e7fb8f41ab6539cf08"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7a499cb840f059e7fb8f41ab6539cf08">&#9670;&nbsp;</a></span>message_arrived()</h2>
 
@@ -223,6 +256,90 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa8eaed30befc4c37d8abfcf1e4d6a098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8eaed30befc4c37d8abfcf1e4d6a098">&#9670;&nbsp;</a></span>publish() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bitrl::network::MqttSubscriber::publish </td>
+          <td>(</td>
+          <td class="paramtype">const nlohmann::json &amp;&#160;</td>
+          <td class="paramname"><em>payload</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacebitrl.html#a0cac0d7ccc6723231e71a79a903283e6">int_t</a>&#160;</td>
+          <td class="paramname"><em>qos</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>retained</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Publish the JSON payload </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">payload</td><td></td></tr>
+    <tr><td class="paramname">qos</td><td></td></tr>
+    <tr><td class="paramname">retained</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a53736edcc495b471922fa6551923ce7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53736edcc495b471922fa6551923ce7a">&#9670;&nbsp;</a></span>publish() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bitrl::network::MqttSubscriber::publish </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>payload</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacebitrl.html#a0cac0d7ccc6723231e71a79a903283e6">int_t</a>&#160;</td>
+          <td class="paramname"><em>qos</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>retained</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Publish the payload to the topic that this subscriber listens to </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">payload</td><td></td></tr>
+    <tr><td class="paramname">qos</td><td></td></tr>
+    <tr><td class="paramname">retained</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

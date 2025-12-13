@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['bernoullidist_1050',['BernoulliDist',['../classbitrl_1_1utils_1_1maths_1_1stats_1_1BernoulliDist.html',1,'bitrl::utils::maths::stats']]],
-  ['betadist_1051',['BetaDist',['../classrlenvscpp_1_1utils_1_1maths_1_1stats_1_1BetaDist.html',1,'rlenvscpp::utils::maths::stats']]],
-  ['bicyclevehiclemodeldynamics_1052',['BicycleVehicleModelDynamics',['../classbitrl_1_1dynamics_1_1BicycleVehicleModelDynamics.html',1,'bitrl::dynamics']]],
-  ['bicyclevehiclemodeldynamicsconfig_1053',['BicycleVehicleModelDynamicsConfig',['../structbitrl_1_1dynamics_1_1BicycleVehicleModelDynamicsConfig.html',1,'bitrl::dynamics']]],
-  ['blackjack_1054',['BlackJack',['../classbitrl_1_1envs_1_1gymnasium_1_1BlackJack.html',1,'bitrl::envs::gymnasium']]],
-  ['board_1055',['board',['../structbitrl_1_1envs_1_1grid__world_1_1detail_1_1board.html',1,'bitrl::envs::grid_world::detail']]],
-  ['board_5fpiece_1056',['board_piece',['../structbitrl_1_1envs_1_1grid__world_1_1detail_1_1board__piece.html',1,'bitrl::envs::grid_world::detail']]],
-  ['boundedcontinuousscalarspace_1057',['BoundedContinuousScalarSpace',['../structbitrl_1_1envs_1_1BoundedContinuousScalarSpace.html',1,'bitrl::envs']]]
+  ['bernoullidist_1053',['BernoulliDist',['../classbitrl_1_1utils_1_1maths_1_1stats_1_1BernoulliDist.html',1,'bitrl::utils::maths::stats']]],
+  ['betadist_1054',['BetaDist',['../classrlenvscpp_1_1utils_1_1maths_1_1stats_1_1BetaDist.html',1,'rlenvscpp::utils::maths::stats']]],
+  ['bicyclevehiclemodeldynamics_1055',['BicycleVehicleModelDynamics',['../classbitrl_1_1dynamics_1_1BicycleVehicleModelDynamics.html',1,'bitrl::dynamics']]],
+  ['bicyclevehiclemodeldynamicsconfig_1056',['BicycleVehicleModelDynamicsConfig',['../structbitrl_1_1dynamics_1_1BicycleVehicleModelDynamicsConfig.html',1,'bitrl::dynamics']]],
+  ['blackjack_1057',['BlackJack',['../classbitrl_1_1envs_1_1gymnasium_1_1BlackJack.html',1,'bitrl::envs::gymnasium']]],
+  ['board_1058',['board',['../structbitrl_1_1envs_1_1grid__world_1_1detail_1_1board.html',1,'bitrl::envs::grid_world::detail']]],
+  ['board_5fpiece_1059',['board_piece',['../structbitrl_1_1envs_1_1grid__world_1_1detail_1_1board__piece.html',1,'bitrl::envs::grid_world::detail']]],
+  ['boundedcontinuousscalarspace_1060',['BoundedContinuousScalarSpace',['../structbitrl_1_1envs_1_1BoundedContinuousScalarSpace.html',1,'bitrl::envs']]]
 ];

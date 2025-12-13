@@ -12,6 +12,6 @@ var searchData=
   ['distance_5ffrom_1513',['distance_from',['../namespacekernel_1_1discretization_1_1utils.html#a20e4aed5bd4ea7e235623adb03027f8c',1,'kernel::discretization::utils']]],
   ['done_1514',['done',['../classbitrl_1_1TimeStep.html#a4a20154551a12ca7293fb7eda5dcbd37',1,'bitrl::TimeStep::done()'],['../classbitrl_1_1VectorTimeStep.html#acf94fe4fe7022938ba5adab47de4841d',1,'bitrl::VectorTimeStep::done()']]],
   ['dot_1515',['dot',['../classbitrl_1_1utils_1_1geom_1_1GeomPoint.html#a9494d3c80c378b13160268b574ca0616',1,'bitrl::utils::geom::GeomPoint']]],
-  ['dynamics_1516',['dynamics',['../classbitrl_1_1envs_1_1RESTApiServerWrapper.html#a32d8f89e1583cbc41ef9b58818042f2e',1,'bitrl::envs::RESTApiServerWrapper']]],
+  ['dynamics_1516',['dynamics',['../classbitrl_1_1network_1_1RESTRLEnvClient.html#ae89eb6e3ba55617a0d94eb467741288b',1,'bitrl::network::RESTRLEnvClient']]],
   ['dynamicsmatrixdescriptor_1517',['DynamicsMatrixDescriptor',['../classbitrl_1_1dynamics_1_1DynamicsMatrixDescriptor.html#a79a8a8c29cd8396aded06238e7125dee',1,'bitrl::dynamics::DynamicsMatrixDescriptor']]]
 ];

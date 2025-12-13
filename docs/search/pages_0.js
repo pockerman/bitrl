@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bitrl_2157',['bitrl',['../index.html',1,'']]]
+  ['bitrl_2ddoc_2158',['bitrl-doc',['../index.html',1,'']]]
 ];

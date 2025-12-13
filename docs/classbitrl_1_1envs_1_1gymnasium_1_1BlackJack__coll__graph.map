@@ -1,9 +1,9 @@
 <map id="bitrl::envs::gymnasium::BlackJack" name="bitrl::envs::gymnasium::BlackJack">
 <area shape="rect" id="node1" title="The BlackJack class. Wrapper to the Blackjack OpenAI&#45;Gym environment." alt="" coords="159,411,331,452"/>
 <area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="139,305,351,361"/>
-<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="class GymnasiumEnvBase. Base class for all Gymnasium wrappers The class has two parameters:" alt="" coords="124,200,367,256"/>
-<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments." alt="" coords="20,96,241,137"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="Base class for all Gymnasium environment wrappers." alt="" coords="124,200,367,256"/>
+<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class interface for Reinforcement Learning environments." alt="" coords="20,96,241,137"/>
 <area shape="rect" id="node5" title=" " alt="" coords="5,13,96,39"/>
 <area shape="rect" id="node6" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="120,5,301,47"/>
-<area shape="rect" id="node7" href="$classbitrl_1_1envs_1_1RESTApiServerWrapper.html" title="Utility class to facilitate HTTP requests between the environments REST API and C++ drivers." alt="" coords="266,96,457,137"/>
+<area shape="rect" id="node7" href="$classbitrl_1_1network_1_1RESTRLEnvClient.html" title="Utility class to facilitate HTTP requests between the environments REST API and C++ drivers." alt="" coords="266,96,457,137"/>
 </map>

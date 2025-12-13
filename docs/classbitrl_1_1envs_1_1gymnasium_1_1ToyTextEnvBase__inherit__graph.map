@@ -1,7 +1,7 @@
 <map id="bitrl::envs::gymnasium::ToyTextEnvBase&lt; TimeStepType, state_end, action_end &gt;" name="bitrl::envs::gymnasium::ToyTextEnvBase&lt; TimeStepType, state_end, action_end &gt;">
 <area shape="rect" id="node1" title="ToyTextEnvBase class. Base class for toy environments from Gymnasium. These environments have a discr..." alt="" coords="795,20,1041,76"/>
 <area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="504,13,747,83"/>
-<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments." alt="" coords="235,27,456,69"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class interface for Reinforcement Learning environments." alt="" coords="235,27,456,69"/>
 <area shape="rect" id="node4" title=" " alt="" coords="51,5,141,32"/>
 <area shape="rect" id="node5" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="5,57,187,98"/>
 </map>

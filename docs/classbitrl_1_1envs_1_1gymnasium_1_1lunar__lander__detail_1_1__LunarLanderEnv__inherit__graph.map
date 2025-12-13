@@ -1,7 +1,7 @@
 <map id="bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStepType, SpaceType &gt;" name="bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStepType, SpaceType &gt;">
 <area shape="rect" id="node1" title=" " alt="" coords="5,288,257,359"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="class GymnasiumEnvBase. Base class for all Gymnasium wrappers The class has two parameters:" alt="" coords="10,184,253,240"/>
-<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments." alt="" coords="21,95,242,136"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="Base class for all Gymnasium environment wrappers." alt="" coords="10,184,253,240"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class interface for Reinforcement Learning environments." alt="" coords="21,95,242,136"/>
 <area shape="rect" id="node4" title=" " alt="" coords="6,13,97,39"/>
 <area shape="rect" id="node5" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="121,5,302,47"/>
 </map>

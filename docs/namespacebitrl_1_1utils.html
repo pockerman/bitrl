@@ -103,6 +103,11 @@ Functions</h2></td></tr>
 <tr class="memitem:abb0e18993a34ce35a46ca30727c162b5"><td class="memTemplParams" colspan="2">template&lt;typename OutT &gt; </td></tr>
 <tr class="memitem:abb0e18993a34ce35a46ca30727c162b5"><td class="memTemplItemLeft" align="right" valign="top">OutT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils.html#abb0e18993a34ce35a46ca30727c162b5">resolve</a> (const std::string &amp;name, const std::map&lt; std::string, std::any &gt; &amp;input)</td></tr>
 <tr class="separator:abb0e18993a34ce35a46ca30727c162b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8930760d6996b9b5d00d3b38a1f5bbe"><td class="memTemplParams" colspan="2">template&lt;typename OutT &gt; </td></tr>
+<tr class="memitem:ab8930760d6996b9b5d00d3b38a1f5bbe"><td class="memTemplItemLeft" align="right" valign="top">OutT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils.html#ab8930760d6996b9b5d00d3b38a1f5bbe">resolve</a> (const std::string &amp;name, const std::unordered_map&lt; std::string, std::any &gt; &amp;input)</td></tr>
+<tr class="separator:ab8930760d6996b9b5d00d3b38a1f5bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44b5ad1e799cb2343e38454152a1a49e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils.html#a44b5ad1e799cb2343e38454152a1a49e">uuid4</a> ()</td></tr>
+<tr class="separator:a44b5ad1e799cb2343e38454152a1a49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ad3022f7477bff480b3dbe24023f3312c"></a>
@@ -142,7 +147,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="abb0e18993a34ce35a46ca30727c162b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb0e18993a34ce35a46ca30727c162b5">&#9670;&nbsp;</a></span>resolve()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abb0e18993a34ce35a46ca30727c162b5">&#9670;&nbsp;</a></span>resolve() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -168,6 +173,64 @@ template&lt;typename OutT &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Given the name of the argument return std::any_cast&lt;OutT&gt;(itr-&gt;second) where itr is itr = input.find(name) </p>
+
+</div>
+</div>
+<a id="ab8930760d6996b9b5d00d3b38a1f5bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8930760d6996b9b5d00d3b38a1f5bbe">&#9670;&nbsp;</a></span>resolve() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename OutT &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">OutT bitrl::utils::resolve </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::unordered_map&lt; std::string, std::any &gt; &amp;&#160;</td>
+          <td class="paramname"><em>input</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Given the name of the argument return std::any_cast&lt;OutT&gt;(itr-&gt;second) where itr is itr = input.find(name) </p>
+
+</div>
+</div>
+<a id="a44b5ad1e799cb2343e38454152a1a49e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44b5ad1e799cb2343e38454152a1a49e">&#9670;&nbsp;</a></span>uuid4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string bitrl::utils::uuid4 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Generate UUID4 strings using Boost::uuids. For more info on UUIDs see: <a href="https://www.ibm.com/docs/en/cobol-zos/6.3.0?topic=functions-uuid4">https://www.ibm.com/docs/en/cobol-zos/6.3.0?topic=functions-uuid4</a> </p><dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>

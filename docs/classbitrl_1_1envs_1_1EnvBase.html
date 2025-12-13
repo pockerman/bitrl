@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Base class for environments.  
+<p>Base class interface for Reinforcement Learning environments.  
  <a href="classbitrl_1_1envs_1_1EnvBase.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="env__base_8h_source.html">env_base.h</a>&gt;</code></p>
@@ -85,14 +85,14 @@ Inheritance diagram for bitrl::envs::EnvBase&lt; TimeStepType, SpaceType &gt;:</
 <div class="dyncontent">
 <div class="center"><img src="classbitrl_1_1envs_1_1EnvBase__inherit__graph.png" border="0" usemap="#abitrl_1_1envs_1_1EnvBase_3_01TimeStepType_00_01SpaceType_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="abitrl_1_1envs_1_1EnvBase_3_01TimeStepType_00_01SpaceType_01_4_inherit__map" id="abitrl_1_1envs_1_1EnvBase_3_01TimeStepType_00_01SpaceType_01_4_inherit__map">
-<area shape="rect" title="Base class for environments." alt="" coords="235,326,456,367"/>
+<area shape="rect" title="Base class interface for Reinforcement Learning environments." alt="" coords="235,326,456,367"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="513,5,782,91"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="513,115,782,200"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="520,224,775,280"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="513,304,782,389"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="526,414,769,485"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title=" " alt="" coords="504,509,791,609"/>
-<area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="class GymnasiumEnvBase. Base class for all Gymnasium wrappers The class has two parameters:" alt="" coords="526,871,769,927"/>
+<area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="Base class for all Gymnasium environment wrappers." alt="" coords="526,871,769,927"/>
 <area shape="rect" title=" " alt="" coords="51,304,141,331"/>
 <area shape="rect" href="structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="5,355,187,397"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1CartPole.html" title="The CartPole class Interface for CartPole environment." alt="" coords="897,27,1069,69"/>
@@ -115,7 +115,7 @@ Inheritance diagram for bitrl::envs::EnvBase&lt; TimeStepType, SpaceType &gt;:</
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1CliffWorld.html" title="The CliffWorld class." alt="" coords="1192,878,1364,919"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1Taxi.html" title="The Taxi class." alt="" coords="1192,958,1364,999"/>
 <area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1LunarLanderDiscreteEnv.html" title="LunarLanderDiscreteEnv environment with discrete action space." alt="" coords="1184,1059,1372,1101"/>
-<area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1LunarLanderContinuousEnv.html" title="LunarLanderDiscreteEnv environment with discrete action space." alt="" coords="1175,1183,1381,1225"/>
+<area shape="rect" href="classbitrl_1_1envs_1_1gymnasium_1_1LunarLanderContinuousEnv.html" title=" " alt="" coords="1175,1183,1381,1225"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -123,7 +123,7 @@ Collaboration diagram for bitrl::envs::EnvBase&lt; TimeStepType, SpaceType &gt;:
 <div class="dyncontent">
 <div class="center"><img src="classbitrl_1_1envs_1_1EnvBase__coll__graph.png" border="0" usemap="#abitrl_1_1envs_1_1EnvBase_3_01TimeStepType_00_01SpaceType_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="abitrl_1_1envs_1_1EnvBase_3_01TimeStepType_00_01SpaceType_01_4_coll__map" id="abitrl_1_1envs_1_1EnvBase_3_01TimeStepType_00_01SpaceType_01_4_coll__map">
-<area shape="rect" title="Base class for environments." alt="" coords="20,95,241,136"/>
+<area shape="rect" title="Base class interface for Reinforcement Learning environments." alt="" coords="20,95,241,136"/>
 <area shape="rect" title=" " alt="" coords="5,13,96,39"/>
 <area shape="rect" href="structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="120,5,301,47"/>
 </map>
@@ -132,63 +132,60 @@ Collaboration diagram for bitrl::envs::EnvBase&lt; TimeStepType, SpaceType &gt;:
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a80ca12db49e1063af633b722179a48de"><td class="memItemLeft" align="right" valign="top">typedef TimeStepType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a></td></tr>
-<tr class="memdesc:a80ca12db49e1063af633b722179a48de"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time step type we return every time a step in the environment is performed.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">More...</a><br /></td></tr>
+<tr class="memdesc:a80ca12db49e1063af633b722179a48de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the type returned when stepping the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">More...</a><br /></td></tr>
 <tr class="separator:a80ca12db49e1063af633b722179a48de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b62d6b97cdf87fd341f6054f4ca0bd0"><td class="memItemLeft" align="right" valign="top">typedef SpaceType::state_space&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a0b62d6b97cdf87fd341f6054f4ca0bd0">state_space_type</a></td></tr>
-<tr class="memdesc:a0b62d6b97cdf87fd341f6054f4ca0bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type describing the state space for the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a0b62d6b97cdf87fd341f6054f4ca0bd0">More...</a><br /></td></tr>
+<tr class="memdesc:a0b62d6b97cdf87fd341f6054f4ca0bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type describing the environment state space.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a0b62d6b97cdf87fd341f6054f4ca0bd0">More...</a><br /></td></tr>
 <tr class="separator:a0b62d6b97cdf87fd341f6054f4ca0bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a188f48e8e0c37aca558e470425d71886"><td class="memItemLeft" align="right" valign="top">typedef SpaceType::state_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a188f48e8e0c37aca558e470425d71886">state_type</a></td></tr>
-<tr class="memdesc:a188f48e8e0c37aca558e470425d71886"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the state.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a188f48e8e0c37aca558e470425d71886">More...</a><br /></td></tr>
+<tr class="memdesc:a188f48e8e0c37aca558e470425d71886"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type describing an individual state.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a188f48e8e0c37aca558e470425d71886">More...</a><br /></td></tr>
 <tr class="separator:a188f48e8e0c37aca558e470425d71886"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78bf122cfc3a1ad1f392e51bf58626fd"><td class="memItemLeft" align="right" valign="top">typedef SpaceType::action_space&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a78bf122cfc3a1ad1f392e51bf58626fd">action_space_type</a></td></tr>
-<tr class="memdesc:a78bf122cfc3a1ad1f392e51bf58626fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the action space for the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a78bf122cfc3a1ad1f392e51bf58626fd">More...</a><br /></td></tr>
+<tr class="memdesc:a78bf122cfc3a1ad1f392e51bf58626fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type describing the environment action space.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a78bf122cfc3a1ad1f392e51bf58626fd">More...</a><br /></td></tr>
 <tr class="separator:a78bf122cfc3a1ad1f392e51bf58626fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99e6c1b6ca5e9e7c060ca6b4b6c83917"><td class="memItemLeft" align="right" valign="top">typedef SpaceType::action_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a99e6c1b6ca5e9e7c060ca6b4b6c83917">action_type</a></td></tr>
-<tr class="memdesc:a99e6c1b6ca5e9e7c060ca6b4b6c83917"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the action to be undertaken in the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a99e6c1b6ca5e9e7c060ca6b4b6c83917">More...</a><br /></td></tr>
+<tr class="memdesc:a99e6c1b6ca5e9e7c060ca6b4b6c83917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing an individual action.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a99e6c1b6ca5e9e7c060ca6b4b6c83917">More...</a><br /></td></tr>
 <tr class="separator:a99e6c1b6ca5e9e7c060ca6b4b6c83917"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa3a7a6aa296d734b4e49468112cf5573"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aa3a7a6aa296d734b4e49468112cf5573">~EnvBase</a> ()=default</td></tr>
-<tr class="memdesc:aa3a7a6aa296d734b4e49468112cf5573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="classbitrl_1_1envs_1_1EnvBase.html#aa3a7a6aa296d734b4e49468112cf5573">More...</a><br /></td></tr>
+<tr class="memdesc:aa3a7a6aa296d734b4e49468112cf5573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="classbitrl_1_1envs_1_1EnvBase.html#aa3a7a6aa296d734b4e49468112cf5573">More...</a><br /></td></tr>
 <tr class="separator:aa3a7a6aa296d734b4e49468112cf5573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae20d385bde6ea7f646d6df33c7b2d3e9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#ae20d385bde6ea7f646d6df33c7b2d3e9">make</a> (const std::string &amp;<a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aa8a255d448dfd29d82cb0de11269647c">version</a>, const std::unordered_map&lt; std::string, std::any &gt; &amp;options)=0</td></tr>
-<tr class="memdesc:ae20d385bde6ea7f646d6df33c7b2d3e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">make. Builds the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#ae20d385bde6ea7f646d6df33c7b2d3e9">More...</a><br /></td></tr>
-<tr class="separator:ae20d385bde6ea7f646d6df33c7b2d3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45a71602431debde2004835e2ba519c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3">make</a> (const std::string &amp;<a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aa8a255d448dfd29d82cb0de11269647c">version</a>, const std::unordered_map&lt; std::string, std::any &gt; &amp;<a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#af793d2bf024a4e0cb9a1183ea2b1cfee">make_options</a>, const std::unordered_map&lt; std::string, std::any &gt; &amp;<a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a00b99f27ca5c8c665613ede7fbe31ce9">reset_options</a>)=0</td></tr>
+<tr class="memdesc:a45a71602431debde2004835e2ba519c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the environment instance.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3">More...</a><br /></td></tr>
+<tr class="separator:a45a71602431debde2004835e2ba519c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92849a1882839b0ee63618a5978eb57f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a92849a1882839b0ee63618a5978eb57f">close</a> ()=0</td></tr>
-<tr class="memdesc:a92849a1882839b0ee63618a5978eb57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">close the environment  <a href="classbitrl_1_1envs_1_1EnvBase.html#a92849a1882839b0ee63618a5978eb57f">More...</a><br /></td></tr>
+<tr class="memdesc:a92849a1882839b0ee63618a5978eb57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close and release any acquired environment resources.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a92849a1882839b0ee63618a5978eb57f">More...</a><br /></td></tr>
 <tr class="separator:a92849a1882839b0ee63618a5978eb57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d8454d8c25e671092c3934693c0ccf6"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a4d8454d8c25e671092c3934693c0ccf6">reset</a> (<a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> seed, const std::unordered_map&lt; std::string, std::any &gt; &amp;options)=0</td></tr>
-<tr class="memdesc:a4d8454d8c25e671092c3934693c0ccf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a4d8454d8c25e671092c3934693c0ccf6">More...</a><br /></td></tr>
-<tr class="separator:a4d8454d8c25e671092c3934693c0ccf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bf9989e3b0ce8a64c88d58fd93b07ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a5bf9989e3b0ce8a64c88d58fd93b07ee">reset</a> ()</td></tr>
-<tr class="memdesc:a5bf9989e3b0ce8a64c88d58fd93b07ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the environment always using the same seed.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a5bf9989e3b0ce8a64c88d58fd93b07ee">More...</a><br /></td></tr>
-<tr class="separator:a5bf9989e3b0ce8a64c88d58fd93b07ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0da7d3dec2d3dc9b61ee729ec74929a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a0da7d3dec2d3dc9b61ee729ec74929a7">reset</a> (<a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> seed)</td></tr>
-<tr class="memdesc:a0da7d3dec2d3dc9b61ee729ec74929a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the environment always using the provided seed.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a0da7d3dec2d3dc9b61ee729ec74929a7">More...</a><br /></td></tr>
-<tr class="separator:a0da7d3dec2d3dc9b61ee729ec74929a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79fb6e84ffc53e9a66c5b510516a5ffd"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">reset</a> ()=0</td></tr>
+<tr class="memdesc:a79fb6e84ffc53e9a66c5b510516a5ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the environment to an initial state using the reset options specified during make.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">More...</a><br /></td></tr>
+<tr class="separator:a79fb6e84ffc53e9a66c5b510516a5ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a77a9db971321e07b82f85fbd1bfa09"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a3a77a9db971321e07b82f85fbd1bfa09">step</a> (const <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a99e6c1b6ca5e9e7c060ca6b4b6c83917">action_type</a> &amp;action)=0</td></tr>
-<tr class="memdesc:a3a77a9db971321e07b82f85fbd1bfa09"><td class="mdescLeft">&#160;</td><td class="mdescRight">step in the environment by performing the given action  <a href="classbitrl_1_1envs_1_1EnvBase.html#a3a77a9db971321e07b82f85fbd1bfa09">More...</a><br /></td></tr>
+<tr class="memdesc:a3a77a9db971321e07b82f85fbd1bfa09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform one step in the environment using an action.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a3a77a9db971321e07b82f85fbd1bfa09">More...</a><br /></td></tr>
 <tr class="separator:a3a77a9db971321e07b82f85fbd1bfa09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb7ec1cd760ed668b236016c5d24707f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#acb7ec1cd760ed668b236016c5d24707f">is_created</a> () const noexcept</td></tr>
-<tr class="memdesc:acb7ec1cd760ed668b236016c5d24707f"><td class="mdescLeft">&#160;</td><td class="mdescRight">is_created Returns true is make has been called successfully  <a href="classbitrl_1_1envs_1_1EnvBase.html#acb7ec1cd760ed668b236016c5d24707f">More...</a><br /></td></tr>
-<tr class="separator:acb7ec1cd760ed668b236016c5d24707f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8a255d448dfd29d82cb0de11269647c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aa8a255d448dfd29d82cb0de11269647c">version</a> () const noexcept</td></tr>
-<tr class="memdesc:aa8a255d448dfd29d82cb0de11269647c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the version of the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#aa8a255d448dfd29d82cb0de11269647c">More...</a><br /></td></tr>
-<tr class="separator:aa8a255d448dfd29d82cb0de11269647c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4593baa494b32ab5d4ed8fedfa5fc01"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#ad4593baa494b32ab5d4ed8fedfa5fc01">env_name</a> () const noexcept</td></tr>
-<tr class="memdesc:ad4593baa494b32ab5d4ed8fedfa5fc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#ad4593baa494b32ab5d4ed8fedfa5fc01">More...</a><br /></td></tr>
-<tr class="separator:ad4593baa494b32ab5d4ed8fedfa5fc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af793d2bf024a4e0cb9a1183ea2b1cfee"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, std::any &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#af793d2bf024a4e0cb9a1183ea2b1cfee">make_options</a> () const noexcept</td></tr>
-<tr class="memdesc:af793d2bf024a4e0cb9a1183ea2b1cfee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a read reference to the options passed when calling make.  <a href="classbitrl_1_1envs_1_1EnvBase.html#af793d2bf024a4e0cb9a1183ea2b1cfee">More...</a><br /></td></tr>
+<tr class="memdesc:af793d2bf024a4e0cb9a1183ea2b1cfee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the configuration options provided to <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a>.  <a href="classbitrl_1_1envs_1_1EnvBase.html#af793d2bf024a4e0cb9a1183ea2b1cfee">More...</a><br /></td></tr>
 <tr class="separator:af793d2bf024a4e0cb9a1183ea2b1cfee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00b99f27ca5c8c665613ede7fbe31ce9"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, std::any &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a00b99f27ca5c8c665613ede7fbe31ce9">reset_options</a> () const noexcept</td></tr>
+<tr class="memdesc:a00b99f27ca5c8c665613ede7fbe31ce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the configuration options provided to <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a>.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a00b99f27ca5c8c665613ede7fbe31ce9">More...</a><br /></td></tr>
+<tr class="separator:a00b99f27ca5c8c665613ede7fbe31ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ee24c3e5eb3ead05b476e871378d50a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9ee24c3e5eb3ead05b476e871378d50a"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a9ee24c3e5eb3ead05b476e871378d50a">read_option</a> (const std::string &amp;op_name) const</td></tr>
-<tr class="memdesc:a9ee24c3e5eb3ead05b476e871378d50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the option with the given name.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a9ee24c3e5eb3ead05b476e871378d50a">More...</a><br /></td></tr>
+<tr class="memdesc:a9ee24c3e5eb3ead05b476e871378d50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a specific <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a> option and cast it to the requested type.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a9ee24c3e5eb3ead05b476e871378d50a">More...</a><br /></td></tr>
 <tr class="separator:a9ee24c3e5eb3ead05b476e871378d50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae39a814061ff60dfa94fa543ca6c796"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aae39a814061ff60dfa94fa543ca6c796">cidx</a> () const noexcept</td></tr>
-<tr class="memdesc:aae39a814061ff60dfa94fa543ca6c796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the index of the environment that is active within a simulation.  <a href="classbitrl_1_1envs_1_1EnvBase.html#aae39a814061ff60dfa94fa543ca6c796">More...</a><br /></td></tr>
-<tr class="separator:aae39a814061ff60dfa94fa543ca6c796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab919918f205095b1a501cce4e3e6358f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#ab919918f205095b1a501cce4e3e6358f">idx</a> () const noexcept</td></tr>
+<tr class="memdesc:ab919918f205095b1a501cce4e3e6358f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the id identifying this environment within a simulation batch. The id is valid only if make has been called.  <a href="classbitrl_1_1envs_1_1EnvBase.html#ab919918f205095b1a501cce4e3e6358f">More...</a><br /></td></tr>
+<tr class="separator:ab919918f205095b1a501cce4e3e6358f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7ec1cd760ed668b236016c5d24707f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#acb7ec1cd760ed668b236016c5d24707f">is_created</a> () const noexcept</td></tr>
+<tr class="memdesc:acb7ec1cd760ed668b236016c5d24707f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a> has successfully initialized the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#acb7ec1cd760ed668b236016c5d24707f">More...</a><br /></td></tr>
+<tr class="separator:acb7ec1cd760ed668b236016c5d24707f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4593baa494b32ab5d4ed8fedfa5fc01"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#ad4593baa494b32ab5d4ed8fedfa5fc01">env_name</a> () const noexcept</td></tr>
+<tr class="memdesc:ad4593baa494b32ab5d4ed8fedfa5fc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of this environment instance.  <a href="classbitrl_1_1envs_1_1EnvBase.html#ad4593baa494b32ab5d4ed8fedfa5fc01">More...</a><br /></td></tr>
+<tr class="separator:ad4593baa494b32ab5d4ed8fedfa5fc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8a255d448dfd29d82cb0de11269647c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aa8a255d448dfd29d82cb0de11269647c">version</a> () const noexcept</td></tr>
+<tr class="memdesc:aa8a255d448dfd29d82cb0de11269647c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the environment version set during <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a>.  <a href="classbitrl_1_1envs_1_1EnvBase.html#aa8a255d448dfd29d82cb0de11269647c">More...</a><br /></td></tr>
+<tr class="separator:aa8a255d448dfd29d82cb0de11269647c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structbitrl_1_1envs_1_1synchronized__env__mixin"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structbitrl_1_1envs_1_1synchronized__env__mixin')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structbitrl_1_1envs_1_1synchronized__env__mixin.html">bitrl::envs::synchronized_env_mixin</a></td></tr>
 <tr class="memitem:a5a6ee8a150981b2ca2a19ec6ae097a7a inherit pub_methods_structbitrl_1_1envs_1_1synchronized__env__mixin"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbitrl_1_1envs_1_1synchronized__env__mixin.html#a5a6ee8a150981b2ca2a19ec6ae097a7a">sync</a> (const std::unordered_map&lt; std::string, std::any &gt; &amp;)</td></tr>
 <tr class="memdesc:a5a6ee8a150981b2ca2a19ec6ae097a7a inherit pub_methods_structbitrl_1_1envs_1_1synchronized__env__mixin"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronize the environment.  <a href="structbitrl_1_1envs_1_1synchronized__env__mixin.html#a5a6ee8a150981b2ca2a19ec6ae097a7a">More...</a><br /></td></tr>
@@ -197,39 +194,52 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:aeb94c1cfe6fd179e2670f67b24fec18c"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aeb94c1cfe6fd179e2670f67b24fec18c">DEFAULT_ENV_SEED</a> = 42</td></tr>
-<tr class="memdesc:aeb94c1cfe6fd179e2670f67b24fec18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default seed to use.  <a href="classbitrl_1_1envs_1_1EnvBase.html#aeb94c1cfe6fd179e2670f67b24fec18c">More...</a><br /></td></tr>
+<tr class="memdesc:aeb94c1cfe6fd179e2670f67b24fec18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default seed used in <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd" title="Reset the environment to an initial state using the reset options specified during make.">reset()</a> if none provided.  <a href="classbitrl_1_1envs_1_1EnvBase.html#aeb94c1cfe6fd179e2670f67b24fec18c">More...</a><br /></td></tr>
 <tr class="separator:aeb94c1cfe6fd179e2670f67b24fec18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a6477becbe20071ff253a217a20b1dd0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a6477becbe20071ff253a217a20b1dd0d">EnvBase</a> (const <a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aae39a814061ff60dfa94fa543ca6c796">cidx</a>=0, const std::string &amp;name=<a class="el" href="namespacebitrl_1_1consts.html#af9b756251c966b0eee15ec51d28450d9">bitrl::consts::INVALID_STR</a>)</td></tr>
-<tr class="memdesc:a6477becbe20071ff253a217a20b1dd0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a6477becbe20071ff253a217a20b1dd0d">More...</a><br /></td></tr>
-<tr class="separator:a6477becbe20071ff253a217a20b1dd0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76562d1db01f09e3d50eeb4215f6bf85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a76562d1db01f09e3d50eeb4215f6bf85">EnvBase</a> (const std::string &amp;<a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#ab919918f205095b1a501cce4e3e6358f">idx</a>=<a class="el" href="namespacebitrl_1_1consts.html#af9b756251c966b0eee15ec51d28450d9">bitrl::consts::INVALID_STR</a>, const std::string &amp;name=<a class="el" href="namespacebitrl_1_1consts.html#af9b756251c966b0eee15ec51d28450d9">bitrl::consts::INVALID_STR</a>)</td></tr>
+<tr class="memdesc:a76562d1db01f09e3d50eeb4215f6bf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (protected — for subclassing only).  <a href="classbitrl_1_1envs_1_1EnvBase.html#a76562d1db01f09e3d50eeb4215f6bf85">More...</a><br /></td></tr>
+<tr class="separator:a76562d1db01f09e3d50eeb4215f6bf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afaee243bbb9433e4e4aa9f10b6df1809"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#afaee243bbb9433e4e4aa9f10b6df1809">EnvBase</a> (const <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">EnvBase</a> &amp;)</td></tr>
 <tr class="memdesc:afaee243bbb9433e4e4aa9f10b6df1809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="classbitrl_1_1envs_1_1EnvBase.html#afaee243bbb9433e4e4aa9f10b6df1809">More...</a><br /></td></tr>
 <tr class="separator:afaee243bbb9433e4e4aa9f10b6df1809"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2e3770d859a4c6f0fed4b215a01d888"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#af2e3770d859a4c6f0fed4b215a01d888">set_version_</a> (const std::string &amp;<a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#aa8a255d448dfd29d82cb0de11269647c">version</a>) noexcept</td></tr>
-<tr class="memdesc:af2e3770d859a4c6f0fed4b215a01d888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to set the version. To be called only when the make is called.  <a href="classbitrl_1_1envs_1_1EnvBase.html#af2e3770d859a4c6f0fed4b215a01d888">More...</a><br /></td></tr>
+<tr class="memdesc:af2e3770d859a4c6f0fed4b215a01d888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set internal version string.  <a href="classbitrl_1_1envs_1_1EnvBase.html#af2e3770d859a4c6f0fed4b215a01d888">More...</a><br /></td></tr>
 <tr class="separator:af2e3770d859a4c6f0fed4b215a01d888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a721486246bfe36599acdda9d42d00fde"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a721486246bfe36599acdda9d42d00fde">set_idx_</a> (const std::string &amp;<a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#ab919918f205095b1a501cce4e3e6358f">idx</a>) noexcept</td></tr>
+<tr class="memdesc:a721486246bfe36599acdda9d42d00fde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the id of the environment.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a721486246bfe36599acdda9d42d00fde">More...</a><br /></td></tr>
+<tr class="separator:a721486246bfe36599acdda9d42d00fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcc4c3b0ace86f790f912816a559b38b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#adcc4c3b0ace86f790f912816a559b38b">set_make_options_</a> (const std::unordered_map&lt; std::string, std::any &gt; &amp;options) noexcept</td></tr>
-<tr class="memdesc:adcc4c3b0ace86f790f912816a559b38b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the make options.  <a href="classbitrl_1_1envs_1_1EnvBase.html#adcc4c3b0ace86f790f912816a559b38b">More...</a><br /></td></tr>
+<tr class="memdesc:adcc4c3b0ace86f790f912816a559b38b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a> options for future access.  <a href="classbitrl_1_1envs_1_1EnvBase.html#adcc4c3b0ace86f790f912816a559b38b">More...</a><br /></td></tr>
 <tr class="separator:adcc4c3b0ace86f790f912816a559b38b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0efd57b92b174db60f59c300c4fa3b40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a0efd57b92b174db60f59c300c4fa3b40">invalidate_is_created_flag_</a> () noexcept</td></tr>
+<tr class="memdesc:a0efd57b92b174db60f59c300c4fa3b40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark environment as not created.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a0efd57b92b174db60f59c300c4fa3b40">More...</a><br /></td></tr>
 <tr class="separator:a0efd57b92b174db60f59c300c4fa3b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abafb8e0049344266fe10e7917c2961b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#abafb8e0049344266fe10e7917c2961b6">make_created_</a> () noexcept</td></tr>
-<tr class="memdesc:abafb8e0049344266fe10e7917c2961b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">mark the environment as created  <a href="classbitrl_1_1envs_1_1EnvBase.html#abafb8e0049344266fe10e7917c2961b6">More...</a><br /></td></tr>
+<tr class="memdesc:abafb8e0049344266fe10e7917c2961b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark environment creation as successful.  <a href="classbitrl_1_1envs_1_1EnvBase.html#abafb8e0049344266fe10e7917c2961b6">More...</a><br /></td></tr>
 <tr class="separator:abafb8e0049344266fe10e7917c2961b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44d49ae3dc155e99010a7561c146f450"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a44d49ae3dc155e99010a7561c146f450">get_current_time_step_</a> () noexcept</td></tr>
+<tr class="memdesc:a44d49ae3dc155e99010a7561c146f450"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutable access to the current time step.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a44d49ae3dc155e99010a7561c146f450">More...</a><br /></td></tr>
 <tr class="separator:a44d49ae3dc155e99010a7561c146f450"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15dd6ca50e030745c382d1fab7f090bc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a15dd6ca50e030745c382d1fab7f090bc">get_current_time_step_</a> () const noexcept</td></tr>
+<tr class="memdesc:a15dd6ca50e030745c382d1fab7f090bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read-only access to the current time step.  <a href="classbitrl_1_1envs_1_1EnvBase.html#a15dd6ca50e030745c382d1fab7f090bc">More...</a><br /></td></tr>
 <tr class="separator:a15dd6ca50e030745c382d1fab7f090bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename TimeStepType, typename SpaceType&gt;<br />
 class bitrl::envs::EnvBase&lt; TimeStepType, SpaceType &gt;</h3>
 
-<p>Base class for environments. </p>
-<p>The <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html" title="Base class for environments.">EnvBase</a> class establishes the minimum contract that an RL environment should expose. </p>
+<p>Base class interface for Reinforcement Learning environments. </p>
+<p>This class defines the minimum API contract that any RL environment must implement. It exposes functionality for creating, resetting, and stepping through an environment, while tracking configuration such as version, options, and current state.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TimeStepType</td><td>Type returned after each environment step </td></tr>
+    <tr><td class="paramname">SpaceType</td><td>Environment's space interface type providing state and action space definitions </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a78bf122cfc3a1ad1f392e51bf58626fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a78bf122cfc3a1ad1f392e51bf58626fd">&#9670;&nbsp;</a></span>action_space_type</h2>
@@ -245,7 +255,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>The type of the action space for the environment. </p>
+<p>Type describing the environment action space. </p>
 
 </div>
 </div>
@@ -263,7 +273,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>The type of the action to be undertaken in the environment. </p>
+<p>Type representing an individual action. </p>
 
 </div>
 </div>
@@ -281,7 +291,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>The type describing the state space for the environment. </p>
+<p>Type describing the environment state space. </p>
 
 </div>
 </div>
@@ -299,7 +309,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>The type of the state. </p>
+<p>Type describing an individual state. </p>
 
 </div>
 </div>
@@ -317,7 +327,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>The time step type we return every time a step in the environment is performed. </p>
+<p>Alias for the type returned when stepping the environment. </p>
 
 </div>
 </div>
@@ -347,12 +357,12 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Destructor. </p>
+<p>Virtual destructor. </p>
 
 </div>
 </div>
-<a id="a6477becbe20071ff253a217a20b1dd0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6477becbe20071ff253a217a20b1dd0d">&#9670;&nbsp;</a></span>EnvBase() <span class="overload">[1/2]</span></h2>
+<a id="a76562d1db01f09e3d50eeb4215f6bf85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76562d1db01f09e3d50eeb4215f6bf85">&#9670;&nbsp;</a></span>EnvBase() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -365,8 +375,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
         <tr>
           <td class="memname">EnvBase::EnvBase </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a>&#160;</td>
-          <td class="paramname"><em>cidx</em> = <code>0</code>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>idx</em> = <code><a class="el" href="namespacebitrl_1_1consts.html#af9b756251c966b0eee15ec51d28450d9">bitrl::consts::INVALID_STR</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -387,7 +397,14 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor. </p>
+<p>Constructor (protected — for subclassing only). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cidx</td><td>Copy index used in multi-environment simulations </td></tr>
+    <tr><td class="paramname">name</td><td>Name of the environment instance </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -422,35 +439,6 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aae39a814061ff60dfa94fa543ca6c796"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae39a814061ff60dfa94fa543ca6c796">&#9670;&nbsp;</a></span>cidx()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TimeStepType , typename SpaceType &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::cidx </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the index of the environment that is active within a simulation. </p>
-
-</div>
-</div>
 <a id="a92849a1882839b0ee63618a5978eb57f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a92849a1882839b0ee63618a5978eb57f">&#9670;&nbsp;</a></span>close()</h2>
 
@@ -473,7 +461,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>close the environment </p>
+<p>Close and release any acquired environment resources. </p>
 
 <p>Implemented in <a class="el" href="classbitrl_1_1envs_1_1bandits_1_1MultiArmedBandits.html#a99844c5234e5f3860339de25c3fef3fe">bitrl::envs::bandits::MultiArmedBandits</a>, <a class="el" href="classbitrl_1_1envs_1_1grid__world_1_1Gridworld.html#acf326aef39c0645aa50ed860f3a21273">bitrl::envs::grid_world::Gridworld&lt; side_size_ &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html#a6689d7e7b006eeee190f8f7405a15b63">bitrl::envs::gdrl::GymWalk&lt; state_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1connect2_1_1Connect2.html#af47eeefb0a495b83902b8bba4a8773e5">bitrl::envs::connect2::Connect2</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a75d65f0af307b55c183a66b2ad1458da">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a75d65f0af307b55c183a66b2ad1458da">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 4, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a75d65f0af307b55c183a66b2ad1458da">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 3, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a75d65f0af307b55c183a66b2ad1458da">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; VectorTimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a75d65f0af307b55c183a66b2ad1458da">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 6, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a75d65f0af307b55c183a66b2ad1458da">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, ScalarDiscreteEnv&lt; state_end, action_end, 0, 0 &gt; &gt;</a>, and <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a75d65f0af307b55c183a66b2ad1458da">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateContinuousScalarBoundedActionEnv&lt; 3, 1, RealRange&lt;-2.0, 2.0 &gt;, 0, real_t &gt; &gt;</a>.</p>
 
@@ -504,7 +492,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the name of the environment. </p>
+<p>Get the name of this environment instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>Environment name </dd></dl>
 
 </div>
 </div>
@@ -533,6 +522,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Read-only access to the current time step. </p>
+
 </div>
 </div>
 <a id="a44d49ae3dc155e99010a7561c146f450"></a>
@@ -559,6 +550,38 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Mutable access to the current time step. </p>
+
+</div>
+</div>
+<a id="ab919918f205095b1a501cce4e3e6358f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab919918f205095b1a501cce4e3e6358f">&#9670;&nbsp;</a></span>idx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeStepType , typename SpaceType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::idx </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the id identifying this environment within a simulation batch. The id is valid only if make has been called. </p>
+<dl class="section return"><dt>Returns</dt><dd>Copy index </dd></dl>
 
 </div>
 </div>
@@ -587,6 +610,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Mark environment as not created. </p>
+
 </div>
 </div>
 <a id="acb7ec1cd760ed668b236016c5d24707f"></a>
@@ -614,12 +639,13 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>is_created Returns true is make has been called successfully </p>
+<p>Check if <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a> has successfully initialized the environment. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if environment is ready, false otherwise </dd></dl>
 
 </div>
 </div>
-<a id="ae20d385bde6ea7f646d6df33c7b2d3e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae20d385bde6ea7f646d6df33c7b2d3e9">&#9670;&nbsp;</a></span>make()</h2>
+<a id="a45a71602431debde2004835e2ba519c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45a71602431debde2004835e2ba519c3">&#9670;&nbsp;</a></span>make()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -630,7 +656,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::make </td>
+          <td class="memname">void EnvBase::make </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>version</em>, </td>
@@ -639,7 +665,13 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::unordered_map&lt; std::string, std::any &gt; &amp;&#160;</td>
-          <td class="paramname"><em>options</em>&#160;</td>
+          <td class="paramname"><em>make_options</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::unordered_map&lt; std::string, std::any &gt; &amp;&#160;</td>
+          <td class="paramname"><em>reset_options</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -654,16 +686,18 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>make. Builds the environment. </p>
+<p>Construct the environment instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">version.</td><td>the version of the environment to build </td></tr>
-    <tr><td class="paramname">options.</td><td>Options to use for building the environment. Concrete classes may choose to hold a copy </td></tr>
+    <tr><td class="paramname">version</td><td>Version string used to control environment variant </td></tr>
+    <tr><td class="paramname">make_options</td><td>Key-value configuration options for environment creation. </td></tr>
+    <tr><td class="paramname">reset_options</td><td>Key-value configuration how the environment should be reset</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Derived classes should use <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#af2e3770d859a4c6f0fed4b215a01d888" title="Set internal version string.">set_version_()</a> and <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#adcc4c3b0ace86f790f912816a559b38b" title="Store make() options for future access.">set_make_options_()</a> internally. They may store selected options for later use. </dd></dl>
 
-<p>Implemented in <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumVecEnvBase.html#ad93358bd6fc9e9559280352b221b1f42">bitrl::envs::gymnasium::GymnasiumVecEnvBase&lt; VectorTimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumVecEnvBase.html#ad93358bd6fc9e9559280352b221b1f42">bitrl::envs::gymnasium::GymnasiumVecEnvBase&lt; VectorTimeStep&lt; detail_::AcrobotVEnv::state_type &gt;, detail_::AcrobotVEnv &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1bandits_1_1MultiArmedBandits.html#a0b39ec6f02080ef15de8b046c7c279c0">bitrl::envs::bandits::MultiArmedBandits</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1FrozenLake.html#ae1daeed348acec650a02737cecc81ff6">bitrl::envs::gymnasium::FrozenLake&lt; side_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1CliffWorld.html#a25fc8b79d7cdf8698b4a1121eea4c809">bitrl::envs::gymnasium::CliffWorld</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1BlackJack.html#a4738dc0e58425cbae65838a57302c29f">bitrl::envs::gymnasium::BlackJack</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Acrobot.html#ae2327eaa2ec72b5a3cc37e1ac3a06fee">bitrl::envs::gymnasium::Acrobot</a>, <a class="el" href="classbitrl_1_1envs_1_1grid__world_1_1Gridworld.html#a214f50caacec633b410bf0f85c9b4547">bitrl::envs::grid_world::Gridworld&lt; side_size_ &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html#ab19a83343aca19aecd5b2ec1dfd9bb3e">bitrl::envs::gdrl::GymWalk&lt; state_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1connect2_1_1Connect2.html#a89d889d31b104ce59806e52853db0027">bitrl::envs::connect2::Connect2</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Taxi.html#af9cddc61684b3a75e8e97b6fc06878c3">bitrl::envs::gymnasium::Taxi</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1AcrobotV.html#a63e63c45658aea72acb63c5a6c314fe8">bitrl::envs::gymnasium::AcrobotV</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Pendulum.html#a4cb8a79af17ee94422ba24f8413b67d9">bitrl::envs::gymnasium::Pendulum</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1MountainCar.html#ab2834b4f89f69a02d142ae24c63d61e6">bitrl::envs::gymnasium::MountainCar</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1CartPole.html#abcca7b75dfdd77407901d4327e5de7b7">bitrl::envs::gymnasium::CartPole</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#aac8aa32a047db831ddecbc365d5f6dad">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#aac8aa32a047db831ddecbc365d5f6dad">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 8, 4, 0, real_t &gt; &gt;</a>, and <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#aac8aa32a047db831ddecbc365d5f6dad">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateContinuousVectorActionEnv&lt; 8, 2, real_t, real_t &gt; &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumVecEnvBase.html#a0d87b630e6d9b03cf16cabe79d306499">bitrl::envs::gymnasium::GymnasiumVecEnvBase&lt; VectorTimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumVecEnvBase.html#a0d87b630e6d9b03cf16cabe79d306499">bitrl::envs::gymnasium::GymnasiumVecEnvBase&lt; VectorTimeStep&lt; detail_::AcrobotVEnv::state_type &gt;, detail_::AcrobotVEnv &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1bandits_1_1MultiArmedBandits.html#acaf9e2faec149aa2d00ad525c8da6887">bitrl::envs::bandits::MultiArmedBandits</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1FrozenLake.html#a8a64c2e4b6558e0baf090ffad65861ec">bitrl::envs::gymnasium::FrozenLake&lt; side_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1CliffWorld.html#aece1745f1c01e7de646f5ba26ac4332f">bitrl::envs::gymnasium::CliffWorld</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1BlackJack.html#aac81703c10a43f59776da28d65ab4989">bitrl::envs::gymnasium::BlackJack</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1MountainCar.html#a5202adedce276e4deb36142c6dd3aefd">bitrl::envs::gymnasium::MountainCar</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1CartPole.html#aa223bffe40434b3af0128354bc24654a">bitrl::envs::gymnasium::CartPole</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Acrobot.html#aebb84c780824bb841dea08e95ce4b71e">bitrl::envs::gymnasium::Acrobot</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#af97929a72c341ffd0e09200c4f27f164">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#af97929a72c341ffd0e09200c4f27f164">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 8, 4, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#af97929a72c341ffd0e09200c4f27f164">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateContinuousVectorActionEnv&lt; 8, 2, real_t, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1grid__world_1_1Gridworld.html#a4931d7beed4607dd88536f37b5967206">bitrl::envs::grid_world::Gridworld&lt; side_size_ &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html#a59004346e039e94b3e20ebcd28f076da">bitrl::envs::gdrl::GymWalk&lt; state_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1connect2_1_1Connect2.html#a815ec22373bdcde556fa3a7b9b4f75ea">bitrl::envs::connect2::Connect2</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1AcrobotV.html#af2798cbbac8cffc93f8ba9211cd83607">bitrl::envs::gymnasium::AcrobotV</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Pendulum.html#a840366d2875b26441c67ccd732e829c9">bitrl::envs::gymnasium::Pendulum</a>, and <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Taxi.html#a8bdd5132809eb9aad51517347a3f497a">bitrl::envs::gymnasium::Taxi</a>.</p>
 
 </div>
 </div>
@@ -692,7 +726,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>mark the environment as created </p>
+<p>Mark environment creation as successful. </p>
 
 </div>
 </div>
@@ -721,7 +755,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a read reference to the options passed when calling make. </p>
+<p>Access the configuration options provided to <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Map of option keys and values </dd></dl>
 
 </div>
 </div>
@@ -745,71 +780,31 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Read the option with the given name. </p>
+<p>Read a specific <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a> option and cast it to the requested type. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Expected data type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">op_name</td><td>Key of the option to read </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Requested value if present </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::bad_any_cast</td><td>If stored type does not match T </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a5bf9989e3b0ce8a64c88d58fd93b07ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bf9989e3b0ce8a64c88d58fd93b07ee">&#9670;&nbsp;</a></span>reset() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TimeStepType , typename SpaceType &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a> <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::reset </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reset the environment always using the same seed. </p>
-
-</div>
-</div>
-<a id="a0da7d3dec2d3dc9b61ee729ec74929a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0da7d3dec2d3dc9b61ee729ec74929a7">&#9670;&nbsp;</a></span>reset() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TimeStepType , typename SpaceType &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a> <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::reset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a>&#160;</td>
-          <td class="paramname"><em>seed</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reset the environment always using the provided seed. </p>
-
-</div>
-</div>
-<a id="a4d8454d8c25e671092c3934693c0ccf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d8454d8c25e671092c3934693c0ccf6">&#9670;&nbsp;</a></span>reset() <span class="overload">[3/3]</span></h2>
+<a id="a79fb6e84ffc53e9a66c5b510516a5ffd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79fb6e84ffc53e9a66c5b510516a5ffd">&#9670;&nbsp;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -822,19 +817,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
         <tr>
           <td class="memname">virtual <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a80ca12db49e1063af633b722179a48de">time_step_type</a> <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::reset </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a>&#160;</td>
-          <td class="paramname"><em>seed</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::unordered_map&lt; std::string, std::any &gt; &amp;&#160;</td>
-          <td class="paramname"><em>options</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -844,16 +828,76 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reset the environment. </p>
+<p>Reset the environment to an initial state using the reset options specified during make. </p>
+<dl class="section return"><dt>Returns</dt><dd>Initial time step after reset </dd></dl>
+
+<p>Implemented in <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 4, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 3, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; VectorTimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 6, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, ScalarDiscreteEnv&lt; state_end, action_end, 0, 0 &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateContinuousScalarBoundedActionEnv&lt; 3, 1, RealRange&lt;-2.0, 2.0 &gt;, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1bandits_1_1MultiArmedBandits.html#ab842f24cb391293a2abb4196eecc69de">bitrl::envs::bandits::MultiArmedBandits</a>, <a class="el" href="classbitrl_1_1envs_1_1grid__world_1_1Gridworld.html#aa8e6cb877f9b30cfd3ae35587141f4eb">bitrl::envs::grid_world::Gridworld&lt; side_size_ &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html#a8d60507d9a4dfc2cb4edecc89f4fa7b4">bitrl::envs::gdrl::GymWalk&lt; state_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1connect2_1_1Connect2.html#a8bf8299e7d34b0037f9afbeb5cd7e0ad">bitrl::envs::connect2::Connect2</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a86ddf1c4e183898760c3a96257b83e82">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a86ddf1c4e183898760c3a96257b83e82">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 4, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a86ddf1c4e183898760c3a96257b83e82">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 3, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a86ddf1c4e183898760c3a96257b83e82">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; VectorTimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a86ddf1c4e183898760c3a96257b83e82">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 6, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a86ddf1c4e183898760c3a96257b83e82">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, ScalarDiscreteEnv&lt; state_end, action_end, 0, 0 &gt; &gt;</a>, and <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a86ddf1c4e183898760c3a96257b83e82">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateContinuousScalarBoundedActionEnv&lt; 3, 1, RealRange&lt;-2.0, 2.0 &gt;, 0, real_t &gt; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a00b99f27ca5c8c665613ede7fbe31ce9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00b99f27ca5c8c665613ede7fbe31ce9">&#9670;&nbsp;</a></span>reset_options()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeStepType , typename SpaceType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::unordered_map&lt;std::string, std::any&gt;&amp; <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::reset_options </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access the configuration options provided to <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Map of option keys and values </dd></dl>
+
+</div>
+</div>
+<a id="a721486246bfe36599acdda9d42d00fde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a721486246bfe36599acdda9d42d00fde">&#9670;&nbsp;</a></span>set_idx_()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeStepType , typename SpaceType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html">bitrl::envs::EnvBase</a>&lt; TimeStepType, SpaceType &gt;::set_idx_ </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the id of the environment. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">seed.</td><td>The seed to use for resetting the environment </td></tr>
-    <tr><td class="paramname">options.</td><td>Options to use for resetting the environment. </td></tr>
+    <tr><td class="paramname">idx</td><td></td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Implemented in <a class="el" href="classbitrl_1_1envs_1_1grid__world_1_1Gridworld.html#ac0d9b92a0ff99f7f87839dc3256de34d">bitrl::envs::grid_world::Gridworld&lt; side_size_ &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1connect2_1_1Connect2.html#aa4d50e869e847f3ea04e3795a2408a5f">bitrl::envs::connect2::Connect2</a>, <a class="el" href="classbitrl_1_1envs_1_1bandits_1_1MultiArmedBandits.html#af175945a1e7b5cc62f58c1e420e72376">bitrl::envs::bandits::MultiArmedBandits</a>, <a class="el" href="classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html#a23f5add037acc665efc6faf9c09cda9e">bitrl::envs::gdrl::GymWalk&lt; state_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a0ef45651bce157fa399203b4d89e6510">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a0ef45651bce157fa399203b4d89e6510">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 4, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a0ef45651bce157fa399203b4d89e6510">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 3, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a0ef45651bce157fa399203b4d89e6510">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; VectorTimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a0ef45651bce157fa399203b4d89e6510">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 6, 2, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a0ef45651bce157fa399203b4d89e6510">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStepType, ScalarDiscreteEnv&lt; state_end, action_end, 0, 0 &gt; &gt;</a>, and <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html#a0ef45651bce157fa399203b4d89e6510">bitrl::envs::gymnasium::GymnasiumEnvBase&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateContinuousScalarBoundedActionEnv&lt; 3, 1, RealRange&lt;-2.0, 2.0 &gt;, 0, real_t &gt; &gt;</a>.</p>
 
 </div>
 </div>
@@ -883,7 +927,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the make options. </p>
+<p>Store <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a> options for future access. </p>
 
 </div>
 </div>
@@ -913,7 +957,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Helper function to set the version. To be called only when the make is called. </p>
+<p>Set internal version string. </p>
+<dl class="section note"><dt>Note</dt><dd>Should be called only inside <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a> </dd></dl>
 
 </div>
 </div>
@@ -943,15 +988,14 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>step in the environment by performing the given action </p>
+<p>Perform one step in the environment using an action. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">action.</td><td>The action to execute in the environment </td></tr>
+    <tr><td class="paramname">action</td><td>Action applied to the environment </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An instance of time_step_type <br  />
- </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>New time step after executing the action </dd></dl>
 
 <p>Implemented in <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Taxi.html#ab4abf5347d74b2b08af8f66a53069a0d">bitrl::envs::gymnasium::Taxi</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1FrozenLake.html#a32fff68b5d07939e668f95ca1cbf3249">bitrl::envs::gymnasium::FrozenLake&lt; side_size &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1CliffWorld.html#a26962b5c79f852a9f54ffffb5f28a46f">bitrl::envs::gymnasium::CliffWorld</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1BlackJack.html#a98270c8a297fe9d9082e163f14706740">bitrl::envs::gymnasium::BlackJack</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1AcrobotV.html#adb455645e203f509c001f7febb4604ad">bitrl::envs::gymnasium::AcrobotV</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Pendulum.html#a18cb70f29ae6d5fa5d49c2ffa5adee2b">bitrl::envs::gymnasium::Pendulum</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1MountainCar.html#a322670a74ac42cb58753bc211ef32c13">bitrl::envs::gymnasium::MountainCar</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1CartPole.html#ab7630465b147e210c945f55e66ee816d">bitrl::envs::gymnasium::CartPole</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1Acrobot.html#acade5ac9c1d18afd5f059e914f51fe15">bitrl::envs::gymnasium::Acrobot</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#a2f19e610cb955c33278f940887d476c4">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStepType, SpaceType &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#a2f19e610cb955c33278f940887d476c4">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateDiscreteActionEnv&lt; 8, 4, 0, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html#a2f19e610cb955c33278f940887d476c4">bitrl::envs::gymnasium::lunar_lander_detail::_LunarLanderEnv&lt; TimeStep&lt; std::vector&lt; real_t &gt; &gt;, ContinuousVectorStateContinuousVectorActionEnv&lt; 8, 2, real_t, real_t &gt; &gt;</a>, <a class="el" href="classbitrl_1_1envs_1_1gdrl_1_1GymWalk.html#a14cac7b8561b21ed00e5fa8b50c03944">bitrl::envs::gdrl::GymWalk&lt; state_size &gt;</a>, and <a class="el" href="classbitrl_1_1envs_1_1connect2_1_1Connect2.html#a7916b7fbf7dcf75ed5b9ded467fc628f">bitrl::envs::connect2::Connect2</a>.</p>
 
@@ -982,7 +1026,8 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the version of the environment. </p>
+<p>Get the environment version set during <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a45a71602431debde2004835e2ba519c3" title="Construct the environment instance.">make()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Version string </dd></dl>
 
 </div>
 </div>
@@ -1009,7 +1054,7 @@ template&lt;typename TimeStepType , typename SpaceType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Default seed to use. </p>
+<p>Default seed used in <a class="el" href="classbitrl_1_1envs_1_1EnvBase.html#a79fb6e84ffc53e9a66c5b510516a5ffd" title="Reset the environment to an initial state using the reset options specified during make.">reset()</a> if none provided. </p>
 
 </div>
 </div>

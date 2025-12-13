@@ -1,12 +1,13 @@
 <map id="/home/alex/qi3/bitrl/src/bitrl/sensors/vector_message.h" name="/home/alex/qi3/bitrl/src/bitrl/sensors/vector_message.h">
-<area shape="rect" id="node1" title=" " alt="" coords="166,5,341,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,109,69,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="93,109,155,136"/>
-<area shape="rect" id="node4" title=" " alt="" coords="179,109,253,136"/>
-<area shape="rect" id="node5" title=" " alt="" coords="229,184,288,211"/>
-<area shape="rect" id="node6" title=" " alt="" coords="313,184,375,211"/>
-<area shape="rect" id="node7" href="$bitrl__types_8h.html" title=" " alt="" coords="379,109,512,136"/>
-<area shape="rect" id="node8" title=" " alt="" coords="399,184,491,211"/>
-<area shape="rect" id="node9" title=" " alt="" coords="515,184,586,211"/>
-<area shape="rect" id="node10" title=" " alt="" coords="610,184,686,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="326,5,501,61"/>
+<area shape="rect" id="node2" href="$bitrl__types_8h.html" title=" " alt="" coords="173,109,307,136"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,184,64,211"/>
+<area shape="rect" id="node6" title=" " alt="" coords="399,184,462,211"/>
+<area shape="rect" id="node8" title=" " alt="" coords="381,109,445,136"/>
+<area shape="rect" id="node9" title=" " alt="" coords="469,109,531,136"/>
+<area shape="rect" id="node10" title=" " alt="" coords="555,109,629,136"/>
+<area shape="rect" id="node11" title=" " alt="" coords="653,109,733,136"/>
+<area shape="rect" id="node3" title=" " alt="" coords="89,184,181,211"/>
+<area shape="rect" id="node5" title=" " alt="" coords="205,184,275,211"/>
+<area shape="rect" id="node7" title=" " alt="" coords="299,184,375,211"/>
 </map>

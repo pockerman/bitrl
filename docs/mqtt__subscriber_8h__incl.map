@@ -1,8 +1,14 @@
 <map id="/home/alex/qi3/bitrl/src/bitrl/network/mqtt_subscriber.h" name="/home/alex/qi3/bitrl/src/bitrl/network/mqtt_subscriber.h">
-<area shape="rect" id="node1" title=" " alt="" coords="217,5,384,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,109,156,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="181,109,239,136"/>
-<area shape="rect" id="node4" title=" " alt="" coords="263,109,338,136"/>
-<area shape="rect" id="node5" title=" " alt="" coords="362,109,426,136"/>
-<area shape="rect" id="node6" title=" " alt="" coords="451,109,513,136"/>
+<area shape="rect" id="node1" title=" " alt="" coords="485,5,651,61"/>
+<area shape="rect" id="node2" href="$bitrl__types_8h.html" title=" " alt="" coords="148,117,281,143"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,199,64,225"/>
+<area shape="rect" id="node8" title=" " alt="" coords="305,109,468,151"/>
+<area shape="rect" id="node9" title=" " alt="" coords="493,117,643,143"/>
+<area shape="rect" id="node10" title=" " alt="" coords="668,117,743,143"/>
+<area shape="rect" id="node11" title=" " alt="" coords="767,117,831,143"/>
+<area shape="rect" id="node12" title=" " alt="" coords="855,117,918,143"/>
+<area shape="rect" id="node3" title=" " alt="" coords="89,199,181,225"/>
+<area shape="rect" id="node5" title=" " alt="" coords="205,199,275,225"/>
+<area shape="rect" id="node6" title=" " alt="" coords="299,199,362,225"/>
+<area shape="rect" id="node7" title=" " alt="" coords="386,199,462,225"/>
 </map>

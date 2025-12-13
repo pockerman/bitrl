@@ -93,8 +93,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5cea8fba0f0fca18c0ad4543c92cf3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36ffde38e5e9423985f87a199fcb7f55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a36ffde38e5e9423985f87a199fcb7f55">~EKFSensorFusion</a> ()</td></tr>
 <tr class="separator:a36ffde38e5e9423985f87a199fcb7f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ce427259cd987cb6eea69886532bf7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a2ce427259cd987cb6eea69886532bf7e">step</a> (<a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a> dt)</td></tr>
-<tr class="separator:a2ce427259cd987cb6eea69886532bf7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e6edb5302cd1de46232e4a715a8de9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a0e6edb5302cd1de46232e4a715a8de9c">step</a> ()</td></tr>
+<tr class="separator:a0e6edb5302cd1de46232e4a715a8de9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af151dd2ed777103a51e06ca378b8c7f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af151dd2ed777103a51e06ca378b8c7f4">predict</a> (const std::string &amp;input_message, const std::string &amp;sensor_message, const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;topic)</td></tr>
+<tr class="separator:af151dd2ed777103a51e06ca378b8c7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79c5138a48f5ea18d9b91b8d85bfc816"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a79c5138a48f5ea18d9b91b8d85bfc816">update</a> (const std::string &amp;sensor_message, const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;topic)</td></tr>
+<tr class="separator:a79c5138a48f5ea18d9b91b8d85bfc816"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4742e8fdb4c2f3536888596e758c4933"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html">EKFSensorFusion</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a4742e8fdb4c2f3536888596e758c4933">with_matrix</a> (const std::string &amp;name, const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#ab0fb36aaeb3510cde66395571dd2cbcd">matrix_type</a> &amp;mat)</td></tr>
 <tr class="separator:a4742e8fdb4c2f3536888596e758c4933"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a317bf03edc2eab5950fe008eb0fda2e5"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a317bf03edc2eab5950fe008eb0fda2e5">read_from_topic</a> (const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;topic, std::chrono::milliseconds timeout=std::chrono::milliseconds(1000))</td></tr>
@@ -103,12 +107,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af8dfab94ba64ca62f99d58add0e12e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82668a43c04ac672c7e8c48080cc2227"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a82668a43c04ac672c7e8c48080cc2227">add_sensor_topic</a> (const std::string &amp;mqtt_url, const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;topic, <a class="el" href="namespacebitrl_1_1sensors.html#ab91c80b9dbf1cf63bd914cf5ade41b17">SensorTypeEnum</a> sensor_type)</td></tr>
 <tr class="separator:a82668a43c04ac672c7e8c48080cc2227"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad51704ab4976810ab7917adca2facb52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#ad51704ab4976810ab7917adca2facb52">add_sensor_noise</a> (const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;topic, const <a class="el" href="namespacebitrl.html#ad1fd5d32de6eedc600d2bbb687bad2c4">DynMat</a>&lt; <a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a> &gt; &amp;noise)</td></tr>
-<tr class="separator:ad51704ab4976810ab7917adca2facb52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a607b11a567b47d16ce9cf18f56312cc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a607b11a567b47d16ce9cf18f56312cc5">predict</a> (<a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a> dt, const std::string &amp;input_message, const std::string &amp;sensor_message, const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;topic)</td></tr>
-<tr class="separator:a607b11a567b47d16ce9cf18f56312cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22eb9d66422f320d4cce01d04951a7a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a22eb9d66422f320d4cce01d04951a7a0">update</a> (<a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a> dr, const std::string &amp;sensor_message, const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;topic)</td></tr>
-<tr class="separator:a22eb9d66422f320d4cce01d04951a7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a978c61c235562955e6fbddd25d6a015b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#ab0fb36aaeb3510cde66395571dd2cbcd">matrix_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a978c61c235562955e6fbddd25d6a015b">operator[]</a> (const std::string &amp;name) const</td></tr>
 <tr class="memdesc:a978c61c235562955e6fbddd25d6a015b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name-th matrix.  <a href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#a978c61c235562955e6fbddd25d6a015b">More...</a><br /></td></tr>
 <tr class="separator:a978c61c235562955e6fbddd25d6a015b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -262,43 +260,6 @@ template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
 
 </div>
 </div>
-<a id="ad51704ab4976810ab7917adca2facb52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad51704ab4976810ab7917adca2facb52">&#9670;&nbsp;</a></span>add_sensor_noise()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html">bitrl::sensors::EKFSensorFusion</a>&lt; MotionModelType, ObservationModelType &gt;::add_sensor_noise </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html#af65774534c0cd0b45bceadd010dbe00a">topic_type</a> &amp;&#160;</td>
-          <td class="paramname"><em>topic</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespacebitrl.html#ad1fd5d32de6eedc600d2bbb687bad2c4">DynMat</a>&lt; <a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>noise</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Add the modelled sensor noise </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">topic</td><td></td></tr>
-    <tr><td class="paramname">noise</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a82668a43c04ac672c7e8c48080cc2227"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a82668a43c04ac672c7e8c48080cc2227">&#9670;&nbsp;</a></span>add_sensor_topic()</h2>
 
@@ -401,8 +362,8 @@ template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
 
 </div>
 </div>
-<a id="a607b11a567b47d16ce9cf18f56312cc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a607b11a567b47d16ce9cf18f56312cc5">&#9670;&nbsp;</a></span>predict()</h2>
+<a id="af151dd2ed777103a51e06ca378b8c7f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af151dd2ed777103a51e06ca378b8c7f4">&#9670;&nbsp;</a></span>predict()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -412,12 +373,6 @@ template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html">bitrl::sensors::EKFSensorFusion</a>&lt; MotionModelType, ObservationModelType &gt;::predict </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a>&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>input_message</em>, </td>
         </tr>
@@ -446,7 +401,6 @@ template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
   </table>
   </dd>
 </dl>
-<p>make a state prediction using the motion model</p>
 
 </div>
 </div>
@@ -480,8 +434,8 @@ template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
 
 </div>
 </div>
-<a id="a2ce427259cd987cb6eea69886532bf7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ce427259cd987cb6eea69886532bf7e">&#9670;&nbsp;</a></span>step()</h2>
+<a id="a0e6edb5302cd1de46232e4a715a8de9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e6edb5302cd1de46232e4a715a8de9c">&#9670;&nbsp;</a></span>step()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -489,19 +443,15 @@ template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
 template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html">bitrl::sensors::EKFSensorFusion</a>&lt; MotionModelType, ObservationModelType &gt;::step </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a>&#160;</td>
-          <td class="paramname"><em>dt</em></td><td>)</td>
-          <td></td>
+          <td class="memname">void <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html">bitrl::sensors::EKFSensorFusion</a>&lt; MotionModelType, ObservationModelType &gt;::step</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a22eb9d66422f320d4cce01d04951a7a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22eb9d66422f320d4cce01d04951a7a0">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a79c5138a48f5ea18d9b91b8d85bfc816"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79c5138a48f5ea18d9b91b8d85bfc816">&#9670;&nbsp;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -511,12 +461,6 @@ template&lt;typename MotionModelType , typename ObservationModelType &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classbitrl_1_1sensors_1_1EKFSensorFusion.html">bitrl::sensors::EKFSensorFusion</a>&lt; MotionModelType, ObservationModelType &gt;::update </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a>&#160;</td>
-          <td class="paramname"><em>dr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>sensor_message</em>, </td>
         </tr>
