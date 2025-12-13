@@ -3,17 +3,19 @@
 //
 
 #include "bitrl/envs/gymnasium/box2d/lunar_lander_env.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <unordered_map>
 #include <vector>
 #include <iostream>
 
+#include "../../src/bitrl/sensors/ekf_sensor_fusion.h"
+
 namespace box2d_example
 {
+    using namespace bitrl;
     const std::string SERVER_URL = "http://0.0.0.0:8001/api";
     using bitrl::real_t;
-    using bitrl::envs::RESTApiServerWrapper;
     using bitrl::envs::gymnasium::LunarLanderDiscreteEnv;
     using bitrl::envs::gymnasium::LunarLanderContinuousEnv;
 }
@@ -22,7 +24,7 @@ int main()
 {
     using namespace box2d_example;
 
-    RESTApiServerWrapper server(SERVER_URL, true);
+    bitrl::network::RESTRLEnvClient server(SERVER_URL, true);
 
     std::unordered_map<std::string, std::any> options;
     options["wind_power"] = std::any(static_cast<bitrl::real_t>(10.0));
@@ -57,7 +59,9 @@ int main()
         std::cout<<"Working with LunarLanderContinuousEnv..."<<std::endl;
 
         LunarLanderContinuousEnv env(server);
-        env.make("v3", options);
+
+        std::unordered_map<std::string, std::any> reset_options;
+        env.make("v3", options, reset_options);
 
         std::cout<<"Is environment created? "<<env.is_created()<<std::endl;
         std::cout<<"Is environment alive? "<<env.is_alive()<<std::endl;
@@ -70,13 +74,8 @@ int main()
         std::vector<real_t> action = {0.8, 0.9};
         time_step = env.step(action);
         std::cout<<"Time step: "<<time_step<<std::endl;
-
-        auto copy = env.make_copy(1);
-        time_step = copy.reset();
-        std::cout<<"Time step: "<<time_step<<std::endl;
-
         env.close();
-        copy.close();
+
     }
 
 }

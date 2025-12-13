@@ -91,8 +91,6 @@ public:
 	///
     typedef typename base_type::state_type state_type;
 
-	using base_type::reset;
-	
 	///
 	/// \brief MultiArmedBandits Constructor
 	///
@@ -105,7 +103,8 @@ public:
 	/// Concrete classes may choose to hold a copy 
 	///
     virtual void make(const std::string& version,
-                      const std::unordered_map<std::string, std::any>& options)override final;
+                      const std::unordered_map<std::string, std::any>& options,
+                      const std::unordered_map<std::string, std::any>& reset_options)override final;
 
     ///
 	/// \brief close the environment
@@ -117,8 +116,7 @@ public:
 	/// \param seed. The seed to use for resetting the environment
 	/// \param options. Options to use for resetting the environment.
 	///
-    virtual time_step_type reset(uint_t seed,
-                                 const std::unordered_map<std::string, std::any>& options)override final;
+    virtual time_step_type reset()override final;
 								 
 
 	///

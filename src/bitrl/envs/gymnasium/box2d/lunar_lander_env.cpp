@@ -16,14 +16,9 @@ namespace bitrl
         const std::string LunarLanderContinuousEnv::name = "LunarLanderContinuous";
         const std::string LunarLanderContinuousEnv::URI = "/gymnasium/lunar-lander-continuous-env";
 
-        LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(const RESTApiServerWrapper& api_server)
+        LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(network::RESTRLEnvClient& api_server)
         :
-        LunarLanderDiscreteEnv::base_type(api_server, 0, LunarLanderDiscreteEnv::name, LunarLanderDiscreteEnv::URI)
-        {}
-
-        LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(const RESTApiServerWrapper& api_server, const uint_t cidx)
-        :
-        LunarLanderDiscreteEnv::base_type(api_server, cidx, LunarLanderDiscreteEnv::name, LunarLanderDiscreteEnv::URI)
+        LunarLanderDiscreteEnv::base_type(api_server, LunarLanderDiscreteEnv::name, LunarLanderDiscreteEnv::URI)
         {}
 
         LunarLanderDiscreteEnv::LunarLanderDiscreteEnv(const LunarLanderDiscreteEnv& other)
@@ -31,42 +26,18 @@ namespace bitrl
         LunarLanderDiscreteEnv::base_type(other)
         {}
 
-        LunarLanderDiscreteEnv
-        LunarLanderDiscreteEnv::make_copy(uint_t cidx)const
-        {
 
-            LunarLanderDiscreteEnv copy(this -> get_api_server(), cidx);
-            auto version = this -> version();
-            copy.make(version, this -> make_options());
-            return copy;
 
-        }
-
-        LunarLanderContinuousEnv::LunarLanderContinuousEnv(const RESTApiServerWrapper& api_server)
+        LunarLanderContinuousEnv::LunarLanderContinuousEnv(network::RESTRLEnvClient& api_server)
         :
-        LunarLanderContinuousEnv::base_type(api_server, 0, LunarLanderContinuousEnv::name, LunarLanderContinuousEnv::URI)
+        LunarLanderContinuousEnv::base_type(api_server, LunarLanderContinuousEnv::name, LunarLanderContinuousEnv::URI)
         {}
 
-        LunarLanderContinuousEnv::LunarLanderContinuousEnv(const RESTApiServerWrapper& api_server, const uint_t cidx)
-        :
-        LunarLanderContinuousEnv::base_type(api_server, cidx, LunarLanderContinuousEnv::name, LunarLanderContinuousEnv::URI)
-        {}
 
         LunarLanderContinuousEnv::LunarLanderContinuousEnv(const LunarLanderContinuousEnv& other)
             :
         LunarLanderContinuousEnv::base_type(other)
         {}
-
-        LunarLanderContinuousEnv
-        LunarLanderContinuousEnv::make_copy(uint_t cidx)const
-        {
-
-            LunarLanderContinuousEnv copy(this -> get_api_server(), cidx);
-            auto version = this -> version();
-            copy.make(version, this -> make_options());
-            return copy;
-
-        }
 
     }
 }

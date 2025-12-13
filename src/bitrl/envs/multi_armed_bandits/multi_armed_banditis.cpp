@@ -21,7 +21,8 @@ bandits_()
 
 void 
 MultiArmedBandits::make(const std::string& version,
-                        const std::unordered_map<std::string, std::any>& options){
+                        const std::unordered_map<std::string, std::any>& options,
+                        const std::unordered_map<std::string, std::any>& reset_options){
 							
 	
 	auto p_itr = options.find("p");
@@ -60,9 +61,8 @@ MultiArmedBandits::make(const std::string& version,
 }
 
 MultiArmedBandits::time_step_type 
-MultiArmedBandits::reset(uint_t seed,
-						 const std::unordered_map<std::string, std::any>& /*options*/){
-	seed_ = seed;
+MultiArmedBandits::reset(){
+	seed_ = 42;
 	
 	static auto res = [](auto& bernoulli){
 		bernoulli.reset();

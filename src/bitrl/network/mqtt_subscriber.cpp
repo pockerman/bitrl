@@ -53,6 +53,10 @@ namespace bitrl {
         std::optional<std::string>
         MqttSubscriber::poll(std::chrono::milliseconds timeout) {
 
+            if (!cli_.is_connected()) {
+                throw std::runtime_error("MQTT client not connected");
+            }
+
             std::unique_lock<std::mutex> lock(mutex_);
 
              if (!cv_.wait_for(lock, timeout, [this]{ return !queue_.empty(); })) {
@@ -69,6 +73,10 @@ namespace bitrl {
         std::optional<std::string>
         MqttSubscriber::read(std::chrono::milliseconds timeout)
         {
+            if (!cli_.is_connected()) {
+                throw std::runtime_error("MQTT client not connected");
+            }
+
             std::unique_lock<std::mutex> lock(mutex_);
 
             if (timeout == std::chrono::milliseconds::zero()) {
@@ -89,6 +97,28 @@ namespace bitrl {
                 queue_.pop();
                 return msg;
             }
+        }
+
+        void
+        MqttSubscriber::publish(const std::string& payload, int_t qos, bool retained)
+        {
+            if (!cli_.is_connected()) {
+                throw std::runtime_error("MQTT client not connected");
+            }
+
+            auto msg = mqtt::make_message(topic_, payload);
+            msg->set_qos(qos);
+            msg->set_retained(retained);
+            cli_.publish(msg);
+        }
+
+        void
+        MqttSubscriber::publish(const nlohmann::json& payload, int_t qos, bool retained)
+        {
+
+            // Serialize JSON to string
+            std::string msg_str = payload.dump();
+            publish(msg_str, qos, retained);
         }
 
     }

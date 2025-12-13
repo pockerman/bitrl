@@ -1,3 +1,4 @@
+#include "bitrl/bitrl_consts.h"
 #include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 #include "bitrl/bitrl_config.h"
 #include "bitrl/envs/time_step_type.h"
@@ -30,30 +31,18 @@ namespace envs::gymnasium
 
 		std::unordered_map<std::string, std::any> info_;
 		info_["prob"] = std::any(static_cast<real_t>(info["prob"]));
-
-
 		return CliffWorld::time_step_type(TimeStepEnumUtils::time_step_type_from_int(step_type),
 		                                  reward, observation, discount,
 		                                  std::move(info_));
 
 	}
 
-
-	CliffWorld::CliffWorld(const RESTApiServerWrapper& api_server)
+	CliffWorld::CliffWorld(network::RESTRLEnvClient& api_server)
 		:
-		ToyTextEnvBase<TimeStep<uint_t>, 37, 4>(api_server, 0, CliffWorld::name),
+		ToyTextEnvBase<TimeStep<uint_t>, 37, 4>(api_server, CliffWorld::name),
 		max_episode_steps_(200)
 	{
-		this ->get_api_server().register_if_not(CliffWorld::name,CliffWorld::URI);
-	}
-
-	CliffWorld::CliffWorld(const RESTApiServerWrapper& api_server,
-	                       const uint_t cidx)
-		:
-		ToyTextEnvBase<TimeStep<uint_t>, 37, 4>(api_server, cidx, CliffWorld::name),
-		max_episode_steps_(200)
-	{
-		this ->get_api_server().register_if_not(CliffWorld::name,CliffWorld::URI);
+		this -> get_api_server().register_if_not(CliffWorld::name,CliffWorld::URI);
 	}
 
 	CliffWorld::CliffWorld(const CliffWorld& other)
@@ -64,7 +53,8 @@ namespace envs::gymnasium
 
 	void
 	CliffWorld::make(const std::string& version,
-	                 const std::unordered_map<std::string, std::any>& options){
+	                 const std::unordered_map<std::string, std::any>& options,
+	                 const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this->is_created()){
 			return;
@@ -78,13 +68,11 @@ namespace envs::gymnasium
 		nlohmann::json ops;
 		ops["max_episode_steps"] = max_episode_steps_;
 		auto response = this -> get_api_server().make(this->env_name(),
-		                                              this->cidx(),
-		                                              version,
-		                                              ops);
-
-		this->set_version_(version);
-		this->make_created_();
-
+		                                                  version, ops);
+		auto idx = response["idx"];
+		this -> set_idx_(idx);
+		this -> base_type::make(version, options, reset_options);
+		this -> make_created_();
 	}
 
 	CliffWorld::time_step_type
@@ -95,26 +83,16 @@ namespace envs::gymnasium
 #endif
 
 		if(this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
+			return this->reset();
 		}
 
 		auto response = this -> get_api_server().step(this->env_name(),
-		                                              this->cidx(),
+		                                              this->idx(),
 		                                              action);
 
 		this->get_current_time_step_() = this->create_time_step_from_response_(response);
 		return this->get_current_time_step_();
 
-	}
-
-	CliffWorld
-	CliffWorld::make_copy(uint_t cidx)const{
-
-		CliffWorld copy(this -> get_api_server(),cidx);
-		std::unordered_map<std::string, std::any> ops;
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
 	}
 
 }

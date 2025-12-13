@@ -81,7 +81,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/envs/env_types.h"
 
@@ -97,15 +97,15 @@ namespace envs::gymnasium
 	///
 	/// \brief The Pendulum class. Interface for Pendulum environment
 	///
-	class Pendulum final: public GymnasiumEnvBase<TimeStep<std::vector<real_t>>,
+class Pendulum final: public GymnasiumEnvBase<TimeStep<std::vector<real_t>>,
 	                                              ContinuousVectorStateContinuousScalarBoundedActionEnv<3,
 		                                              1,
 		                                              RealRange<-2.0, 2.0>,
 		                                              0, real_t>
 		>
-	{
+{
 
-	public:
+public:
 
 		///
 		/// \brief name
@@ -156,13 +156,7 @@ namespace envs::gymnasium
 		///
 		/// \brief Pendulum. Constructor
 		///
-		Pendulum(const RESTApiServerWrapper& api_server );
-
-		///
-		/// \brief Constructor
-		///
-		Pendulum(const RESTApiServerWrapper& api_server,
-		         const uint_t cidx);
+		Pendulum(network::RESTRLEnvClient& api_server );
 
 		///
 		/// \brief copy ctor
@@ -172,35 +166,32 @@ namespace envs::gymnasium
 		///
 		/// \brief ~Pendulum. Destructor
 		///
-		~Pendulum()=default;
+		~Pendulum() override =default;
 
 		///
 		/// \brief make. Build the environment
 		///
 		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& /*options*/) override final;
+		                  const std::unordered_map<std::string, std::any>& /*options*/,
+		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
 
 		///
 		/// \brief step. Step in the environment following the given action
 		///
 		virtual time_step_type step(const action_type& action)override final;
 
-		///
-		/// \brief Create a new copy of the environment with the given
-		/// copy index
-		///
-		Pendulum make_copy(uint_t cidx)const;
+
 
 		///
 		/// \brief n_actions. Returns the number of actions
 		///
 		uint_t n_actions()const noexcept{return action_space_type::size;}
 
-	protected:
+protected:
 
 		///
-    /// \brief Handle the reset response from the environment server
-    ///
+		/// \brief Handle the reset response from the environment server
+		///
 		virtual time_step_type create_time_step_from_response_(const nlohmann::json& response) const override final;
 
 	};

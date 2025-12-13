@@ -12,22 +12,27 @@
 #include <string>
 #include <random>
 #include <unordered_map>
+#include <any>
 
 
 namespace example_5{
-	
+
+	using namespace bitrl;
+
 	using namespace bitrl::envs::grid_world;
 	
 	void create_static(){
 		
 		std::cout<<"Creating STATIC Gridworld..."<<std::endl;
 		
-		bitrl::envs::grid_world::Gridworld<4> env;
+		Gridworld<4> env;
 
         std::unordered_map<std::string, std::any> options;
+		std::unordered_map<std::string, std::any> reset_ops;
+		reset_ops.insert({"seed", static_cast<uint_t>(42)});
         options["mode"] = std::any(GridWorldInitType::STATIC);
 
-        env.make("v0", options);
+        env.make("v0", options, reset_ops);
 		
 		std::cout<<"Number of actions: "<<env.n_actions()<<std::endl;
 		std::cout<<"Number of states:  "<<env.n_states()<<std::endl;
@@ -51,7 +56,10 @@ namespace example_5{
         std::unordered_map<std::string, std::any> options;
         options["mode"] = std::any(GridWorldInitType::RANDOM);
 
-        env.make("v0", options);
+		std::unordered_map<std::string, std::any> reset_ops;
+		reset_ops.insert({"seed", static_cast<uint_t>(42)});
+
+        env.make("v0", options, reset_ops);
 		
 		std::cout<<"Number of actions: "<<env.n_actions()<<std::endl;
 		std::cout<<"Number of states:  "<<env.n_states()<<std::endl;
