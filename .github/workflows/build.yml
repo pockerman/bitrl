@@ -21,15 +21,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install dependencies
       run: |
-        sudo apt-get install -y \
-          build-essential \
-          cmake \
-          git \
-          libboost-all-dev \
-          libgtest-dev \ 
-          libeigen3-dev \ 
-          libblas-dev \ 
-          libopencv-dev
+        sudo apt-get install -y build-essential cmake git \
+        libboost-all-dev libgtest-dev libeigen3-dev libblas-dev libopencv-dev
       # g++ cmake libboost-all-dev libgtest-dev libeigen3-dev libblas-dev
     - name: Build and install Paho MQTT C
       run: |
