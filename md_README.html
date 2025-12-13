@@ -76,18 +76,11 @@ $(function() {
 <h1><a class="anchor" id="autotoc_md0"></a>
 bitrl</h1>
 <div class="fragment"><div class="line"> {bitrl```}</div>
-<div class="line">using  C++. </div>
+<div class="line">using  C++.  The documentation for the library can be found &lt;a href=&quot;https://pockerman.github.io/bitrl/index.html&quot;&gt;here&lt;/a&gt;.</div>
 <div class="line"> </div>
-<div class="line">Furthermore, there is some minimal support for working with Arduino UNO boards over USB or WiFi.</div>
-<div class="line">See also &lt;a href=&quot;https://rlenvscpp.readthedocs.io/en/latest/working_with_webots.html&quot;&gt;Working with Webots&lt;/a&gt;</div>
-<div class="line">for how to integrate ```bitrl``` with &lt;a href=&quot;https://cyberbotics.com/doc/guide/installing-webots&quot;&gt;Webots&lt;/a&gt;.</div>
-<div class="line"> </div>
-<div class="line">Various RL algorithms using the environments can be found at &lt;a href=&quot;https://github.com/pockerman/cuberl/tree/master&quot;&gt;cuberl&lt;/a&gt;.</div>
-<div class="line"> </div>
-<div class="line">The documentation for the library can be found &lt;a href=&quot;https://pockerman.github.io/bitrl/index.html&quot;&gt;here&lt;/a&gt;.</div>
 <div class="line">The following is an example how to use the </div>
 <div class="line">``FrozenLake``   environment from &lt;a href=&quot;https://github.com/Farama-Foundation/Gymnasium/tree/main&quot;&gt;Gymnasium&lt;/a&gt;.</div>
-</div><!-- fragment --><p>#include "bitrl/bitrl_types.h" #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h" #include "bitrl/envs/api_server/apiserver.h"</p>
+</div><!-- fragment --><p>#include "bitrl/bitrl_types.h" #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h" #include "bitrl/network/rest_rl_env_client.h"</p>
 <p>#include &lt;iostream&gt; #include &lt;string&gt; #include &lt;unordered_map&gt; #include &lt;any&gt;</p>
 <p>namespace example_1{</p>
 <p>const std::string SERVER_URL = "http://0.0.0.0:8001/api";</p>
@@ -97,21 +90,26 @@ bitrl</h1>
 std::cout&lt;&lt;"Environame URL: "&lt;&lt;env.get_url()&lt;&lt;std::endl;
 
 // make the environment
-std::unordered_map&lt;std::string, std::any&gt; options;
-options.insert({"is_slippery", false});
-env.make("v1", options);
+std::unordered_map&lt;std::string, std::any&gt; make_ops;
+make_ops.insert({"is_slippery", false});
+
+std::unordered_map&lt;std::string, std::any&gt; reset_ops;
+reset_ops.insert({"seed", static_cast&lt;uint_t&gt;(42)});
+env.make("v1", make_ops, reset_ops);
 
 std::cout&lt;&lt;"Is environment created? "&lt;&lt;env.is_created()&lt;&lt;std::endl;
 std::cout&lt;&lt;"Is environment alive? "&lt;&lt;env.is_alive()&lt;&lt;std::endl;
 std::cout&lt;&lt;"Number of valid actions? "&lt;&lt;env.n_actions()&lt;&lt;std::endl;
 std::cout&lt;&lt;"Number of states? "&lt;&lt;env.n_states()&lt;&lt;std::endl;
+std::cout&lt;&lt;"Env idx: "&lt;&lt;env.idx()&lt;&lt;std::endl;
 
 // reset the environment
-auto time_step = env.reset(42, std::unordered_map&lt;std::string, std::any&gt;());
+auto time_step = env.reset();
 
 std::cout&lt;&lt;"Reward on reset: "&lt;&lt;time_step.reward()&lt;&lt;std::endl;
 std::cout&lt;&lt;"Observation on reset: "&lt;&lt;time_step.observation()&lt;&lt;std::endl;
 std::cout&lt;&lt;"Is terminal state: "&lt;&lt;time_step.done()&lt;&lt;std::endl;
+std::cout&lt;&lt;"Env idx: "&lt;&lt;env.idx()&lt;&lt;std::endl;
 
 //...print the time_step
 std::cout&lt;&lt;time_step&lt;&lt;std::endl;
@@ -130,7 +128,6 @@ auto dynamics = env.p(state, action);
 std::cout&lt;&lt;"Dynamics for state="&lt;&lt;state&lt;&lt;" and action="&lt;&lt;action&lt;&lt;std::endl;
 
 for(auto item:dynamics){
-
     std::cout&lt;&lt;std::get&lt;0&gt;(item)&lt;&lt;std::endl;
     std::cout&lt;&lt;std::get&lt;1&gt;(item)&lt;&lt;std::endl;
     std::cout&lt;&lt;std::get&lt;2&gt;(item)&lt;&lt;std::endl;
@@ -143,12 +140,9 @@ std::cout&lt;&lt;"Action sampled: "&lt;&lt;action&lt;&lt;std::endl;
 new_time_step = env.step(action);
 std::cout&lt;&lt;new_time_step&lt;&lt;std::endl;
 
-std::cout&lt;&lt;"env cidx: "&lt;&lt;env.cidx()&lt;&lt;std::endl;
-
 // close the environment
 env.close();
-</pre><p> }</p>
-<p>}</p>
+</pre><p> } }</p>
 <p>int main(){ </p><pre class="fragment">using namespace example_1;
 
 RESTApiServerWrapper server(SERVER_URL, true);
@@ -159,7 +153,9 @@ std::cout&lt;&lt;"===================="&lt;&lt;std::endl;
 
 return 0;
 </pre><p> }</p>
-<p>``` </p>
+<p>```</p>
+<p>Gymnasium environments exposed over a REST like API can be found at: &lt;href="https://github.com/pockerman/bitrl-rest-api"&gt;bitrl-rest-api Various RL algorithms using the environments can be found at <a href="https://github.com/pockerman/cuberl/tree/master">cuberl</a>.</p>
+<p>Furthermore, there is some minimal support for working with Arduino UNO boards over USB or WiFi. See also <a href="https://rlenvscpp.readthedocs.io/en/latest/working_with_webots.html">Working with Webots</a> for how to integrate <code>bitrl</code> with <a href="https://cyberbotics.com/doc/guide/installing-webots">Webots</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
