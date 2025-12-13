@@ -103,7 +103,7 @@ int main(){
 
 ```
 
-Gymnasium environments exposed over a REST like API can be found at: <href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a>
+Gymnasium environments exposed over a REST like API can be found at: <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a>
 Various RL algorithms using the environments can be found at <a href="https://github.com/pockerman/cuberl/tree/master">cuberl</a>.
 
 Furthermore, there is some minimal support for working with Arduino UNO boards over USB or WiFi.
