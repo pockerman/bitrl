@@ -7,6 +7,7 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/sensors/sensor_type_enum.h"
+#include "bitrl/network/mqtt_subscriber.h"
 #include "Eigen/Dense"
 
 #include <chrono>
@@ -19,12 +20,6 @@
 
 namespace bitrl
 {
-    namespace network
-    {
-        // forward declaration
-        class MqttSubscriber;
-    }
-
     namespace sensors
     {
         template<typename MotionModelType, typename ObservationModelType>

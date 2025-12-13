@@ -9,7 +9,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_config.h"
 #include "bitrl/envs/env_base.h"
-#include "../../network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/utils//std_map_utils.h"
 
@@ -90,7 +90,7 @@ public:
 	 * @brief Retrieve the REST API wrapper instance used for communication.
 	 * @return Read-only reference to the server wrapper.
 	 */
-	RESTRLEnvClient& get_api_server()const{return *api_server_;}
+	network::RESTRLEnvClient& get_api_server()const{return *api_server_;}
 
 	/**
 	 * @brief Get the full URL for this environment endpoint on the server.
@@ -107,7 +107,7 @@ protected:
 	 * @param cidx        Index of this environment instance within a simulation.
 	 * @param name        Name of the environment.
 	*/
-	GymnasiumEnvBase(RESTRLEnvClient& api_server, const std::string& name);
+	GymnasiumEnvBase(network::RESTRLEnvClient& api_server, const std::string& name);
 
 	/**
 	 * @brief Copy constructor.
@@ -117,7 +117,7 @@ protected:
 	/**
 	 * @brief Server wrapper handling communication with remote Gymnasium environment.
 	 */
-	RESTRLEnvClient* api_server_;
+	network::RESTRLEnvClient* api_server_;
 
 	/**
 	 * @brief Build a TimeStepType instance from a server JSON response.
@@ -134,7 +134,7 @@ protected:
 
 	template<typename TimeStepType, typename SpaceType>
 	GymnasiumEnvBase<TimeStepType,
-	                 SpaceType>::GymnasiumEnvBase(RESTRLEnvClient& api_server,
+	                 SpaceType>::GymnasiumEnvBase(network::RESTRLEnvClient& api_server,
 	                                              const std::string& name)
 		:
 		EnvBase<TimeStepType, SpaceType>(name),

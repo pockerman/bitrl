@@ -66,7 +66,8 @@ public:
 	typedef typename base_type::state_type state_type;
 	
 	virtual void make(const std::string& version,
-					  const std::unordered_map<std::string, std::any>& options)=0;
+					  const std::unordered_map<std::string, std::any>& options,
+					  const std::unordered_map<std::string, std::any>& reset_options)=0;
 	
 	
 	///
@@ -89,8 +90,7 @@ protected:
 	///
     /// \brief Constructor
     ///
-    GymnasiumVecEnvBase(const RESTRLEnvClient& api_server,
-						const uint_t cidx,
+    GymnasiumVecEnvBase(network::RESTRLEnvClient& api_server,
 	                    const std::string& name);
 						
 	GymnasiumVecEnvBase(const GymnasiumVecEnvBase& other);
@@ -110,11 +110,10 @@ private:
 
 
 template<typename VectorTimeStepType, typename SpaceType>
-GymnasiumVecEnvBase<VectorTimeStepType, SpaceType>::GymnasiumVecEnvBase(const RESTRLEnvClient& api_server,
-                                                                        const uint_t cidx,
+GymnasiumVecEnvBase<VectorTimeStepType, SpaceType>::GymnasiumVecEnvBase(network::RESTRLEnvClient& api_server,
 															            const std::string& name)
 :
-GymnasiumEnvBase<VectorTimeStepType, SpaceType>(api_server, cidx, name)
+GymnasiumEnvBase<VectorTimeStepType, SpaceType>(api_server, name)
 {}
 
 
@@ -129,7 +128,8 @@ reset_if_any_done_(other.reset_if_any_done_)
 template<typename VectorTimeStepType, typename SpaceType>
 void 
 GymnasiumVecEnvBase<VectorTimeStepType, SpaceType>::make(const std::string& version,
-                                             const std::unordered_map<std::string, std::any>& options){
+                                             const std::unordered_map<std::string, std::any>& options,
+                                             const std::unordered_map<std::string, std::any>& reset_options){
 
 	auto reset_if_any_done_itr = options.find("reset_if_any_done");
 	

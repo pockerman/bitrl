@@ -36,22 +36,11 @@ namespace envs::gymnasium
 	}
 
 
-	MountainCar::MountainCar(const RESTRLEnvClient& api_server )
+	MountainCar::MountainCar(network::RESTRLEnvClient& api_server )
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t>>,
 		                 ContinuousVectorStateDiscreteActionEnv<3, 2, 0, real_t >
-		>(api_server, 0, MountainCar::name)
-	{
-		this -> get_api_server().register_if_not(MountainCar::name, MountainCar::URI);
-	}
-
-
-	MountainCar::MountainCar(const RESTRLEnvClient& api_server ,
-	                         const uint_t cidx)
-		:
-		GymnasiumEnvBase<TimeStep<std::vector<real_t>>,
-		                 ContinuousVectorStateDiscreteActionEnv<3, 2, 0, real_t >
-		>(api_server, cidx, MountainCar::name)
+		>(api_server, MountainCar::name)
 	{
 		this -> get_api_server().register_if_not(MountainCar::name, MountainCar::URI);
 	}
@@ -65,21 +54,20 @@ namespace envs::gymnasium
 
 	void
 	MountainCar::make(const std::string& version,
-	                  const std::unordered_map<std::string, std::any>& /*options*/){
+	                  const std::unordered_map<std::string, std::any>& options,
+	                  const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this->is_created()){
 			return;
 		}
 
 		auto response  = this -> get_api_server().make(this -> env_name(),
-		                                               this -> cidx(),
 		                                               version, nlohmann::json());
 
-		this->set_version_(version);
-		this->make_created_();
-
-		this->set_version_(version);
-		this->make_created_();
+		auto idx = response["idx"];
+		this -> set_idx_(idx);
+		this -> base_type::make(version, options, reset_options);
+		this -> make_created_();
 
 	}
 
@@ -91,28 +79,17 @@ namespace envs::gymnasium
 #endif
 
 		if(this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
+			return this->reset();
 		}
 
 		const auto response  = this -> get_api_server().step(this -> env_name(),
-		                                                     this -> cidx(),
+		                                                     this -> idx(),
 		                                                     action);
 
 
 		this->get_current_time_step_() = this->create_time_step_from_response_(response);
 		return this->get_current_time_step_();
-
-	}
-
-	MountainCar
-	MountainCar::make_copy(uint_t cidx)const{
-
-		MountainCar copy(this -> get_api_server(), cidx);
-		std::unordered_map<std::string, std::any> ops;
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
-	}
+}
 
 }
 }

@@ -37,11 +37,11 @@ namespace envs::gymnasium
 		);
 	}
 
-	BlackJack::BlackJack(const RESTRLEnvClient& api_server)
+	BlackJack::BlackJack(network::RESTRLEnvClient& api_server)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>, 48, 2>(api_server, BlackJack::name)
 	{
-		this ->get_api_server().register_if_not(BlackJack::name, BlackJack::URI);
+		this -> get_api_server().register_if_not(BlackJack::name, BlackJack::URI);
 	}
 
 	BlackJack::BlackJack(const BlackJack& other)

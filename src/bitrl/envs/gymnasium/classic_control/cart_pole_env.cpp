@@ -29,21 +29,10 @@ namespace envs::gymnasium
 		                                std::unordered_map<std::string, std::any>());
 	}
 
-	CartPole::CartPole(const RESTRLEnvClient& api_server)
+	CartPole::CartPole(network::RESTRLEnvClient& api_server)
 		:
 		GymnasiumEnvBase<TimeStep<std::vector<real_t> >,
-		                 ContinuousVectorStateDiscreteActionEnv<4, 2, 0, real_t >>(api_server, 0, CartPole::name)
-	{
-		this -> get_api_server().register_if_not(CartPole::name, CartPole::URI);
-	}
-
-	CartPole::CartPole(const RESTRLEnvClient& api_server,
-	                   const uint_t cidx)
-		:
-		GymnasiumEnvBase<TimeStep<std::vector<real_t> >,
-		                 ContinuousVectorStateDiscreteActionEnv<4, 2, 0, real_t >>(api_server,
-			cidx,
-			CartPole::name)
+		                 ContinuousVectorStateDiscreteActionEnv<4, 2, 0, real_t >>(api_server, CartPole::name)
 	{
 		this -> get_api_server().register_if_not(CartPole::name, CartPole::URI);
 	}
@@ -56,28 +45,22 @@ namespace envs::gymnasium
 
 	void
 	CartPole::make(const std::string& version,
-	               const std::unordered_map<std::string, std::any>& options){
+	               const std::unordered_map<std::string, std::any>& options,
+	               const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this->is_created()){
 			return;
 		}
 
-
 		nlohmann::json ops;
-		auto has_rendering = options.find("render_mode");
-		if(has_rendering != options.end()){
-			auto render_str = std::any_cast<std::string>(has_rendering->second);
-			ops["render_mode"] = render_str;
-		}
-
 		auto response  = this -> get_api_server().make(this -> env_name(),
-		                                               this -> cidx(),
 		                                               version, ops);
 
-		this->set_version_(version);
-		this->make_created_();
+		auto idx = response["idx"];
+		this -> set_idx_(idx);
+		this -> base_type::make(version, options, reset_options);
+		this -> make_created_();
 	}
-
 
 	CartPole::time_step_type
 	CartPole::step(const action_type& action){
@@ -87,28 +70,16 @@ namespace envs::gymnasium
 #endif
 
 		if(this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
+			return this->reset();
 		}
 
 		const auto response  = this -> get_api_server().step(this -> env_name(),
-		                                                     this -> cidx(),
+		                                                     this -> idx(),
 		                                                     action);
 
 		this->get_current_time_step_() = this->create_time_step_from_response_(response);
 		return this->get_current_time_step_();
 	}
-
-	CartPole
-	CartPole::make_copy(uint_t cidx)const{
-
-
-		CartPole copy(this -> get_api_server(), cidx);
-		std::unordered_map<std::string, std::any> ops;
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
-	}
-
 
 }
 }

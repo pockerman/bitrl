@@ -5,7 +5,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
 #include "bitrl/envs/time_step.h"
-#include "../../../network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <string>
@@ -67,7 +67,7 @@ public:
 		///
     /// \brief Taxi
     ///
-		Taxi(const RESTRLEnvClient& api_server);
+		Taxi(network::RESTRLEnvClient& api_server);
 
 
 		///
@@ -78,7 +78,7 @@ public:
 		///
     /// \brief ~FrozenLake. Destructor.
     ///
-		~Taxi()=default;
+		~Taxi() override =default;
 
 		///
     /// \brief make. Builds the environment. Optionally we can choose if the
@@ -88,21 +88,13 @@ public:
 		                  const std::unordered_map<std::string, std::any>& /*options*/,
 		                  const std::unordered_map<std::string, std::any>& /*reset_options*/) override final;
 
-
 		///
     /// \brief step
     ///
 		virtual time_step_type step(const action_type& action) override final;
 
 
-	protected:
-
-
-
-		///
-    /// \brief build the dynamics from response
-    ///
-		//virtual dynamics_t build_dynamics_from_response_(const nlohmann::json& response)const override final;
+protected:
 
 		///
     /// \brief Handle the reset response from the environment server
@@ -111,7 +103,7 @@ public:
 
 
 
-	};
+};
 
 }
 }

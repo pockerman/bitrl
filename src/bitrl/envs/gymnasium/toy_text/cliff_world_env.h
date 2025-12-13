@@ -109,7 +109,7 @@ public:
 		///
     /// \brief CliffWorld
     ///
-		CliffWorld(const RESTRLEnvClient& api_server);
+		CliffWorld(network::RESTRLEnvClient& api_server);
 
 
 		///

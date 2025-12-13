@@ -18,12 +18,12 @@ namespace envs::gymnasium
 	const std::string Taxi::name = "Taxi";
 	const std::string Taxi::URI = "/gymnasium/taxi-env";
 
-	Taxi::Taxi(const RESTRLEnvClient& api_server)
+	Taxi::Taxi(network::RESTRLEnvClient& api_server)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>, 500, 6>(api_server, Taxi::name)
 	{
 
-		this ->get_api_server().register_if_not(Taxi::name,Taxi::URI);
+		this -> get_api_server().register_if_not(Taxi::name,Taxi::URI);
 	}
 
 	Taxi::time_step_type

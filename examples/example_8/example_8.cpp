@@ -1,6 +1,6 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/gymnasium/classic_control/vector/acrobot_vec_env.h"
-#include "../../src/bitrl/network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/bitrl_consts.h"
 
 #include <iostream>
@@ -15,7 +15,7 @@ int main(){
 
 	using namespace bitrl::envs::gymnasium;
 	using bitrl::uint_t;
-	using bitrl::envs::RESTRLEnvClient;
+	using bitrl::network::RESTRLEnvClient;
 	
 	const std::string SERVER_URL = "http://0.0.0.0:8001/api";
     
@@ -29,9 +29,12 @@ int main(){
 	
 	std::unordered_map<std::string, std::any> options;
 	options["num_envs"] = std::any(static_cast<uint_t>(3));
-	
+
+	std::unordered_map<std::string, std::any> reset_ops;
+	reset_ops.insert({"seed", static_cast<uint_t>(42)});
+
 	// make the environment
-	env.make("v1", options);
+	env.make("v1", options, reset_ops);
 	
 	std::cout<<"Reseting the environment... "<<std::endl;
 	auto time_step = env.reset();

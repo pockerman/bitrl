@@ -24,6 +24,8 @@
 #include <unordered_map>
 #include <memory>
 
+#include "../../sensors/ekf_sensor_fusion.h"
+
 #ifdef BITRL_DEBUG
 #include <cassert>
 #endif
@@ -32,16 +34,15 @@ namespace bitrl{
 namespace envs::gdrl
 {
 
-
-	///
-/// \brief class GymWalk. Interface for the GymWalk environment
-///
-	template<uint_t state_size>
-	class GymWalk final: public EnvBase<TimeStep<uint_t>,
+/**
+ * GymWalk. Interface for the GymWalk environment
+ */
+template<uint_t state_size>
+class GymWalk final: public EnvBase<TimeStep<uint_t>,
 	                                    ScalarDiscreteEnv<state_size, 2, 0, 0>
 		>
-	{
-	public:
+{
+public:
 
 		///
     /// \brief name
@@ -91,13 +92,7 @@ namespace envs::gdrl
 		///
 	/// \brief Constructor
 	///
-		GymWalk(const RESTApiServerWrapper& api_server);
-
-		///
-	/// \brief Constructor
-	///
-		GymWalk(const RESTApiServerWrapper& api_server,
-		        const uint_t cidx);
+		GymWalk(const network::RESTApiServerWrapper& api_server);
 
 		///
 	/// \brief copy ctor
@@ -109,7 +104,8 @@ namespace envs::gdrl
     /// environment will be slippery
     ///
 		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& options) override final;
+		                  const std::unordered_map<std::string, std::any>& options,
+		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
 
 
 		///
@@ -132,9 +128,7 @@ namespace envs::gdrl
 		///
 	/// \brief Reset the environment
 	///
-		virtual time_step_type reset(uint_t seed,
-		                             const std::unordered_map<std::string, std::any>& options)override final;
-
+		virtual time_step_type reset()override final;
 
 		///
 	/// \brief Create a new copy of the environment with the given
@@ -154,7 +148,7 @@ namespace envs::gdrl
 		uint_t n_actions()const noexcept{return action_space_type::size;}
 
 
-	private:
+private:
 
 		///
     /// \brief build the dynamics from response
@@ -167,7 +161,7 @@ namespace envs::gdrl
 		time_step_type create_time_step_from_response_(const nlohmann::json& response) const;
 
 
-		RESTApiServerWrapper api_server_;
+		network::RESTApiServerWrapper* api_server_;
 	};
 
 	template<uint_t state_size>
@@ -176,28 +170,15 @@ namespace envs::gdrl
 
 
 	template<uint_t state_size>
-	GymWalk<state_size>::GymWalk(const RESTApiServerWrapper& api_server)
+	GymWalk<state_size>::GymWalk(network::RESTApiServerWrapper& api_server)
 		:
 		EnvBase<TimeStep<uint_t>,
 		        ScalarDiscreteEnv<state_size, 2, 0, 0>
-		>(0, GymWalk<state_size>::name),
-		api_server_(api_server_)
+		>(GymWalk<state_size>::name),
+		api_server_(&api_server_)
 	{
 		api_server_.register_if_not(GymWalk<state_size>::name, GymWalk<state_size>::URI);
 	}
-
-	template<uint_t state_size>
-	GymWalk<state_size>::GymWalk(const RESTApiServerWrapper& api_server,
-	                             const uint_t cidx)
-		:
-		EnvBase<TimeStep<uint_t>,
-		        ScalarDiscreteEnv<state_size, 2, 0, 0>
-		>(cidx, "GymWalk"),
-		api_server_(api_server)
-	{
-		api_server_.register_if_not(GymWalk<state_size>::name, GymWalk<state_size>::URI);
-	}
-
 
 	template<uint_t state_size>
 	GymWalk<state_size>::GymWalk(const GymWalk<state_size>& other)
@@ -232,19 +213,21 @@ namespace envs::gdrl
 	template<uint_t state_size>
 	void
 	GymWalk<state_size>::make(const std::string& version,
-	                          const std::unordered_map<std::string, std::any>& options){
+	                          const std::unordered_map<std::string, std::any>& options,
+	                          const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this->is_created()){
 			return;
 		}
 
 		auto response = api_server_.make(this->env_name(),
-		                                 this->cidx(),
 		                                 version,
 		                                 ops);
 
-		this->set_version_(version);
-		this->make_created_();
+		auto idx = response["idx"];
+		this -> set_idx_(idx);
+		this -> base_type::make(version, options, reset_options);
+		this -> make_created_();
 	}
 
 	template<uint_t state_size>
@@ -260,7 +243,7 @@ namespace envs::gdrl
 		}
 
 		const auto response  = api_server_.step(this -> env_name(),
-		                                        this -> cidx(),
+		                                        this -> idx(),
 		                                        action);
 
 		this->get_current_time_step_() = this->create_time_step_from_response_(response);
@@ -289,8 +272,7 @@ namespace envs::gdrl
 
 	template<uint_t state_size>
 	typename GymWalk<state_size>::time_step_type
-	GymWalk<state_size>::reset(uint_t seed,
-	                           const std::unordered_map<std::string, std::any>& /*options*/){
+	GymWalk<state_size>::reset(){
 
 		if(!this->is_created()){
 #ifdef RLENVSCPP_DEBUG
@@ -300,22 +282,11 @@ namespace envs::gdrl
 		}
 
 		auto response = this -> api_server_.reset(this->env_name(),
-		                                          this -> cidx(), seed,
+		                                          this -> idx(), seed,
 		                                          nlohmann::json());
 
 		this->create_time_step_from_response_(response);
 		return this -> get_current_time_step_();
-	}
-
-	template<uint_t state_size>
-	GymWalk<state_size>
-	GymWalk<state_size>::make_copy(uint_t cidx)const{
-
-		GymWalk<state_size> copy(api_server_ ,cidx);
-		std::unordered_map<std::string, std::any> ops;
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
 	}
 
 }

@@ -117,7 +117,8 @@ public:
 	T read_option(const std::string& op_name)const;
 
 	/**
-	 * @brief Get the id identifying this environment within a simulation batch. The id is valid only if make has been called
+	 * @brief Get the id identifying this environment within a simulation batch.
+	 * The id is valid only if make has been called
 	 * @return Copy index
 	 */
     std::string idx()const noexcept{return idx_;}

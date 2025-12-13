@@ -73,22 +73,11 @@ public:
 	///
 		typedef typename base_type::state_type state_type;
 
-		///
-    /// \brief BlackJack. Constructor.
-    ///
-		BlackJack(const RESTRLEnvClient& api_server);
+		BlackJack(network::RESTRLEnvClient& api_server);
 
-
-
-		///
-	///
-	///
 		BlackJack(const BlackJack& other);
 
-		///
-    /// \brief ~BlackJack. Destructor
-    ///
-		~BlackJack()=default;
+		~BlackJack() override =default;
 
 		///
 		/// \brief make. Builds the environment. Optionally we can choose if the
@@ -104,15 +93,7 @@ public:
 		/// \return
 		///
 		virtual time_step_type step(const action_type& action)override final;
-
-		///
-		///
-		///
 		bool is_natural()const noexcept{return is_natural_;}
-
-		///
-		///
-		///
 		bool is_sab()const noexcept{return is_sab_;}
 
 protected:

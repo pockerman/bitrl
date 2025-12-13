@@ -122,7 +122,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "../../../network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/envs/env_types.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
@@ -132,126 +132,100 @@
 #include <any>
 
 namespace bitrl{
-namespace envs{
-namespace gymnasium{
+namespace envs::gymnasium
+{
 
-///
+	///
 /// \brief class Acrobot. The Acrobot class. Interface for Gymnasium::Acrobot environment.
 ///
 class Acrobot final: public GymnasiumEnvBase<TimeStep<std::vector<real_t> >,
-                                             ContinuousVectorStateDiscreteActionEnv<6, 2, 0, real_t > 
-											>
+	                                             ContinuousVectorStateDiscreteActionEnv<6, 2, 0, real_t >
+		>
 {
 
 public:
 
-	///
+		///
     /// \brief The name of the environment
     ///
-	static  const std::string name;
-	
-	///
+		static  const std::string name;
+
+		///
 	/// \brief The URI for accessing the environment
 	///
-	static const std::string URI;
-	
-	///
+		static const std::string URI;
+
+		///
 	/// \brief Base class type
 	///
-	typedef GymnasiumEnvBase<TimeStep<std::vector<real_t> >,
-							 ContinuousVectorStateDiscreteActionEnv< 6, // size of state space
-							                                         2, // end of action space
-																	 0, // start of action space
-																	 real_t> // type of state
-																	>::base_type base_type;
-	///
+		typedef GymnasiumEnvBase<TimeStep<std::vector<real_t> >,
+		                         ContinuousVectorStateDiscreteActionEnv< 6, // size of state space
+		                                                                 2, // end of action space
+		                                                                 0, // start of action space
+		                                                                 real_t> // type of state
+		>::base_type base_type;
+		///
 	/// \brief The time step type we return every time a step in the
 	/// environment is performed
 	///
-    typedef typename base_type::time_step_type time_step_type;
-	
-	///
+		typedef typename base_type::time_step_type time_step_type;
+
+		///
 	/// \brief The type describing the state space for the environment
 	///
-	typedef typename base_type::state_space_type state_space_type;
-	
-	///
+		typedef typename base_type::state_space_type state_space_type;
+
+		///
 	/// \brief The type of the action space for the environment
 	///
-	typedef typename base_type::action_space_type action_space_type;
+		typedef typename base_type::action_space_type action_space_type;
 
-    ///
+		///
 	/// \brief The type of the action to be undertaken in the environment
 	///
-    typedef typename base_type::action_type action_type;
-	
-	///
+		typedef typename base_type::action_type action_type;
+
+		///
 	/// \brief The type of the state
 	///
-	typedef typename base_type::state_type state_type;
-	
-    ///
-    /// \brief Acrobot. Constructor
-	/// \param api_server. The RESTApiServerWrapper instance to use
-    ///
-    Acrobot(const RESTRLEnvClient& api_server );
-	
-	///
-    /// \brief Acrobot. Constructor
-	/// \param api_server. The RESTApiServerWrapper instance to use
-	/// \param cidx. The index to assign to the created environment
-    ///
-    Acrobot(const RESTRLEnvClient& api_server, 
-		     const uint_t cidx);
-			 
-	///
-	/// \brief Acrobot. Copy constructor
-	///
-	Acrobot(const Acrobot& other);
-	
-    ///
-    /// \brief ~Acrobot. Destructor
-    ///
-    ~Acrobot()=default;
+		typedef typename base_type::state_type state_type;
 
-    ///
+
+		Acrobot(network::RESTRLEnvClient& api_server );
+
+		Acrobot(const Acrobot& other);
+
+		~Acrobot() override =default;
+
+		///
     /// \brief make. Build the environment
 	/// \param version. The version of the environment to create
 	/// \param options. The options to use when creating the environment
     ///
-    virtual void make(const std::string& version,
-              const std::unordered_map<std::string, std::any>& options) override final;
-			  
-	///
+		virtual void make(const std::string& version,
+		                  const std::unordered_map<std::string, std::any>& options,
+		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
+
+		///
     /// \brief step. Step in the environment following the given action.
 	/// \param action. The action to execute
     ///
-    virtual time_step_type step(const action_type& action) override final;
-	
-	///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index.
-	/// \param cidx. The index to assign to the copied environment
-	///
-	Acrobot make_copy(uint_t cidx)const;
+		virtual time_step_type step(const action_type& action) override final;
 
-    ///
+		///
     /// \brief n_actions. Returns the number of actions
     ///
-    uint_t n_actions()const noexcept{return action_space_type::size;}
+		uint_t n_actions()const noexcept{return action_space_type::size;}
 
 protected:
-	
-    ///
+
+		///
     /// \brief Handle the reset response from the environment server
     ///
-    virtual time_step_type create_time_step_from_response_(const nlohmann::json& response) const override final;
+		virtual time_step_type create_time_step_from_response_(const nlohmann::json& response) const override final;
 
-};
+	};
 
-
-
-}
 }
 }
 

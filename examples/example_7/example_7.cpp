@@ -25,7 +25,7 @@ int main(){
 	std::unordered_map<std::string, std::any> options;
 	
 	// make the environment
-	env.make("v1", options);
+	env.make("v1", options, options);
 	
 	std::cout<<"Is active? "<<env.is_created()<<std::noboolalpha <<std::endl;
 	

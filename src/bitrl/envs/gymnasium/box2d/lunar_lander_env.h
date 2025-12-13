@@ -8,7 +8,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "../../../network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/envs/env_types.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
@@ -59,8 +59,7 @@ namespace bitrl
                 /// @param name
                 /// @param uri
                 ///
-                _LunarLanderEnv(const RESTRLEnvClient& api_server, uint_t cidx,
-                                const std::string& name, const std::string& uri);
+                _LunarLanderEnv(network::RESTRLEnvClient& api_server, const std::string& name, const std::string& uri);
 
                 ///
                 /// @param other
@@ -76,7 +75,8 @@ namespace bitrl
                 /// \brief make. Build the environment
                 ///
                 virtual void make(const std::string& version,
-                                  const std::unordered_map<std::string, std::any>& /*options*/) override final;
+                                  const std::unordered_map<std::string, std::any>& options,
+                                  const std::unordered_map<std::string, std::any>& reset_options) override final;
 
                 ///
                 /// \brief step. Step in the environment following the given action
@@ -98,10 +98,10 @@ namespace bitrl
             };
 
             template<typename TimeStepType, typename SpaceType>
-            _LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(const RESTRLEnvClient& api_server, uint_t cidx,
+            _LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(network::RESTRLEnvClient& api_server,
                 const std::string& name, const std::string& uri)
                 :
-            GymnasiumEnvBase<TimeStepType, SpaceType >(api_server, cidx, name)
+            GymnasiumEnvBase<TimeStepType, SpaceType >(api_server, name)
             {
                 this -> get_api_server().register_if_not(name, uri);
             }
@@ -115,7 +115,8 @@ namespace bitrl
             template<typename TimeStepType, typename SpaceType>
             void
             _LunarLanderEnv<TimeStepType, SpaceType>::make(const std::string& version,
-                                                           const std::unordered_map<std::string, std::any>& options)
+                                                           const std::unordered_map<std::string, std::any>& options,
+                                                           const std::unordered_map<std::string, std::any>& reset_options)
             {
                 if(this->is_created()){
                     return;
@@ -148,11 +149,11 @@ namespace bitrl
                 }
 
                 auto response  = this -> get_api_server().make(this -> env_name(),
-                                                                   this -> cidx(),
                                                                    version, ops);
 
-                this -> set_version_(version);
-                this -> set_make_options_(options);
+                auto idx = response["idx"];
+                this -> set_idx_(idx);
+                this -> base_type::make(version, options, reset_options);
                 this -> make_created_();
             }
 
@@ -166,11 +167,11 @@ namespace bitrl
 #endif
 
                 if(this->get_current_time_step_().last()){
-                    return this->reset(42, std::unordered_map<std::string, std::any>());
+                    return this->reset();
                 }
 
                 const auto response  = this -> get_api_server().step(this -> env_name(),
-                                                                         this -> cidx(),
+                                                                         this -> idx(),
                                                                          action);
 
                 this->get_current_time_step_() = this->create_time_step_from_response_(response);
@@ -199,10 +200,10 @@ namespace bitrl
         ///
         /// \brief LunarLanderDiscreteEnv environment with discrete action space
         ///
-        class LunarLanderDiscreteEnv final : public lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
+class LunarLanderDiscreteEnv final : public lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
                 ContinuousVectorStateDiscreteActionEnv<8, 4, 0, real_t>>
-        {
-        public:
+{
+public:
             ///
             /// \brief name
             ///
@@ -248,12 +249,7 @@ namespace bitrl
             /// Constructor
             /// @param api_server
             ///
-            LunarLanderDiscreteEnv(const RESTRLEnvClient& api_server);
-
-            ///
-            /// \brief Constructor
-            ///
-            LunarLanderDiscreteEnv(const RESTRLEnvClient& api_server, const uint_t cidx);
+            LunarLanderDiscreteEnv(network::RESTRLEnvClient& api_server);
 
             ///
             /// @param other
@@ -265,21 +261,16 @@ namespace bitrl
             ///
             ~LunarLanderDiscreteEnv() override =default;
 
-            ///
-            /// \brief Create a new copy of the environment with the given
-            /// copy index
-            ///
-            LunarLanderDiscreteEnv make_copy(uint_t cidx)const;
-
         };
 
-        ///
-        /// \brief LunarLanderDiscreteEnv environment with discrete action space
-        ///
-        class LunarLanderContinuousEnv final : public lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
+/**
+ *
+ * LunarLanderDiscreteEnv environment with discrete action space
+ */
+class LunarLanderContinuousEnv final : public lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
                 ContinuousVectorStateContinuousVectorActionEnv<8, 2, real_t, real_t>>
-        {
-        public:
+{
+public:
             ///
             /// \brief name
             ///
@@ -325,12 +316,7 @@ namespace bitrl
             /// Constructor
             /// @param api_server
             ///
-            LunarLanderContinuousEnv(const RESTRLEnvClient& api_server);
-
-            ///
-            /// \brief Constructor
-            ///
-            LunarLanderContinuousEnv(const RESTRLEnvClient& api_server, const uint_t cidx);
+            LunarLanderContinuousEnv(network::RESTRLEnvClient& api_server);
 
             ///
             /// @param other
@@ -341,12 +327,6 @@ namespace bitrl
             /// \brief ~Pendulum. Destructor
             ///
             ~LunarLanderContinuousEnv() override =default;
-
-            ///
-            /// \brief Create a new copy of the environment with the given
-            /// copy index
-            ///
-            LunarLanderContinuousEnv make_copy(uint_t cidx)const;
 
         };
     }

@@ -22,12 +22,12 @@ namespace envs::gymnasium
 	const std::string FrozenLake<side_size>::URI = "/gymnasium/frozen-lake-env";
 
 	template<uint_t side_size>
-	FrozenLake<side_size>::FrozenLake(const RESTRLEnvClient& api_server, bool slippery)
+	FrozenLake<side_size>::FrozenLake(network::RESTRLEnvClient& api_server)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>,
 		               frozenlake_state_size<side_size>::size,
 		               3>(api_server, FrozenLake<side_size>::name),
-		is_slippery_(slippery)
+		is_slippery_(true)
 	{
 		this -> get_api_server().register_if_not(FrozenLake<side_size>::name,FrozenLake<side_size>::URI);
 	}
@@ -80,7 +80,6 @@ namespace envs::gymnasium
 		ops["map_name"] = map_type();
 		ops["is_slippery"] = is_slippery_;
 		auto response = this -> get_api_server().make(this -> env_name(),
-		                                              this -> idx(),
 		                                              version, ops);
 
 		auto idx = response["idx"];
@@ -98,7 +97,7 @@ namespace envs::gymnasium
 #endif
 
 		if(this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
+			return this->reset();
 		}
 
 		auto response = this -> get_api_server().step(this -> env_name(),

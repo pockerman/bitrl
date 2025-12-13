@@ -29,19 +29,10 @@ namespace envs::gymnasium
 	}
 
 
-	AcrobotV::AcrobotV(const RESTRLEnvClient& api_server )
+	AcrobotV::AcrobotV(network::RESTRLEnvClient& api_server )
 		:
 		GymnasiumVecEnvBase<VectorTimeStep<detail_::AcrobotVEnv::state_type>,
-		                    detail_::AcrobotVEnv>(api_server, 0, AcrobotV::name)
-	{
-		this -> get_api_server().register_if_not(AcrobotV::name,AcrobotV::URI);
-	}
-
-	AcrobotV::AcrobotV(const RESTRLEnvClient& api_server , const uint_t cidx)
-		:
-		GymnasiumVecEnvBase<VectorTimeStep<detail_::AcrobotVEnv::state_type>,
-		                    detail_::AcrobotVEnv>(api_server, cidx,
-		                                          AcrobotV::name)
+		                    detail_::AcrobotVEnv>(api_server, AcrobotV::name)
 	{
 		this -> get_api_server().register_if_not(AcrobotV::name,AcrobotV::URI);
 	}
@@ -56,20 +47,20 @@ namespace envs::gymnasium
 
 	void
 	AcrobotV::make(const std::string& version,
-	               const std::unordered_map<std::string, std::any>& options){
+	               const std::unordered_map<std::string, std::any>& options,
+	               const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this->is_created()){
 			return;
 		}
 
 		this->GymnasiumVecEnvBase<VectorTimeStep<detail_::AcrobotVEnv::state_type>,
-		                          detail_::AcrobotVEnv>::make(version, options);
+		                          detail_::AcrobotVEnv>::make(version, options, reset_options);
 
 		nlohmann::json ops;
 		ops["num_envs"] = this->get_n_envs();
 		auto response = this -> get_api_server().make(this -> env_name(),
-		                                              this -> cidx(),
-		                                              version, ops);
+		                                                  version, ops);
 
 		this->set_version_(version);
 		this->make_created_();
@@ -85,29 +76,16 @@ namespace envs::gymnasium
 #endif
 
 		if(this->get_reset_if_any_done() && this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
+			return this->reset();
 		}
 
 		auto response = this -> get_api_server().step(this -> env_name(),
-		                                              this -> cidx(),
+		                                              this -> idx(),
 		                                              action);
 
 		this->get_current_time_step_() = this->create_time_step_from_response_(response);
 		return this->get_current_time_step_();
-	}
-
-
-	AcrobotV
-	AcrobotV::make_copy(uint_t cidx)const{
-
-		AcrobotV copy(this->get_api_server(), cidx);
-
-		std::unordered_map<std::string, std::any> ops;
-		ops["num_envs"] = this -> get_n_envs();
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
-	}
+}
 
 }
 }

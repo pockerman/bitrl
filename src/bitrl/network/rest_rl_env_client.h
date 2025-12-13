@@ -18,7 +18,7 @@
 ///
 ///
 namespace bitrl{
-namespace envs{
+namespace network{
 	
 ///
 /// \brief Utility class to facilitate

@@ -28,31 +28,16 @@ Pendulum::create_time_step_from_response_(const nlohmann::json& response)const{
 }
 
 
-Pendulum::Pendulum(const RESTRLEnvClient& api_server)
+Pendulum::Pendulum(network::RESTRLEnvClient& api_server)
 :
 GymnasiumEnvBase<TimeStep<std::vector<real_t>>, 
 				 ContinuousVectorStateContinuousScalarBoundedActionEnv<3, 
 																	   1, 
 											                           RealRange<-2.0, 2.0>, 
 																	   0, real_t>
-											 >(api_server, 0, Pendulum::name)
+											 >(api_server, Pendulum::name)
 {
 	this -> get_api_server().register_if_not(Pendulum::name,Pendulum::URI);
-}
-
-Pendulum::Pendulum(const RESTRLEnvClient& api_server, 
-	               const uint_t cidx)
-:
-GymnasiumEnvBase<TimeStep<std::vector<real_t>>, 
-				 ContinuousVectorStateContinuousScalarBoundedActionEnv<3, 
-																	   1, 
-											                           RealRange<-2.0, 2.0>, 
-																	   0, real_t>
-											 >(api_server,
-											   cidx, 
-											   Pendulum::name)
-{
- this -> get_api_server().register_if_not(Pendulum::name,Pendulum::URI);	
 }
 
 Pendulum::Pendulum(const Pendulum& other)
@@ -67,18 +52,20 @@ GymnasiumEnvBase<TimeStep<std::vector<real_t>>,
 
 void
 Pendulum::make(const std::string& version,
-              const std::unordered_map<std::string, std::any>& /*options*/){
+              const std::unordered_map<std::string, std::any>& options,
+              const std::unordered_map<std::string, std::any>& reset_options){
 
     if(this->is_created()){
         return;
     }
 	
 	auto response = this -> get_api_server().make(this -> env_name(),
-	                                              this -> cidx(),
 												  version, nlohmann::json());
 
-    this->set_version_(version);
-    this->make_created_();
+	auto idx = response["idx"];
+	this -> set_idx_(idx);
+	this -> base_type::make(version, options, reset_options);
+	this -> make_created_();
 }
 
 
@@ -90,25 +77,15 @@ Pendulum::step(const action_type& action){
 #endif
 
      if(this->get_current_time_step_().last()){
-         return this->reset(42, std::unordered_map<std::string, std::any>());
+         return this->reset();
      }
 
 	auto response = this -> get_api_server().step(this -> env_name(),
-	                                              this -> cidx(),
+	                                              this -> idx(),
 												  action);
 
     this->get_current_time_step_() = this->create_time_step_from_response_(response);
     return this->get_current_time_step_();
-}
-
-
-Pendulum 
-Pendulum::make_copy(uint_t cidx)const{
-	Pendulum copy(this -> get_api_server(), cidx);
-	std::unordered_map<std::string, std::any> ops;
-	auto version = this -> version();
-	copy.make(version, ops);
-	return copy;
 }
 
 }

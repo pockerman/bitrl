@@ -58,7 +58,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
-#include "../../../network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <string>
@@ -158,7 +158,7 @@ public:
 		///
 		/// \brief Constructor
 		///
-		FrozenLake(const RESTRLEnvClient& api_server, bool slippery);
+		FrozenLake(network::RESTRLEnvClient& api_server);
 
 		///
 		/// \brief copy constructor

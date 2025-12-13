@@ -5,7 +5,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/bitrl_config.h"
-#include "../../../network/rest_rl_env_client.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/envs/env_types.h"
 
 #include <string>
@@ -97,8 +97,7 @@ protected:
 	///
     /// \brief Constructor
     ///
-	ToyTextEnvBase(const RESTRLEnvClient& api_server,
-		           const std::string& name);
+	ToyTextEnvBase(network::RESTRLEnvClient& api_server, const std::string& name);
 
 	///
 	/// \brief Copy constructor
@@ -113,7 +112,7 @@ protected:
 };
 
 template<typename TimeStepType, uint_t state_end,  uint_t action_end>
-ToyTextEnvBase<TimeStepType, state_end, action_end>::ToyTextEnvBase(const RESTRLEnvClient& api_server,const std::string& name)
+ToyTextEnvBase<TimeStepType, state_end, action_end>::ToyTextEnvBase(network::RESTRLEnvClient& api_server,const std::string& name)
 		:
 		GymnasiumEnvBase<TimeStepType,
 		                 ScalarDiscreteEnv<state_end, action_end>>(api_server,
@@ -139,7 +138,7 @@ ToyTextEnvBase<TimeStepType,
 		assert(this->is_created() && "Environment has not been created");
 #endif
 
-		auto response = this -> get_api_server() -> dynamics(this->env_name(),
+		auto response = this -> get_api_server().dynamics(this->env_name(),
 		                                                  this->idx(),
 		                                                  sidx, aidx);
 		return build_dynamics_from_response_(response);

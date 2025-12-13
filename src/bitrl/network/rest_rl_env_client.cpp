@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 namespace bitrl{
-namespace envs{
+namespace network{
 
 RESTRLEnvClient::RESTRLEnvClient(const std::string& url, const bool initialize)
 :
