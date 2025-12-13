@@ -1,4 +1,4 @@
-[![Build rlenvs](https://github.com/pockerman/rlenvs_from_cpp/actions/workflows/build.yml/badge.svg)](https://github.com/pockerman/rlenvs_from_cpp/actions/workflows/build.yml)
+[![Build bitrl](https://github.com/pockerman/bitrl/actions/workflows/build.yml/badge.svg)](https://github.com/pockerman/bitrl/actions/workflows/build.yml)
 # bitrl
 
 ```bitrl``` is an effort to provide implementations and wrappers of environments suitable for training reinforcement learning agents
