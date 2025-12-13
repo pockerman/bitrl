@@ -81,12 +81,7 @@ public:
     /// \brief Constructor
     ///
     Connect2();
-	
-	///
-    /// \brief Constructor
-    ///
-    explicit Connect2(uint_t cidx);
-	
+
 	///
 	///
 	///
@@ -97,7 +92,8 @@ public:
     /// environment will be slippery
     ///
     virtual void make(const std::string& version,
-                      const std::unordered_map<std::string, std::any>& options) override final;
+                      const std::unordered_map<std::string, std::any>& options,
+                      const std::unordered_map<std::string, std::any>& reset_options) override final;
 					  
 	///
     /// \brief step. Move in the environment with the given action
@@ -115,8 +111,7 @@ public:
 	///
 	/// \brief Reset the environment
 	///
-    virtual time_step_type reset(uint_t /*seed*/,
-                                 const std::unordered_map<std::string, std::any>& /*options*/)override final;
+    virtual time_step_type reset()override final;
 					  
 	///
 	/// \brief Create a new copy of the environment with the given
@@ -155,9 +150,7 @@ public:
 	std::vector<uint_t> get_valid_moves()const;
 
 private:
-	
-	
-	
+
 	///
 	/// \brief The discount factor
 	///

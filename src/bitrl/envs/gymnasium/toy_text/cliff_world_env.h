@@ -38,7 +38,7 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 
@@ -55,29 +55,29 @@ namespace envs::gymnasium
 	///
 /// \brief The CliffWorld class
 ///
-	class CliffWorld final: public ToyTextEnvBase<TimeStep<uint_t>, 37, 4>
-	{
+class CliffWorld final: public ToyTextEnvBase<TimeStep<uint_t>, 37, 4>
+{
 
-	public:
+public:
 
 		///
-    /// \brief name
-    ///
+		/// \brief name
+		///
 		static  const std::string name;
 
 		///
-	/// \brief The URI for accessing the environment
-	///
+		/// \brief The URI for accessing the environment
+		///
 		static const std::string URI;
 
 		///
-    /// \brief dynamics_t
-    ///
+		/// \brief dynamics_t
+		///
 		typedef std::vector<std::tuple<real_t, uint_t, real_t, bool>> dynamics_type;
 
 		///
-	/// \brief The base type
-	///
+		/// \brief The base type
+		///
 		typedef typename ToyTextEnvBase<TimeStep<uint_t>, 37, 4>::base_type base_type;
 
 		///
@@ -109,13 +109,8 @@ namespace envs::gymnasium
 		///
     /// \brief CliffWorld
     ///
-		CliffWorld(const RESTApiServerWrapper& api_server);
+		CliffWorld(network::RESTRLEnvClient& api_server);
 
-		///
-	/// \brief Constructor
-	///
-		CliffWorld(const RESTApiServerWrapper& api_server,
-		           const uint_t cidx);
 
 		///
 	/// \brief copy constructor
@@ -132,7 +127,8 @@ namespace envs::gymnasium
     /// environment will be slippery
     ///
 		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& options) override final;
+		                  const std::unordered_map<std::string, std::any>& options,
+		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
 
 		///
     /// \brief step
@@ -141,13 +137,6 @@ namespace envs::gymnasium
     ///
 		virtual time_step_type step(const action_type& action) override final;
 
-		///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
-		CliffWorld make_copy(uint_t cidx)const;
-
-
 	protected:
 
 		///
@@ -155,10 +144,7 @@ namespace envs::gymnasium
 	///
 		uint_t max_episode_steps_;
 
-		///
-    /// \brief build the dynamics from response
-    ///
-		//virtual dynamics_t build_dynamics_from_response_(const nlohmann::json& response)const override final;
+
 
 		///
     /// \brief Handle the reset response from the environment server

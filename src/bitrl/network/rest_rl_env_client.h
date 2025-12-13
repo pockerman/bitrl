@@ -1,7 +1,7 @@
 
 
-#ifndef APISERVER_H
-#define APISERVER_H
+#ifndef REST_RL_ENV_CLIENT_H
+#define REST_RL_ENV_CLIENT_H
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
@@ -18,22 +18,22 @@
 ///
 ///
 namespace bitrl{
-namespace envs{
+namespace network{
 	
 ///
 /// \brief Utility class to facilitate
 /// HTTP requests between the environments REST API 
 /// and C++ drivers
 ///
-class RESTApiServerWrapper
+class RESTRLEnvClient
 {
 public:
 
     ///
     /// \brief Constructor
     ///
-    explicit RESTApiServerWrapper(const std::string& url="http://0.0.0.0:8001/api",
-	                              const bool initialize=true);
+    explicit RESTRLEnvClient(const std::string& url="http://0.0.0.0:8001/api",
+                             const bool initialize=true);
 								  
 	///
 	/// \brief Returns true if the server is initialised
@@ -76,7 +76,7 @@ public:
 	/// Throws std::logic_error is the environment is not registered
 	///
 	nlohmann::json is_alive(const std::string& env_name, 
-							const uint_t cidx)const;
+							const std::string& idx)const;
 	
 	///
 	/// \brief Close the environment with the given name.
@@ -84,7 +84,7 @@ public:
 	/// Throws std::runtime_error if the server response is not 201
 	///
 	nlohmann::json close(const std::string& env_name, 
-	                     const uint_t cidx)const;
+	                     const std::string& idx)const;
 	
 	///
 	/// \brief Step in the environment with the given name
@@ -95,7 +95,7 @@ public:
 	///
 	template<typename ActionType>
 	nlohmann::json step(const std::string& env_name, 
-	                    const uint_t cidx,
+	                    const std::string& idx,
 	                    const ActionType& action)const;
 						
 	///
@@ -105,7 +105,7 @@ public:
 	/// Throws std::runtime_error if the server response is not 202
 	///
 	nlohmann::json reset(const std::string& env_name, 
-	                     const uint_t cidx,
+	                     const std::string& idx,
 	                     const uint_t seed,
 						 const nlohmann::json& options)const;
 						 
@@ -116,7 +116,6 @@ public:
 	/// Throws std::runtime_error if the server response is not 202
 	///
 	nlohmann::json make(const std::string& env_name, 
-	                    const uint_t cidx,
 	                    const std::string& version,
 	                    const nlohmann::json& options)const;
 
@@ -126,17 +125,9 @@ public:
 	/// does not expose such an endpoint it returns 404
 	///
 	nlohmann::json dynamics(const std::string& env_name, 
-							const uint_t cidx,
+							const std::string& idx,
 	                        const uint_t sidx, 
 							const uint_t aidx)const;
-	
-	///
-	/// \brief Make the cidx copy of the environment
-	///
-	nlohmann::json copy(const std::string& env_name,
-						const uint_t cidx,
-	                    const std::string& version,
-	                    const nlohmann::json& options)const{return make(env_name, cidx, version, options);}
 
     ///
     ///
@@ -175,7 +166,7 @@ private:
 
 template<typename ActionType>
 nlohmann::json 
-RESTApiServerWrapper::step(const std::string& env_name, const uint_t cidx,
+RESTRLEnvClient::step(const std::string& env_name, const std::string& idx,
 	                       const ActionType& action)const{
 							   
 		
@@ -186,11 +177,10 @@ RESTApiServerWrapper::step(const std::string& env_name, const uint_t cidx,
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
 	
-	const auto request_url = url_ + "/step";
+	const auto request_url = url_ +  "/" + idx + "/step";
     http::Request request{request_url};
 	
 	nlohmann::json body;
-	body["cidx"] = cidx;
 	body["action"] = action;
 	
 	const auto response = request.send("POST", body.dump());

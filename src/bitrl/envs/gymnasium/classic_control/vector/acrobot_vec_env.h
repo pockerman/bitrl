@@ -12,7 +12,7 @@
 #include "bitrl/envs/vector_time_step.h"
 #include "bitrl/envs/space_type.h"
 #include "bitrl/envs/gymnasium/gymnasium_vector_env_base.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 
@@ -61,11 +61,11 @@ namespace envs::gymnasium
 	///
 /// \brief The CartPole class Interface for CartPole environment
 ///
-	class AcrobotV final: public GymnasiumVecEnvBase<VectorTimeStep<detail_::AcrobotVEnv::state_type>,
+class AcrobotV final: public GymnasiumVecEnvBase<VectorTimeStep<detail_::AcrobotVEnv::state_type>,
 	                                                 detail_::AcrobotVEnv>
-	{
+{
 
-	public:
+public:
 
 		///
     /// \brief name
@@ -112,13 +112,7 @@ namespace envs::gymnasium
 		///
     /// \brief Acrobot. Constructor
     ///
-		AcrobotV(const RESTApiServerWrapper& api_server );
-
-		///
-    /// \brief CartPole. Constructor
-    ///
-		AcrobotV(const RESTApiServerWrapper& api_server ,
-		         const uint_t cidx);
+		AcrobotV(network::RESTRLEnvClient& api_server );
 
 		///
 	/// \brief copy ctor
@@ -128,14 +122,14 @@ namespace envs::gymnasium
 		///
     /// \brief ~Acrobot. Destructor
     ///
-		~AcrobotV()=default;
+		~AcrobotV() override =default;
 
 		///
     /// \brief make. Build the environment
     ///
 		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>&) override final;
-
+		                  const std::unordered_map<std::string, std::any>&,
+		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
 
 		///
     /// \brief step. Step in the environment following the given action
@@ -143,25 +137,18 @@ namespace envs::gymnasium
 		virtual time_step_type step(const action_type& action) override final;
 
 		///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
-		AcrobotV make_copy(uint_t cidx)const;
-
-		///
     /// \brief n_actions. Returns the number of actions
     ///
 		uint_t n_actions()const noexcept{return action_space_type::size;}
 
-	protected:
+protected:
 
 		///
     /// \brief Handle the reset response from the environment server
     ///
 		virtual time_step_type create_time_step_from_response_(const nlohmann::json& response) const override final;
 
-	};
-
+};
 
 
 }

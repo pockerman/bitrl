@@ -42,7 +42,7 @@
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
 #include "bitrl/envs/env_types.h"
-#include "bitrl/envs/api_server/apiserver.h"
+#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <string>
@@ -121,14 +121,8 @@ public:
     ///
     /// \brief CartPole. Constructor
     ///
-    CartPole(const RESTApiServerWrapper& api_server );
-	
-	///
-    /// \brief CartPole. Constructor
-    ///
-    CartPole(const RESTApiServerWrapper& api_server, 
-		     const uint_t cidx);
-	
+    CartPole(network::RESTRLEnvClient& api_server );
+
 	///
 	/// \brief copy ctor
 	///
@@ -137,26 +131,20 @@ public:
     ///
     /// \brief ~CartPole. Destructor
     ///
-    ~CartPole()=default;
+    ~CartPole() override =default;
 
     ///
     /// \brief make. Build the environment
     ///
     virtual void make(const std::string& version,
-                      const std::unordered_map<std::string, std::any>&) override final;
+                      const std::unordered_map<std::string, std::any>& options,
+                      const std::unordered_map<std::string, std::any>& reset_options) override final;
 
     ///
     /// \brief step. Step in the environment following the given action
     ///
     virtual time_step_type step(const action_type& action)override final;
 
-
-	///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
-	CartPole make_copy(uint_t cidx)const;
-	
 	///
     /// \brief n_actions. Returns the number of actions
     ///

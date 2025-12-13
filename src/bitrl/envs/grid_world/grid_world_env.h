@@ -14,6 +14,7 @@
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/env_base.h"
 #include "bitrl/envs/space_type.h"
+#include "bitrl/utils/utils.h"
 
 #ifdef BITRL_DEBUG
 #include <cassert>
@@ -191,52 +192,36 @@ namespace envs::grid_world
 			[[nodiscard]] board_move_type validate_move(board_component_type piece, board_position pos)const;
 		};
 
-		template<uint_t size_size>
-		struct GridWorldEnv
-		{
+template<uint_t size_size>
+struct GridWorldEnv
+{
 
-			typedef detail::board state_space;
-
-			typedef detail::board_state_type state_type;
-
-			///
-			/// \brief state space size
-			///
-			static constexpr uint_t STATE_SPACE_SIZE = size_size * size_size;
-
-			///
-	        /// \brief the action space type
-	        ///
-			typedef ScalarDiscreteSpace<0, 4> action_space;
-
-			///
-			/// \brief the Action type
-			///
-			typedef action_space::space_item_type action_type;
-
-			///
-			/// \brief action space size
-			///
-			static constexpr uint_t ACTION_SPACE_SIZE = action_space::size;
-		};
-	}
+	typedef detail::board state_space;
+	typedef detail::board_state_type state_type;
+	static constexpr uint_t STATE_SPACE_SIZE = size_size * size_size;
+	typedef ScalarDiscreteSpace<0, 4> action_space;
+	typedef action_space::space_item_type action_type;
+	static constexpr uint_t ACTION_SPACE_SIZE = action_space::size;
+};
+}
 
 
-	///
-	/// The Gridworld class models a square board. There are three ways to initialize the board.
-	/// - static
-	/// - random
-	/// - player
-	/// See the GridworldInitType enumeration.
-	/// Static initialization means that the objects on the board are initialized at the same predetermined locations.
-	/// Player initialization means that the player is initialized at a random position on the board.
-	/// Random initialization means that all the objects are placed randomly
-	///
-	template<uint_t side_size_>
-	class Gridworld final: public EnvBase<TimeStep<detail::board_state_type>,
+/**
+ * The Gridworld class models a square board. There are three ways to initialize the board.
+ * - static
+ * - random
+ * - player
+ * See the GridworldInitType enumeration.
+ * Static initialization means that the objects on the board are initialized at the same predetermined locations.
+ * Player initialization means that the player is initialized at a random position on the board.
+ * Random initialization means that all the objects are placed randomly
+ */
+
+template<uint_t side_size_>
+class Gridworld final: public EnvBase<TimeStep<detail::board_state_type>,
 	                                      detail::GridWorldEnv<side_size_>>
-	{
-	public:
+{
+public:
 
 		static_assert (side_size_ >= 4,
 		               "The side size should be greater than or equal to 4");
@@ -301,11 +286,6 @@ namespace envs::grid_world
 		///
 	    /// \brief Gridworld. Constructor
 	    ///
-		explicit Gridworld(const uint_t cidx);
-
-		///
-	    /// \brief Gridworld. Constructor
-	    ///
 		Gridworld(const Gridworld& other);
 
 		///
@@ -313,19 +293,13 @@ namespace envs::grid_world
 	    /// environment will be slippery
 	    ///
 		void make(const std::string& version,
-		          const std::unordered_map<std::string, std::any>& options) override final;
+		          const std::unordered_map<std::string, std::any>& options,
+		          const std::unordered_map<std::string, std::any>& reset_options) override final;
 
 		///
 		/// \brief Reset the environment
 		///
-		time_step_type reset(uint_t /*seed*/,
-		                     const std::unordered_map<std::string, std::any>& /*options*/) override final;
-
-		///
-		/// \brief Create a new copy of the environment with the given
-		/// copy index
-		///
-		Gridworld make_copy(uint_t cidx)const;
+		time_step_type reset() override final;
 
 		///
 	    /// \brief step
@@ -379,7 +353,7 @@ namespace envs::grid_world
 	    ///
 		[[nodiscard]] GridWorldInitType init_type()const noexcept{return init_mode_;}
 
-	private:
+private:
 
 		///
 	    /// \brief init_mode_
@@ -420,7 +394,7 @@ namespace envs::grid_world
 	Gridworld<side_size_>::Gridworld()
 		:
 		EnvBase<TimeStep<detail::board_state_type>,
-		        detail::GridWorldEnv<side_size_>>(0, "Gridworld"),
+		        detail::GridWorldEnv<side_size_>>(Gridworld<side_size>::name),
 		init_mode_(GridWorldInitType::INVALID_TYPE),
 		randomize_state_(false),
 		seed_(0),
@@ -428,20 +402,6 @@ namespace envs::grid_world
 		board_()
 	{
 	}
-
-	template<uint_t side_size_>
-	Gridworld<side_size_>::Gridworld(uint_t cidx)
-		:
-		EnvBase<TimeStep<detail::board_state_type>,
-		        detail::GridWorldEnv<side_size_>>(cidx, "Gridworld"),
-		init_mode_(GridWorldInitType::INVALID_TYPE),
-		randomize_state_(false),
-		seed_(0),
-		noise_factor_(0.0),
-		board_()
-	{
-	}
-
 
 	template<uint_t side_size_>
 	Gridworld<side_size_>::Gridworld(const Gridworld<side_size_>& other)
@@ -459,7 +419,8 @@ namespace envs::grid_world
 	template<uint_t side_size_>
 	void
 	Gridworld<side_size_>::make(const std::string& version,
-	                            const std::unordered_map<std::string, std::any>& options){
+	                            const std::unordered_map<std::string, std::any>& options,
+	                            const std::unordered_map<std::string, std::any>& reset_options){
 
 		if(this -> is_created()){
 			return;
@@ -491,21 +452,13 @@ namespace envs::grid_world
 		// to created
 		this->set_version_(version);
 		this->make_created_();
+
+		auto idx = utils::uuid4();
+		this -> set_idx_(idx);
+		this -> base_type::make(version, options, reset_options);
+		this -> make_created_();
 	}
 
-	template<uint_t side_size_>
-	Gridworld<side_size_>
-	Gridworld<side_size_>::make_copy(uint_t cidx)const{
-
-		Gridworld<side_size_> copy(cidx);
-		std::unordered_map<std::string, std::any> ops;
-		ops["randomize_state"] = this -> has_random_state();
-		ops["noise_factor"] = this -> noise_factor_;
-		ops["seed"] = std::any(static_cast<uint_t>(this -> seed_));
-		auto version = this -> version();
-		copy.make(version, ops);
-		return copy;
-	}
 
 	template<uint_t side_size_>
 	typename Gridworld<side_size_>::time_step_type
@@ -526,8 +479,7 @@ namespace envs::grid_world
 
 	template<uint_t side_size_>
 	typename Gridworld<side_size_>::time_step_type
-	Gridworld<side_size_>::reset(uint_t /*seed*/,
-	                             const std::unordered_map<std::string, std::any>& /*options*/){
+	Gridworld<side_size_>::reset(){
 
 		// reinitialize the board
 		auto obs = board_.init_board(side_size_, init_mode_);
