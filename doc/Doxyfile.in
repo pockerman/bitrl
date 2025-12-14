@@ -4,6 +4,9 @@ PROJECT_NAME           = "@PROJECT_NAME@"
 OUTPUT_DIRECTORY       = @PROJECT_SOURCE_DIR@/docs
 GENERATE_LATEX         = NO
 RECURSIVE              = YES
+MARKDOWN_SUPPORT = YES
+AUTOLINK_SUPPORT = YES
+EXTRACT_ALL = YES
 
 # Adjust to your source path(s)
 INPUT                  = @PROJECT_SOURCE_DIR@/src/bitrl @PROJECT_SOURCE_DIR@/doc
