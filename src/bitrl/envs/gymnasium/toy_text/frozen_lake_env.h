@@ -71,35 +71,34 @@ namespace bitrl{
 namespace envs::gymnasium
 {
 
-	template<uint_t side_size>
-	struct frozenlake_state_size;
+	/**
+ * Forward declaration
+ * @tparam side_size The size of the FrozenLake map
+ */
+template<uint_t side_size>
+struct frozenlake_state_size;
 
+/**
+ * 4x4 FronzeLake map
+ */
+template<>
+struct frozenlake_state_size<4>
+{
+	static constexpr uint_t size = 16;
+};
 
-	template<>
-	struct frozenlake_state_size<4>
-	{
-		///
-    /// \brief size
-    ///
-		static constexpr uint_t size = 16;
+/**
+ * 8x8 FrozenLake map
+ */
+template<>
+struct frozenlake_state_size<8>
+{
+	static constexpr uint_t size = 64;
+};
 
-	};
-
-
-	template<>
-	struct frozenlake_state_size<8>
-	{
-		///
-    /// \brief size
-    ///
-		static constexpr uint_t size = 64;
-
-	};
-
-	///
-/// \brief The FrozenLake class. Wrapper to Gymnasium FrozenLake
-/// environment
-///
+/**
+ * The FrozenLake class. Wrapper to Gymnasium FrozenLake environment
+ */
 template<uint_t side_size>
 class FrozenLake final: public ToyTextEnvBase<TimeStep<uint_t>,
 	                                              frozenlake_state_size<side_size>::size,
@@ -193,8 +192,7 @@ public:
 		/// \brief is_slipery
 		/// \return
 		///
-		bool is_slippery()const noexcept{return is_slippery_;}
-
+		bool is_slippery()const;
 
 protected:
 
@@ -202,13 +200,6 @@ protected:
 		/// \brief Handle the reset response from the environment server
 		///
 		virtual time_step_type create_time_step_from_response_(const nlohmann::json& response) const override final;
-
-private:
-
-		///
-		/// \brief is_slipery_
-		///
-		bool is_slippery_;
 
 };
 

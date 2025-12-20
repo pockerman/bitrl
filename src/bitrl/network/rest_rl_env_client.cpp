@@ -5,6 +5,7 @@
 
 #include <string>
 #include <stdexcept>
+#include <iostream>
 
 namespace bitrl{
 namespace network{
@@ -36,38 +37,43 @@ RESTRLEnvClient::init_(){
 	
 }
 
+
+bool
+RESTRLEnvClient::is_env_registered(const std::string& env_name)const noexcept
+{
+	auto env_itr = envs_.find(env_name);
+	if( env_itr != envs_.end() )
+	{
+		return true;
+	}
+	return false;
+}
+
 void 
 RESTRLEnvClient::register_new(const std::string& name, const std::string& uri){
 	
 	auto env_itr = envs_.find(name);
-	
 	if(env_itr == envs_.end()){
 		envs_[name] = uri;
 		return;
 	}
 	
 	throw std::logic_error("Environment: " + name + " already exists");
-	
 }
 
 void 
-RESTRLEnvClient::register_if_not(const std::string& name,
-									  const std::string& uri){
+RESTRLEnvClient::register_if_not(const std::string& name, const std::string& uri){
 	
 	try{
 		register_new(name, uri);
 	}
-	catch(const std::logic_error& e){
-		
-	}
-	
+	catch(const std::logic_error& e){}
 }
 
 std::string 
 RESTRLEnvClient::get_uri(const std::string& name)const noexcept{
 	
 	auto env_itr = envs_.find(name);
-	
 	if(env_itr == envs_.end()){
 		return bitrl::consts::INVALID_STR;
 	}
@@ -79,7 +85,6 @@ std::string
 RESTRLEnvClient::get_env_url(const std::string& name)const noexcept{
 	
 	auto uri_ = get_uri(name);
-	
 	if(uri_ == bitrl::consts::INVALID_STR){
 		return bitrl::consts::INVALID_STR;
 	}
@@ -118,8 +123,7 @@ RESTRLEnvClient::close(const std::string& env_name, const std::string& idx)const
 	
     http::Request request{url_ + "/" + idx + "/close"};
     const auto response = request.send("POST");
-    
-	
+
 	if(response.status.code != 202){
         throw std::runtime_error("Could not close environment " + env_name);
     }

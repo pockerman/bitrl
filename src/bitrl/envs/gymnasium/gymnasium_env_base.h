@@ -8,6 +8,7 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_config.h"
+#include "bitrl/bitrl_consts.h"
 #include "bitrl/envs/env_base.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
@@ -26,15 +27,15 @@ namespace bitrl{
 namespace envs::gymnasium
 {
 /**
-	 * @class GymnasiumEnvBase
-	 * @brief Base class for all Gymnasium environment wrappers.
-	 *
-	 * This template wraps a remote Gymnasium-compatible environment served through
-	 * a REST API. It extends EnvBase and provides the common logic for environment
-	 * reset, closing, and time-step handling via HTTP communication.
-	 *
-	 * @tparam TimeStepType  The type representing one interaction step with the environment.
-	 * @tparam SpaceType     The type describing the observation and action spaces.
+ * @class GymnasiumEnvBase
+ * @brief Base class for all Gymnasium environment wrappers.
+ *
+ * This template wraps a remote Gymnasium-compatible environment served through
+ * a REST API. It extends EnvBase and provides the common logic for environment
+ * reset, closing, and time-step handling via HTTP communication.
+ *
+ * @tparam TimeStepType  The type representing one interaction step with the environment.
+ * @tparam SpaceType     The type describing the observation and action spaces.
  */
 template<typename TimeStepType, typename SpaceType>
 class GymnasiumEnvBase: public EnvBase<TimeStepType, SpaceType>
@@ -132,22 +133,22 @@ protected:
 
 	};
 
-	template<typename TimeStepType, typename SpaceType>
-	GymnasiumEnvBase<TimeStepType,
+template<typename TimeStepType, typename SpaceType>
+GymnasiumEnvBase<TimeStepType,
 	                 SpaceType>::GymnasiumEnvBase(network::RESTRLEnvClient& api_server,
 	                                              const std::string& name)
 		:
-		EnvBase<TimeStepType, SpaceType>(name),
+		EnvBase<TimeStepType, SpaceType>(bitrl::consts::INVALID_STR, name),
 		api_server_(&api_server)
-	{}
+{}
 
-	template<typename TimeStepType, typename SpaceType>
-	GymnasiumEnvBase<TimeStepType,
+template<typename TimeStepType, typename SpaceType>
+GymnasiumEnvBase<TimeStepType,
 	                 SpaceType>::GymnasiumEnvBase(const GymnasiumEnvBase<TimeStepType, SpaceType>& other)
 		:
 		EnvBase<TimeStepType, SpaceType>(other),
 		api_server_(other.api_server_)
-	{}
+{}
 
 
 	template<typename TimeStepType, typename SpaceType>

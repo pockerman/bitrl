@@ -7,6 +7,8 @@
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/extern/HTTPRequest.hpp"
+
+#include <iostream>
 #include <string>
 #include <vector>
 #include <any>
@@ -44,7 +46,14 @@ public:
 	/// \brief Returns the remote url
 	///
 	std::string get_url()const noexcept{return url_;}
-	
+
+    /**
+     * Returns true if the environment with the given name is registered
+     * @param env_name The environment name to query
+     * @return
+     */
+    bool is_env_registered(const std::string& env_name)const noexcept;
+
 	///
 	/// \brief Return the url for the environment
 	/// with the given name
@@ -129,14 +138,7 @@ public:
 	                        const uint_t sidx, 
 							const uint_t aidx)const;
 
-    ///
-    ///
-    ///
     bool has_gymnasium()const;
-
-    ///
-    ///
-    ///
     std::vector<std::string> gymnasium_envs()const;
 
 private:
@@ -182,9 +184,10 @@ RESTRLEnvClient::step(const std::string& env_name, const std::string& idx,
 	
 	nlohmann::json body;
 	body["action"] = action;
+
+	std::cout<<"Sending body: "<<body.dump()<<std::endl;
 	
 	const auto response = request.send("POST", body.dump());
-
     if(response.status.code != 202){
         throw std::runtime_error("Environment server failed to step environment");
     }

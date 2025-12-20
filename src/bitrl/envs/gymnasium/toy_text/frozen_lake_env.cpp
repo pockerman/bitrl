@@ -10,40 +10,39 @@
 
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 
 namespace bitrl{
 namespace envs::gymnasium
 {
 
-	template<uint_t side_size>
-	const std::string FrozenLake<side_size>::name = "FrozenLake";
+template<uint_t side_size>
+const std::string FrozenLake<side_size>::name = "FrozenLake";
 
-	template<uint_t side_size>
-	const std::string FrozenLake<side_size>::URI = "/gymnasium/frozen-lake-env";
+template<uint_t side_size>
+const std::string FrozenLake<side_size>::URI = "/gymnasium/frozen-lake-env";
 
-	template<uint_t side_size>
-	FrozenLake<side_size>::FrozenLake(network::RESTRLEnvClient& api_server)
+template<uint_t side_size>
+FrozenLake<side_size>::FrozenLake(network::RESTRLEnvClient& api_server)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>,
 		               frozenlake_state_size<side_size>::size,
-		               3>(api_server, FrozenLake<side_size>::name),
-		is_slippery_(true)
-	{
-		this -> get_api_server().register_if_not(FrozenLake<side_size>::name,FrozenLake<side_size>::URI);
-	}
+		               3>(api_server, FrozenLake<side_size>::name)
+{
+	this -> get_api_server().register_if_not(FrozenLake<side_size>::name, FrozenLake<side_size>::URI);
+}
 
-	template<uint_t side_size>
-	FrozenLake<side_size>::FrozenLake(const FrozenLake<side_size>& other)
+template<uint_t side_size>
+FrozenLake<side_size>::FrozenLake(const FrozenLake<side_size>& other)
 		:
 		ToyTextEnvBase<TimeStep<uint_t>,
 		               frozenlake_state_size<side_size>::size,
-		               3>(other),
-		is_slippery_(other.is_slippery_)
+		               3>(other)
 	{}
 
-	template<uint_t side_size>
-	typename FrozenLake<side_size>::time_step_type
-	FrozenLake<side_size>::create_time_step_from_response_(const nlohmann::json& response)const{
+template<uint_t side_size>
+typename FrozenLake<side_size>::time_step_type
+FrozenLake<side_size>::create_time_step_from_response_(const nlohmann::json& response)const{
 
 		auto step_type = response["time_step"]["step_type"].template get<uint_t>();
 		auto step_type_val = TimeStepEnumUtils::time_step_type_from_int(step_type);
@@ -59,9 +58,24 @@ namespace envs::gymnasium
 		return time_step;
 	}
 
-	template<uint_t side_size>
-	void
-	FrozenLake<side_size>::make(const std::string& version,
+template<uint_t side_size>
+bool
+FrozenLake<side_size>::is_slippery()const
+{
+	auto make_ops = this -> make_options();
+	auto slip_itr = make_ops.find("is_slippery");
+
+	if( slip_itr != make_ops.end())
+	{
+		return std::any_cast<bool>(slip_itr->second);
+	}
+
+	throw std::logic_error("Property: is_slippery was not found. Have your called make?");
+}
+
+template<uint_t side_size>
+void
+FrozenLake<side_size>::make(const std::string& version,
 	                            const std::unordered_map<std::string, std::any>& options,
 	                            const std::unordered_map<std::string, std::any>& reset_options){
 
@@ -69,48 +83,52 @@ namespace envs::gymnasium
 			return;
 		}
 
-		is_slippery_ = true;
+		std::unordered_map<std::string, std::any> copy_make_ops = options;
+		auto is_slippery = true;
 
 		auto slip_itr = options.find("is_slippery");
 		if( slip_itr != options.end()){
-			is_slippery_ = std::any_cast<bool>(slip_itr->second);
+			is_slippery = std::any_cast<bool>(slip_itr->second);
+			copy_make_ops["is_slippery"] = is_slippery;
 		}
+		else
+		{
+			copy_make_ops["is_slippery"] = true;
+		}
+
 
 		nlohmann::json ops;
 		ops["map_name"] = map_type();
-		ops["is_slippery"] = is_slippery_;
+		ops["is_slippery"] = is_slippery;
 		auto response = this -> get_api_server().make(this -> env_name(),
 		                                              version, ops);
 
 		auto idx = response["idx"];
 		this -> set_idx_(idx);
-		this -> base_type::make(version, options, reset_options);
+		this -> base_type::make(version, copy_make_ops, reset_options);
 		this -> make_created_();
 	}
 
-	template<uint_t side_size>
-	typename FrozenLake<side_size>::time_step_type
-	FrozenLake<side_size>::step(const action_type& action){
+template<uint_t side_size>
+typename FrozenLake<side_size>::time_step_type
+FrozenLake<side_size>::step(const action_type& action){
 
 #ifdef BITRL_DEBUG
 		assert(this->is_created() && "Environment has not been created");
 #endif
 
-		if(this->get_current_time_step_().last()){
-			return this->reset();
-		}
-
-		auto response = this -> get_api_server().step(this -> env_name(),
-		                                              this -> idx(),
-		                                              action);
-
-		this->get_current_time_step_() = this->create_time_step_from_response_(response);
-		return this->get_current_time_step_();
-
+	if(this->get_current_time_step_().last()){
+		return this->reset();
 	}
 
-	template class FrozenLake<4>;
-	template class FrozenLake<8>;
+	auto response = this -> get_api_server().step(this -> env_name(), this -> idx(), action);
+	this->get_current_time_step_() = this->create_time_step_from_response_(response);
+	return this->get_current_time_step_();
+
+}
+
+template class FrozenLake<4>;
+template class FrozenLake<8>;
 
 }
 }
