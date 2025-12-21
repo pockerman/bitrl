@@ -151,7 +151,9 @@ RESTRLEnvClient::reset(const std::string& env_name, const std::string& idx,
     nlohmann::json request_body;
     request_body["seed"] = seed;
 	request_body["options"] = options;
-	
+
+
+	std::cout<<"Sending body request: "<<request_body.dump()<<std::endl;
     const auto response = request.send("POST", request_body.dump());
 
      if(response.status.code != 202){
@@ -183,6 +185,8 @@ RESTRLEnvClient::make(const std::string& env_name,
     nlohmann::json request_body;
     request_body["version"] = version;
 	request_body["options"] = options;
+
+	std::cout<<"Sending body request: "<<request_body.dump()<<std::endl;
 	
     const auto response = request.send("POST", request_body.dump());
 
@@ -207,8 +211,8 @@ RESTRLEnvClient::dynamics(const std::string& env_name, const std::string& idx,
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
 	
-	const auto request_url = url_ + "/" + idx + "/dynamics?stateId="+std::to_string(sidx)
-													+"&actionId="+std::to_string(aidx);
+	const auto request_url = url_ + "/" + idx + "/dynamics?state_id="+std::to_string(sidx)
+													+"&action_id="+std::to_string(aidx);
     http::Request request{request_url};
     const auto response = request.send("GET");
 	
