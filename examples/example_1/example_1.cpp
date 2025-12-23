@@ -47,7 +47,7 @@ void test_frozen_lake(RESTRLEnvClient& server){
 	std::cout<<"Environment version: "<<env.version()<<std::endl;
 
 	// once the env is created we can get it's id
-	std::cout<<"Environment is: "<<env.idx()<<std::endl;
+	std::cout<<"Environment idx is: "<<env.idx()<<std::endl;
 
 	// the create flag should be true
 	std::cout<<"Is environment created? "<<env.is_created()<<std::endl;
@@ -107,8 +107,6 @@ void test_taxi(RESTRLEnvClient& server){
 
     Taxi env(server);
 
-	// environment name can also be accessed via env.env_name()
-	std::cout<<"Is environment registered: "<<server.is_env_registered(env.env_name())<<std::endl;
 	std::cout<<"Environment URL: "<<env.get_url()<<std::endl;
 
     // make the environment
@@ -121,7 +119,7 @@ void test_taxi(RESTRLEnvClient& server){
 	std::cout<<"Environment version: "<<env.version()<<std::endl;
 
 	// once the env is created we can get it's id
-	std::cout<<"Environment is: "<<env.idx()<<std::endl;
+	std::cout<<"Environment idx is: "<<env.idx()<<std::endl;
 
 	// the create flag should be true
 	std::cout<<"Is environment created? "<<env.is_created()<<std::endl;
@@ -165,7 +163,6 @@ void test_taxi(RESTRLEnvClient& server){
 
     // close the environment
     env.close();
-
 }
 
 
@@ -207,12 +204,24 @@ void test_cliff_world(RESTRLEnvClient& server){
 	options["max_episode_steps"] = std::any(static_cast<bitrl::uint_t>(10));
 	std::unordered_map<std::string, std::any> reset_ops;
 	reset_ops.insert({"seed", static_cast<uint_t>(42)});
-    env.make("v0", options, reset_ops);
+    env.make("v1", options, reset_ops);
 
-    std::cout<<"Is environment created? "<<env.is_created()<<std::endl;
-    std::cout<<"Is environment alive? "<<env.is_alive()<<std::endl;
-    std::cout<<"Number of valid actions? "<<env.n_actions()<<std::endl;
-    std::cout<<"Number of states? "<<env.n_states()<<std::endl;
+	// query the environemnt version
+	std::cout<<"Environment version: "<<env.version()<<std::endl;
+
+	// once the env is created we can get it's id
+	std::cout<<"Environment idx is: "<<env.idx()<<std::endl;
+
+	// the create flag should be true
+	std::cout<<"Is environment created? "<<env.is_created()<<std::endl;
+
+	// environment should be alive on the server
+	std::cout<<"Is environment alive? "<<env.is_alive()<<std::endl;
+
+	// FrozenLake is a discrete state-action env so we can
+	// query number of actions and states
+	std::cout<<"Number of valid actions? "<<env.n_actions()<<std::endl;
+	std::cout<<"Number of states? "<<env.n_states()<<std::endl;
 
     // reset the environment
     auto time_step = env.reset();
@@ -265,10 +274,10 @@ int main(){
     example_1::test_taxi(server);
     std::cout<<"===================="<<std::endl;
     std::cout<<"Testing BlackJack..."<<std::endl;
-    //example_1::test_black_jack(server);
+    example_1::test_black_jack(server);
     std::cout<<"===================="<<std::endl;
     std::cout<<"Testing CliffWorld..."<<std::endl;
-    //example_1::test_cliff_world(server);
+    example_1::test_cliff_world(server);
     std::cout<<"===================="<<std::endl;
     return 0;
 }
