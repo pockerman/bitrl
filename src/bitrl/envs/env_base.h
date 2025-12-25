@@ -1,12 +1,8 @@
 #ifndef ENV_BASE_H
 #define ENV_BASE_H
 
-///
-/// \file env_base.h
-///
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
-#include "bitrl/envs/synchronized_env_mixin.h"
 
 #include <unordered_map>
 #include <any>
@@ -30,7 +26,7 @@ namespace envs{
 	 *                   state and action space definitions
 	 */
 template<typename TimeStepType, typename SpaceType>
-class EnvBase: public SpaceType, public synchronized_env_mixin
+class EnvBase: public SpaceType
 {
 public:
 	
@@ -197,7 +193,6 @@ template<typename TimeStepType, typename SpaceType>
 EnvBase<TimeStepType, SpaceType>::EnvBase(const std::string& idx, const std::string& name)
 :
 SpaceType(),
-synchronized_env_mixin(),
 is_created_(false),
 idx_(idx),
 version_(),
@@ -209,7 +204,6 @@ template<typename TimeStepType, typename SpaceType>
 EnvBase<TimeStepType, SpaceType>::EnvBase(const EnvBase<TimeStepType, SpaceType>& other)
 :
 SpaceType(),
-synchronized_env_mixin(),
 is_created_(other.is_created_),
 idx_(other.idx_),
 version_(other.version_),

@@ -210,15 +210,20 @@ RESTRLEnvClient::dynamics(const std::string& env_name, const std::string& idx,
 	if(url_ == bitrl::consts::INVALID_STR){
 		throw std::logic_error("Environment: " + env_name + " is not registered");
 	}
-	
-	const auto request_url = url_ + "/" + idx + "/dynamics?state_id="+std::to_string(sidx)
-													+"&action_id="+std::to_string(aidx);
-    http::Request request{request_url};
-    const auto response = request.send("GET");
-	
+
+	auto request_url = url_ + "/" + idx + "/dynamics?state_id="+std::to_string(sidx);
+	if (aidx != consts::INVALID_ID)
+	{
+		request_url += "&action_id="+std::to_string(aidx);
+	}
+
+	http::Request request{request_url};
+	const auto response = request.send("GET");
+
 	auto str_response = std::string(response.body.begin(), response.body.end());
-    nlohmann::json j = nlohmann::json::parse(str_response);
-	return j;	
+	nlohmann::json j = nlohmann::json::parse(str_response);
+	return j;
+
 }
 
 bool

@@ -1,3 +1,5 @@
+#ifndef BITRL_ENV_TYPES_H
+#define BITRL_ENV_TYPES_H
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/space_type.h"
 
@@ -224,3 +226,5 @@ struct DiscreteVectorStateDiscreteActionEnv
 
 }
 }
+
+#endif
