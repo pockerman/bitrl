@@ -20,51 +20,44 @@
 
 namespace bitrl
 {
-    namespace systems
-    {
-        struct DoublePendulumProperties
-        {
-            real_t l1 = 1.0;
-            real_t l2 = 1.0;
-            real_t r1 = 1.0;
-            real_t r2 = 1.0;
-            real_t density = 1000.;
+namespace systems
+{
+struct DoublePendulumProperties
+{
+    real_t l1 = 1.0;
+    real_t l2 = 1.0;
+    real_t r1 = 1.0;
+    real_t r2 = 1.0;
+    real_t density = 1000.;
+};
+class DoublePendulumSystem
+{
+  public:
+    DoublePendulumSystem();
 
-        };
-        class DoublePendulumSystem
-        {
-        public:
+    /**
+     * Build the system
+     * @param props
+     */
+    void build_system(const DoublePendulumProperties &props);
 
-            DoublePendulumSystem();
+    /**
+     * Enable the gravity vector
+     */
+    void enable_gravity();
 
-            /**
-             * Build the system
-             * @param props
-             */
-            void build_system(const DoublePendulumProperties& props);
+    bool has_gravity_enabled() const noexcept { return gravity_enabled_; }
+    bool is_initialized() const noexcept { return is_initialized_; }
 
+  protected:
+    chrono::ChSystemNSC system_;
 
-            /**
-             * Enable the gravity vector
-             */
-            void enable_gravity();
-
-            bool has_gravity_enabled() const noexcept{return gravity_enabled_;}
-            bool is_initialized() const noexcept{return is_initialized_;}
-
-
-
-        protected:
-
-            chrono::ChSystemNSC system_;
-
-        private:
-
-            bool gravity_enabled_{false};
-            bool is_initialized_{false};
-        };
-    }
-}
+  private:
+    bool gravity_enabled_{false};
+    bool is_initialized_{false};
+};
+} // namespace systems
+} // namespace bitrl
 
 #endif
-#endif //DOUBLE_PENDULUM_SYSTEM_H
+#endif // DOUBLE_PENDULUM_SYSTEM_H

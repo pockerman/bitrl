@@ -6,330 +6,330 @@
 #define LUNAR_LANDER_ENV_H
 
 #include "bitrl/bitrl_types.h"
-#include "bitrl/envs/time_step.h"
-#include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/envs/env_types.h"
+#include "bitrl/envs/gymnasium/gymnasium_env_base.h"
+#include "bitrl/envs/time_step.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
+#include "bitrl/network/rest_rl_env_client.h"
 
 namespace bitrl
 {
-    namespace envs::gymnasium
+namespace envs::gymnasium
+{
+namespace lunar_lander_detail
+{
+template <typename TimeStepType, typename SpaceType>
+class _LunarLanderEnv : public GymnasiumEnvBase<TimeStepType, SpaceType>
+{
+  public:
+    ///
+    /// \brief Base class type
+    ///
+    typedef GymnasiumEnvBase<TimeStepType, SpaceType>::base_type base_type;
+
+    ///
+    /// \brief The time step type we return every time a step in the
+    /// environment is performed
+    ///
+    typedef typename base_type::time_step_type time_step_type;
+
+    ///
+    /// \brief The type describing the state space for the environment
+    ///
+    typedef typename base_type::state_space_type state_space_type;
+
+    ///
+    /// \brief The type of the action space for the environment
+    ///
+    typedef typename base_type::action_space_type action_space_type;
+
+    ///
+    /// \brief The type of the action to be undertaken in the environment
+    ///
+    typedef typename base_type::action_type action_type;
+
+    ///
+    /// \brief The type of the state
+    ///
+    typedef typename base_type::state_type state_type;
+
+    /// Constructor
+    /// @param api_server
+    /// @param name
+    /// @param uri
+    ///
+    _LunarLanderEnv(network::RESTRLEnvClient &api_server, const std::string &name,
+                    const std::string &uri);
+
+    ///
+    /// @param other
+    ///
+    _LunarLanderEnv(const _LunarLanderEnv &other);
+
+    ///
+    /// \brief ~Pendulum. Destructor
+    ///
+    ~_LunarLanderEnv() = default;
+
+    ///
+    /// \brief make. Build the environment
+    ///
+    virtual void
+    make(const std::string &version, const std::unordered_map<std::string, std::any> &options,
+         const std::unordered_map<std::string, std::any> &reset_options) override final;
+
+    ///
+    /// \brief step. Step in the environment following the given action
+    ///
+    virtual time_step_type step(const action_type &action) override final;
+
+    ///
+    /// \brief n_actions. Returns the number of actions
+    ///
+    uint_t n_actions() const noexcept { return action_space_type::size; }
+
+  protected:
+    ///
+    /// \brief build the time step from the server response
+    ///
+    virtual time_step_type
+    create_time_step_from_response_(const nlohmann::json &response) const override;
+};
+
+template <typename TimeStepType, typename SpaceType>
+_LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(network::RESTRLEnvClient &api_server,
+                                                          const std::string &name,
+                                                          const std::string &uri)
+    : GymnasiumEnvBase<TimeStepType, SpaceType>(api_server, name)
+{
+    this->get_api_server().register_if_not(name, uri);
+}
+
+template <typename TimeStepType, typename SpaceType>
+_LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(
+    const _LunarLanderEnv<TimeStepType, SpaceType> &other)
+    : GymnasiumEnvBase<TimeStepType, SpaceType>(other)
+{
+}
+
+template <typename TimeStepType, typename SpaceType>
+void _LunarLanderEnv<TimeStepType, SpaceType>::make(
+    const std::string &version, const std::unordered_map<std::string, std::any> &options,
+    const std::unordered_map<std::string, std::any> &reset_options)
+{
+    if (this->is_created())
     {
-        namespace lunar_lander_detail
-        {
-            template<typename TimeStepType, typename SpaceType>
-            class _LunarLanderEnv: public GymnasiumEnvBase<TimeStepType, SpaceType >
-            {
-                public:
+        return;
+    }
 
-                ///
-                /// \brief Base class type
-                ///
-                typedef GymnasiumEnvBase<TimeStepType, SpaceType >::base_type base_type;
+    nlohmann::json ops;
 
-                ///
-                /// \brief The time step type we return every time a step in the
-                /// environment is performed
-                ///
-                typedef typename base_type::time_step_type time_step_type;
+    if (auto gravity_itr = options.find("gravity"); gravity_itr != options.end())
+    {
+        auto gravity = std::any_cast<real_t>(gravity_itr->second);
+        ops["gravity"] = gravity;
+    }
 
-                ///
-                /// \brief The type describing the state space for the environment
-                ///
-                typedef typename base_type::state_space_type state_space_type;
+    if (auto enable_wind_itr = options.find("enable_wind"); enable_wind_itr != options.end())
+    {
+        auto wind = std::any_cast<bool>(enable_wind_itr->second);
+        ops["enable_wind"] = wind;
+    }
 
-                ///
-                /// \brief The type of the action space for the environment
-                ///
-                typedef typename base_type::action_space_type action_space_type;
+    if (auto wind_power_itr = options.find("wind_power"); wind_power_itr != options.end())
+    {
+        auto wind_power = std::any_cast<real_t>(wind_power_itr->second);
+        ops["wind_power"] = wind_power;
+    }
 
-                ///
-                /// \brief The type of the action to be undertaken in the environment
-                ///
-                typedef typename base_type::action_type action_type;
+    if (auto turbulence_power_itr = options.find("turbulence_power");
+        turbulence_power_itr != options.end())
+    {
+        auto turbulence_power = std::any_cast<real_t>(turbulence_power_itr->second);
+        ops["turbulence_power"] = turbulence_power;
+    }
 
-                ///
-                /// \brief The type of the state
-                ///
-                typedef typename base_type::state_type state_type;
+    auto response = this->get_api_server().make(this->env_name(), version, ops);
 
-                /// Constructor
-                /// @param api_server
-                /// @param name
-                /// @param uri
-                ///
-                _LunarLanderEnv(network::RESTRLEnvClient& api_server, const std::string& name, const std::string& uri);
+    auto idx = response["idx"];
+    this->set_idx_(idx);
+    this->base_type::make(version, options, reset_options);
+    this->make_created_();
+}
 
-                ///
-                /// @param other
-                ///
-                _LunarLanderEnv(const _LunarLanderEnv& other);
-
-                ///
-                /// \brief ~Pendulum. Destructor
-                ///
-                ~_LunarLanderEnv()=default;
-
-                ///
-                /// \brief make. Build the environment
-                ///
-                virtual void make(const std::string& version,
-                                  const std::unordered_map<std::string, std::any>& options,
-                                  const std::unordered_map<std::string, std::any>& reset_options) override final;
-
-                ///
-                /// \brief step. Step in the environment following the given action
-                ///
-                virtual time_step_type step(const action_type& action)override final;
-
-                ///
-                /// \brief n_actions. Returns the number of actions
-                ///
-                uint_t n_actions()const noexcept{return action_space_type::size;}
-
-            protected:
-
-                ///
-                /// \brief build the time step from the server response
-                ///
-                virtual time_step_type create_time_step_from_response_(const nlohmann::json& response)const override;
-
-            };
-
-            template<typename TimeStepType, typename SpaceType>
-            _LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(network::RESTRLEnvClient& api_server,
-                const std::string& name, const std::string& uri)
-                :
-            GymnasiumEnvBase<TimeStepType, SpaceType >(api_server, name)
-            {
-                this -> get_api_server().register_if_not(name, uri);
-            }
-
-            template<typename TimeStepType, typename SpaceType>
-            _LunarLanderEnv<TimeStepType, SpaceType>::_LunarLanderEnv(const _LunarLanderEnv<TimeStepType, SpaceType>& other)
-                :
-            GymnasiumEnvBase<TimeStepType, SpaceType >(other)
-            {}
-
-            template<typename TimeStepType, typename SpaceType>
-            void
-            _LunarLanderEnv<TimeStepType, SpaceType>::make(const std::string& version,
-                                                           const std::unordered_map<std::string, std::any>& options,
-                                                           const std::unordered_map<std::string, std::any>& reset_options)
-            {
-                if(this->is_created()){
-                    return;
-                }
-
-                nlohmann::json ops;
-
-                if (auto gravity_itr = options.find("gravity"); gravity_itr != options.end())
-                {
-                    auto gravity = std::any_cast<real_t>(gravity_itr->second);
-                    ops["gravity"] = gravity;
-                }
-
-                if (auto enable_wind_itr = options.find("enable_wind"); enable_wind_itr != options.end())
-                {
-                    auto wind = std::any_cast<bool>(enable_wind_itr->second);
-                    ops["enable_wind"] = wind;
-                }
-
-                if (auto wind_power_itr = options.find("wind_power"); wind_power_itr != options.end())
-                {
-                    auto wind_power = std::any_cast<real_t>(wind_power_itr->second);
-                    ops["wind_power"] = wind_power;
-                }
-
-                if (auto turbulence_power_itr = options.find("turbulence_power"); turbulence_power_itr != options.end())
-                {
-                    auto turbulence_power = std::any_cast<real_t>(turbulence_power_itr->second);
-                    ops["turbulence_power"] = turbulence_power;
-                }
-
-                auto response  = this -> get_api_server().make(this -> env_name(),
-                                                                   version, ops);
-
-                auto idx = response["idx"];
-                this -> set_idx_(idx);
-                this -> base_type::make(version, options, reset_options);
-                this -> make_created_();
-            }
-
-            template<typename TimeStepType, typename SpaceType>
-            typename _LunarLanderEnv<TimeStepType, SpaceType>::time_step_type
-            _LunarLanderEnv<TimeStepType, SpaceType>::step(const action_type& action)
-            {
+template <typename TimeStepType, typename SpaceType>
+typename _LunarLanderEnv<TimeStepType, SpaceType>::time_step_type
+_LunarLanderEnv<TimeStepType, SpaceType>::step(const action_type &action)
+{
 
 #ifdef BITRL_DEBUG
-                assert(this->is_created() && "Environment has not been created");
+    assert(this->is_created() && "Environment has not been created");
 #endif
 
-                if(this->get_current_time_step_().last()){
-                    return this->reset();
-                }
+    if (this->get_current_time_step_().last())
+    {
+        return this->reset();
+    }
 
-                const auto response  = this -> get_api_server().step(this -> env_name(),
-                                                                         this -> idx(),
-                                                                         action);
+    const auto response = this->get_api_server().step(this->env_name(), this->idx(), action);
 
-                this->get_current_time_step_() = this->create_time_step_from_response_(response);
-                return this->get_current_time_step_();
-            }
+    this->get_current_time_step_() = this->create_time_step_from_response_(response);
+    return this->get_current_time_step_();
+}
 
-
-            template<typename TimeStepType, typename SpaceType>
-            typename _LunarLanderEnv<TimeStepType, SpaceType>::time_step_type
-            _LunarLanderEnv<TimeStepType, SpaceType>::create_time_step_from_response_(const nlohmann::json& response)const
-            {
-                auto step_type = response["time_step"]["step_type"].template get<uint_t>();
-                auto reward    = response["time_step"]["reward"];
-                auto discount  = response["time_step"]["discount"];
-                auto obs       = response["time_step"]["observation"];
-                auto info      = response["time_step"]["info"];
-                return time_step_type(TimeStepEnumUtils::time_step_type_from_int(step_type),
-                                      reward, obs, discount, std::unordered_map<std::string, std::any>());
-
-
-            }
-
-        }
-
-
-        ///
-        /// \brief LunarLanderDiscreteEnv environment with discrete action space
-        ///
-class LunarLanderDiscreteEnv final : public lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
-                ContinuousVectorStateDiscreteActionEnv<8, 4, 0, real_t>>
+template <typename TimeStepType, typename SpaceType>
+typename _LunarLanderEnv<TimeStepType, SpaceType>::time_step_type
+_LunarLanderEnv<TimeStepType, SpaceType>::create_time_step_from_response_(
+    const nlohmann::json &response) const
 {
-public:
-            ///
-            /// \brief name
-            ///
-            static const std::string name;
+    auto step_type = response["time_step"]["step_type"].template get<uint_t>();
+    auto reward = response["time_step"]["reward"];
+    auto discount = response["time_step"]["discount"];
+    auto obs = response["time_step"]["observation"];
+    auto info = response["time_step"]["info"];
+    return time_step_type(TimeStepEnumUtils::time_step_type_from_int(step_type), reward, obs,
+                          discount, std::unordered_map<std::string, std::any>());
+}
 
-            ///
-            /// \brief The URI for accessing the environment
-            ///
-            static const std::string URI;
+} // namespace lunar_lander_detail
 
-            ///
-            /// \brief Base class type
-            ///
-            typedef lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
-                                                         ContinuousVectorStateDiscreteActionEnv<8, 4, 0, real_t> > base_type;
+///
+/// \brief LunarLanderDiscreteEnv environment with discrete action space
+///
+class LunarLanderDiscreteEnv final
+    : public lunar_lander_detail::_LunarLanderEnv<
+          TimeStep<std::vector<real_t>>, ContinuousVectorStateDiscreteActionEnv<8, 4, 0, real_t>>
+{
+  public:
+    ///
+    /// \brief name
+    ///
+    static const std::string name;
 
-            ///
-            /// \brief The time step type we return every time a step in the
-            /// environment is performed
-            ///
-            typedef typename base_type::time_step_type time_step_type;
+    ///
+    /// \brief The URI for accessing the environment
+    ///
+    static const std::string URI;
 
-            ///
-            /// \brief The type describing the state space for the environment
-            ///
-            typedef typename base_type::state_space_type state_space_type;
+    ///
+    /// \brief Base class type
+    ///
+    typedef lunar_lander_detail::_LunarLanderEnv<
+        TimeStep<std::vector<real_t>>, ContinuousVectorStateDiscreteActionEnv<8, 4, 0, real_t>>
+        base_type;
 
-            ///
-            /// \brief The type of the action space for the environment
-            ///
-            typedef typename base_type::action_space_type action_space_type;
+    ///
+    /// \brief The time step type we return every time a step in the
+    /// environment is performed
+    ///
+    typedef typename base_type::time_step_type time_step_type;
 
-            ///
-            /// \brief The type of the action to be undertaken in the environment
-            ///
-            typedef typename base_type::action_type action_type;
+    ///
+    /// \brief The type describing the state space for the environment
+    ///
+    typedef typename base_type::state_space_type state_space_type;
 
-            ///
-            /// \brief The type of the state
-            ///
-            typedef typename base_type::state_type state_type;
+    ///
+    /// \brief The type of the action space for the environment
+    ///
+    typedef typename base_type::action_space_type action_space_type;
 
-            /// Constructor
-            /// @param api_server
-            ///
-            LunarLanderDiscreteEnv(network::RESTRLEnvClient& api_server);
+    ///
+    /// \brief The type of the action to be undertaken in the environment
+    ///
+    typedef typename base_type::action_type action_type;
 
-            ///
-            /// @param other
-            ///
-            LunarLanderDiscreteEnv(const LunarLanderDiscreteEnv& other);
+    ///
+    /// \brief The type of the state
+    ///
+    typedef typename base_type::state_type state_type;
 
-            ///
-            /// \brief ~Pendulum. Destructor
-            ///
-            ~LunarLanderDiscreteEnv() override =default;
+    /// Constructor
+    /// @param api_server
+    ///
+    LunarLanderDiscreteEnv(network::RESTRLEnvClient &api_server);
 
-        };
+    ///
+    /// @param other
+    ///
+    LunarLanderDiscreteEnv(const LunarLanderDiscreteEnv &other);
+
+    ///
+    /// \brief ~Pendulum. Destructor
+    ///
+    ~LunarLanderDiscreteEnv() override = default;
+};
 
 /**
  *
  * LunarLanderDiscreteEnv environment with discrete action space
  */
-class LunarLanderContinuousEnv final : public lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
-                ContinuousVectorStateContinuousVectorActionEnv<8, 2, real_t, real_t>>
+class LunarLanderContinuousEnv final
+    : public lunar_lander_detail::_LunarLanderEnv<
+          TimeStep<std::vector<real_t>>,
+          ContinuousVectorStateContinuousVectorActionEnv<8, 2, real_t, real_t>>
 {
-public:
-            ///
-            /// \brief name
-            ///
-            static const std::string name;
+  public:
+    ///
+    /// \brief name
+    ///
+    static const std::string name;
 
-            ///
-            /// \brief The URI for accessing the environment
-            ///
-            static const std::string URI;
+    ///
+    /// \brief The URI for accessing the environment
+    ///
+    static const std::string URI;
 
-            ///
-            /// \brief Base class type
-            ///
-            typedef lunar_lander_detail::_LunarLanderEnv<TimeStep<std::vector<real_t>>,
-                                                         ContinuousVectorStateContinuousVectorActionEnv<8, 2, real_t, real_t> > base_type;
+    ///
+    /// \brief Base class type
+    ///
+    typedef lunar_lander_detail::_LunarLanderEnv<
+        TimeStep<std::vector<real_t>>,
+        ContinuousVectorStateContinuousVectorActionEnv<8, 2, real_t, real_t>>
+        base_type;
 
-            ///
-            /// \brief The time step type we return every time a step in the
-            /// environment is performed
-            ///
-            typedef typename base_type::time_step_type time_step_type;
+    ///
+    /// \brief The time step type we return every time a step in the
+    /// environment is performed
+    ///
+    typedef typename base_type::time_step_type time_step_type;
 
-            ///
-            /// \brief The type describing the state space for the environment
-            ///
-            typedef typename base_type::state_space_type state_space_type;
+    ///
+    /// \brief The type describing the state space for the environment
+    ///
+    typedef typename base_type::state_space_type state_space_type;
 
-            ///
-            /// \brief The type of the action space for the environment
-            ///
-            typedef typename base_type::action_space_type action_space_type;
+    ///
+    /// \brief The type of the action space for the environment
+    ///
+    typedef typename base_type::action_space_type action_space_type;
 
-            ///
-            /// \brief The type of the action to be undertaken in the environment
-            ///
-            typedef typename base_type::action_type action_type;
+    ///
+    /// \brief The type of the action to be undertaken in the environment
+    ///
+    typedef typename base_type::action_type action_type;
 
-            ///
-            /// \brief The type of the state
-            ///
-            typedef typename base_type::state_type state_type;
+    ///
+    /// \brief The type of the state
+    ///
+    typedef typename base_type::state_type state_type;
 
-            /// Constructor
-            /// @param api_server
-            ///
-            LunarLanderContinuousEnv(network::RESTRLEnvClient& api_server);
+    /// Constructor
+    /// @param api_server
+    ///
+    LunarLanderContinuousEnv(network::RESTRLEnvClient &api_server);
 
-            ///
-            /// @param other
-            ///
-            LunarLanderContinuousEnv(const LunarLanderContinuousEnv& other);
+    ///
+    /// @param other
+    ///
+    LunarLanderContinuousEnv(const LunarLanderContinuousEnv &other);
 
-            ///
-            /// \brief ~Pendulum. Destructor
-            ///
-            ~LunarLanderContinuousEnv() override =default;
+    ///
+    /// \brief ~Pendulum. Destructor
+    ///
+    ~LunarLanderContinuousEnv() override = default;
+};
+} // namespace envs::gymnasium
+} // namespace bitrl
 
-        };
-    }
-}
-
-#endif //LUNAR_LANDER_ENV_H
+#endif // LUNAR_LANDER_ENV_H

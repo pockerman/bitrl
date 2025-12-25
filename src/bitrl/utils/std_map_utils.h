@@ -9,58 +9,57 @@
 
 #include <any>
 #include <map>
-#include <unordered_map>
 #include <stdexcept>
+#include <unordered_map>
 
-
-namespace bitrl{
-namespace utils{
+namespace bitrl
+{
+namespace utils
+{
 
 /**
  * Given the name of the argument return std::any_cast<OutT>(itr->second)
  * where itr is itr = input.find(name)
  */
-template<typename OutT>
-OutT
-resolve(const std::string& name,
-        const std::map<std::string, std::any>& input){
+template <typename OutT>
+OutT resolve(const std::string &name, const std::map<std::string, std::any> &input)
+{
 
     auto itr = input.find(name);
 
-    if(itr == input.end()){
+    if (itr == input.end())
+    {
         throw std::logic_error("Property: " + name + " not in input");
     }
 
     return std::any_cast<OutT>(itr->second);
-
 }
 
-  /**
-  * Given the name of the argument return std::any_cast<OutT>(itr->second)
-  * where itr is itr = input.find(name)
-  */
- template<typename OutT>
- OutT
- resolve(const std::string& name,
-          const std::unordered_map<std::string, std::any>& input)
+/**
+ * Given the name of the argument return std::any_cast<OutT>(itr->second)
+ * where itr is itr = input.find(name)
+ */
+template <typename OutT>
+OutT resolve(const std::string &name, const std::unordered_map<std::string, std::any> &input)
 {
-  auto itr = input.find(name);
+    auto itr = input.find(name);
 
-  if (itr == input.end()) {
-    throw std::logic_error("Property: " + name + " not in input");
-  }
+    if (itr == input.end())
+    {
+        throw std::logic_error("Property: " + name + " not in input");
+    }
 
-  try {
-    return std::any_cast<OutT>(itr->second);
-  }
-  catch (const std::bad_any_cast&) {
-    throw std::logic_error(
-        "Property: " + name + " has unexpected type"
-    );
-  }
+    try
+    {
+        return std::any_cast<OutT>(itr->second);
+    }
+    catch (const std::bad_any_cast &)
+    {
+        throw std::logic_error("Property: " + name + " has unexpected type");
+    }
 }
 
-	}
-}
+} // namespace utils
+} // namespace bitrl
 
-#endif 
+#endif

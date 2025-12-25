@@ -3,44 +3,41 @@
 
 #include "bitrl/bitrl_types.h"
 
-namespace bitrl{
- 
-  struct NotNull 
-  {
-  
-    NotNull()
-    {}
-    
-    template<typename ITERATOR>
-    bool operator()(const ITERATOR* itr)const{
-    	return itr!=nullptr;
+namespace bitrl
+{
+
+struct NotNull
+{
+
+    NotNull() {}
+
+    template <typename ITERATOR> bool operator()(const ITERATOR *itr) const
+    {
+        return itr != nullptr;
     }
-  };
-  
-  struct IsActive
-  {
-  
-    IsActive()
-    {}
-    template<typename ITERATOR>
-    bool operator()(const ITERATOR* itr)const{
-      return itr->is_active();
+};
+
+struct IsActive
+{
+
+    IsActive() {}
+    template <typename ITERATOR> bool operator()(const ITERATOR *itr) const
+    {
+        return itr->is_active();
     }
-  
-  };
+};
 
-  struct ActiveBoundaryObject
-  {
+struct ActiveBoundaryObject
+{
 
-     ActiveBoundaryObject()
-     {}
+    ActiveBoundaryObject() {}
 
-     template<typename ITERATOR>
-     bool operator()(const ITERATOR* itr)const{
+    template <typename ITERATOR> bool operator()(const ITERATOR *itr) const
+    {
 
-         return (itr->is_active() && itr->on_boundary());
-     }
-  };
+        return (itr->is_active() && itr->on_boundary());
+    }
+};
 
-}
+} // namespace bitrl
 #endif

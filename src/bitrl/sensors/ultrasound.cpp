@@ -7,15 +7,12 @@
 
 namespace bitrl
 {
-    namespace sensors
-    {
-            std::optional<UltrasoundReading>
-            UltrasoundReading::parse(const std::string& msg)
-            {
-                auto json = nlohmann::json::parse(msg);
-                return UltrasoundReading{
-                    json["distance_m"], json["timestamp"]
-                };
-            }
-    }
+namespace sensors
+{
+std::optional<UltrasoundReading> UltrasoundReading::parse(const std::string &msg)
+{
+    auto json = nlohmann::json::parse(msg);
+    return UltrasoundReading{json["distance_m"], json["timestamp"]};
 }
+} // namespace sensors
+} // namespace bitrl

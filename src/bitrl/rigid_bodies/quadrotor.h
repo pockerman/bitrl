@@ -3,35 +3,32 @@
 
 #include "rlenvs/rlenvs_types_v2.h"
 
-namespace rlenvscpp{
-namespace rigid_bodies{
+namespace rlenvscpp
+{
+namespace rigid_bodies
+{
 
 ///
 ///
 class Quadrotor
 {
-public:
-	
-	Quadrotor
+  public:
+    Quadrotor
 
-private:
+        private :
 
-	///
-	/// \brief The mass of the quadrotor
-	///
-	real_t mass_;	
-	
-	///
-	/// \brief the arm length
-	///
-	real_t l_;
-		
-	
-};	
-	
-}
-}
+        ///
+        /// \brief The mass of the quadrotor
+        ///
+        real_t mass_;
 
+    ///
+    /// \brief the arm length
+    ///
+    real_t l_;
+};
 
+} // namespace rigid_bodies
+} // namespace rlenvscpp
 
 #endif

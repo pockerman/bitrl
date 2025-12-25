@@ -3,18 +3,19 @@
 
 #include "bitrl/utils/filtered_iterator.h"
 
-namespace bitrl{
-namespace utils{
-namespace geom{
+namespace bitrl
+{
+namespace utils
+{
+namespace geom
+{
 
-template<typename Predicate, typename  MeshTp> class FaceMeshIterator;
+template <typename Predicate, typename MeshTp> class FaceMeshIterator;
 
 /// \brief The general template
-template<typename Predicate, typename  MeshTp>
-class FaceMeshIterator
+template <typename Predicate, typename MeshTp> class FaceMeshIterator
 {
-public:
-
+  public:
     typedef Predicate predicate_t;
     typedef MeshTp mesh_t;
     typedef typename mesh_t::face_iterator_impl iterator_impl;
@@ -22,7 +23,7 @@ public:
     typedef FilteredIterator<Predicate, iterator_impl> result_t;
 
     /// constructor
-    FaceMeshIterator(mesh_t& mesh);
+    FaceMeshIterator(mesh_t &mesh);
 
     /// \brief begin the iteration
     result_t begin();
@@ -30,40 +31,36 @@ public:
     /// \brief end the iteration
     result_t end();
 
-protected:
-
+  protected:
     // the mesh over which the iterator is working
-    mesh_t& mesh_;
-
+    mesh_t &mesh_;
 };
 
-template<typename Predicate, typename  MeshTp>
-FaceMeshIterator<Predicate, MeshTp>::FaceMeshIterator(typename FaceMeshIterator<Predicate, MeshTp>::mesh_t& mesh)
-    :
-mesh_(mesh)
-{}
-
-template<typename Predicate, typename  MeshTp>
-typename FaceMeshIterator<Predicate, MeshTp>::result_t
-FaceMeshIterator<Predicate, MeshTp>::begin(){
-    Predicate p;
-    return FaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_begin(), mesh_.faces_end() );
+template <typename Predicate, typename MeshTp>
+FaceMeshIterator<Predicate, MeshTp>::FaceMeshIterator(
+    typename FaceMeshIterator<Predicate, MeshTp>::mesh_t &mesh)
+    : mesh_(mesh)
+{
 }
 
-template<typename Predicate, typename  MeshTp>
-typename FaceMeshIterator<Predicate, MeshTp>::result_t
-FaceMeshIterator<Predicate, MeshTp>::end(){
+template <typename Predicate, typename MeshTp>
+typename FaceMeshIterator<Predicate, MeshTp>::result_t FaceMeshIterator<Predicate, MeshTp>::begin()
+{
     Predicate p;
-    return FaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_end(), mesh_.faces_end() );
+    return FaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_begin(), mesh_.faces_end());
 }
 
+template <typename Predicate, typename MeshTp>
+typename FaceMeshIterator<Predicate, MeshTp>::result_t FaceMeshIterator<Predicate, MeshTp>::end()
+{
+    Predicate p;
+    return FaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_end(), mesh_.faces_end());
+}
 
 /// \brief The general template
-template<typename Predicate, typename  MeshTp>
-class ConstFaceMeshIterator
+template <typename Predicate, typename MeshTp> class ConstFaceMeshIterator
 {
-public:
-
+  public:
     typedef Predicate predicate_t;
     typedef MeshTp mesh_t;
     typedef typename mesh_t::cface_iterator_impl iterator_impl;
@@ -71,43 +68,46 @@ public:
     typedef FilteredIterator<Predicate, iterator_impl> result_t;
 
     /// constructor
-    ConstFaceMeshIterator(const mesh_t& mesh);
+    ConstFaceMeshIterator(const mesh_t &mesh);
 
     /// \brief begin the iteration
-    result_t begin()const;
+    result_t begin() const;
 
     /// \brief end the iteration
-    result_t end()const;
+    result_t end() const;
 
-protected:
-
+  protected:
     // the mesh over which the iterator is working
-    const mesh_t& mesh_;
-
+    const mesh_t &mesh_;
 };
 
-template<typename Predicate, typename  MeshTp>
-ConstFaceMeshIterator<Predicate, MeshTp>::ConstFaceMeshIterator(const typename ConstFaceMeshIterator<Predicate, MeshTp>::mesh_t& mesh)
-    :
-mesh_(mesh)
-{}
+template <typename Predicate, typename MeshTp>
+ConstFaceMeshIterator<Predicate, MeshTp>::ConstFaceMeshIterator(
+    const typename ConstFaceMeshIterator<Predicate, MeshTp>::mesh_t &mesh)
+    : mesh_(mesh)
+{
+}
 
-template<typename Predicate, typename  MeshTp>
+template <typename Predicate, typename MeshTp>
 typename ConstFaceMeshIterator<Predicate, MeshTp>::result_t
-ConstFaceMeshIterator<Predicate, MeshTp>::begin()const{
+ConstFaceMeshIterator<Predicate, MeshTp>::begin() const
+{
     Predicate p;
-    return ConstFaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_begin(), mesh_.faces_end() );
+    return ConstFaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_begin(),
+                                                              mesh_.faces_end());
 }
 
-template<typename Predicate, typename  MeshTp>
+template <typename Predicate, typename MeshTp>
 typename ConstFaceMeshIterator<Predicate, MeshTp>::result_t
-ConstFaceMeshIterator<Predicate, MeshTp>::end()const{
+ConstFaceMeshIterator<Predicate, MeshTp>::end() const
+{
     Predicate p;
-    return ConstFaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_end(), mesh_.faces_end() );
+    return ConstFaceMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.faces_end(),
+                                                              mesh_.faces_end());
 }
 
-}
-}
-}
+} // namespace geom
+} // namespace utils
+} // namespace bitrl
 
 #endif // FACE_MESH_ITERATOR_H

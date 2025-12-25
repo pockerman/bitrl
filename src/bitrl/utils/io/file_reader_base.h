@@ -9,19 +9,21 @@
 #include "bitrl/utils//io/file_handler_base.h"
 #include "boost/noncopyable.hpp"
 
-#include <string>
 #include <fstream>
+#include <string>
 
-namespace bitrl{
-namespace utils{
-namespace io{
+namespace bitrl
+{
+namespace utils
+{
+namespace io
+{
 /**
  * @todo write docs
  */
-class FileReaderBase: public FileHandlerBase<std::ifstream>
+class FileReaderBase : public FileHandlerBase<std::ifstream>
 {
-    public:
-
+  public:
     virtual ~FileReaderBase() = default;
 
     ///
@@ -33,18 +35,16 @@ class FileReaderBase: public FileHandlerBase<std::ifstream>
     /// \brief Returns true if the underlying stream
     /// handler has reached the EOF
     ///
-    bool eof()const{return this->get_file_stream().eof();}
+    bool eof() const { return this->get_file_stream().eof(); }
 
-protected:
-
+  protected:
     ///
     /// \brief Constructor
     ///
-    FileReaderBase(const std::string& file_name, FileFormats::Type t);
-				
+    FileReaderBase(const std::string &file_name, FileFormats::Type t);
 };
 
-}
-}
-}
+} // namespace io
+} // namespace utils
+} // namespace bitrl
 #endif // FILE_READER_BASE_H

@@ -3,10 +3,12 @@
 
 #include <string>
 
-namespace bitrl{
-namespace utils{
-namespace io{	
-
+namespace bitrl
+{
+namespace utils
+{
+namespace io
+{
 
 ///
 /// Small struct that holds an enumeration for varioufile formats
@@ -15,20 +17,24 @@ namespace io{
 struct FileFormats
 {
 
-  ///
-  /// File formats types
-  ///
-  enum class Type{CSV=0, JSON=1, INVALID_TYPE};
+    ///
+    /// File formats types
+    ///
+    enum class Type
+    {
+        CSV = 0,
+        JSON = 1,
+        INVALID_TYPE
+    };
 
-  ///
-  /// Return an std::string representation of the given file format type
-  ///
-  static std::string type_to_string(Type t);
+    ///
+    /// Return an std::string representation of the given file format type
+    ///
+    static std::string type_to_string(Type t);
 };
 
-}
-}
-}
-
+} // namespace io
+} // namespace utils
+} // namespace bitrl
 
 #endif // FILE_FORMATS_H

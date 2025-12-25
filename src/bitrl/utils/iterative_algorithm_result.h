@@ -2,18 +2,21 @@
 #define ITERATIVE_ALGORITHM_RESULT_H
 
 #include "bitrl/bitrl_types.h"
-#include <ostream>
 #include <chrono>
+#include <ostream>
 #include <vector>
 
-namespace bitrl{
-namespace utils{
+namespace bitrl
+{
+namespace utils
+{
 
 ///
 /// \brief The IterativeAlgorithmResult struct. Helper
 /// struct to assemble the result of an iterative algorithm
 ///
-struct IterativeAlgorithmResult  {
+struct IterativeAlgorithmResult
+{
 
     ///
     /// \brief tolerance
@@ -33,7 +36,7 @@ struct IterativeAlgorithmResult  {
     ///
     /// \brief converged
     ///
-    bool converged=false;
+    bool converged = false;
 
     ///
     /// \brief total_time
@@ -53,23 +56,20 @@ struct IterativeAlgorithmResult  {
     ///
     /// \brief IterativeAlgorithmResult
     ///
-    IterativeAlgorithmResult(real_t tol, real_t res,
-                             uint_t nitrs, 
-							 std::chrono::duration<real_t> time);
+    IterativeAlgorithmResult(real_t tol, real_t res, uint_t nitrs,
+                             std::chrono::duration<real_t> time);
 
     ///
     /// \brief print
     ///
-    std::ostream& print(std::ostream& out)const;
+    std::ostream &print(std::ostream &out) const;
 };
 
-
-inline
-std::ostream& operator<<(std::ostream& out, 
-                         const IterativeAlgorithmResult& result){
+inline std::ostream &operator<<(std::ostream &out, const IterativeAlgorithmResult &result)
+{
     return result.print(out);
 }
 
-}
-}
+} // namespace utils
+} // namespace bitrl
 #endif // ITERATIVE_ALGORITHM_RESULT_H

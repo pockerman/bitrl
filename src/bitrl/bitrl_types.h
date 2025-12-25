@@ -3,20 +3,19 @@
 
 /**
  * \file rlenvs_types_v2.h
- * 
+ *
  */
 
 //#include "bitrl/bitrl_config.h"
 #include "Eigen/Core"
 
-
-#include <string>
 #include <cstddef>
-#include <vector>
 #include <ostream>
+#include <string>
+#include <vector>
 
-
-namespace bitrl {
+namespace bitrl
+{
 
 ///
 /// \brief real_t
@@ -44,42 +43,38 @@ typedef long int lint_t;
 typedef std::size_t uint_t;
 
 ///
-/// \brief Dynamically sized matrix to use 
+/// \brief Dynamically sized matrix to use
 /// around the library
 ///
-template<typename T>
-using DynMat = Eigen::MatrixX<T>;
+template <typename T> using DynMat = Eigen::MatrixX<T>;
 
 ///
 /// \brief Square matrix with elements of type T
 ///
-template<typename T, uint_t N>
-using SquareMat = Eigen::Matrix<T, N, N>;
+template <typename T, uint_t N> using SquareMat = Eigen::Matrix<T, N, N>;
 
 ///
 /// \brief General fixed size matrix
 ///
-template<typename T, uint_t N, uint_t M>
-using Mat = Eigen::Matrix<T, N, M>;
+template <typename T, uint_t N, uint_t M> using Mat = Eigen::Matrix<T, N, M>;
 
 ///
-/// \brief Dynamic×3 matrix of type double. 
-/// 
+/// \brief Dynamic×3 matrix of type double.
+///
 using RealMat3d = Eigen::Matrix3<real_t>;
 
 ///
-/// \brief Dynamic×3 matrix of type float. 
+/// \brief Dynamic×3 matrix of type float.
 ///
 using FloatMat3d = Eigen::Matrix3<float_t>;
 
 ///
 /// \brief Dynamically sized row vector
 ///
-template<typename T>
-using DynVec = Eigen::RowVectorX<T>;
+template <typename T> using DynVec = Eigen::RowVectorX<T>;
 
 ///
-/// \brief single precision floating point vector 
+/// \brief single precision floating point vector
 ///
 using FloatVec = DynVec<float_t>;
 
@@ -102,16 +97,15 @@ using STD_RealVec = std::vector<real_t>;
 /// \brief Column vector. Some maths operations
 /// are easier using column vectors rather than DynVec
 ///
-template<typename T>
-using ColVec = Eigen::VectorX<T>;
+template <typename T> using ColVec = Eigen::VectorX<T>;
 
 ///
-/// \brief Dynamically sized column vector  
+/// \brief Dynamically sized column vector
 ///
 using RealColVec = ColVec<real_t>;
 
 ///
-/// \brief Dynamically sized column vector  
+/// \brief Dynamically sized column vector
 ///
 using FoatColVec = ColVec<float_t>;
 
@@ -125,55 +119,56 @@ using RealColVec3d = Eigen::Vector3d;
 ///
 using FloatColVec3d = Eigen::Vector3f;
 
-
 ///
-/// \struct IntegralRange 
+/// \struct IntegralRange
 /// \brief A range of integer values in
 /// [s, e]
 ///
-template<uint_t s, uint_t e>
-struct IntegralRange
+template <uint_t s, uint_t e> struct IntegralRange
 {
-	typedef uint_t value_type;
-	static constexpr uint_t S = s;
-	static constexpr uint_t E = e;
-	static constexpr uint_t size = e - s;
+    typedef uint_t value_type;
+    static constexpr uint_t S = s;
+    static constexpr uint_t E = e;
+    static constexpr uint_t size = e - s;
 };
 
 ///
-/// \struct RealRange 
+/// \struct RealRange
 /// \brief A range of double precision floating point values
 ///
-template<real_t s, real_t e>
-struct RealRange
+template <real_t s, real_t e> struct RealRange
 {
-	typedef real_t value_type;
-	static constexpr real_t S = s;
-	static constexpr real_t E = e;
-	static constexpr real_t size = e - s;
+    typedef real_t value_type;
+    static constexpr real_t S = s;
+    static constexpr real_t E = e;
+    static constexpr real_t size = e - s;
 };
-
 
 ///
 /// \struct Null
 /// \brief Null placeholder
 ///
-struct Null{};
+struct Null
+{
+};
 
 /// \enum DeviceType
 /// \brief Enumeration of various device types.
 ///
-enum class DeviceType {INVALID_TYPE=0, CPU=1, GPU=2} ;
+enum class DeviceType
+{
+    INVALID_TYPE = 0,
+    CPU = 1,
+    GPU = 2
+};
 
-inline
-std::ostream& operator<<(std::ostream& out,
-                         const Null&){
+inline std::ostream &operator<<(std::ostream &out, const Null &)
+{
 
-	out<<"null";
-	return out;
+    out << "null";
+    return out;
 }
 
-}
+} // namespace bitrl
 
 #endif // TYPES_H
-

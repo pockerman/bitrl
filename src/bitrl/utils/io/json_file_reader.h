@@ -7,51 +7,44 @@
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/utils/io/file_reader_base.h"
 
-namespace bitrl{
+namespace bitrl
+{
 namespace utils::io
 {
-    /**
+/**
  * @todo write docs
  */
-    class JSONFileReader final: public FileReaderBase
-    {
+class JSONFileReader final : public FileReaderBase
+{
 
-    public:
+  public:
+    JSONFileReader(const std::string &filename);
 
-
-        JSONFileReader(const std::string& filename);
-
-        ///
+    ///
     /// \brief Attempts to open the file for reading
     ///
-        virtual void open() override final;
+    virtual void open() override final;
 
-        /**
+    /**
      * @brief Get the value specified by the label
      */
-        template<typename T>
-        T get_value(const std::string& label)const;
+    template <typename T> T get_value(const std::string &label) const;
 
-    private:
+  private:
+    using json = nlohmann::json;
+    json data_;
+};
 
-        using json = nlohmann::json;
-        json data_;
+template <typename T> T JSONFileReader::get_value(const std::string &label) const
+{
 
-
-    };
-
-
-    template<typename T>
-    T
-    JSONFileReader::get_value(const std::string& label)const{
-
-        if(!this -> is_open()){
-            throw std::logic_error("JSON file is not open. Have you called open()?");
-        }
-        return data_[label].template get<T>();
-
+    if (!this->is_open())
+    {
+        throw std::logic_error("JSON file is not open. Have you called open()?");
     }
+    return data_[label].template get<T>();
+}
 
-}
-}
+} // namespace utils::io
+} // namespace bitrl
 #endif // JSON_FILE_READER_H
