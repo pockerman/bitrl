@@ -2,12 +2,11 @@
 // Created by alex on 7/5/25.
 //
 
-#include  "bitrl/boards/arduino/arduino_connector_wifi_base.h"
+#include "bitrl/boards/arduino/arduino_connector_wifi_base.h"
 #include <iostream>
 
-#include <thread>
 #include <chrono>
-
+#include <thread>
 
 /**
  * // Code for Arduino
@@ -91,65 +90,59 @@ void loop() {
  */
 namespace example
 {
-  using bitrl::boards::arduino::ArduinoCMDBase;
-  using bitrl::boards::arduino::ArduinoConnectorWIFIBase;
+using bitrl::boards::arduino::ArduinoCMDBase;
+using bitrl::boards::arduino::ArduinoConnectorWIFIBase;
 
-  struct ArduinoONCMD: public ArduinoCMDBase
-  {
-    virtual std::string get_cmd()const final;
-  };
+struct ArduinoONCMD : public ArduinoCMDBase
+{
+    virtual std::string get_cmd() const final;
+};
 
-  std::string ArduinoONCMD::get_cmd() const
-  {
-    return "ON";
-  }
+std::string ArduinoONCMD::get_cmd() const { return "ON"; }
 
-  struct ArduinoOFFCMD: public ArduinoCMDBase
-  {
-    virtual std::string get_cmd()const final;
-  };
+struct ArduinoOFFCMD : public ArduinoCMDBase
+{
+    virtual std::string get_cmd() const final;
+};
 
-  std::string ArduinoOFFCMD::get_cmd() const
-  {
-    return "OFF";
-  }
-}
+std::string ArduinoOFFCMD::get_cmd() const { return "OFF"; }
+} // namespace example
 
-int main() {
+int main()
+{
 
+    using namespace example;
 
-  using namespace example;
+    ArduinoConnectorWIFIBase connector("http://192.168.0.70:8005");
+    ArduinoONCMD on_cmd;
+    ArduinoOFFCMD off_cmd;
 
-  ArduinoConnectorWIFIBase connector("http://192.168.0.70:8005");
-  ArduinoONCMD on_cmd;
-  ArduinoOFFCMD off_cmd;
-
-  std::string user_input;
-  while (true)
-  {
-    std::cout << "Enter command ON/OFF or e (to exit): ";
-    std::getline(std::cin, user_input);
-
-    if (user_input == "e") {
-      connector.send_cmd(off_cmd);
-      break;
-    }
-
-    if (user_input == "ON")
+    std::string user_input;
+    while (true)
     {
-      auto response = connector.send_cmd(on_cmd);
-      std::cout<<"Arduino response: "<<response<<std::endl;
-    }
+        std::cout << "Enter command ON/OFF or e (to exit): ";
+        std::getline(std::cin, user_input);
 
-    if (user_input == "OFF")
-    {
-      auto response = connector.send_cmd(off_cmd);
-      std::cout<<"Arduino response: "<<response<<std::endl;
-    }
+        if (user_input == "e")
+        {
+            connector.send_cmd(off_cmd);
+            break;
+        }
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-  }
+        if (user_input == "ON")
+        {
+            auto response = connector.send_cmd(on_cmd);
+            std::cout << "Arduino response: " << response << std::endl;
+        }
+
+        if (user_input == "OFF")
+        {
+            auto response = connector.send_cmd(off_cmd);
+            std::cout << "Arduino response: " << response << std::endl;
+        }
+
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
 
     return 0;
 }
-

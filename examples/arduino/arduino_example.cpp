@@ -1,10 +1,9 @@
 #include "bitrl/boards/arduino/arduino_connector_usb_base.h"
 
+#include <chrono>
 #include <iostream>
 #include <string>
-#include <chrono>
 #include <thread>
-
 
 /*
     Arduino Code
@@ -33,35 +32,28 @@
     }
  */
 
-
 namespace example
 {
-    using bitrl::boards::arduino::ArduinoCMDBase;
-    using bitrl::boards::arduino::ArduinoConnectorUSBBase;
+using bitrl::boards::arduino::ArduinoCMDBase;
+using bitrl::boards::arduino::ArduinoConnectorUSBBase;
 
-    struct ArduinoONCMD: public ArduinoCMDBase
-    {
-        virtual std::string get_cmd()const final;
-    };
+struct ArduinoONCMD : public ArduinoCMDBase
+{
+    virtual std::string get_cmd() const final;
+};
 
-    std::string ArduinoONCMD::get_cmd() const
-    {
-        return "ON";
-    }
+std::string ArduinoONCMD::get_cmd() const { return "ON"; }
 
-    struct ArduinoOFFCMD: public ArduinoCMDBase
-    {
-        virtual std::string get_cmd()const final;
-    };
+struct ArduinoOFFCMD : public ArduinoCMDBase
+{
+    virtual std::string get_cmd() const final;
+};
 
-    std::string ArduinoOFFCMD::get_cmd() const
-    {
-        return "OFF";
-    }
-}
+std::string ArduinoOFFCMD::get_cmd() const { return "OFF"; }
+} // namespace example
 
-
-int main() {
+int main()
+{
 
     using namespace example;
 
@@ -72,11 +64,13 @@ int main() {
     ArduinoOFFCMD off_cmd;
 
     std::string user_input;
-    while (true) {
+    while (true)
+    {
         std::cout << "Enter command ON/OFF or e (to exit): ";
         std::getline(std::cin, user_input);
 
-        if (user_input == "e") {
+        if (user_input == "e")
+        {
             connector.send_cmd(off_cmd);
             break;
         }
