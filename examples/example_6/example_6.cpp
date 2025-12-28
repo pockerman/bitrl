@@ -4,6 +4,7 @@
 #include "bitrl/envs/gymnasium/classic_control/acrobot_env.h"
 #include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
 #include "bitrl/envs/gymnasium/classic_control/pendulum_env.h"
+#include "bitrl/envs/gymnasium/classic_control/mountain_car_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 
 #ifdef BITRL_DEBUG
@@ -23,7 +24,6 @@ using bitrl::network::RESTRLEnvClient;
 
 void test_cart_pole(RESTRLEnvClient &server)
 {
-    // the environment is not registered with the server
     std::cout << "Is environment registered: " << server.is_env_registered(CartPole::name)
               << std::endl;
 
@@ -51,7 +51,6 @@ void test_cart_pole(RESTRLEnvClient &server)
 
 void test_acrobot(RESTRLEnvClient &server)
 {
-    // the environment is not registered with the server
     std::cout << "Is environment registered: " << server.is_env_registered(Acrobot::name)
               << std::endl;
 
@@ -79,8 +78,6 @@ void test_acrobot(RESTRLEnvClient &server)
 
 void test_pendulum(RESTRLEnvClient &server)
 {
-
-    // the environment is not registered with the server
     std::cout << "Is environment registered: " << server.is_env_registered(Pendulum::name)
               << std::endl;
 
@@ -95,6 +92,33 @@ void test_pendulum(RESTRLEnvClient &server)
     std::unordered_map<std::string, std::any> reset_ops;
     reset_ops.insert({"seed", static_cast<uint_t>(42)});
     env.make("v1", options, reset_ops);
+
+    auto time_step = env.reset();
+    std::cout << "Time step: " << time_step << std::endl;
+
+    // step in the environment
+    time_step = env.step(0.0);
+    std::cout << "Time step after action: " << time_step << std::endl;
+
+    env.close();
+}
+
+void test_mountain_car(RESTRLEnvClient &server)
+{
+    std::cout << "Is environment registered: " << server.is_env_registered(MountainCar::name)
+              << std::endl;
+
+    // create the environment
+    MountainCar env(server);
+
+    std::cout << "Name: " << env.name << std::endl;
+    std::cout << "Number of actions: " << env.n_actions() << std::endl;
+
+    // make the environment
+    std::unordered_map<std::string, std::any> options;
+    std::unordered_map<std::string, std::any> reset_ops;
+    reset_ops.insert({"seed", static_cast<uint_t>(42)});
+    env.make("v0", options, reset_ops);
 
     auto time_step = env.reset();
     std::cout << "Time step: " << time_step << std::endl;
@@ -126,9 +150,9 @@ int main()
     std::cout << "Testing Acrobot..." << std::endl;
     example::test_acrobot(server);
     std::cout << "====================" << std::endl;
-    // std::cout<<"Testing CliffWorld..."<<std::endl;
-    // example_1::test_cliff_world(server);
-    // std::cout<<"===================="<<std::endl;
+    std::cout<<"Testing MountainCar..."<<std::endl;
+    example::test_mountain_car(server);
+    std::cout<<"===================="<<std::endl;
     return 0;
 
     return 0;
