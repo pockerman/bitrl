@@ -1,6 +1,4 @@
-//
-// Created by alex on 7/5/25.
-//
+
 
 #include "bitrl/envs/gymnasium/box2d/lunar_lander_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
@@ -8,8 +6,6 @@
 #include <iostream>
 #include <unordered_map>
 #include <vector>
-
-#include "../../src/bitrl/sensors/ekf_sensor_fusion.h"
 
 namespace box2d_example
 {
@@ -32,10 +28,16 @@ int main()
     options["gravity"] = std::any(static_cast<bitrl::real_t>(-9.86));
     options["turbulence_power"] = std::any(static_cast<bitrl::real_t>(1.5));
 
-    /*{
+    std::unordered_map<std::string, std::any> reset_ops;
+    reset_ops.insert({"seed", static_cast<uint_t>(42)});
+
+    {
         std::cout<<"Working with LunarLanderDiscreteEnv..."<<std::endl;
+        std::cout << "Is environment registered: " << server.is_env_registered(LunarLanderDiscreteEnv::name)
+              << std::endl;
         LunarLanderDiscreteEnv env(server);
-        env.make("v3", options);
+
+        env.make("v3", options, reset_ops);
 
         std::cout<<"Is environment created? "<<env.is_created()<<std::endl;
         std::cout<<"Is environment alive? "<<env.is_alive()<<std::endl;
@@ -46,21 +48,14 @@ int main()
 
         time_step = env.step(1);
         std::cout<<"Time step: "<<time_step<<std::endl;
-
-        auto copy = env.make_copy(1);
-        time_step = copy.reset();
-        std::cout<<"Time step: "<<time_step<<std::endl;
-
         env.close();
-        copy.close();
-    }*/
+
+    }
     {
         std::cout << "Working with LunarLanderContinuousEnv..." << std::endl;
 
         LunarLanderContinuousEnv env(server);
-
-        std::unordered_map<std::string, std::any> reset_options;
-        env.make("v3", options, reset_options);
+        env.make("v3", options, reset_ops);
 
         std::cout << "Is environment created? " << env.is_created() << std::endl;
         std::cout << "Is environment alive? " << env.is_alive() << std::endl;
@@ -75,4 +70,6 @@ int main()
         std::cout << "Time step: " << time_step << std::endl;
         env.close();
     }
+
+    return 0;
 }
