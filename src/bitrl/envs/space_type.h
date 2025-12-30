@@ -35,7 +35,7 @@ template <uint_t s, uint_t e> struct ScalarDiscreteSpace
     /// \brief The overall size of the space meaning
     /// how many elements can potentially the space have
     ///
-    static constexpr uint_t size = IntegralRange<s, e>::size;
+    static constexpr uint_t size = e - s ; //IntegralRange<s, e>::size;
 
     ///
     /// \brief sample
