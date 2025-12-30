@@ -27,6 +27,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <atomic>
 
 namespace bitrl
 {
@@ -304,11 +305,6 @@ class Gridworld final
     Gridworld();
 
     ///
-    /// \brief Gridworld. Constructor
-    ///
-    Gridworld(const Gridworld &other);
-
-    ///
     /// \brief make. Builds the environment. Optionally we can choose if the
     /// environment will be slippery
     ///
@@ -372,6 +368,14 @@ class Gridworld final
     ///
     [[nodiscard]] GridWorldInitType init_type() const noexcept { return init_mode_; }
 
+    /**
+     * Get the number of copies of this class
+     * @return
+     */
+    static uint_t n_copies() {
+        return n_copies_.load();
+    }
+
   private:
     ///
     /// \brief init_mode_
@@ -387,6 +391,12 @@ class Gridworld final
     /// \brief seed_
     ///
     uint_t seed_;
+
+    /**
+     * Counter to count the number of instances of this
+     * class.
+     */
+    static std::atomic<uint_t> n_copies_;
 
     ///
     /// \brief noise_factor_
@@ -405,6 +415,8 @@ template <uint_t side_size_> const uint_t Gridworld<side_size_>::side_size = sid
 
 template <uint_t side_size_> const uint_t Gridworld<side_size_>::n_components = 4;
 
+template <uint_t side_size> std::atomic<uint_t> Gridworld<side_size>::n_copies_ = 0;
+
 template <uint_t side_size_>
 Gridworld<side_size_>::Gridworld()
     : EnvBase<TimeStep<detail::board_state_type>, detail::GridWorldEnv<side_size_>>(
@@ -412,14 +424,7 @@ Gridworld<side_size_>::Gridworld()
       init_mode_(GridWorldInitType::INVALID_TYPE), randomize_state_(false), seed_(0),
       noise_factor_(0.0), board_()
 {
-}
-
-template <uint_t side_size_>
-Gridworld<side_size_>::Gridworld(const Gridworld<side_size_> &other)
-    : EnvBase<TimeStep<detail::board_state_type>, detail::GridWorldEnv<side_size_>>(other),
-      init_mode_(other.init_mode_), randomize_state_(other.randomize_state_), seed_(other.seed_),
-      noise_factor_(other.noise_factor_), board_(other.board_)
-{
+    ++n_copies_;
 }
 
 template <uint_t side_size_>
@@ -464,8 +469,6 @@ void Gridworld<side_size_>::make(const std::string &version,
     // set the version and set the board
     // to created
     this->set_version_(version);
-    this->make_created_();
-
     auto idx = utils::uuid4();
     this->set_idx_(idx);
     this->base_type::make(version, options, reset_options);

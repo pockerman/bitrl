@@ -63,6 +63,10 @@ void test_frozen_lake(RESTRLEnvClient &server)
     std::cout << "Number of valid actions? " << env.n_actions() << std::endl;
     std::cout << "Number of states? " << env.n_states() << std::endl;
 
+    // how many copies of this environment
+    auto n_copies = env.n_copies();
+    std::cout << "n_copies: " << n_copies << std::endl;
+
     // reset the environment
     auto time_step = env.reset();
 
@@ -230,6 +234,11 @@ void test_cliff_world(RESTRLEnvClient &server)
     std::cout << "Number of valid actions? " << env.n_actions() << std::endl;
     std::cout << "Number of states? " << env.n_states() << std::endl;
 
+    // how many copies of this environment
+    auto n_copies = env.n_copies();
+    std::cout << "n_copies: " << n_copies << std::endl;
+
+
     // reset the environment
     auto time_step = env.reset();
 
@@ -243,7 +252,6 @@ void test_cliff_world(RESTRLEnvClient &server)
     // take an action in the environment
     // 0 = UP
     auto new_time_step = env.step(0);
-
     std::cout << new_time_step << std::endl;
 
     // get the dynamics of the environment for the given state and action
@@ -261,6 +269,8 @@ void test_cliff_world(RESTRLEnvClient &server)
         std::cout << std::get<2>(item) << std::endl;
         std::cout << std::get<3>(item) << std::endl;
     }
+
+
 
     // close the environment
     env.close();

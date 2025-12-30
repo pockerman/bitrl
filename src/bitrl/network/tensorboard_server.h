@@ -11,10 +11,9 @@
 
 namespace bitrl
 {
-namespace utils
+namespace network
 {
-namespace io
-{
+
 
 ///
 /// \brief class TensorboardServer
@@ -73,7 +72,6 @@ class TensorboardServer : private boost::noncopyable
     const std::string api_str_;
 };
 
-} // namespace io
 } // namespace utils
 } // namespace bitrl
 #endif // TENSORBOARD_SERVER_H

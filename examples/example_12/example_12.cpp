@@ -19,7 +19,7 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/utils/io/json_file_reader.h"
-#include "bitrl/utils/io/tensor_board_server/tensorboard_server.h"
+#include "bitrl/network/tensorboard_server.h"
 
 #include <filesystem>
 #include <iostream>
@@ -30,7 +30,7 @@ namespace example_12
 {
 using namespace bitrl;
 using utils::io::JSONFileReader;
-using utils::io::TensorboardServer;
+using network::TensorboardServer;
 
 namespace fs = std::filesystem;
 const std::string CONFIG = "config.json";
@@ -90,7 +90,6 @@ int main()
     }
     catch (...)
     {
-
         std::cout << "Unknown exception occured" << std::endl;
     }
 

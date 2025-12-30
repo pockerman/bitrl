@@ -14,11 +14,7 @@
 #include <unordered_map>
 #include <vector>
 
-///
-/// todo write docs
-///
-///
-///
+
 namespace bitrl
 {
 namespace network
@@ -78,6 +74,13 @@ class RESTRLEnvClient
     /// \brief Same as register_new but swallows the thrown exception
     ///
     void register_if_not(const std::string &name, const std::string &uri);
+
+    /**
+     * Return the number of copies of the environment with the given name
+     * @param name
+     * @return
+     */
+    nlohmann::json n_copies(const std::string &name, const std::string& version=bitrl::consts::INVALID_STR) const;
 
     ///
     /// \brief Queries the remote server if the environment with the

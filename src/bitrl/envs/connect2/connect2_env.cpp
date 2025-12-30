@@ -14,20 +14,17 @@ namespace envs::connect2
 {
 
 const std::string Connect2::name = "Connect2";
+std::atomic<uint_t> Connect2::n_copies_ = 0;
 
 Connect2::Connect2()
     : EnvBase<TimeStep<std::vector<uint_t>>,
               DiscreteVectorStateDiscreteActionEnv<53, 0, 4, uint_t>>("Connect2"),
       discount_(1.0), board_()
 {
+    ++n_copies_;
 }
 
-Connect2::Connect2(const Connect2 &other)
-    : EnvBase<TimeStep<std::vector<uint_t>>,
-              DiscreteVectorStateDiscreteActionEnv<53, 0, 4, uint_t>>(other),
-      discount_(1.0), board_(other.board_), is_finished_(other.is_finished_)
-{
-}
+
 
 void Connect2::make(const std::string & /*version*/,
                     const std::unordered_map<std::string, std::any> &options,

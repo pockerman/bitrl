@@ -74,7 +74,13 @@ class GymWalk final : public EnvBase<TimeStep<uint_t>, ScalarDiscreteEnv<state_s
      * @brief Get the full URL for this environment endpoint on the server.
      * @return Environment URL string.
      */
-    std::string get_url() const{return api_server_->get_env_url(this->env_name());};
+    std::string get_url() const{return api_server_->get_env_url(this->env_name());}
+
+    /**
+    * Get the number of copies on the server for this environment
+    * @return
+    */
+    uint_t n_copies() const;
 
   private:
     dynamics_t build_dynamics_from_response_(const nlohmann::json &response) const;
@@ -160,6 +166,14 @@ template <uint_t state_size> bool GymWalk<state_size>::is_alive() const
     auto response = this->api_server_ -> is_alive(this->env_name(), this->idx());
     return response["result"];
 }
+
+template <uint_t state_size>
+uint_t GymWalk<state_size>::n_copies() const
+{
+    auto response = this->api_server_->n_copies(this->env_name());
+    return response["copies"];
+}
+
 
 template <uint_t state_size> void GymWalk<state_size>::close()
 {

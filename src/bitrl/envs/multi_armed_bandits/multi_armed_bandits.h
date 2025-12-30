@@ -10,12 +10,11 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <atomic>
 
 namespace bitrl
 {
-namespace envs
-{
-namespace bandits
+namespace envs::bandits
 {
 
 ///
@@ -46,15 +45,15 @@ struct MultiArmedBanditsSpace
     typedef uint_t action_type;
 };
 
-///
-/// \brief class MultiArmedBandits. Environment for simulating armed-bandits
-/// The bandits are represented as Bernoulli distribution. At each step
-/// only one bandit can be executed
-///
+/**
+ * class MultiArmedBandits. Environment for simulating armed-bandits
+ * The bandits are represented as Bernoulli distribution. At each step
+ * only one bandit can be executed
+ */
 class MultiArmedBandits final : public EnvBase<TimeStep<bool>, MultiArmedBanditsSpace>
 {
 
-  public:
+public:
     ///
     /// \brief name
     ///
@@ -139,11 +138,25 @@ class MultiArmedBandits final : public EnvBase<TimeStep<bool>, MultiArmedBandits
     ///
     real_t fail_reward() const noexcept { return fail_reward_; }
 
-  private:
+    /**
+    * Get the number of copies of this class
+    * @return
+    */
+    static uint_t n_copies() {
+        return n_copies_.load();
+    }
+
+private:
     ///
     /// \brief The seed to use
     ///
     uint_t seed_;
+
+    /**
+     * Counter to count the number of instances of this
+     * class.
+     */
+    static std::atomic<uint_t> n_copies_;
 
     ///
     /// \brief The success reward
@@ -162,8 +175,7 @@ class MultiArmedBandits final : public EnvBase<TimeStep<bool>, MultiArmedBandits
     std::vector<utils::maths::stats::BernoulliDist> bandits_;
 };
 
-} // namespace bandits
-} // namespace envs
+}
 } // namespace bitrl
 
 #endif

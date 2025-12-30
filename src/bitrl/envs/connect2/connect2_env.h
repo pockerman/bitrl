@@ -19,6 +19,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <atomic>
 
 namespace bitrl
 {
@@ -85,11 +86,6 @@ class Connect2 final : public EnvBase<TimeStep<std::vector<uint_t>>,
     Connect2();
 
     ///
-    ///
-    ///
-    Connect2(const Connect2 &other);
-
-    ///
     /// \brief make. Builds the environment. Optionally we can choose if the
     /// environment will be slippery
     ///
@@ -114,12 +110,6 @@ class Connect2 final : public EnvBase<TimeStep<std::vector<uint_t>>,
     /// \brief Reset the environment
     ///
     virtual time_step_type reset() override final;
-
-    ///
-    /// \brief Create a new copy of the environment with the given
-    /// copy index
-    ///
-    Connect2 make_copy(uint_t cidx) const;
 
     ///
     /// \brief n_states. Returns the number of states
@@ -151,6 +141,14 @@ class Connect2 final : public EnvBase<TimeStep<std::vector<uint_t>>,
     ///
     std::vector<uint_t> get_valid_moves() const;
 
+    /**
+     * Get the number of copies of this class
+     * @return
+     */
+    static uint_t n_copies() {
+        return n_copies_.load();
+    }
+
   private:
     ///
     /// \brief The discount factor
@@ -171,6 +169,12 @@ class Connect2 final : public EnvBase<TimeStep<std::vector<uint_t>>,
     /// \brief The wining value for a player
     ///
     const uint_t win_val_{2};
+
+    /**
+     * Counter to count the number of instances of this
+     * class.
+     */
+    static std::atomic<uint_t> n_copies_;
 
     ///
     /// \brief The representation of the board

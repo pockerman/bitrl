@@ -86,6 +86,12 @@ class GymnasiumEnvBase : public EnvBase<TimeStepType, SpaceType>
     virtual time_step_type reset() override;
 
     /**
+     * Get the number of copies on the server for this environment
+     * @return
+     */
+    uint_t n_copies() const;
+
+    /**
      * @brief Retrieve the REST API wrapper instance used for communication.
      * @return Read-only reference to the server wrapper.
      */
@@ -162,6 +168,12 @@ bool GymnasiumEnvBase<TimeStepType, SpaceType>::is_alive() const
 {
     auto response = this->api_server_->is_alive(this->env_name(), this->idx());
     return response["result"];
+}
+template <typename TimeStepType, typename SpaceType>
+uint_t GymnasiumEnvBase<TimeStepType, SpaceType>::n_copies() const
+{
+    auto response = this->api_server_->n_copies(this->env_name());
+    return response["copies"];
 }
 
 template <typename TimeStepType, typename SpaceType>

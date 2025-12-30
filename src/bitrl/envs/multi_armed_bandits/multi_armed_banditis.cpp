@@ -1,6 +1,7 @@
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/envs/multi_armed_bandits/multi_armed_bandits.h"
 #include "bitrl/envs/time_step_type.h"
+#include "bitrl/utils/utils.h"
 
 #include <algorithm>
 #include <exception>
@@ -9,16 +10,16 @@
 
 namespace bitrl
 {
-namespace envs
-{
-namespace bandits
+namespace envs::bandits
 {
 
 const std::string MultiArmedBandits::name = "MultiArmedBandits";
+std::atomic<uint_t> MultiArmedBandits::n_copies_ = 0;
 
 MultiArmedBandits::MultiArmedBandits()
-    : EnvBase<TimeStep<bool>, MultiArmedBanditsSpace>(0, "MultiArmedBandits"), bandits_()
+    : EnvBase(0, "MultiArmedBandits")
 {
+    ++n_copies_;
 }
 
 void MultiArmedBandits::make(const std::string &version,
@@ -61,7 +62,9 @@ void MultiArmedBandits::make(const std::string &version,
     }
 
     this->set_version_(version);
-    this->set_make_options_(options);
+    auto idx = utils::uuid4();
+    this->set_idx_(idx);
+    this->base_type::make(version, options, reset_options);
     this->make_created_();
 }
 
@@ -106,11 +109,9 @@ MultiArmedBandits::time_step_type MultiArmedBandits::step(const action_type &act
 
 void MultiArmedBandits::close()
 {
-
     bandits_.clear();
     this->EnvBase<TimeStep<bool>, MultiArmedBanditsSpace>::close();
 }
 
-} // namespace bandits
-} // namespace envs
+}
 } // namespace bitrl

@@ -158,7 +158,6 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/dynamics/*.cpp
 		src/bitrl/utils/*.cpp
 		src/bitrl/utils/io/*.cpp
-		src/bitrl/utils/io/tensor_board_server/*.cpp
 		src/bitrl/utils/maths/statistics/distributions/*.cpp
 		#src/bitrl/utils/geometry/*.cpp
 		#src/bitrl/utils/geometry/shapes/*.cpp

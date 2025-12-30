@@ -138,6 +138,24 @@ nlohmann::json RESTRLEnvClient::close(const std::string &env_name, const std::st
     return j;
 }
 
+nlohmann::json RESTRLEnvClient::n_copies(const std::string &env_name, const std::string& /*version*/) const
+{
+    auto url_ = get_env_url(env_name);
+
+    if (url_ == bitrl::consts::INVALID_STR)
+    {
+        throw std::logic_error("Environment: " + env_name + " is not registered");
+    }
+
+    http::Request request{url_ + "/copies"};
+    const auto response = request.send("GET");
+
+    auto str_response = std::string(response.body.begin(),
+                                    response.body.end());
+    nlohmann::json j = nlohmann::json::parse(str_response);
+    return j;
+}
+
 nlohmann::json RESTRLEnvClient::reset(const std::string &env_name, const std::string &idx,
                                       const uint_t seed, const nlohmann::json &options) const
 {

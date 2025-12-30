@@ -1,4 +1,4 @@
-#include "bitrl/utils/io/tensor_board_server/tensorboard_server.h"
+#include "bitrl/network/tensorboard_server.h"
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/extern/HTTPRequest.hpp"
 #include "bitrl/extern/nlohmann/json/json.hpp"
@@ -7,10 +7,9 @@
 
 namespace bitrl
 {
-namespace utils
+namespace network
 {
-namespace io
-{
+
 
 TensorboardServer::TensorboardServer(const std::string &api_url)
     : api_url_(api_url), log_dir_(bitrl::consts::INVALID_STR), api_str_("/tensorboard-api")
@@ -154,6 +153,6 @@ void TensorboardServer::add_text(const std::string &tag, const std::string &text
     }
 }
 
-} // namespace io
+
 } // namespace utils
 } // namespace bitrl
