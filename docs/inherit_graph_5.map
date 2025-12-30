@@ -5,9 +5,9 @@
 <area shape="rect" id="node7" href="$classbitrl_1_1utils_1_1io_1_1FileHandlerBase.html" title=" " alt="" coords="262,231,449,272"/>
 <area shape="rect" id="node10" href="$classbitrl_1_1utils_1_1io_1_1FileHandlerBase.html" title=" " alt="" coords="262,296,449,337"/>
 <area shape="rect" id="node14" href="$classbitrl_1_1dynamics_1_1MotionModelDynamicsBase.html" title="Base class for deriving motion models. Motion models describe the dynamics or kinematics of a rigid b..." alt="" coords="203,362,508,418"/>
-<area shape="rect" id="node15" href="$classbitrl_1_1utils_1_1geom_1_1Mesh.html" title="A class that represents a mesh." alt="" coords="276,443,435,484"/>
-<area shape="rect" id="node16" href="$classbitrl_1_1utils_1_1io_1_1FileHandlerBase.html" title=" " alt="" coords="262,508,449,549"/>
-<area shape="rect" id="node17" href="$classbitrl_1_1utils_1_1io_1_1TensorboardServer.html" title="class TensorboardServer" alt="" coords="260,573,451,615"/>
+<area shape="rect" id="node15" href="$classbitrl_1_1network_1_1TensorboardServer.html" title="class TensorboardServer" alt="" coords="257,443,453,484"/>
+<area shape="rect" id="node16" href="$classbitrl_1_1utils_1_1geom_1_1Mesh.html" title="A class that represents a mesh." alt="" coords="276,508,435,549"/>
+<area shape="rect" id="node17" href="$classbitrl_1_1utils_1_1io_1_1FileHandlerBase.html" title=" " alt="" coords="262,573,449,615"/>
 <area shape="rect" id="node3" href="$classbitrl_1_1dynamics_1_1BicycleVehicleModelDynamics.html" title="The BicycleVehicleModelDynamics class. Implements the bicycle vehicle model dynamics...." alt="" coords="575,5,750,47"/>
 <area shape="rect" id="node4" href="$classbitrl_1_1dynamics_1_1DiffDriveDynamics.html" title="DiffDriveDynamics class. Describes the motion dynamics of a differential drive system...." alt="" coords="570,71,755,112"/>
 <area shape="rect" id="node6" href="$classbitrl_1_1dynamics_1_1QuadrotorDynamics.html" title="The QuadrotorDynamics class. Implements quadrotor dynamics The implementation of this class follows t..." alt="" coords="567,151,759,192"/>

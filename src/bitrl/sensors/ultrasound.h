@@ -11,15 +11,15 @@
 
 namespace bitrl
 {
-    namespace sensors
-    {
-        struct UltrasoundReading {
-            real_t distance_m;
-            real_t timestamp;
-            static std::optional<UltrasoundReading> parse(const std::string& msg);
-        };
-    }
-}
+namespace sensors
+{
+struct UltrasoundReading
+{
+    real_t distance_m;
+    real_t timestamp;
+    static std::optional<UltrasoundReading> parse(const std::string &msg);
+};
+} // namespace sensors
+} // namespace bitrl
 
-
-#endif //ULTRASOUND_H
+#endif // ULTRASOUND_H

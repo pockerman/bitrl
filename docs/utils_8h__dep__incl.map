@@ -1,6 +1,7 @@
 <map id="/home/alex/qi3/bitrl/src/bitrl/utils/utils.h" name="/home/alex/qi3/bitrl/src/bitrl/utils/utils.h">
-<area shape="rect" id="node1" title=" " alt="" coords="117,5,267,47"/>
-<area shape="rect" id="node2" href="$connect2__env_8cpp.html" title=" " alt="" coords="5,95,179,151"/>
-<area shape="rect" id="node3" href="$grid__world__env_8h.html" title=" " alt="" coords="203,95,381,151"/>
-<area shape="rect" id="node4" href="$grid__world__env_8cpp.html" title=" " alt="" coords="195,199,389,255"/>
+<area shape="rect" id="node1" title=" " alt="" coords="217,5,367,47"/>
+<area shape="rect" id="node2" href="$connect2__env_8cpp.html" title=" " alt="" coords="5,102,179,158"/>
+<area shape="rect" id="node3" href="$grid__world__env_8h.html" title=" " alt="" coords="203,102,381,158"/>
+<area shape="rect" id="node5" href="$multi__armed__banditis_8cpp.html" title=" " alt="" coords="405,95,619,165"/>
+<area shape="rect" id="node4" href="$grid__world__env_8cpp.html" title=" " alt="" coords="195,213,389,269"/>
 </map>

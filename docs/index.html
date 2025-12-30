@@ -71,30 +71,107 @@ $(function() {
 <div class="line">#include &quot;bitrl/envs/gymnasium/toy_text/frozen_lake_env.h&quot;</div>
 <div class="line">#include &quot;bitrl/network/rest_rl_env_client.h&quot;</div>
 <div class="line"> </div>
+<div class="line">#include &lt;any&gt;</div>
 <div class="line">#include &lt;iostream&gt;</div>
 <div class="line">#include &lt;string&gt;</div>
 <div class="line">#include &lt;unordered_map&gt;</div>
-<div class="line">#include &lt;any&gt;</div>
 <div class="line"> </div>
-<div class="line">namespace example_1 {</div>
+<div class="line"> </div>
+<div class="line">namespace example_1</div>
+<div class="line">{</div>
+<div class="line">using namespace bitrl;</div>
+<div class="line"> </div>
 <div class="line">const std::string SERVER_URL = &quot;http://0.0.0.0:8001/api&quot;;</div>
 <div class="line">using bitrl::envs::gymnasium::FrozenLake;</div>
 <div class="line">using bitrl::envs::RESTApiServerWrapper;</div>
 <div class="line"> </div>
-<div class="line">void test_frozen_lake(const RESTApiServerWrapper&amp; server) {</div>
+<div class="line">void test_frozen_lake(RESTRLEnvClient &amp;server)</div>
+<div class="line">{</div>
 <div class="line"> </div>
-<div class="line">     FrozenLake&lt;4&gt; env(server);</div>
-<div class="line">     std::cout &lt;&lt; &quot;Environment URL: &quot; &lt;&lt; env.get_url() &lt;&lt; std::endl;</div>
-<div class="line">     </div>
-<div class="line">     std::unordered_map&lt;std::string, std::any&gt; make_ops;</div>
-<div class="line">     make_ops.insert({&quot;is_slippery&quot;, false});</div>
-<div class="line">     </div>
-<div class="line">     std::unordered_map&lt;std::string, std::any&gt; reset_ops;</div>
-<div class="line">     reset_ops.insert({&quot;seed&quot;, static_cast&lt;uint_t&gt;(42)});</div>
+<div class="line">    // the environment is not registered with the server</div>
+<div class="line">    std::cout &lt;&lt; &quot;Is environment registered: &quot; &lt;&lt; server.is_env_registered(FrozenLake&lt;4&gt;::name)</div>
+<div class="line">              &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">     env.make(&quot;v1&quot;, make_ops, reset_ops);</div>
+<div class="line">    // when the environment is created we register it with the REST client</div>
+<div class="line">    FrozenLake&lt;4&gt; env(server);</div>
+<div class="line"> </div>
+<div class="line">    // environment name can also be accessed via env.env_name()</div>
+<div class="line">    std::cout &lt;&lt; &quot;Is environment registered: &quot; &lt;&lt; server.is_env_registered(env.env_name())</div>
+<div class="line">              &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; &quot;Environment URL: &quot; &lt;&lt; env.get_url() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // make the environment we pass both make options</div>
+<div class="line">    // and reset options</div>
+<div class="line">    std::unordered_map&lt;std::string, std::any&gt; make_ops;</div>
+<div class="line">    make_ops.insert({&quot;is_slippery&quot;, false});</div>
+<div class="line"> </div>
+<div class="line">    std::unordered_map&lt;std::string, std::any&gt; reset_ops;</div>
+<div class="line">    reset_ops.insert({&quot;seed&quot;, static_cast&lt;uint_t&gt;(42)});</div>
+<div class="line">    env.make(&quot;v1&quot;, make_ops, reset_ops);</div>
+<div class="line"> </div>
+<div class="line">    // query the environemnt version</div>
+<div class="line">    std::cout &lt;&lt; &quot;Environment version: &quot; &lt;&lt; env.version() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // once the env is created we can get it&#39;s id</div>
+<div class="line">    std::cout &lt;&lt; &quot;Environment idx is: &quot; &lt;&lt; env.idx() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // the create flag should be true</div>
+<div class="line">    std::cout &lt;&lt; &quot;Is environment created? &quot; &lt;&lt; env.is_created() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // environment should be alive on the server</div>
+<div class="line">    std::cout &lt;&lt; &quot;Is environment alive? &quot; &lt;&lt; env.is_alive() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // FrozenLake is a discrete state-action env so we can</div>
+<div class="line">    // query number of actions and states</div>
+<div class="line">    std::cout &lt;&lt; &quot;Number of valid actions? &quot; &lt;&lt; env.n_actions() &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; &quot;Number of states? &quot; &lt;&lt; env.n_states() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // how many copies of this environment</div>
+<div class="line">    auto n_copies = env.n_copies();</div>
+<div class="line">    std::cout &lt;&lt; &quot;n_copies: &quot; &lt;&lt; n_copies &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // reset the environment</div>
+<div class="line">    auto time_step = env.reset();</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; &quot;Reward on reset: &quot; &lt;&lt; time_step.reward() &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; &quot;Observation on reset: &quot; &lt;&lt; time_step.observation() &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; &quot;Is terminal state: &quot; &lt;&lt; time_step.done() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    //...print the time_step</div>
+<div class="line">    std::cout &lt;&lt; time_step &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // take an action in the environment</div>
+<div class="line">    // 2 = RIGHT</div>
+<div class="line">    auto new_time_step = env.step(2);</div>
+<div class="line">    std::cout &lt;&lt; new_time_step &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // get the dynamics of the environment for the given state and action</div>
+<div class="line">    auto state = 0;</div>
+<div class="line">    auto action = 1;</div>
+<div class="line">    auto dynamics = env.p(state, action);</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; &quot;Dynamics for state=&quot; &lt;&lt; state &lt;&lt; &quot; and action=&quot; &lt;&lt; action &lt;&lt; std::endl;</div>
+<div class="line">    for (auto item : dynamics)</div>
+<div class="line">    {</div>
+<div class="line">        std::cout &lt;&lt; std::get&lt;0&gt;(item) &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; std::get&lt;1&gt;(item) &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; std::get&lt;2&gt;(item) &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; std::get&lt;3&gt;(item) &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    // discrete action environments can sample</div>
+<div class="line">    // actions</div>
+<div class="line">    action = env.sample_action();</div>
+<div class="line">    std::cout &lt;&lt; &quot;Action sampled: &quot; &lt;&lt; action &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    new_time_step = env.step(action);</div>
+<div class="line">    std::cout &lt;&lt; new_time_step &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    // close the environment</div>
+<div class="line">    env.close();</div>
+<div class="line"> </div>
 <div class="line">}</div>
-<div class="line">} // namespace example_1</div>
+<div class="line">} </div>
 <div class="line"> </div>
 <div class="line">int main() {</div>
 <div class="line">RESTApiServerWrapper server(SERVER_URL, true);</div>
@@ -111,6 +188,7 @@ Dependencies</h1>
 <li>Blas</li>
 <li>OpenCV</li>
 <li>PahoMqttCpp</li>
+<li>Doxygen</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md23"></a>
 Installation</h1>
@@ -118,7 +196,17 @@ Installation</h1>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake -DCMAKE_INSTALL_PREFIX=/path/where/bitrl/should/be/installed/to ..</div>
 <div class="line">make install -j4</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md24"></a>
+Build the documentation</h1>
+<p>You can build the documentation locally. In this case, Doxygen should be installed on your machine.</p>
+<div class="fragment"><div class="line">cd build</div>
+<div class="line">cmake -DCMAKE_INSTALL_PREFIX=/path/where/bitrl/should/be/installed/to ..</div>
+<div class="line">make install -j4</div>
+<div class="line">make doc</div>
+</div><!-- fragment --><p>The documentation will be installed under <em>docs</em> under the project's source directory</p>
+<h1><a class="anchor" id="autotoc_md25"></a>
+Examples</h1>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

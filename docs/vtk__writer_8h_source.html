@@ -74,45 +74,46 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;kernel/base/config.h&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;kernel/base/types.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;kernel/utilities/file_writer_base.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;kernel/discretization/vtk_mesh_file_writer.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;kernel/discretization/vtk_mesh_file_writer.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;kernel/utilities/file_writer_base.h&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacekernel.html">kernel</a>{</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>numerics{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">int</span> dim&gt; <span class="keyword">class </span>Mesh;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">class </span>TrilinosEpetraVector;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classkernel_1_1numerics_1_1FVDoFManager.html">   14</a></span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">int</span> dim&gt; <span class="keyword">class </span><a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classkernel_1_1numerics_1_1VtkWriter.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html">VtkWriter</a>: <span class="keyword">public</span> <a class="code" href="classkernel_1_1numerics_1_1VtkMeshFileWriter.html">VtkMeshFileWriter</a></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a1c882f916d1f4440c5c75e88150ce5ea">VtkWriter</a>(<span class="keyword">const</span> std::string&amp; filename, <span class="keywordtype">bool</span> open_file=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacekernel.html">kernel</a></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>numerics</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim&gt; <span class="keyword">class </span>Mesh;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">class </span>TrilinosEpetraVector;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classkernel_1_1numerics_1_1FVDoFManager.html">   16</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim&gt; <span class="keyword">class </span><a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classkernel_1_1numerics_1_1VtkWriter.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html">VtkWriter</a> : <span class="keyword">public</span> <a class="code" href="classkernel_1_1numerics_1_1VtkMeshFileWriter.html">VtkMeshFileWriter</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a1c882f916d1f4440c5c75e88150ce5ea">VtkWriter</a>(<span class="keyword">const</span> std::string &amp;filename, <span class="keywordtype">bool</span> open_file = <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifdef USE_TRILINOS</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a5d3279dbbc5b832a328a1f0a50f556b6">write_solution</a>(<span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1Mesh.html">Mesh&lt;1&gt;</a>&amp; mesh, <span class="keyword">const</span> TrilinosEpetraVector&amp; data, <span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager&lt;1&gt;</a>&amp; manager);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a5d3279dbbc5b832a328a1f0a50f556b6">write_solution</a>(<span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1Mesh.html">Mesh&lt;2&gt;</a>&amp; mesh, <span class="keyword">const</span> TrilinosEpetraVector&amp; data, <span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager&lt;2&gt;</a>&amp; manager);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a5d3279dbbc5b832a328a1f0a50f556b6">write_solution</a>(<span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1Mesh.html">Mesh&lt;2&gt;</a>&amp; mesh, <span class="keyword">const</span> DynVec&lt;real_t&gt;&amp; data, <span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager&lt;2&gt;</a>&amp; manager);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// VTK_WRITER_H</span></div>
-<div class="ttc" id="aclasskernel_1_1numerics_1_1FVDoFManager_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1FVDoFManager.html">kernel::numerics::FVDoFManager</a></div><div class="ttdef"><b>Definition:</b> vtk_writer.h:14</div></div>
-<div class="ttc" id="aclasskernel_1_1numerics_1_1Mesh_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1Mesh.html">kernel::numerics::Mesh</a></div><div class="ttdef"><b>Definition:</b> vtk_mesh_file_writer.h:18</div></div>
-<div class="ttc" id="aclasskernel_1_1numerics_1_1VtkMeshFileWriter_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1VtkMeshFileWriter.html">kernel::numerics::VtkMeshFileWriter</a></div><div class="ttdoc">Write the given Mesh object in a VTK format.</div><div class="ttdef"><b>Definition:</b> vtk_mesh_file_writer.h:24</div></div>
-<div class="ttc" id="aclasskernel_1_1numerics_1_1VtkWriter_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1VtkWriter.html">kernel::numerics::VtkWriter</a></div><div class="ttdef"><b>Definition:</b> vtk_writer.h:18</div></div>
-<div class="ttc" id="aclasskernel_1_1numerics_1_1VtkWriter_html_a1c882f916d1f4440c5c75e88150ce5ea"><div class="ttname"><a href="classkernel_1_1numerics_1_1VtkWriter.html#a1c882f916d1f4440c5c75e88150ce5ea">kernel::numerics::VtkWriter::VtkWriter</a></div><div class="ttdeci">VtkWriter(const std::string &amp;filename, bool open_file=false)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> vtk_writer.cpp:26</div></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a5d3279dbbc5b832a328a1f0a50f556b6">write_solution</a>(<span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1Mesh.html">Mesh&lt;1&gt;</a> &amp;mesh, <span class="keyword">const</span> TrilinosEpetraVector &amp;data,</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                        <span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager&lt;1&gt;</a> &amp;manager);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a5d3279dbbc5b832a328a1f0a50f556b6">write_solution</a>(<span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1Mesh.html">Mesh&lt;2&gt;</a> &amp;mesh, <span class="keyword">const</span> TrilinosEpetraVector &amp;data,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                        <span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager&lt;2&gt;</a> &amp;manager);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classkernel_1_1numerics_1_1VtkWriter.html#a5d3279dbbc5b832a328a1f0a50f556b6">write_solution</a>(<span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1Mesh.html">Mesh&lt;2&gt;</a> &amp;mesh, <span class="keyword">const</span> DynVec&lt;real_t&gt; &amp;data,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                        <span class="keyword">const</span> <a class="code" href="classkernel_1_1numerics_1_1FVDoFManager.html">FVDoFManager&lt;2&gt;</a> &amp;manager);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;};</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;} <span class="comment">// namespace numerics</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;} <span class="comment">// namespace kernel</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// VTK_WRITER_H</span></div>
+<div class="ttc" id="aclasskernel_1_1numerics_1_1FVDoFManager_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1FVDoFManager.html">kernel::numerics::FVDoFManager</a></div><div class="ttdef"><b>Definition:</b> vtk_writer.h:16</div></div>
+<div class="ttc" id="aclasskernel_1_1numerics_1_1Mesh_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1Mesh.html">kernel::numerics::Mesh</a></div><div class="ttdef"><b>Definition:</b> vtk_mesh_file_writer.h:20</div></div>
+<div class="ttc" id="aclasskernel_1_1numerics_1_1VtkMeshFileWriter_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1VtkMeshFileWriter.html">kernel::numerics::VtkMeshFileWriter</a></div><div class="ttdoc">Write the given Mesh object in a VTK format.</div><div class="ttdef"><b>Definition:</b> vtk_mesh_file_writer.h:26</div></div>
+<div class="ttc" id="aclasskernel_1_1numerics_1_1VtkWriter_html"><div class="ttname"><a href="classkernel_1_1numerics_1_1VtkWriter.html">kernel::numerics::VtkWriter</a></div><div class="ttdef"><b>Definition:</b> vtk_writer.h:19</div></div>
+<div class="ttc" id="aclasskernel_1_1numerics_1_1VtkWriter_html_a1c882f916d1f4440c5c75e88150ce5ea"><div class="ttname"><a href="classkernel_1_1numerics_1_1VtkWriter.html#a1c882f916d1f4440c5c75e88150ce5ea">kernel::numerics::VtkWriter::VtkWriter</a></div><div class="ttdeci">VtkWriter(const std::string &amp;filename, bool open_file=false)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> vtk_writer.cpp:27</div></div>
 <div class="ttc" id="aclasskernel_1_1numerics_1_1VtkWriter_html_a5d3279dbbc5b832a328a1f0a50f556b6"><div class="ttname"><a href="classkernel_1_1numerics_1_1VtkWriter.html#a5d3279dbbc5b832a328a1f0a50f556b6">kernel::numerics::VtkWriter::write_solution</a></div><div class="ttdeci">void write_solution(const Mesh&lt; 2 &gt; &amp;mesh, const DynVec&lt; real_t &gt; &amp;data, const FVDoFManager&lt; 2 &gt; &amp;manager)</div><div class="ttdoc">Write the mesh into the file specified in constructor of this class.</div><div class="ttdef"><b>Definition:</b> vtk_writer.cpp:72</div></div>
-<div class="ttc" id="anamespacekernel_html"><div class="ttname"><a href="namespacekernel.html">kernel</a></div><div class="ttdef"><b>Definition:</b> line_mesh_utils.cpp:12</div></div>
+<div class="ttc" id="anamespacekernel_html"><div class="ttname"><a href="namespacekernel.html">kernel</a></div><div class="ttdef"><b>Definition:</b> line_mesh_utils.cpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

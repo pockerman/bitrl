@@ -7,51 +7,48 @@
 
 #include "bitrl/boards/arduino/arduino_connector_base.h"
 
-
 namespace bitrl
 {
-    namespace boards::arduino
-    {
-        class ArduinoConnectorWIFIBase: public ArduinoConnectorBase
-        {
-        public:
+namespace boards::arduino
+{
+class ArduinoConnectorWIFIBase : public ArduinoConnectorBase
+{
+  public:
+    ///
+    /// \brief The base type
+    ///
+    typedef ArduinoConnectorBase base_type;
 
-            ///
-            /// \brief The base type
-            ///
-            typedef ArduinoConnectorBase base_type;
+    /// Constructor
+    /// @param port
+    /// @param cidx
+    /// @param name
+    ArduinoConnectorWIFIBase(const std::string &arduino_url);
 
-            /// Constructor
-            /// @param port
-            /// @param cidx
-            /// @param name
-            ArduinoConnectorWIFIBase(const std::string& arduino_url);
+    ///
+    /// @return string representing the port name
+    std::string arduino_url() const noexcept { return arduino_url_; }
 
-            ///
-            /// @return string representing the port name
-            std::string arduino_url()const noexcept{return arduino_url_;}
+    ///
+    /// \brief Connect to the Arduino board
+    ///
+    void connect() override;
 
-            ///
-            /// \brief Connect to the Arduino board
-            ///
-            void connect() override;
+    ///
+    /// \brief Close the connection
+    ///
+    virtual void close_connection() override;
 
-            ///
-            /// \brief Close the connection
-            ///
-            virtual void close_connection()override;
+    ///
+    /// \brief Send the command
+    ///
+    std::string send_cmd(const ArduinoCMDBase &cmd) override;
 
-            ///
-            /// \brief Send the command
-            ///
-            std::string send_cmd(const ArduinoCMDBase& cmd) override;
+  private:
+    std::string arduino_url_;
+};
 
-        private:
-            std::string arduino_url_;
+} // namespace boards::arduino
+} // namespace bitrl
 
-        };
-
-    }
-}
-
-#endif //ARDUINO_CONNECTOR_WIFI_BASE_H
+#endif // ARDUINO_CONNECTOR_WIFI_BASE_H

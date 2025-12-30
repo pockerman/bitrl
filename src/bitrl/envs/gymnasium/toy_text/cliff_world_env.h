@@ -26,8 +26,9 @@
  *   ### Observations
  *
  *   There are 3x12 + 1 possible states. In fact, the agent cannot be at the cliff, nor at
- *   the goal (as this results the end of episode). They remain all the positions of the first 3 rows plus the bottom-left cell.
- *   The observation is simply the current position encoded as [flattened index](https://numpy.org/doc/stable/reference/generated/numpy.unravel_index.html).
+ *   the goal (as this results the end of episode). They remain all the positions of the first 3
+ * rows plus the bottom-left cell. The observation is simply the current position encoded as
+ * [flattened index](https://numpy.org/doc/stable/reference/generated/numpy.unravel_index.html).
  *
  *  ### Reward
  *
@@ -36,122 +37,117 @@
  */
 
 #include "bitrl/bitrl_types.h"
-#include "bitrl/envs/time_step.h"
 #include "bitrl/envs/gymnasium/toy_text/toy_text_base.h"
-#include "bitrl/network/rest_rl_env_client.h"
+#include "bitrl/envs/time_step.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
+#include "bitrl/network/rest_rl_env_client.h"
 
-
+#include <any>
 #include <string>
 #include <tuple>
-#include <any>
 #include <unordered_map>
 
-
-namespace bitrl{
+namespace bitrl
+{
 namespace envs::gymnasium
 {
 
-	///
+///
 /// \brief The CliffWorld class
 ///
-class CliffWorld final: public ToyTextEnvBase<TimeStep<uint_t>, 37, 4>
+class CliffWorld final : public ToyTextEnvBase<TimeStep<uint_t>, 37, 4>
 {
 
-public:
+  public:
+    ///
+    /// \brief name
+    ///
+    static const std::string name;
 
-		///
-		/// \brief name
-		///
-		static  const std::string name;
+    ///
+    /// \brief The URI for accessing the environment
+    ///
+    static const std::string URI;
 
-		///
-		/// \brief The URI for accessing the environment
-		///
-		static const std::string URI;
+    ///
+    /// \brief dynamics_t
+    ///
+    typedef std::vector<std::tuple<real_t, uint_t, real_t, bool>> dynamics_type;
 
-		///
-		/// \brief dynamics_t
-		///
-		typedef std::vector<std::tuple<real_t, uint_t, real_t, bool>> dynamics_type;
+    ///
+    /// \brief The base type
+    ///
+    typedef typename ToyTextEnvBase<TimeStep<uint_t>, 37, 4>::base_type base_type;
 
-		///
-		/// \brief The base type
-		///
-		typedef typename ToyTextEnvBase<TimeStep<uint_t>, 37, 4>::base_type base_type;
+    ///
+    /// \brief The time step type we return every time a step in the
+    /// environment is performed
+    ///
+    typedef typename base_type::time_step_type time_step_type;
 
-		///
-	/// \brief The time step type we return every time a step in the
-	/// environment is performed
-	///
-		typedef typename base_type::time_step_type time_step_type;
+    ///
+    /// \brief The type describing the state space for the environment
+    ///
+    typedef typename base_type::state_space_type state_space_type;
 
-		///
-	/// \brief The type describing the state space for the environment
-	///
-		typedef typename base_type::state_space_type state_space_type;
+    ///
+    /// \brief The type of the action space for the environment
+    ///
+    typedef typename base_type::action_space_type action_space_type;
 
-		///
-	/// \brief The type of the action space for the environment
-	///
-		typedef typename base_type::action_space_type action_space_type;
+    ///
+    /// \brief The type of the action to be undertaken in the environment
+    ///
+    typedef typename base_type::action_type action_type;
 
-		///
-	/// \brief The type of the action to be undertaken in the environment
-	///
-		typedef typename base_type::action_type action_type;
+    ///
+    /// \brief The type of the action to be undertaken in the environment
+    ///
+    typedef typename base_type::state_type state_type;
 
-		///
-	/// \brief The type of the action to be undertaken in the environment
-	///
-		typedef typename base_type::state_type state_type;
-
-		///
+    ///
     /// \brief CliffWorld
     ///
-		CliffWorld(network::RESTRLEnvClient& api_server);
+    CliffWorld(network::RESTRLEnvClient &api_server);
 
+    ///
+    /// \brief copy constructor
+    ///
+    CliffWorld(const CliffWorld &other);
 
-		///
-	/// \brief copy constructor
-	///
-		CliffWorld(const CliffWorld& other);
-
-		///
+    ///
     /// \brief ~CliffWorld. Destructor
     ///
-		~CliffWorld()=default;
+    ~CliffWorld() = default;
 
-		///
+    ///
     /// \brief make. Builds the environment. Optionally we can choose if the
     /// environment will be slippery
     ///
-		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& options,
-		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
+    virtual void
+    make(const std::string &version, const std::unordered_map<std::string, std::any> &options,
+         const std::unordered_map<std::string, std::any> &reset_options) override final;
 
-		///
+    ///
     /// \brief step
     /// \param action
     /// \return
     ///
-		virtual time_step_type step(const action_type& action) override final;
+    virtual time_step_type step(const action_type &action) override final;
 
-	protected:
+  protected:
+    ///
+    /// \brief Maximum episodes per step
+    ///
+    uint_t max_episode_steps_;
 
-		///
-	/// \brief Maximum episodes per step
-	///
-		uint_t max_episode_steps_;
-
-
-
-		///
+    ///
     /// \brief Handle the reset response from the environment server
     ///
-		virtual time_step_type create_time_step_from_response_(const nlohmann::json& response) const override final;
-	};
+    virtual time_step_type
+    create_time_step_from_response_(const nlohmann::json &response) const override final;
+};
 
-}
-}
+} // namespace envs::gymnasium
+} // namespace bitrl
 #endif // CLIFF_WORLD_H

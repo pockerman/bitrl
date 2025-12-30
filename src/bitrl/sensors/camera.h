@@ -11,14 +11,14 @@
 
 namespace bitrl
 {
-    namespace sensors
-    {
-        struct CameraReading {
-            cv::Mat image;
-            static std::optional<CameraReading> parse(const std::string& base64jpeg);
-        };
-    }
-}
+namespace sensors
+{
+struct CameraReading
+{
+    cv::Mat image;
+    static std::optional<CameraReading> parse(const std::string &base64jpeg);
+};
+} // namespace sensors
+} // namespace bitrl
 
-
-#endif //CAMERA_H
+#endif // CAMERA_H

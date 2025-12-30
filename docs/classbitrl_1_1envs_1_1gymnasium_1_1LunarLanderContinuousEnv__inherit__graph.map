@@ -1,8 +1,7 @@
 <map id="bitrl::envs::gymnasium::LunarLanderContinuousEnv" name="bitrl::envs::gymnasium::LunarLanderContinuousEnv">
-<area shape="rect" id="node1" title=" " alt="" coords="1131,35,1337,76"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html" title=" " alt="" coords="795,5,1083,105"/>
-<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="Base class for all Gymnasium environment wrappers." alt="" coords="504,27,747,83"/>
-<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class interface for Reinforcement Learning environments." alt="" coords="235,35,456,76"/>
-<area shape="rect" id="node5" title=" " alt="" coords="51,13,141,39"/>
-<area shape="rect" id="node6" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="5,64,187,105"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1040,35,1247,76"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1lunar__lander__detail_1_1__LunarLanderEnv.html" title=" " alt="" coords="704,5,992,105"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="Base class for all Gymnasium environment wrappers." alt="" coords="413,27,656,83"/>
+<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class interface for Reinforcement Learning environments." alt="" coords="144,35,365,76"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,42,96,69"/>
 </map>

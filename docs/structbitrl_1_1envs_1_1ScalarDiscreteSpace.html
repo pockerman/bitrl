@@ -103,7 +103,7 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a4b17743de9e6845e907b374b0f395709"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structbitrl_1_1IntegralRange.html">IntegralRange</a>&lt; s, e &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbitrl_1_1envs_1_1ScalarDiscreteSpace.html#a4b17743de9e6845e907b374b0f395709">limits</a> = <a class="el" href="structbitrl_1_1IntegralRange.html">IntegralRange</a>&lt;s, e&gt;()</td></tr>
 <tr class="memdesc:a4b17743de9e6845e907b374b0f395709"><td class="mdescLeft">&#160;</td><td class="mdescRight">The limits of the space.  <a href="structbitrl_1_1envs_1_1ScalarDiscreteSpace.html#a4b17743de9e6845e907b374b0f395709">More...</a><br /></td></tr>
 <tr class="separator:a4b17743de9e6845e907b374b0f395709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac009dc1d73bf0e5b88bd26b9b880509a"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbitrl_1_1envs_1_1ScalarDiscreteSpace.html#ac009dc1d73bf0e5b88bd26b9b880509a">size</a> = <a class="el" href="structbitrl_1_1IntegralRange.html">IntegralRange</a>&lt;s, e&gt;::size</td></tr>
+<tr class="memitem:ac009dc1d73bf0e5b88bd26b9b880509a"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbitrl_1_1envs_1_1ScalarDiscreteSpace.html#ac009dc1d73bf0e5b88bd26b9b880509a">size</a> = e - s</td></tr>
 <tr class="memdesc:ac009dc1d73bf0e5b88bd26b9b880509a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The overall size of the space meaning how many elements can potentially the space have.  <a href="structbitrl_1_1envs_1_1ScalarDiscreteSpace.html#ac009dc1d73bf0e5b88bd26b9b880509a">More...</a><br /></td></tr>
 <tr class="separator:ac009dc1d73bf0e5b88bd26b9b880509a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -302,7 +302,7 @@ template&lt;uint_t s, uint_t e&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <a class="el" href="structbitrl_1_1envs_1_1ScalarDiscreteSpace.html">bitrl::envs::ScalarDiscreteSpace</a>&lt; s, e &gt;::size = <a class="el" href="structbitrl_1_1IntegralRange.html">IntegralRange</a>&lt;s, e&gt;::size</td>
+          <td class="memname">constexpr <a class="el" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <a class="el" href="structbitrl_1_1envs_1_1ScalarDiscreteSpace.html">bitrl::envs::ScalarDiscreteSpace</a>&lt; s, e &gt;::size = e - s</td>
         </tr>
       </table>
   </td>

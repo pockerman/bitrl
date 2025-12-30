@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['l_545',['l',['../structbitrl_1_1dynamics_1_1QuadrotorDynamicsConfig.html#acb920db07b5b2d2c5deb187c0b4e4fb1',1,'bitrl::dynamics::QuadrotorDynamicsConfig']]],
-  ['l_546',['L',['../structbitrl_1_1dynamics_1_1BicycleVehicleModelDynamicsConfig.html#a36d831b3c201ff0bfe2f3862582fafb0',1,'bitrl::dynamics::BicycleVehicleModelDynamicsConfig']]],
+  ['l_545',['L',['../structbitrl_1_1dynamics_1_1BicycleVehicleModelDynamicsConfig.html#a36d831b3c201ff0bfe2f3862582fafb0',1,'bitrl::dynamics::BicycleVehicleModelDynamicsConfig']]],
+  ['l_546',['l',['../structbitrl_1_1dynamics_1_1QuadrotorDynamicsConfig.html#acb920db07b5b2d2c5deb187c0b4e4fb1',1,'bitrl::dynamics::QuadrotorDynamicsConfig']]],
   ['l2_5fnorm_547',['L2_norm',['../classbitrl_1_1utils_1_1geom_1_1GeomPoint.html#aa9aa81e6e6a69b2c21002f9a78fe8677',1,'bitrl::utils::geom::GeomPoint']]],
   ['last_548',['LAST',['../namespacebitrl.html#a951d92c04fcc4301b396dbf4ecdcba39af447f5c03508de4d88e340390ba7c78f',1,'bitrl']]],
   ['last_549',['last',['../classbitrl_1_1TimeStep.html#a1fb4d4c283acaef02c5b77ac2001861a',1,'bitrl::TimeStep::last()'],['../classbitrl_1_1VectorTimeStep.html#a805e86cc9faf449f049b504f3bd13f7f',1,'bitrl::VectorTimeStep::last()']]],
   ['left_550',['LEFT',['../namespacebitrl_1_1envs_1_1grid__world.html#a40a325c845f1c84fa24cde939f26490ba684d325a7303f52e64011467ff5c5758',1,'bitrl::envs::grid_world']]],
   ['length_551',['length',['../classbitrl_1_1utils_1_1geom_1_1GenericLine.html#a9c779c0b9f20fa8f80ebd36037216c5f',1,'bitrl::utils::geom::GenericLine']]],
-  ['limits_552',['limits',['../structbitrl_1_1envs_1_1BoundedContinuousScalarSpace.html#af61a2ced375e08131dc3e547ce265392',1,'bitrl::envs::BoundedContinuousScalarSpace::limits()'],['../structbitrl_1_1envs_1_1ScalarDiscreteSpace.html#a4b17743de9e6845e907b374b0f395709',1,'bitrl::envs::ScalarDiscreteSpace::limits()']]],
+  ['limits_552',['limits',['../structbitrl_1_1envs_1_1ScalarDiscreteSpace.html#a4b17743de9e6845e907b374b0f395709',1,'bitrl::envs::ScalarDiscreteSpace']]],
   ['lin_5fspace_553',['lin_space',['../namespacebitrl_1_1utils_1_1maths.html#aec162de47d9db25be1b243dd2a99ae7e',1,'bitrl::utils::maths']]],
   ['line_5fmesh_5futils_2ecpp_554',['line_mesh_utils.cpp',['../line__mesh__utils_8cpp.html',1,'']]],
   ['line_5fmesh_5futils_2eh_555',['line_mesh_utils.h',['../line__mesh__utils_8h.html',1,'']]],

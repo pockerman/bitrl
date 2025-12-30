@@ -74,27 +74,27 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="bitrl__types_8h_source.html">bitrl/bitrl_types.h</a>&quot;</code><br />
-<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;array&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;ostream&gt;</code><br />
-<code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for geom_point.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="geom__point_8h__incl.png" border="0" usemap="#a_2home_2alex_2qi3_2bitrl_2src_2bitrl_2utils_2geometry_2geom__point_8h" alt=""/></div>
 <map name="a_2home_2alex_2qi3_2bitrl_2src_2bitrl_2utils_2geometry_2geom__point_8h" id="a_2home_2alex_2qi3_2bitrl_2src_2bitrl_2utils_2geometry_2geom__point_8h">
-<area shape="rect" title=" " alt="" coords="295,5,470,61"/>
-<area shape="rect" href="bitrl__types_8h.html" title=" " alt="" coords="161,109,295,136"/>
-<area shape="rect" title=" " alt="" coords="5,184,64,211"/>
-<area shape="rect" title=" " alt="" coords="299,184,362,211"/>
-<area shape="rect" title=" " alt="" coords="386,184,462,211"/>
-<area shape="rect" title=" " alt="" coords="420,109,476,136"/>
-<area shape="rect" title=" " alt="" coords="501,109,563,136"/>
-<area shape="rect" title=" " alt="" coords="588,109,673,136"/>
-<area shape="rect" title=" " alt="" coords="183,184,275,211"/>
-<area shape="rect" title=" " alt="" coords="89,184,159,211"/>
+<area shape="rect" title=" " alt="" coords="311,5,485,61"/>
+<area shape="rect" href="bitrl__types_8h.html" title=" " alt="" coords="177,109,310,136"/>
+<area shape="rect" title=" " alt="" coords="5,184,81,211"/>
+<area shape="rect" title=" " alt="" coords="317,184,375,211"/>
+<area shape="rect" title=" " alt="" coords="400,184,463,211"/>
+<area shape="rect" title=" " alt="" coords="435,109,521,136"/>
+<area shape="rect" title=" " alt="" coords="545,109,601,136"/>
+<area shape="rect" title=" " alt="" coords="625,109,688,136"/>
+<area shape="rect" title=" " alt="" coords="200,184,292,211"/>
+<area shape="rect" title=" " alt="" coords="105,184,176,211"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -146,31 +146,31 @@ Functions</h2></td></tr>
 <tr class="memitem:a4ab42dc44ff101d0c8d17394a9dadf47"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a4ab42dc44ff101d0c8d17394a9dadf47">bitrl::utils::geom::operator&lt;&lt;</a> (std::ostream &amp;out, const GeomPoint&lt; spacedim, T &gt; &amp;p)</td></tr>
 <tr class="memdesc:a4ab42dc44ff101d0c8d17394a9dadf47"><td class="mdescLeft">&#160;</td><td class="mdescRight">free functions that work on the GeomPoint&lt;spacedim,T&gt; class  <a href="namespacebitrl_1_1utils_1_1geom.html#a4ab42dc44ff101d0c8d17394a9dadf47">More...</a><br /></td></tr>
 <tr class="separator:a4ab42dc44ff101d0c8d17394a9dadf47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2df75ceb09ea8d412e5fcc8b120fda4b"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
-<tr class="memitem:a2df75ceb09ea8d412e5fcc8b120fda4b"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a2df75ceb09ea8d412e5fcc8b120fda4b">bitrl::utils::geom::scale</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, T factor)</td></tr>
-<tr class="memdesc:a2df75ceb09ea8d412e5fcc8b120fda4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">scale the given point by facto and returns a copyr. This function does not change the entries of <code>t</code>.  <a href="namespacebitrl_1_1utils_1_1geom.html#a2df75ceb09ea8d412e5fcc8b120fda4b">More...</a><br /></td></tr>
-<tr class="separator:a2df75ceb09ea8d412e5fcc8b120fda4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2be0fac696313341f3c09642c09315d1"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
-<tr class="memitem:a2be0fac696313341f3c09642c09315d1"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a2be0fac696313341f3c09642c09315d1">bitrl::utils::geom::scale</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, const std::vector&lt; T &gt; &amp;factors)</td></tr>
-<tr class="memdesc:a2be0fac696313341f3c09642c09315d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">scale the given point by the factors in vector  <a href="namespacebitrl_1_1utils_1_1geom.html#a2be0fac696313341f3c09642c09315d1">More...</a><br /></td></tr>
-<tr class="separator:a2be0fac696313341f3c09642c09315d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37f9a25692049dd936ac655eba612ebf"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
-<tr class="memitem:a37f9a25692049dd936ac655eba612ebf"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a37f9a25692049dd936ac655eba612ebf">bitrl::utils::geom::abs</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t)</td></tr>
-<tr class="memdesc:a37f9a25692049dd936ac655eba612ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a point having the absolute values of the given point object.  <a href="namespacebitrl_1_1utils_1_1geom.html#a37f9a25692049dd936ac655eba612ebf">More...</a><br /></td></tr>
-<tr class="separator:a37f9a25692049dd936ac655eba612ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed841eafe25d5e5dd1ec6d85991a650c"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
-<tr class="memitem:aed841eafe25d5e5dd1ec6d85991a650c"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#aed841eafe25d5e5dd1ec6d85991a650c">bitrl::utils::geom::operator*</a> (T factor, const GeomPoint&lt; spacedim, T &gt; &amp;t)</td></tr>
-<tr class="memdesc:aed841eafe25d5e5dd1ec6d85991a650c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allow multiplication from left with a factor.  <a href="namespacebitrl_1_1utils_1_1geom.html#aed841eafe25d5e5dd1ec6d85991a650c">More...</a><br /></td></tr>
-<tr class="separator:aed841eafe25d5e5dd1ec6d85991a650c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac829b9a84721d83e91dbc98cb17bd968"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
-<tr class="memitem:ac829b9a84721d83e91dbc98cb17bd968"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#ac829b9a84721d83e91dbc98cb17bd968">bitrl::utils::geom::operator*</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, T factor)</td></tr>
-<tr class="separator:ac829b9a84721d83e91dbc98cb17bd968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc4926a6d1e3f4287614530e7c5fc416"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
-<tr class="memitem:adc4926a6d1e3f4287614530e7c5fc416"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#adc4926a6d1e3f4287614530e7c5fc416">bitrl::utils::geom::operator/</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, T factor)</td></tr>
-<tr class="separator:adc4926a6d1e3f4287614530e7c5fc416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c0d447c6994112b9673b960c9029341"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
-<tr class="memitem:a0c0d447c6994112b9673b960c9029341"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a0c0d447c6994112b9673b960c9029341">bitrl::utils::geom::operator+</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t1, const GeomPoint&lt; spacedim, T &gt; &amp;t2)</td></tr>
-<tr class="separator:a0c0d447c6994112b9673b960c9029341"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f05bb5dc24c6d60931a21464cb3986"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
+<tr class="memitem:a22f05bb5dc24c6d60931a21464cb3986"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a22f05bb5dc24c6d60931a21464cb3986">bitrl::utils::geom::scale</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, T factor)</td></tr>
+<tr class="memdesc:a22f05bb5dc24c6d60931a21464cb3986"><td class="mdescLeft">&#160;</td><td class="mdescRight">scale the given point by facto and returns a copyr. This function does not change the entries of <code>t</code>.  <a href="namespacebitrl_1_1utils_1_1geom.html#a22f05bb5dc24c6d60931a21464cb3986">More...</a><br /></td></tr>
+<tr class="separator:a22f05bb5dc24c6d60931a21464cb3986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca4faa01eb5c4142c686d6fa3457852"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
+<tr class="memitem:a2ca4faa01eb5c4142c686d6fa3457852"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a2ca4faa01eb5c4142c686d6fa3457852">bitrl::utils::geom::scale</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, const std::vector&lt; T &gt; &amp;factors)</td></tr>
+<tr class="memdesc:a2ca4faa01eb5c4142c686d6fa3457852"><td class="mdescLeft">&#160;</td><td class="mdescRight">scale the given point by the factors in vector  <a href="namespacebitrl_1_1utils_1_1geom.html#a2ca4faa01eb5c4142c686d6fa3457852">More...</a><br /></td></tr>
+<tr class="separator:a2ca4faa01eb5c4142c686d6fa3457852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99e741490e3e41b73545d2a05e707d72"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
+<tr class="memitem:a99e741490e3e41b73545d2a05e707d72"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a99e741490e3e41b73545d2a05e707d72">bitrl::utils::geom::abs</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t)</td></tr>
+<tr class="memdesc:a99e741490e3e41b73545d2a05e707d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a point having the absolute values of the given point object.  <a href="namespacebitrl_1_1utils_1_1geom.html#a99e741490e3e41b73545d2a05e707d72">More...</a><br /></td></tr>
+<tr class="separator:a99e741490e3e41b73545d2a05e707d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae26d96223dd1ac8bffcfd5d8c0365038"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
+<tr class="memitem:ae26d96223dd1ac8bffcfd5d8c0365038"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#ae26d96223dd1ac8bffcfd5d8c0365038">bitrl::utils::geom::operator*</a> (T factor, const GeomPoint&lt; spacedim, T &gt; &amp;t)</td></tr>
+<tr class="memdesc:ae26d96223dd1ac8bffcfd5d8c0365038"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allow multiplication from left with a factor.  <a href="namespacebitrl_1_1utils_1_1geom.html#ae26d96223dd1ac8bffcfd5d8c0365038">More...</a><br /></td></tr>
+<tr class="separator:ae26d96223dd1ac8bffcfd5d8c0365038"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad30deb4f106af87304beeb2253427dac"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
+<tr class="memitem:ad30deb4f106af87304beeb2253427dac"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#ad30deb4f106af87304beeb2253427dac">bitrl::utils::geom::operator*</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, T factor)</td></tr>
+<tr class="separator:ad30deb4f106af87304beeb2253427dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cd79277b6dfa21b2ab1d274f5f59c93"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
+<tr class="memitem:a2cd79277b6dfa21b2ab1d274f5f59c93"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#a2cd79277b6dfa21b2ab1d274f5f59c93">bitrl::utils::geom::operator/</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t, T factor)</td></tr>
+<tr class="separator:a2cd79277b6dfa21b2ab1d274f5f59c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab314585530481d0140cd6d22fc4952e1"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
+<tr class="memitem:ab314585530481d0140cd6d22fc4952e1"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#ab314585530481d0140cd6d22fc4952e1">bitrl::utils::geom::operator+</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t1, const GeomPoint&lt; spacedim, T &gt; &amp;t2)</td></tr>
+<tr class="separator:ab314585530481d0140cd6d22fc4952e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae53ef66332652273b43070480a8eca20"><td class="memTemplParams" colspan="2">template&lt;int spacedim, typename T &gt; </td></tr>
 <tr class="memitem:ae53ef66332652273b43070480a8eca20"><td class="memTemplItemLeft" align="right" valign="top">const GeomPoint&lt; spacedim, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebitrl_1_1utils_1_1geom.html#ae53ef66332652273b43070480a8eca20">bitrl::utils::geom::operator-</a> (const GeomPoint&lt; spacedim, T &gt; &amp;t1, const GeomPoint&lt; spacedim, T &gt; &amp;t2)</td></tr>
 <tr class="separator:ae53ef66332652273b43070480a8eca20"><td class="memSeparator" colspan="2">&#160;</td></tr>

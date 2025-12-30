@@ -72,26 +72,26 @@ $(function() {
 <div class="title">mesh_utils.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;kernel/geometry/shapes/circle.h&quot;</code><br />
-<code>#include &quot;kernel/geometry/geometry_utils.h&quot;</code><br />
-<code>#include &quot;kernel/discretization/element_mesh_iterator.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;kernel/discretization/element_mesh_iterator.h&quot;</code><br />
 <code>#include &quot;kernel/discretization/mesh_predicates.h&quot;</code><br />
-<code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;tuple&gt;</code><br />
+<code>#include &quot;kernel/geometry/geometry_utils.h&quot;</code><br />
+<code>#include &quot;kernel/geometry/shapes/circle.h&quot;</code><br />
 <code>#include &lt;limits&gt;</code><br />
+<code>#include &lt;tuple&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for mesh_utils.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="mesh__utils_8h__incl.png" border="0" usemap="#a_2home_2alex_2qi3_2bitrl_2src_2bitrl_2utils_2geometry_2mesh_2utils_2mesh__utils_8h" alt=""/></div>
 <map name="a_2home_2alex_2qi3_2bitrl_2src_2bitrl_2utils_2geometry_2mesh_2utils_2mesh__utils_8h" id="a_2home_2alex_2qi3_2bitrl_2src_2bitrl_2utils_2geometry_2mesh_2utils_2mesh__utils_8h">
-<area shape="rect" title=" " alt="" coords="629,5,811,61"/>
-<area shape="rect" title=" " alt="" coords="5,109,184,151"/>
-<area shape="rect" title=" " alt="" coords="209,109,405,151"/>
-<area shape="rect" title=" " alt="" coords="429,109,619,151"/>
-<area shape="rect" title=" " alt="" coords="643,109,797,151"/>
-<area shape="rect" title=" " alt="" coords="822,117,885,143"/>
-<area shape="rect" title=" " alt="" coords="909,117,963,143"/>
-<area shape="rect" title=" " alt="" coords="988,117,1047,143"/>
+<area shape="rect" title=" " alt="" coords="617,5,799,61"/>
+<area shape="rect" title=" " alt="" coords="5,109,195,151"/>
+<area shape="rect" title=" " alt="" coords="219,109,373,151"/>
+<area shape="rect" title=" " alt="" coords="398,109,594,151"/>
+<area shape="rect" title=" " alt="" coords="619,109,797,151"/>
+<area shape="rect" title=" " alt="" coords="821,117,880,143"/>
+<area shape="rect" title=" " alt="" coords="905,117,959,143"/>
+<area shape="rect" title=" " alt="" coords="983,117,1046,143"/>
 </map>
 </div>
 </div>
@@ -118,9 +118,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4eaf3f060ad8f8cf4fd950bdca2fe4dd"><td class="memTemplItemLeft" align="right" valign="top">const MeshTp::element_t *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacekernel_1_1discretization_1_1utils.html#a4eaf3f060ad8f8cf4fd950bdca2fe4dd">kernel::discretization::utils::find_closest_element</a> (const MeshTp &amp;mesh, const GeomPoint&lt; MeshTp::dimension &gt; &amp;p, uint_t nsamples, real_t tol)</td></tr>
 <tr class="memdesc:a4eaf3f060ad8f8cf4fd950bdca2fe4dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the element in the mesh with the smallest distance from the point.  <a href="namespacekernel_1_1discretization_1_1utils.html#a4eaf3f060ad8f8cf4fd950bdca2fe4dd">More...</a><br /></td></tr>
 <tr class="separator:a4eaf3f060ad8f8cf4fd950bdca2fe4dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a21b3a6002cf9df7a61187467af40ec"><td class="memTemplParams" colspan="2">template&lt;typename MeshTp &gt; </td></tr>
-<tr class="memitem:a9a21b3a6002cf9df7a61187467af40ec"><td class="memTemplItemLeft" align="right" valign="top">std::tuple&lt; const typename MeshTp::point_t, const typename MeshTp::element_t * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacekernel_1_1discretization_1_1utils.html#a9a21b3a6002cf9df7a61187467af40ec">kernel::discretization::utils::find_closest_point_to</a> (const MeshTp &amp;mesh, const GeomPoint&lt; 2 &gt; &amp;p, uint_t nsamples, real_t tol)</td></tr>
-<tr class="separator:a9a21b3a6002cf9df7a61187467af40ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9b03c7a83a7ba9c09b9f916786ca178"><td class="memTemplParams" colspan="2">template&lt;typename MeshTp &gt; </td></tr>
+<tr class="memitem:aa9b03c7a83a7ba9c09b9f916786ca178"><td class="memTemplItemLeft" align="right" valign="top">std::tuple&lt; const typename MeshTp::point_t, const typename MeshTp::element_t * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacekernel_1_1discretization_1_1utils.html#aa9b03c7a83a7ba9c09b9f916786ca178">kernel::discretization::utils::find_closest_point_to</a> (const MeshTp &amp;mesh, const GeomPoint&lt; 2 &gt; &amp;p, uint_t nsamples, real_t tol)</td></tr>
+<tr class="separator:aa9b03c7a83a7ba9c09b9f916786ca178"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90710a99b40f74ce5425c3d9cb14dc14"><td class="memTemplParams" colspan="2">template&lt;typename MeshTp &gt; </td></tr>
 <tr class="memitem:a90710a99b40f74ce5425c3d9cb14dc14"><td class="memTemplItemLeft" align="right" valign="top">const std::vector&lt; typename MeshTp::point_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacekernel_1_1discretization_1_1utils.html#a90710a99b40f74ce5425c3d9cb14dc14">kernel::discretization::utils::find_intersections</a> (const MeshTp &amp;mesh, const Circle &amp;circle)</td></tr>
 <tr class="memdesc:a90710a99b40f74ce5425c3d9cb14dc14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the intersection points of the Circle with the elements of the LineMesh. The algorithn implemented is the one described here <a href="https://stackoverflow.com/questions/1073336/circle-line-segment-collision-detection-algorithm/1084899#1084899%E2%80%8B">https://stackoverflow.com/questions/1073336/circle-line-segment-collision-detection-algorithm/1084899#1084899%E2%80%8B</a>.  <a href="namespacekernel_1_1discretization_1_1utils.html#a90710a99b40f74ce5425c3d9cb14dc14">More...</a><br /></td></tr>

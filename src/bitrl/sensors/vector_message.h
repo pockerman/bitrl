@@ -8,74 +8,72 @@
 #include "bitrl/bitrl_types.h"
 
 #include <iosfwd>
+#include <iostream>
 #include <locale>
 #include <optional>
 #include <string>
 #include <vector>
-#include <iostream>
-
 
 namespace bitrl
 {
-    namespace sensors
+namespace sensors
+{
+template <typename T> struct EigenVectorMessage
+{
+    DynVec<T> message;
+    static std::optional<EigenVectorMessage<T>> parse(const std::string &msg);
+};
+
+template <typename T>
+std::optional<EigenVectorMessage<T>> EigenVectorMessage<T>::parse(const std::string &msg)
+{
+    // --- Trim whitespace ---
+    auto trim = [](const std::string &s)
     {
-        template <typename T>
-        struct EigenVectorMessage
-        {
-            DynVec<T> message;
-            static std::optional<EigenVectorMessage<T>> parse(const std::string& msg);
-        };
+        size_t start = 0;
+        while (start < s.size() && std::isspace(s[start]))
+            start++;
+        size_t end = s.size();
+        while (end > start && std::isspace(s[end - 1]))
+            end--;
+        return s.substr(start, end - start);
+    };
 
-        template <typename T>
-        std::optional<EigenVectorMessage<T>>
-         EigenVectorMessage<T>::parse(const std::string& msg)
-        {
-            // --- Trim whitespace ---
-            auto trim = [](const std::string& s) {
-                size_t start = 0;
-                while (start < s.size() && std::isspace(s[start])) start++;
-                size_t end = s.size();
-                while (end > start && std::isspace(s[end - 1])) end--;
-                return s.substr(start, end - start);
-            };
+    std::string s = trim(msg);
 
-            std::string s = trim(msg);
+    if (s.empty() || s.front() != '[' || s.back() != ']')
+        return std::nullopt;
 
-            if (s.empty() || s.front() != '[' || s.back() != ']')
-                return std::nullopt;
+    // Remove '[' and ']'
+    s = s.substr(1, s.size() - 2);
 
-            // Remove '[' and ']'
-            s = s.substr(1, s.size() - 2);
+    std::vector<T> values;
+    std::stringstream ss(s);
+    std::string item;
 
-            std::vector<T> values;
-            std::stringstream ss(s);
-            std::string item;
+    while (std::getline(ss, item, ','))
+    {
+        item = trim(item);
+        if (item.empty())
+            return std::nullopt;
 
-            while (std::getline(ss, item, ',')) {
-                item = trim(item);
-                if (item.empty())
-                    return std::nullopt;
+        std::stringstream item_ss(item);
+        T value;
 
-                std::stringstream item_ss(item);
-                T value;
+        if (!(item_ss >> value)) // Parsing failed
+            return std::nullopt;
 
-                if (!(item_ss >> value))  // Parsing failed
-                    return std::nullopt;
-
-                values.push_back(value);
-            }
-
-
-
-            EigenVectorMessage<T> result;
-            result.message = DynVec<T>::Zero(values.size());
-            for (size_t i = 0; i < values.size(); ++i)
-                result.message[i] = values[i];
-            return result;
-        }
-
-
+        values.push_back(value);
     }
+
+    EigenVectorMessage<T> result;
+    result.message = DynVec<T>::Zero(values.size());
+    for (size_t i = 0; i < values.size(); ++i)
+        result.message[i] = values[i];
+    return result;
 }
 
-#endif //VECTOR_MESSAGE_H
+} // namespace sensors
+} // namespace bitrl
+
+#endif // VECTOR_MESSAGE_H

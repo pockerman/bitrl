@@ -7,14 +7,12 @@
 
 namespace bitrl
 {
-    namespace sensors
-    {
-            std::optional<OdometryReading>
-            OdometryReading::parse(const std::string& msg) {
-                auto json = nlohmann::json::parse(msg);
-                return OdometryReading{
-                    json["x"], json["y"], json["yaw"], json["timestamp"]
-                };
-            }
-    }
+namespace sensors
+{
+std::optional<OdometryReading> OdometryReading::parse(const std::string &msg)
+{
+    auto json = nlohmann::json::parse(msg);
+    return OdometryReading{json["x"], json["y"], json["yaw"], json["timestamp"]};
 }
+} // namespace sensors
+} // namespace bitrl

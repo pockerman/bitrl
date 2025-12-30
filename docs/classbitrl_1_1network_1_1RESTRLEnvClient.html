@@ -89,6 +89,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a239962f21d54ec9336309cfc49767c09"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a239962f21d54ec9336309cfc49767c09">get_url</a> () const noexcept</td></tr>
 <tr class="memdesc:a239962f21d54ec9336309cfc49767c09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the remote url.  <a href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a239962f21d54ec9336309cfc49767c09">More...</a><br /></td></tr>
 <tr class="separator:a239962f21d54ec9336309cfc49767c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26e06c63678cf99ff7db02eb9fa74cd6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a26e06c63678cf99ff7db02eb9fa74cd6">is_env_registered</a> (const std::string &amp;env_name) const noexcept</td></tr>
+<tr class="separator:a26e06c63678cf99ff7db02eb9fa74cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d6bd459d145992871de2f09787fd17d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a5d6bd459d145992871de2f09787fd17d">get_env_url</a> (const std::string &amp;name) const noexcept</td></tr>
 <tr class="memdesc:a5d6bd459d145992871de2f09787fd17d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the url for the environment with the given name.  <a href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a5d6bd459d145992871de2f09787fd17d">More...</a><br /></td></tr>
 <tr class="separator:a5d6bd459d145992871de2f09787fd17d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,6 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7722f703110e7d168e13582dd1dddcc7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a7722f703110e7d168e13582dd1dddcc7">register_if_not</a> (const std::string &amp;name, const std::string &amp;uri)</td></tr>
 <tr class="memdesc:a7722f703110e7d168e13582dd1dddcc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as register_new but swallows the thrown exception.  <a href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a7722f703110e7d168e13582dd1dddcc7">More...</a><br /></td></tr>
 <tr class="separator:a7722f703110e7d168e13582dd1dddcc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a478570bd9667081e097e8108242aa2c1"><td class="memItemLeft" align="right" valign="top">nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a478570bd9667081e097e8108242aa2c1">n_copies</a> (const std::string &amp;name, const std::string &amp;version=<a class="el" href="namespacebitrl_1_1consts.html#af9b756251c966b0eee15ec51d28450d9">bitrl::consts::INVALID_STR</a>) const</td></tr>
+<tr class="separator:a478570bd9667081e097e8108242aa2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9483316c9c874fc26ac107fa95f016a6"><td class="memItemLeft" align="right" valign="top">nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a9483316c9c874fc26ac107fa95f016a6">is_alive</a> (const std::string &amp;env_name, const std::string &amp;idx) const</td></tr>
 <tr class="memdesc:a9483316c9c874fc26ac107fa95f016a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queries the remote server if the environment with the given cidx is alive Throws std::logic_error is the environment is not registered.  <a href="classbitrl_1_1network_1_1RESTRLEnvClient.html#a9483316c9c874fc26ac107fa95f016a6">More...</a><br /></td></tr>
 <tr class="separator:a9483316c9c874fc26ac107fa95f016a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -386,6 +390,39 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a26e06c63678cf99ff7db02eb9fa74cd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26e06c63678cf99ff7db02eb9fa74cd6">&#9670;&nbsp;</a></span>is_env_registered()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bitrl::network::RESTRLEnvClient::is_env_registered </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>env_name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns true if the environment with the given name is registered </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">env_name</td><td>The environment name to query </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
 <a id="a4136a6e60613ffae58c4612c1b9e9b4a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4136a6e60613ffae58c4612c1b9e9b4a">&#9670;&nbsp;</a></span>is_inisialised()</h2>
 
@@ -446,6 +483,41 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Make the the environment with the given name and the given copy index executing action. Throws std::logic_error is the environment is not registered Throws std::runtime_error if the server response is not 202. </p>
+
+</div>
+</div>
+<a id="a478570bd9667081e097e8108242aa2c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a478570bd9667081e097e8108242aa2c1">&#9670;&nbsp;</a></span>n_copies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nlohmann::json bitrl::network::RESTRLEnvClient::n_copies </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>version</em> = <code><a class="el" href="namespacebitrl_1_1consts.html#af9b756251c966b0eee15ec51d28450d9">bitrl::consts::INVALID_STR</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the number of copies of the environment with the given name </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>

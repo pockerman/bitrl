@@ -1,15 +1,14 @@
 <map id="/home/alex/qi3/bitrl/src/bitrl/envs/env_base.h" name="/home/alex/qi3/bitrl/src/bitrl/envs/env_base.h">
-<area shape="rect" id="node1" title=" " alt="" coords="444,5,632,47"/>
-<area shape="rect" id="node2" href="$bitrl__types_8h.html" title=" " alt="" coords="162,184,295,211"/>
-<area shape="rect" id="node4" title=" " alt="" coords="439,259,498,285"/>
-<area shape="rect" id="node8" href="$bitrl__consts_8h.html" title=" " alt="" coords="301,102,439,129"/>
-<area shape="rect" id="node10" href="$synchronized__env__mixin_8h.html" title=" " alt="" coords="575,95,749,136"/>
-<area shape="rect" id="node11" title=" " alt="" coords="551,184,597,211"/>
-<area shape="rect" id="node12" title=" " alt="" coords="705,184,829,211"/>
-<area shape="rect" id="node13" title=" " alt="" coords="824,102,916,129"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,259,97,285"/>
-<area shape="rect" id="node5" title=" " alt="" coords="121,259,192,285"/>
-<area shape="rect" id="node6" title=" " alt="" coords="216,259,279,285"/>
-<area shape="rect" id="node7" title=" " alt="" coords="303,259,379,285"/>
-<area shape="rect" id="node9" title=" " alt="" coords="371,184,449,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="449,5,637,47"/>
+<area shape="rect" id="node2" href="$bitrl__consts_8h.html" title=" " alt="" coords="326,95,465,121"/>
+<area shape="rect" id="node3" href="$bitrl__types_8h.html" title=" " alt="" coords="187,169,321,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="403,244,462,271"/>
+<area shape="rect" id="node10" title=" " alt="" coords="551,95,597,121"/>
+<area shape="rect" id="node11" title=" " alt="" coords="621,95,713,121"/>
+<area shape="rect" id="node12" title=" " alt="" coords="737,95,861,121"/>
+<area shape="rect" id="node9" title=" " alt="" coords="396,169,475,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,244,97,271"/>
+<area shape="rect" id="node5" title=" " alt="" coords="121,244,192,271"/>
+<area shape="rect" id="node6" title=" " alt="" coords="216,244,292,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="316,244,379,271"/>
 </map>

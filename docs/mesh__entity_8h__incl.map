@@ -1,13 +1,13 @@
 <map id="/home/alex/qi3/bitrl/src/bitrl/utils/geometry/mesh/mesh_entity.h" name="/home/alex/qi3/bitrl/src/bitrl/utils/geometry/mesh/mesh_entity.h">
-<area shape="rect" id="node1" title=" " alt="" coords="347,5,521,61"/>
-<area shape="rect" id="node2" href="$bitrl__types_8h.html" title=" " alt="" coords="174,184,307,211"/>
-<area shape="rect" id="node8" href="$bitrl__consts_8h.html" title=" " alt="" coords="295,109,434,136"/>
-<area shape="rect" id="node10" title=" " alt="" coords="459,109,551,136"/>
-<area shape="rect" id="node11" title=" " alt="" coords="575,109,621,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,259,97,285"/>
-<area shape="rect" id="node4" title=" " alt="" coords="414,259,473,285"/>
+<area shape="rect" id="node1" title=" " alt="" coords="368,5,543,61"/>
+<area shape="rect" id="node2" href="$bitrl__consts_8h.html" title=" " alt="" coords="327,109,466,136"/>
+<area shape="rect" id="node3" href="$bitrl__types_8h.html" title=" " alt="" coords="223,184,357,211"/>
+<area shape="rect" id="node10" title=" " alt="" coords="491,109,537,136"/>
+<area shape="rect" id="node11" title=" " alt="" coords="561,109,653,136"/>
+<area shape="rect" id="node7" title=" " alt="" coords="403,259,462,285"/>
+<area shape="rect" id="node9" title=" " alt="" coords="435,184,513,211"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,259,97,285"/>
 <area shape="rect" id="node5" title=" " alt="" coords="121,259,192,285"/>
-<area shape="rect" id="node6" title=" " alt="" coords="216,259,279,285"/>
-<area shape="rect" id="node7" title=" " alt="" coords="303,259,379,285"/>
-<area shape="rect" id="node9" title=" " alt="" coords="332,184,411,211"/>
+<area shape="rect" id="node6" title=" " alt="" coords="216,259,292,285"/>
+<area shape="rect" id="node8" title=" " alt="" coords="316,259,379,285"/>
 </map>

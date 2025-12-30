@@ -74,28 +74,29 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="bitrl__types_8h.html">bitrl/bitrl_types.h</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacebitrl.html">bitrl</a>{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>utils{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>geom{ </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// forward declarations</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">int</span> dim, <span class="keyword">typename</span> T&gt; <span class="keyword">class </span>GeomPoint;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">int</span> dim&gt; <span class="keyword">class </span>Mesh;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespacebitrl_1_1utils_1_1geom.html#abbb85cbc51e5c1441f49844244cdadaa">build_quad_mesh</a>(Mesh&lt;2&gt;&amp; mesh, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> nx, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> ny,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                     <span class="keyword">const</span> GeomPoint&lt;2, real_t&gt;&amp; lower_point,</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                     <span class="keyword">const</span> GeomPoint&lt;2, real_t&gt;&amp; upper_point);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// QUAD_MESH_GENERATION_H</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacebitrl.html">bitrl</a></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>utils</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>geom</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// forward declarations</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim, <span class="keyword">typename</span> T&gt; <span class="keyword">class </span>GeomPoint;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim&gt; <span class="keyword">class </span>Mesh;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespacebitrl_1_1utils_1_1geom.html#abbb85cbc51e5c1441f49844244cdadaa">build_quad_mesh</a>(Mesh&lt;2&gt; &amp;mesh, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> nx, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> ny, <span class="keyword">const</span> GeomPoint&lt;2, real_t&gt; &amp;lower_point,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                     <span class="keyword">const</span> GeomPoint&lt;2, real_t&gt; &amp;upper_point);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;} <span class="comment">// namespace geom</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;} <span class="comment">// namespace utils</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;} <span class="comment">// namespace bitrl</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// QUAD_MESH_GENERATION_H</span></div>
 <div class="ttc" id="abitrl__types_8h_html"><div class="ttname"><a href="bitrl__types_8h.html">bitrl_types.h</a></div></div>
-<div class="ttc" id="anamespacebitrl_1_1utils_1_1geom_html_abbb85cbc51e5c1441f49844244cdadaa"><div class="ttname"><a href="namespacebitrl_1_1utils_1_1geom.html#abbb85cbc51e5c1441f49844244cdadaa">bitrl::utils::geom::build_quad_mesh</a></div><div class="ttdeci">void build_quad_mesh(Mesh&lt; 2 &gt; &amp;mesh, uint_t nx, uint_t ny, const GeomPoint&lt; 2, real_t &gt; &amp;lower_point, const GeomPoint&lt; 2, real_t &gt; &amp;upper_point)</div><div class="ttdoc">build a cartesian mesh with quad elements</div><div class="ttdef"><b>Definition:</b> quad_mesh_generation.cpp:266</div></div>
-<div class="ttc" id="anamespacebitrl_html"><div class="ttname"><a href="namespacebitrl.html">bitrl</a></div><div class="ttdef"><b>Definition:</b> bitrl_consts.h:12</div></div>
-<div class="ttc" id="anamespacebitrl_html_a84c96b350ee9feed7262273146a5ad11"><div class="ttname"><a href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">bitrl::uint_t</a></div><div class="ttdeci">std::size_t uint_t</div><div class="ttdoc">uint_t</div><div class="ttdef"><b>Definition:</b> bitrl_types.h:44</div></div>
+<div class="ttc" id="anamespacebitrl_1_1utils_1_1geom_html_abbb85cbc51e5c1441f49844244cdadaa"><div class="ttname"><a href="namespacebitrl_1_1utils_1_1geom.html#abbb85cbc51e5c1441f49844244cdadaa">bitrl::utils::geom::build_quad_mesh</a></div><div class="ttdeci">void build_quad_mesh(Mesh&lt; 2 &gt; &amp;mesh, uint_t nx, uint_t ny, const GeomPoint&lt; 2, real_t &gt; &amp;lower_point, const GeomPoint&lt; 2, real_t &gt; &amp;upper_point)</div><div class="ttdoc">build a cartesian mesh with quad elements</div><div class="ttdef"><b>Definition:</b> quad_mesh_generation.cpp:274</div></div>
+<div class="ttc" id="anamespacebitrl_html"><div class="ttname"><a href="namespacebitrl.html">bitrl</a></div><div class="ttdef"><b>Definition:</b> bitrl_consts.h:13</div></div>
+<div class="ttc" id="anamespacebitrl_html_a84c96b350ee9feed7262273146a5ad11"><div class="ttname"><a href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">bitrl::uint_t</a></div><div class="ttdeci">std::size_t uint_t</div><div class="ttdoc">uint_t</div><div class="ttdef"><b>Definition:</b> bitrl_types.h:43</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

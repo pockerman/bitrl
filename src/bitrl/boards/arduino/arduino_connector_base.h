@@ -12,51 +12,48 @@
 
 namespace bitrl
 {
-    namespace boards::arduino
-    {
+namespace boards::arduino
+{
 
-        struct ArduinoCMDBase
-        {
+struct ArduinoCMDBase
+{
 
-            ArduinoCMDBase() =default;
-            virtual ~ArduinoCMDBase() =default;
-            virtual std::string get_cmd()const=0;
-        };
+    ArduinoCMDBase() = default;
+    virtual ~ArduinoCMDBase() = default;
+    virtual std::string get_cmd() const = 0;
+};
 
-        class ArduinoConnectorBase
-        {
-        public:
-            ///
-            /// \brief Destructor
-            ///
-            virtual ~ArduinoConnectorBase() =default;
+class ArduinoConnectorBase
+{
+  public:
+    ///
+    /// \brief Destructor
+    ///
+    virtual ~ArduinoConnectorBase() = default;
 
-            ///
-            /// \brief Connect to the Arduino board
-            ///
-            virtual void connect()=0;
+    ///
+    /// \brief Connect to the Arduino board
+    ///
+    virtual void connect() = 0;
 
-            ///
-            /// \brief Close the connection
-            ///
-            virtual void close_connection()=0;
+    ///
+    /// \brief Close the connection
+    ///
+    virtual void close_connection() = 0;
 
-            ///
-            /// \brief Send the command
-            ///
-            virtual std::string send_cmd(const ArduinoCMDBase& cmd)=0;
+    ///
+    /// \brief Send the command
+    ///
+    virtual std::string send_cmd(const ArduinoCMDBase &cmd) = 0;
 
+  protected:
+    ///
+    /// \brief Constructor
+    ///
+    ArduinoConnectorBase() = default;
+};
 
+} // namespace boards::arduino
+} // namespace bitrl
 
-        protected:
-
-            ///
-            /// \brief Constructor
-            ///
-            ArduinoConnectorBase()=default;
-        };
-
-    }
-}
-
-#endif //ARDUINO_ENV_BASE_H
+#endif // ARDUINO_ENV_BASE_H

@@ -5,32 +5,34 @@
 #include "bitrl/utils/io/file_reader_base.h"
 
 #include <boost/noncopyable.hpp>
+#include <fstream>
 #include <string>
 #include <vector>
-#include <fstream>
 
-namespace bitrl{
-namespace utils{
-namespace io{
+namespace bitrl
+{
+namespace utils
+{
+namespace io
+{
 
 ///
 /// \brief The CSVFileReader class
 ///
-class CSVFileReader: public FileReaderBase
+class CSVFileReader : public FileReaderBase
 {
-public:
-
+  public:
     ///
     /// \brief The default column delimiter
     ///
-    static std::string default_delimeter(){return ",";}
+    static std::string default_delimeter() { return ","; }
 
     ///
     /// \brief Constructor
     ///
-    CSVFileReader(const std::string& file_path,
-                  const std::string delimeter=CSVFileReader::default_delimeter());
-				  
+    CSVFileReader(const std::string &file_path,
+                  const std::string delimeter = CSVFileReader::default_delimeter());
+
     ///
     /// \brief Destructor. Close the file if it is empty
     ///
@@ -48,9 +50,7 @@ public:
     ///
     std::vector<uint_t> read_line_as_uint();
 
-
-private:
-
+  private:
     ///
     /// \brief The delimiter
     ///
@@ -62,7 +62,7 @@ private:
     uint_t current_row_idx_;
 };
 
-}
-}
-}
+} // namespace io
+} // namespace utils
+} // namespace bitrl
 #endif // CSV_FILE_READER_H

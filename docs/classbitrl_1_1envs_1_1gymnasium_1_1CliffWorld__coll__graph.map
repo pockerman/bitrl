@@ -1,9 +1,8 @@
 <map id="bitrl::envs::gymnasium::CliffWorld" name="bitrl::envs::gymnasium::CliffWorld">
-<area shape="rect" id="node1" title="The CliffWorld class." alt="" coords="159,411,331,452"/>
-<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="139,305,351,361"/>
-<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="Base class for all Gymnasium environment wrappers." alt="" coords="124,200,367,256"/>
-<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class interface for Reinforcement Learning environments." alt="" coords="20,96,241,137"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,13,96,39"/>
-<area shape="rect" id="node6" href="$structbitrl_1_1envs_1_1synchronized__env__mixin.html" title="class synchronized_env_mixin" alt="" coords="120,5,301,47"/>
-<area shape="rect" id="node7" href="$classbitrl_1_1network_1_1RESTRLEnvClient.html" title="Utility class to facilitate HTTP requests between the environments REST API and C++ drivers." alt="" coords="266,96,457,137"/>
+<area shape="rect" id="node1" title="The CliffWorld class." alt="" coords="145,396,317,437"/>
+<area shape="rect" id="node2" href="$classbitrl_1_1envs_1_1gymnasium_1_1ToyTextEnvBase.html" title=" " alt="" coords="125,291,337,347"/>
+<area shape="rect" id="node3" href="$classbitrl_1_1envs_1_1gymnasium_1_1GymnasiumEnvBase.html" title="Base class for all Gymnasium environment wrappers." alt="" coords="109,185,352,241"/>
+<area shape="rect" id="node4" href="$classbitrl_1_1envs_1_1EnvBase.html" title="Base class interface for Reinforcement Learning environments." alt="" coords="5,81,227,123"/>
+<area shape="rect" id="node5" title=" " alt="" coords="71,5,161,32"/>
+<area shape="rect" id="node6" href="$classbitrl_1_1network_1_1RESTRLEnvClient.html" title="Utility class to facilitate HTTP requests between the environments REST API and C++ drivers." alt="" coords="251,81,442,123"/>
 </map>

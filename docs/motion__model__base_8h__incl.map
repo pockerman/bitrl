@@ -1,13 +1,13 @@
 <map id="/home/alex/qi3/bitrl/src/bitrl/dynamics/motion_model_base.h" name="/home/alex/qi3/bitrl/src/bitrl/dynamics/motion_model_base.h">
-<area shape="rect" id="node1" title=" " alt="" coords="279,5,471,61"/>
-<area shape="rect" id="node2" href="$bitrl__types_8h.html" title=" " alt="" coords="151,184,284,211"/>
-<area shape="rect" id="node4" title=" " alt="" coords="5,259,64,285"/>
-<area shape="rect" id="node6" title=" " alt="" coords="399,259,462,285"/>
-<area shape="rect" id="node8" href="$bitrl__consts_8h.html" title=" " alt="" coords="252,109,391,136"/>
-<area shape="rect" id="node10" title=" " alt="" coords="465,109,639,136"/>
-<area shape="rect" id="node11" title=" " alt="" coords="663,109,740,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="89,259,181,285"/>
-<area shape="rect" id="node5" title=" " alt="" coords="205,259,275,285"/>
-<area shape="rect" id="node7" title=" " alt="" coords="299,259,375,285"/>
-<area shape="rect" id="node9" title=" " alt="" coords="309,184,387,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="249,5,441,61"/>
+<area shape="rect" id="node2" href="$bitrl__consts_8h.html" title=" " alt="" coords="105,109,244,136"/>
+<area shape="rect" id="node3" href="$bitrl__types_8h.html" title=" " alt="" coords="201,184,335,211"/>
+<area shape="rect" id="node7" title=" " alt="" coords="5,259,64,285"/>
+<area shape="rect" id="node8" title=" " alt="" coords="399,259,462,285"/>
+<area shape="rect" id="node10" title=" " alt="" coords="409,109,583,136"/>
+<area shape="rect" id="node11" title=" " alt="" coords="607,109,684,136"/>
+<area shape="rect" id="node9" title=" " alt="" coords="98,184,177,211"/>
+<area shape="rect" id="node4" title=" " alt="" coords="283,259,375,285"/>
+<area shape="rect" id="node5" title=" " alt="" coords="89,259,159,285"/>
+<area shape="rect" id="node6" title=" " alt="" coords="183,259,259,285"/>
 </map>

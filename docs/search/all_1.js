@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['abs_3',['abs',['../namespacebitrl_1_1utils_1_1geom.html#a37f9a25692049dd936ac655eba612ebf',1,'bitrl::utils::geom']]],
+  ['abs_3',['abs',['../namespacebitrl_1_1utils_1_1geom.html#a99e741490e3e41b73545d2a05e707d72',1,'bitrl::utils::geom']]],
   ['acrobot_4',['Acrobot',['../classbitrl_1_1envs_1_1gymnasium_1_1Acrobot.html#a032556f789d2860be4bb90440a1ea96e',1,'bitrl::envs::gymnasium::Acrobot::Acrobot(network::RESTRLEnvClient &amp;api_server)'],['../classbitrl_1_1envs_1_1gymnasium_1_1Acrobot.html#a675eadf68845c9324fa1d998e9472f05',1,'bitrl::envs::gymnasium::Acrobot::Acrobot(const Acrobot &amp;other)'],['../classbitrl_1_1envs_1_1gymnasium_1_1Acrobot.html',1,'bitrl::envs::gymnasium::Acrobot']]],
   ['acrobot_5fenv_2ecpp_5',['acrobot_env.cpp',['../acrobot__env_8cpp.html',1,'']]],
   ['acrobot_5fenv_2eh_6',['acrobot_env.h',['../acrobot__env_8h.html',1,'']]],
@@ -22,11 +22,11 @@ var searchData=
   ['add_5fface_22',['add_face',['../classbitrl_1_1utils_1_1geom_1_1MeshTopology.html#a7c9b81afa334de3577e61e1be24de13a',1,'bitrl::utils::geom::MeshTopology::add_face(MeshTopology&lt; 1 &gt;::face_ptr_t face)'],['../classbitrl_1_1utils_1_1geom_1_1MeshTopology.html#a0bb5de8455884cf88b8199597631fe67',1,'bitrl::utils::geom::MeshTopology::add_face(MeshTopology&lt; 2 &gt;::face_ptr_t face)'],['../classbitrl_1_1utils_1_1geom_1_1MeshTopology.html#ab20ba6f19d9834adc3df1768c810bb45',1,'bitrl::utils::geom::MeshTopology::add_face(face_ptr_t face)']]],
   ['add_5finput_5ftopic_23',['add_input_topic',['../classbitrl_1_1sensors_1_1EKFSensorFusion.html#af8dfab94ba64ca62f99d58add0e12e57',1,'bitrl::sensors::EKFSensorFusion']]],
   ['add_5fnode_24',['add_node',['../classbitrl_1_1utils_1_1geom_1_1MeshTopology.html#aa3713e4c2bcadbba062c3cc44c6569e6',1,'bitrl::utils::geom::MeshTopology']]],
-  ['add_5fscalar_25',['add_scalar',['../classbitrl_1_1utils_1_1io_1_1TensorboardServer.html#abb4bd9b75cabc378be1645ced8c87ee2',1,'bitrl::utils::io::TensorboardServer']]],
-  ['add_5fscalars_26',['add_scalars',['../classbitrl_1_1utils_1_1io_1_1TensorboardServer.html#ac936271953dfacf031cec72a6ebe722d',1,'bitrl::utils::io::TensorboardServer']]],
+  ['add_5fscalar_25',['add_scalar',['../classbitrl_1_1network_1_1TensorboardServer.html#ac01e8ec71d5aad8c69256af0853666e1',1,'bitrl::network::TensorboardServer']]],
+  ['add_5fscalars_26',['add_scalars',['../classbitrl_1_1network_1_1TensorboardServer.html#a3b0c4a401005625cfc2c581db9c7afa2',1,'bitrl::network::TensorboardServer']]],
   ['add_5fscaled_27',['add_scaled',['../classbitrl_1_1utils_1_1geom_1_1GeomPoint.html#ad998f36978c8e4c6ff5db2f1ed6bf92e',1,'bitrl::utils::geom::GeomPoint']]],
   ['add_5fsensor_5ftopic_28',['add_sensor_topic',['../classbitrl_1_1sensors_1_1EKFSensorFusion.html#a82668a43c04ac672c7e8c48080cc2227',1,'bitrl::sensors::EKFSensorFusion']]],
-  ['add_5ftext_29',['add_text',['../classbitrl_1_1utils_1_1io_1_1TensorboardServer.html#a8061f89424a552de57e842e324627fe0',1,'bitrl::utils::io::TensorboardServer']]],
+  ['add_5ftext_29',['add_text',['../classbitrl_1_1network_1_1TensorboardServer.html#a8ac3baa5c229041fb1e55352b2811dd8',1,'bitrl::network::TensorboardServer']]],
   ['allows_5fmatrix_5fupdates_30',['allows_matrix_updates',['../classbitrl_1_1dynamics_1_1MotionModelDynamicsBase.html#afca7286410aa2856f08d648bfefcb47d',1,'bitrl::dynamics::MotionModelDynamicsBase']]],
   ['alpha_31',['alpha',['../classrlenvscpp_1_1utils_1_1maths_1_1stats_1_1BetaDist.html#a050beef95b114a636e44f93d20b3f662',1,'rlenvscpp::utils::maths::stats::BetaDist']]],
   ['angular_5fspeed_5fto_5flinear_5fspeed_32',['angular_speed_to_linear_speed',['../namespacebitrl_1_1utils_1_1unit__converter.html#a309842b72065a46abe589c0ffbf3d670',1,'bitrl::utils::unit_converter']]],

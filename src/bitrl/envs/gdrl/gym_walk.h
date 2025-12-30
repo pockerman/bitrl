@@ -1,295 +1,227 @@
 /*
  * GymWalk environment from
  * <a href="https://github.com/mimoralea/gym-walk2">gym_walk</a>
- * 
- * 
- * 
- */ 
+ *
+ *
+ *
+ */
 
 #ifndef GYM_WALK_H
 #define GYM_WALK_H
 
 #include "bitrl/bitrl_config.h"
+#include "bitrl/bitrl_consts.h"
 #include "bitrl/bitrl_types.h"
-#include "bitrl/envs/time_step.h"
-#include "bitrl/envs/env_types.h"
 #include "bitrl/envs/env_base.h"
+#include "bitrl/envs/env_types.h"
+#include "bitrl/envs/time_step.h"
+#include "bitrl/network/rest_rl_env_client.h"
+#include "bitrl/utils//std_map_utils.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
-
-#include <vector>
-#include <tuple>
-#include <string>
 #include <any>
-#include <unordered_map>
 #include <memory>
-
-#include "../../sensors/ekf_sensor_fusion.h"
+#include <string>
+#include <tuple>
+#include <unordered_map>
+#include <vector>
 
 #ifdef BITRL_DEBUG
 #include <cassert>
 #endif
 
-namespace bitrl{
+namespace bitrl
+{
 namespace envs::gdrl
 {
 
 /**
  * GymWalk. Interface for the GymWalk environment
  */
-template<uint_t state_size>
-class GymWalk final: public EnvBase<TimeStep<uint_t>,
-	                                    ScalarDiscreteEnv<state_size, 2, 0, 0>
-		>
+template <uint_t state_size>
+class GymWalk final : public EnvBase<TimeStep<uint_t>, ScalarDiscreteEnv<state_size, 1, 0, 0>>
 {
-public:
+  public:
 
-		///
-    /// \brief name
+    static const std::string name;
+    static const std::string URI;
+
+    typedef EnvBase<TimeStep<uint_t>, ScalarDiscreteEnv<state_size, 1, 0, 0>> base_type;
+    typedef typename base_type::time_step_type time_step_type;
+    typedef typename base_type::state_space_type state_space_type;
+    typedef typename base_type::action_space_type action_space_type;
+    typedef typename base_type::action_type action_type;
+    typedef typename base_type::state_type state_type;
+    typedef std::vector<std::tuple<real_t, uint_t, real_t, bool>> dynamics_t;
+
     ///
-		static  const std::string name;
-
-		///
-	/// \brief The URI for accessing the environment
-	///
-		static const std::string URI;
-
-		typedef EnvBase<TimeStep<uint_t>,
-		                ScalarDiscreteEnv<state_size, 2, 0, 0>
-		> base_type;
-
-		///
-	/// \brief The time step type we return every time a step in the
-	/// environment is performed
-	///
-		typedef typename base_type::time_step_type time_step_type;
-
-		///
-	/// \brief The type describing the state space for the environment
-	///
-		typedef typename base_type::state_space_type state_space_type;
-
-		///
-	/// \brief The type of the action space for the environment
-	///
-		typedef typename base_type::action_space_type action_space_type;
-
-		///
-	/// \brief The type of the action to be undertaken in the environment
-	///
-		typedef typename base_type::action_type action_type;
-
-		///
-	/// \brief The type of the state
-	///
-		typedef typename base_type::state_type state_type;
-
-		///
-    /// \brief dynamics_t
+    /// \brief Constructor
     ///
-		typedef std::vector<std::tuple<real_t, uint_t, real_t, bool>> dynamics_t;
+    GymWalk(network::RESTRLEnvClient &api_server);
 
-		///
-	/// \brief Constructor
-	///
-		GymWalk(const network::RESTApiServerWrapper& api_server);
+    virtual void
+    make(const std::string &version, const std::unordered_map<std::string, std::any> &options,
+         const std::unordered_map<std::string, std::any> &reset_options) override final;
+    bool is_alive() const;
+    virtual void close() override final;
+    virtual time_step_type step(const action_type &action) override final;
+    virtual time_step_type reset() override final;
+    uint_t n_states() const noexcept { return state_space_type::size; }
+    uint_t n_actions() const noexcept { return action_space_type::size + 1; }
+    dynamics_t p(uint_t sidx, uint_t aidx) const;
 
-		///
-	/// \brief copy ctor
-	///
-		GymWalk(const GymWalk& other);
+    /**
+     * @brief Get the full URL for this environment endpoint on the server.
+     * @return Environment URL string.
+     */
+    std::string get_url() const{return api_server_->get_env_url(this->env_name());}
 
-		///
-    /// \brief make. Builds the environment. Optionally we can choose if the
-    /// environment will be slippery
-    ///
-		virtual void make(const std::string& version,
-		                  const std::unordered_map<std::string, std::any>& options,
-		                  const std::unordered_map<std::string, std::any>& reset_options) override final;
+    /**
+    * Get the number of copies on the server for this environment
+    * @return
+    */
+    uint_t n_copies() const;
 
+  private:
+    dynamics_t build_dynamics_from_response_(const nlohmann::json &response) const;
+    time_step_type create_time_step_from_response_(const nlohmann::json &response) const;
 
-		///
-	/// \brief
-	///
-		virtual bool is_alive()const override final;
+    network::RESTRLEnvClient *api_server_;
+};
 
-		///
-    /// \brief close the environment
-    ///
-		virtual void close() override final;
+template <uint_t state_size> const std::string GymWalk<state_size>::name = "GymWalk";
+template <uint_t state_size> const std::string GymWalk<state_size>::URI = "/gdrl/gym-walk-env";
 
-		///
-    /// \brief step
-    /// \param action
-    /// \return
-    ///
-		virtual time_step_type step(const action_type& action) override final;
+template <uint_t state_size>
+GymWalk<state_size>::GymWalk(network::RESTRLEnvClient &api_server)
+    : base_type(bitrl::consts::INVALID_STR, name),
+      api_server_(&api_server)
+{
+    api_server_ -> register_if_not(name, URI);
+}
 
-		///
-	/// \brief Reset the environment
-	///
-		virtual time_step_type reset()override final;
+template <uint_t state_size>
+typename GymWalk<state_size>::dynamics_t
+GymWalk<state_size>::build_dynamics_from_response_(const nlohmann::json &response) const
+{
+    auto dynamics = response["dynamics"];
+    return dynamics;
+}
 
-		///
-	/// \brief Create a new copy of the environment with the given
-	/// copy index
-	///
-		virtual std::unique_ptr<base_type> make_copy(uint_t cidx)const override final;
+template <uint_t state_size>
+typename GymWalk<state_size>::time_step_type
+GymWalk<state_size>::create_time_step_from_response_(const nlohmann::json &response) const
+{
 
+    auto step_type = response["time_step"]["step_type"];
+    auto reward = response["time_step"]["reward"];
+    auto discount = response["time_step"]["discount"];
+    auto observation = response["time_step"]["observation"];
+    auto info = response["time_step"]["info"];
+    return GymWalk::time_step_type(TimeStepEnumUtils::time_step_type_from_int(step_type.get<uint_t>()), reward, observation,
+                                   discount, std::unordered_map<std::string, std::any>());
+}
 
-		///
-    /// \brief n_states. Returns the number of states
-    ///
-		uint_t n_states()const noexcept{ return state_space_type::size; }
+template <uint_t state_size>
+void GymWalk<state_size>::make(const std::string &version,
+                               const std::unordered_map<std::string, std::any> &options,
+                               const std::unordered_map<std::string, std::any> &reset_options)
+{
 
-		///
-    /// \brief n_actions. Returns the number of actions
-    ///
-		uint_t n_actions()const noexcept{return action_space_type::size;}
+    if (this->is_created())
+    {
+        return;
+    }
 
+    nlohmann::json ops;
+    auto response = api_server_ -> make(this->env_name(), version, ops);
 
-private:
+    auto idx = response["idx"];
+    this->set_idx_(idx);
+    this->base_type::make(version, options, reset_options);
+    this->make_created_();
+}
 
-		///
-    /// \brief build the dynamics from response
-    ///
-		dynamics_t build_dynamics_from_response_(const nlohmann::json& response)const;
+template <uint_t state_size>
+typename GymWalk<state_size>::time_step_type GymWalk<state_size>::step(const action_type &action)
+{
 
-		///
-    /// \brief Handle the reset response from the environment server
-    ///
-		time_step_type create_time_step_from_response_(const nlohmann::json& response) const;
-
-
-		network::RESTApiServerWrapper* api_server_;
-	};
-
-	template<uint_t state_size>
-	const std::string GymWalk<state_size>::name = "GymWalk";
-	const std::string GymWalk<state_size>::URI =  "/gdrl/gym-walk-env";
-
-
-	template<uint_t state_size>
-	GymWalk<state_size>::GymWalk(network::RESTApiServerWrapper& api_server)
-		:
-		EnvBase<TimeStep<uint_t>,
-		        ScalarDiscreteEnv<state_size, 2, 0, 0>
-		>(GymWalk<state_size>::name),
-		api_server_(&api_server_)
-	{
-		api_server_.register_if_not(GymWalk<state_size>::name, GymWalk<state_size>::URI);
-	}
-
-	template<uint_t state_size>
-	GymWalk<state_size>::GymWalk(const GymWalk<state_size>& other)
-		:
-		EnvBase<TimeStep<uint_t>,
-		        ScalarDiscreteEnv<state_size, 2, 0, 0>
-		>(other),
-		api_server_(other.api_server_)
-	{}
-
-	template<uint_t state_size>
-	typename GymWalk<state_size>::dynamics_t
-	GymWalk<state_size>::build_dynamics_from_response_(const nlohmann::json& response)const{
-		auto dynamics = response["dynamics"];
-		return dynamics;
-	}
-
-	template<uint_t state_size>
-	typename GymWalk<state_size>::time_step_type
-	GymWalk<state_size>::create_time_step_from_response_(const nlohmann::json& response)const{
-
-		auto step_type   = response["time_step"]["step_type"];
-		auto reward      = response["time_step"]["reward"];
-		auto discount    = response["time_step"]["discount"];
-		auto observation = response["time_step"]["observation"];
-		auto info        = response["time_step"]["info"];
-		return GymWalk::time_step_type(time_step_type_from_int(step_type),
-		                               reward, observation, discount,
-		                               std::unordered_map<std::string, std::any>());
-	}
-
-	template<uint_t state_size>
-	void
-	GymWalk<state_size>::make(const std::string& version,
-	                          const std::unordered_map<std::string, std::any>& options,
-	                          const std::unordered_map<std::string, std::any>& reset_options){
-
-		if(this->is_created()){
-			return;
-		}
-
-		auto response = api_server_.make(this->env_name(),
-		                                 version,
-		                                 ops);
-
-		auto idx = response["idx"];
-		this -> set_idx_(idx);
-		this -> base_type::make(version, options, reset_options);
-		this -> make_created_();
-	}
-
-	template<uint_t state_size>
-	typename GymWalk<state_size>::time_step_type
-	GymWalk<state_size>::step(const action_type&  action){
-
-#ifdef RLENVSCPP_DEBUG
-     assert(this->is_created() && "Environment has not been created");
+#ifdef BITRL_DEBUG
+    assert(this->is_created() && "Environment has not been created");
 #endif
 
-		if(this->get_current_time_step_().last()){
-			return this->reset(42, std::unordered_map<std::string, std::any>());
-		}
+    if (this->get_current_time_step_().last())
+    {
+        return this->reset();
+    }
 
-		const auto response  = api_server_.step(this -> env_name(),
-		                                        this -> idx(),
-		                                        action);
+    const auto response = api_server_ -> step(this->env_name(), this->idx(), action);
 
-		this->get_current_time_step_() = this->create_time_step_from_response_(response);
-		return this->get_current_time_step_();
-	}
+    this->get_current_time_step_() = this->create_time_step_from_response_(response);
+    return this->get_current_time_step_();
+}
 
-	template<uint_t state_size>
-	bool
-	GymWalk<state_size>::is_alive()const{
-		auto response = this -> api_server_.is_alive(this->env_name(), this -> cidx());
-		return response["result"];
+template <uint_t state_size> bool GymWalk<state_size>::is_alive() const
+{
+    auto response = this->api_server_ -> is_alive(this->env_name(), this->idx());
+    return response["result"];
+}
 
-	}
+template <uint_t state_size>
+uint_t GymWalk<state_size>::n_copies() const
+{
+    auto response = this->api_server_->n_copies(this->env_name());
+    return response["copies"];
+}
 
-	template<uint_t state_size>
-	bool
-	GymWalk<state_size>::close(){
 
-		if(!this->is_created()){
-			return;
-		}
+template <uint_t state_size> void GymWalk<state_size>::close()
+{
 
-		auto response = this -> api_server_.close(this->env_name(), this -> cidx());
-		this -> invalidate_is_created_flag_();
-	}
+    if (!this->is_created())
+    {
+        return;
+    }
 
-	template<uint_t state_size>
-	typename GymWalk<state_size>::time_step_type
-	GymWalk<state_size>::reset(){
+    auto response = this->api_server_ -> close(this->env_name(), this->idx());
+    this->invalidate_is_created_flag_();
+}
 
-		if(!this->is_created()){
-#ifdef RLENVSCPP_DEBUG
-     assert(this->is_created() && "Environment has not been created");
+template <uint_t state_size>
+typename GymWalk<state_size>::time_step_type GymWalk<state_size>::reset()
+{
+
+    if (!this->is_created())
+    {
+#ifdef BITRL_DEBUG
+        assert(this->is_created() && "Environment has not been created");
 #endif
-			return time_step_type();
-		}
+        return time_step_type();
+    }
 
-		auto response = this -> api_server_.reset(this->env_name(),
-		                                          this -> idx(), seed,
-		                                          nlohmann::json());
 
-		this->create_time_step_from_response_(response);
-		return this -> get_current_time_step_();
-	}
+    auto &reset_ops = this->reset_options();
+    auto seed = utils::resolve<uint_t>("seed", reset_ops);
+    auto response = this->api_server_ -> reset(this->env_name(), this->idx(), seed, nlohmann::json());
 
+    this->create_time_step_from_response_(response);
+    return this->get_current_time_step_();
 }
+
+template <uint_t state_size>
+typename GymWalk<state_size>::dynamics_t
+GymWalk<state_size>::p(uint_t sidx, uint_t aidx) const
+{
+
+#ifdef BITRL_DEBUG
+    assert(this->is_created() && "Environment has not been created");
+#endif
+
+    auto response = this->api_server_ -> dynamics(this->env_name(), this->idx(), sidx, aidx);
+    return build_dynamics_from_response_(response);
 }
+
+} // namespace envs::gdrl
+} // namespace bitrl
 
 #endif // GYM_WALK_H

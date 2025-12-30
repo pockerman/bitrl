@@ -1,23 +1,26 @@
 #include "bitrl/utils/io/file_formats.h"
 
-namespace bitrl{
-namespace utils{
-namespace io{	
+namespace bitrl
+{
+namespace utils
+{
+namespace io
+{
 
-std::string
-FileFormats::type_to_string(FileFormats::Type t){
+std::string FileFormats::type_to_string(FileFormats::Type t)
+{
 
-   switch(t)
-   {
-      case FileFormats::Type::CSV:
-         return "csv";
-     case FileFormats::Type::JSON:
+    switch (t)
+    {
+    case FileFormats::Type::CSV:
+        return "csv";
+    case FileFormats::Type::JSON:
         return "json";
-   }
+    }
 
-   return "INVALID_TYPE";
+    return "INVALID_TYPE";
 }
 
-}
-}
-}
+} // namespace io
+} // namespace utils
+} // namespace bitrl

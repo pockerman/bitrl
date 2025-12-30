@@ -1,19 +1,19 @@
 #ifndef ELEMENT_ITERATOR_H
 #define ELEMENT_ITERATOR_H
 
-
 #include "bitrl/utils/filtered_iterator.h"
 
-namespace bitrl{
-namespace utils{
-namespace geom{
-
-template<typename Predicate, typename  MeshTp>
-class ElementMeshIterator
+namespace bitrl
+{
+namespace utils
+{
+namespace geom
 {
 
-public:
+template <typename Predicate, typename MeshTp> class ElementMeshIterator
+{
 
+  public:
     typedef Predicate predicate_t;
     typedef MeshTp mesh_t;
     typedef typename mesh_t::element_iterator_impl iterator_impl;
@@ -21,7 +21,7 @@ public:
     typedef FilteredIterator<Predicate, iterator_impl> result_t;
 
     /// constructor
-    ElementMeshIterator(mesh_t& mesh);
+    ElementMeshIterator(mesh_t &mesh);
 
     /// \brief begin the iteration
     result_t begin();
@@ -30,64 +30,65 @@ public:
     result_t end();
 
     /// \brief begin iteration
-    template<typename T>
-    result_t begin(const T& item);
+    template <typename T> result_t begin(const T &item);
 
     /// \brief end iteration
-    template<typename T>
-    result_t end(const T& item);
+    template <typename T> result_t end(const T &item);
 
-protected:
-
+  protected:
     // the mesh over which the iterator is working
-    mesh_t& mesh_;
-
+    mesh_t &mesh_;
 };
 
-template<typename Predicate, typename  MeshTp>
-ElementMeshIterator<Predicate, MeshTp>::ElementMeshIterator(typename ElementMeshIterator<Predicate, MeshTp>::mesh_t& mesh)
-    :
-mesh_(mesh)
-{}
+template <typename Predicate, typename MeshTp>
+ElementMeshIterator<Predicate, MeshTp>::ElementMeshIterator(
+    typename ElementMeshIterator<Predicate, MeshTp>::mesh_t &mesh)
+    : mesh_(mesh)
+{
+}
 
-template<typename Predicate, typename  MeshTp>
+template <typename Predicate, typename MeshTp>
 typename ElementMeshIterator<Predicate, MeshTp>::result_t
-ElementMeshIterator<Predicate, MeshTp>::begin(){
+ElementMeshIterator<Predicate, MeshTp>::begin()
+{
     Predicate p;
-    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(), mesh_.elements_end() );
+    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(),
+                                                            mesh_.elements_end());
 }
 
-template<typename Predicate, typename  MeshTp>
+template <typename Predicate, typename MeshTp>
 typename ElementMeshIterator<Predicate, MeshTp>::result_t
-ElementMeshIterator<Predicate, MeshTp>::end(){
+ElementMeshIterator<Predicate, MeshTp>::end()
+{
     Predicate p;
-    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(), mesh_.elements_end() );
+    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(),
+                                                            mesh_.elements_end());
 }
 
-
-template<typename Predicate, typename  MeshTp>
-template<typename T>
+template <typename Predicate, typename MeshTp>
+template <typename T>
 typename ElementMeshIterator<Predicate, MeshTp>::result_t
-ElementMeshIterator<Predicate, MeshTp>::begin(const T& item){
+ElementMeshIterator<Predicate, MeshTp>::begin(const T &item)
+{
     Predicate p(item);
-    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(), mesh_.elements_end() );
+    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(),
+                                                            mesh_.elements_end());
 }
 
-template<typename Predicate, typename  MeshTp>
-template<typename T>
+template <typename Predicate, typename MeshTp>
+template <typename T>
 typename ElementMeshIterator<Predicate, MeshTp>::result_t
-ElementMeshIterator<Predicate, MeshTp>::end(const T& item){
+ElementMeshIterator<Predicate, MeshTp>::end(const T &item)
+{
     Predicate p(item);
-    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(), mesh_.elements_end() );
+    return ElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(),
+                                                            mesh_.elements_end());
 }
 
-
-template<typename Predicate, typename  MeshTp>
-class ConstElementMeshIterator
+template <typename Predicate, typename MeshTp> class ConstElementMeshIterator
 {
 
-public:
-
+  public:
     typedef Predicate predicate_t;
     typedef MeshTp mesh_t;
     typedef typename mesh_t::celement_iterator_impl iterator_impl;
@@ -95,68 +96,73 @@ public:
     typedef FilteredIterator<Predicate, iterator_impl> result_t;
 
     /// constructor
-    ConstElementMeshIterator(const mesh_t& mesh);
+    ConstElementMeshIterator(const mesh_t &mesh);
 
     /// \brief begin the iteration
-    result_t begin()const;
+    result_t begin() const;
 
     /// \brief end the iteration
-    result_t end()const;
+    result_t end() const;
 
     /// \brief begin iteration
-    template<typename T>
-    result_t begin(const T& item)const;
+    template <typename T> result_t begin(const T &item) const;
 
     /// \brief end iteration
-    template<typename T>
-    result_t end(const T& item)const;
+    template <typename T> result_t end(const T &item) const;
 
-protected:
-
+  protected:
     // the mesh over which the iterator is working
-    const mesh_t& mesh_;
-
+    const mesh_t &mesh_;
 };
 
-template<typename Predicate, typename  MeshTp>
-ConstElementMeshIterator<Predicate, MeshTp>::ConstElementMeshIterator(const typename ConstElementMeshIterator<Predicate, MeshTp>::mesh_t& mesh)
-    :
-mesh_(mesh)
-{}
+template <typename Predicate, typename MeshTp>
+ConstElementMeshIterator<Predicate, MeshTp>::ConstElementMeshIterator(
+    const typename ConstElementMeshIterator<Predicate, MeshTp>::mesh_t &mesh)
+    : mesh_(mesh)
+{
+}
 
-template<typename Predicate, typename  MeshTp>
+template <typename Predicate, typename MeshTp>
 typename ConstElementMeshIterator<Predicate, MeshTp>::result_t
-ConstElementMeshIterator<Predicate, MeshTp>::begin()const{
+ConstElementMeshIterator<Predicate, MeshTp>::begin() const
+{
     Predicate p;
-    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(), mesh_.elements_end() );
+    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(),
+                                                                 mesh_.elements_end());
 }
 
-template<typename Predicate, typename  MeshTp>
+template <typename Predicate, typename MeshTp>
 typename ConstElementMeshIterator<Predicate, MeshTp>::result_t
-ConstElementMeshIterator<Predicate, MeshTp>::end()const{
+ConstElementMeshIterator<Predicate, MeshTp>::end() const
+{
     Predicate p;
-    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(), mesh_.elements_end() );
+    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(),
+                                                                 mesh_.elements_end());
 }
 
-template<typename Predicate, typename  MeshTp>
-template<typename T>
+template <typename Predicate, typename MeshTp>
+template <typename T>
 typename ConstElementMeshIterator<Predicate, MeshTp>::result_t
-ConstElementMeshIterator<Predicate, MeshTp>::begin(const T& item)const{
+ConstElementMeshIterator<Predicate, MeshTp>::begin(const T &item) const
+{
     Predicate p(item);
-    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(), mesh_.elements_end() );
+    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_begin(),
+                                                                 mesh_.elements_end());
 }
 
-template<typename Predicate, typename  MeshTp>
-template<typename T>
+template <typename Predicate, typename MeshTp>
+template <typename T>
 typename ConstElementMeshIterator<Predicate, MeshTp>::result_t
-ConstElementMeshIterator<Predicate, MeshTp>::end(const T& item)const{
+ConstElementMeshIterator<Predicate, MeshTp>::end(const T &item) const
+{
     Predicate p(item);
-    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(), mesh_.elements_end() );
+    return ConstElementMeshIterator<Predicate, MeshTp>::result_t(p, mesh_.elements_end(),
+                                                                 mesh_.elements_end());
 }
 
-}
+} // namespace geom
 
-}
-}
+} // namespace utils
+} // namespace bitrl
 
 #endif // ELEMENT_ITERATOR_H

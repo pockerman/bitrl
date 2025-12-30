@@ -2,31 +2,32 @@
 #define BICYCLE_VEHICLE_MODEL_DYNAMICS_H
 
 #include "bitrl/bitrl_types.h"
-#include "bitrl/dynamics/system_state.h"
-#include "bitrl/dynamics/motion_model_base.h"
 #include "bitrl/dynamics/dynamics_matrix_descriptor.h"
+#include "bitrl/dynamics/motion_model_base.h"
+#include "bitrl/dynamics/system_state.h"
 
 #include <any>
 #include <map>
 #include <string>
 
-namespace bitrl{
-namespace dynamics{
-	
+namespace bitrl
+{
+namespace dynamics
+{
+
 struct BicycleVehicleModelDynamicsConfig
 {
-	///
-	/// \brief The time step to use in secs
-	///
-	real_t dt;
-	
-	///
-	/// \brief The distance between the front and
-	/// real wheels in m
-	///
-	real_t L;
-};
+    ///
+    /// \brief The time step to use in secs
+    ///
+    real_t dt;
 
+    ///
+    /// \brief The distance between the front and
+    /// real wheels in m
+    ///
+    real_t L;
+};
 
 ///
 /// \brief The BicycleVehicleModelDynamics class.
@@ -38,15 +39,15 @@ struct BicycleVehicleModelDynamicsConfig
 /// where (X,Y) denotes the 2D position of the vehicle in the world coordinates
 /// and phi denotes the heading of the vehicle
 ///
-class BicycleVehicleModelDynamics: public MotionModelDynamicsBase<SysState<3>, 
-                                                                  DynamicsMatrixDescriptor,
-                                                                  std::map<std::string, std::any>>
+class BicycleVehicleModelDynamics
+    : public MotionModelDynamicsBase<SysState<3>, DynamicsMatrixDescriptor,
+                                     std::map<std::string, std::any>>
 {
 
-public:
-    typedef MotionModelDynamicsBase<SysState<3>, 
-	                                DynamicsMatrixDescriptor,
-                                    std::map<std::string, std::any>> base_type;
+  public:
+    typedef MotionModelDynamicsBase<SysState<3>, DynamicsMatrixDescriptor,
+                                    std::map<std::string, std::any>>
+        base_type;
 
     typedef base_type::state_type state_type;
     typedef base_type::input_type input_type;
@@ -58,50 +59,48 @@ public:
     /// \brief Constructor
     ///
     BicycleVehicleModelDynamics(const BicycleVehicleModelDynamicsConfig config,
-								SysState<3>& init_state);
+                                SysState<3> &init_state);
 
     ///
     /// \brief integrate. Integrate the dynamics equations
-	/// the model expects the following inputs
-	/// the velocity of the vehicle v and the angle delta of the front wheel
+    /// the model expects the following inputs
+    /// the velocity of the vehicle v and the angle delta of the front wheel
     ///
-    void integrate(const input_type& input );
+    void integrate(const input_type &input);
 
     ///
     /// \brief evaluate
     /// \param input
     /// \return
     ///
-    state_type& evaluate(const input_type& input );
+    state_type &evaluate(const input_type &input);
 
     ///
     /// \brief initialize_matrices. Initialize the matrix description of the
     /// dynamics
     ///
-    void initialize_matrices(const input_type& input);
+    void initialize_matrices(const input_type &input);
 
     ///
     /// \brief update_matrices. Update the matrix description of the
     /// dynamics
     ///
-    void update_matrices(const input_type& input);
+    void update_matrices(const input_type &input);
 
     ///
     /// \brief load_from_json Load the description of the chassis from
     /// the given json file
     ///
-    void load_from_json(const std::string& filename){};
+    void load_from_json(const std::string &filename){};
 
-private:
-	
-	///
-	/// \brief Configuration of the dynamics integrator
-	///
-	BicycleVehicleModelDynamicsConfig config_;
-
+  private:
+    ///
+    /// \brief Configuration of the dynamics integrator
+    ///
+    BicycleVehicleModelDynamicsConfig config_;
 };
 
-}
-}
+} // namespace dynamics
+} // namespace bitrl
 
 #endif // BICYCLE_VEHICLE_MODEL_DYNAMICS_H

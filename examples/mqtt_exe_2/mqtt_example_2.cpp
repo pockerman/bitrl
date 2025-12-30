@@ -2,20 +2,19 @@
 // Created by alex on 11/22/25.
 //
 
-
-
 #include "bitrl/bitrl_config.h"
 
-# ifdef BITRL_MQTT
+#ifdef BITRL_MQTT
 
 #include "bitrl/network/mqtt_subscriber.h"
 #include "bitrl/sensors/camera.h"
 
+#include <chrono>
 #include <iostream>
 #include <thread>
-#include <chrono>
 
-int main() {
+int main()
+{
 
     using namespace bitrl;
 
@@ -34,8 +33,9 @@ int main() {
             {
                 auto img = reading.value().image;
                 // plot the image
-                if(img.empty()){
-                    std::cout << "Could not plot the received image: "<< std::endl;
+                if (img.empty())
+                {
+                    std::cout << "Could not plot the received image: " << std::endl;
                     return 1;
                 }
 
@@ -44,7 +44,6 @@ int main() {
                 // Wait for a keystroke in the window
                 cv::waitKey(0);
             }
-
         }
 
         std::this_thread::sleep_for(std::chrono::microseconds(200));
@@ -57,8 +56,9 @@ int main() {
 #include <iostream>
 int main()
 {
-    std::cerr<<"This example requires MQTT and OpenCV to be enable. "
-               "Reconfigure bitrl with ENABLE_MQTT=ON and ENABLE_OPENCV=ON"<<std::endl;
+    std::cerr << "This example requires MQTT and OpenCV to be enable. "
+                 "Reconfigure bitrl with ENABLE_MQTT=ON and ENABLE_OPENCV=ON"
+              << std::endl;
     return 1;
 }
 #endif

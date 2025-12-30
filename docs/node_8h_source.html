@@ -76,49 +76,46 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="geom__point_8h.html">bitrl/utils/geometry/geom_point.h</a>&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="face__element_8h.html">bitrl/utils/geometry/mesh/face_element.h</a>&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;any&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;any&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacebitrl.html">bitrl</a>{</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>utils{</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>geom{</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">int</span> dim&gt;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classbitrl_1_1utils_1_1geom_1_1Node.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html">Node</a>: <span class="keyword">public</span> <a class="code" href="classbitrl_1_1utils_1_1geom_1_1FaceElement.html">FaceElement</a>&lt;dim, 0&gt;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacebitrl.html">bitrl</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>utils</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>geom</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classbitrl_1_1utils_1_1geom_1_1Node.html">   23</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim&gt; <span class="keyword">class </span><a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html">Node</a> : <span class="keyword">public</span> <a class="code" href="classbitrl_1_1utils_1_1geom_1_1FaceElement.html">FaceElement</a>&lt;dim, 0&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<a class="code" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a> coord, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <span class="keywordtype">id</span>, <span class="keyword">const</span> std::any&amp; data);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<span class="keyword">const</span> std::array&lt;real_t, dim&gt;&amp; coords, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <span class="keywordtype">id</span>, <span class="keyword">const</span> std::any&amp; data);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<span class="keyword">const</span> <a class="code" href="classbitrl_1_1utils_1_1geom_1_1GeomPoint.html">GeomPoint&lt;dim&gt;</a>&amp; point, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> global_id, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> pid, <span class="keyword">const</span> std::any&amp; data);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<span class="keyword">const</span> <a class="code" href="classbitrl_1_1utils_1_1geom_1_1GeomPoint.html">GeomPoint&lt;dim&gt;</a>&amp; point, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> global_id, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> pid);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<a class="code" href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">real_t</a> coord, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <span class="keywordtype">id</span>, <span class="keyword">const</span> std::any &amp;data);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<span class="keyword">const</span> std::array&lt;real_t, dim&gt; &amp;coords, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> <span class="keywordtype">id</span>, <span class="keyword">const</span> std::any &amp;data);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<span class="keyword">const</span> <a class="code" href="classbitrl_1_1utils_1_1geom_1_1GeomPoint.html">GeomPoint&lt;dim&gt;</a> &amp;point, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> global_id, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> pid, <span class="keyword">const</span> std::any &amp;data);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">Node</a>(<span class="keyword">const</span> <a class="code" href="classbitrl_1_1utils_1_1geom_1_1GeomPoint.html">GeomPoint&lt;dim&gt;</a> &amp;point, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> global_id, <a class="code" href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">uint_t</a> pid);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// NODE_H</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} <span class="comment">// namespace geom</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;} <span class="comment">// namespace utils</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;} <span class="comment">// namespace bitrl</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// NODE_H</span></div>
 <div class="ttc" id="abitrl__types_8h_html"><div class="ttname"><a href="bitrl__types_8h.html">bitrl_types.h</a></div></div>
-<div class="ttc" id="aclassbitrl_1_1utils_1_1geom_1_1FaceElement_html"><div class="ttname"><a href="classbitrl_1_1utils_1_1geom_1_1FaceElement.html">bitrl::utils::geom::FaceElement</a></div><div class="ttdef"><b>Definition:</b> edge_face_selector.h:10</div></div>
+<div class="ttc" id="aclassbitrl_1_1utils_1_1geom_1_1FaceElement_html"><div class="ttname"><a href="classbitrl_1_1utils_1_1geom_1_1FaceElement.html">bitrl::utils::geom::FaceElement</a></div><div class="ttdef"><b>Definition:</b> edge_face_selector.h:12</div></div>
 <div class="ttc" id="aclassbitrl_1_1utils_1_1geom_1_1GeomPoint_html"><div class="ttname"><a href="classbitrl_1_1utils_1_1geom_1_1GeomPoint.html">bitrl::utils::geom::GeomPoint&lt; dim &gt;</a></div></div>
-<div class="ttc" id="aclassbitrl_1_1utils_1_1geom_1_1Node_html"><div class="ttname"><a href="classbitrl_1_1utils_1_1geom_1_1Node.html">bitrl::utils::geom::Node</a></div><div class="ttdoc">Wraps the notion of a node. A node is simply a point in dim-space that can hold dofs.</div><div class="ttdef"><b>Definition:</b> node.h:22</div></div>
-<div class="ttc" id="aclassbitrl_1_1utils_1_1geom_1_1Node_html_ada0293920ca46f8c4fc4120c0fd9b92b"><div class="ttname"><a href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">bitrl::utils::geom::Node::Node</a></div><div class="ttdeci">Node()</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> node.cpp:10</div></div>
+<div class="ttc" id="aclassbitrl_1_1utils_1_1geom_1_1Node_html"><div class="ttname"><a href="classbitrl_1_1utils_1_1geom_1_1Node.html">bitrl::utils::geom::Node</a></div><div class="ttdoc">Wraps the notion of a node. A node is simply a point in dim-space that can hold dofs.</div><div class="ttdef"><b>Definition:</b> node.h:24</div></div>
+<div class="ttc" id="aclassbitrl_1_1utils_1_1geom_1_1Node_html_ada0293920ca46f8c4fc4120c0fd9b92b"><div class="ttname"><a href="classbitrl_1_1utils_1_1geom_1_1Node.html#ada0293920ca46f8c4fc4120c0fd9b92b">bitrl::utils::geom::Node::Node</a></div><div class="ttdeci">Node()</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> node.cpp:11</div></div>
 <div class="ttc" id="aface__element_8h_html"><div class="ttname"><a href="face__element_8h.html">face_element.h</a></div></div>
 <div class="ttc" id="ageom__point_8h_html"><div class="ttname"><a href="geom__point_8h.html">geom_point.h</a></div></div>
-<div class="ttc" id="anamespacebitrl_html"><div class="ttname"><a href="namespacebitrl.html">bitrl</a></div><div class="ttdef"><b>Definition:</b> bitrl_consts.h:12</div></div>
-<div class="ttc" id="anamespacebitrl_html_a2f4504e90084ab8d017fb11d685b01bb"><div class="ttname"><a href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">bitrl::real_t</a></div><div class="ttdeci">double real_t</div><div class="ttdoc">real_t</div><div class="ttdef"><b>Definition:</b> bitrl_types.h:24</div></div>
-<div class="ttc" id="anamespacebitrl_html_a84c96b350ee9feed7262273146a5ad11"><div class="ttname"><a href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">bitrl::uint_t</a></div><div class="ttdeci">std::size_t uint_t</div><div class="ttdoc">uint_t</div><div class="ttdef"><b>Definition:</b> bitrl_types.h:44</div></div>
+<div class="ttc" id="anamespacebitrl_html"><div class="ttname"><a href="namespacebitrl.html">bitrl</a></div><div class="ttdef"><b>Definition:</b> bitrl_consts.h:13</div></div>
+<div class="ttc" id="anamespacebitrl_html_a2f4504e90084ab8d017fb11d685b01bb"><div class="ttname"><a href="namespacebitrl.html#a2f4504e90084ab8d017fb11d685b01bb">bitrl::real_t</a></div><div class="ttdeci">double real_t</div><div class="ttdoc">real_t</div><div class="ttdef"><b>Definition:</b> bitrl_types.h:23</div></div>
+<div class="ttc" id="anamespacebitrl_html_a84c96b350ee9feed7262273146a5ad11"><div class="ttname"><a href="namespacebitrl.html#a84c96b350ee9feed7262273146a5ad11">bitrl::uint_t</a></div><div class="ttdeci">std::size_t uint_t</div><div class="ttdoc">uint_t</div><div class="ttdef"><b>Definition:</b> bitrl_types.h:43</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
