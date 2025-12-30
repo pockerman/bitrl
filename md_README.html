@@ -81,15 +81,24 @@ bitrl</h1>
 <div class="line">The following is an example how to use the </div>
 <div class="line">``FrozenLake``   environment from &lt;a href=&quot;https://github.com/Farama-Foundation/Gymnasium/tree/main&quot;&gt;Gymnasium&lt;/a&gt;.</div>
 </div><!-- fragment --><p>#include "bitrl/bitrl_types.h" #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h" #include "bitrl/network/rest_rl_env_client.h"</p>
-<p>#include &lt;iostream&gt; #include &lt;string&gt; #include &lt;unordered_map&gt; #include &lt;any&gt;</p>
-<p>namespace example_1{</p>
+<p>#include &lt;any&gt; #include &lt;iostream&gt; #include &lt;string&gt; #include &lt;unordered_map&gt;</p>
+<p>namespace example_1 { using namespace bitrl;</p>
 <p>const std::string SERVER_URL = "http://0.0.0.0:8001/api";</p>
-<p>using bitrl::envs::gymnasium::FrozenLake; using bitrl::envs::RESTApiServerWrapper;</p>
-<p>void test_frozen_lake(const RESTApiServerWrapper&amp; server){ </p><pre class="fragment">FrozenLake&lt;4&gt; env(server);
+<p>using bitrl::envs::gymnasium::FrozenLake; using bitrl::network::RESTRLEnvClient;</p>
+<p>void test_frozen_lake(RESTRLEnvClient &amp;server) { </p><pre class="fragment">// the environment is not registered with the server
+std::cout &lt;&lt; "Is environment registered: " &lt;&lt; server.is_env_registered(FrozenLake&lt;4&gt;::name)
+          &lt;&lt; std::endl;
 
-std::cout&lt;&lt;"Environame URL: "&lt;&lt;env.get_url()&lt;&lt;std::endl;
+// when the environment is created we register it with the REST client
+FrozenLake&lt;4&gt; env(server);
 
-// make the environment
+// environment name can also be accessed via env.env_name()
+std::cout &lt;&lt; "Is environment registered: " &lt;&lt; server.is_env_registered(env.env_name())
+          &lt;&lt; std::endl;
+std::cout &lt;&lt; "Environment URL: " &lt;&lt; env.get_url() &lt;&lt; std::endl;
+
+// make the environment we pass both make options
+// and reset options
 std::unordered_map&lt;std::string, std::any&gt; make_ops;
 make_ops.insert({"is_slippery", false});
 
@@ -97,62 +106,71 @@ std::unordered_map&lt;std::string, std::any&gt; reset_ops;
 reset_ops.insert({"seed", static_cast&lt;uint_t&gt;(42)});
 env.make("v1", make_ops, reset_ops);
 
-std::cout&lt;&lt;"Is environment created? "&lt;&lt;env.is_created()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Is environment alive? "&lt;&lt;env.is_alive()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Number of valid actions? "&lt;&lt;env.n_actions()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Number of states? "&lt;&lt;env.n_states()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Env idx: "&lt;&lt;env.idx()&lt;&lt;std::endl;
+// query the environemnt version
+std::cout &lt;&lt; "Environment version: " &lt;&lt; env.version() &lt;&lt; std::endl;
+
+// once the env is created we can get it's id
+std::cout &lt;&lt; "Environment idx is: " &lt;&lt; env.idx() &lt;&lt; std::endl;
+
+// the create flag should be true
+std::cout &lt;&lt; "Is environment created? " &lt;&lt; env.is_created() &lt;&lt; std::endl;
+
+// environment should be alive on the server
+std::cout &lt;&lt; "Is environment alive? " &lt;&lt; env.is_alive() &lt;&lt; std::endl;
+
+// FrozenLake is a discrete state-action env so we can
+// query number of actions and states
+std::cout &lt;&lt; "Number of valid actions? " &lt;&lt; env.n_actions() &lt;&lt; std::endl;
+std::cout &lt;&lt; "Number of states? " &lt;&lt; env.n_states() &lt;&lt; std::endl;
+
+// how many copies of this environment
+auto n_copies = env.n_copies();
+std::cout &lt;&lt; "n_copies: " &lt;&lt; n_copies &lt;&lt; std::endl;
 
 // reset the environment
 auto time_step = env.reset();
 
-std::cout&lt;&lt;"Reward on reset: "&lt;&lt;time_step.reward()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Observation on reset: "&lt;&lt;time_step.observation()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Is terminal state: "&lt;&lt;time_step.done()&lt;&lt;std::endl;
-std::cout&lt;&lt;"Env idx: "&lt;&lt;env.idx()&lt;&lt;std::endl;
+std::cout &lt;&lt; "Reward on reset: " &lt;&lt; time_step.reward() &lt;&lt; std::endl;
+std::cout &lt;&lt; "Observation on reset: " &lt;&lt; time_step.observation() &lt;&lt; std::endl;
+std::cout &lt;&lt; "Is terminal state: " &lt;&lt; time_step.done() &lt;&lt; std::endl;
 
 //...print the time_step
-std::cout&lt;&lt;time_step&lt;&lt;std::endl;
+std::cout &lt;&lt; time_step &lt;&lt; std::endl;
 
 // take an action in the environment
 // 2 = RIGHT
 auto new_time_step = env.step(2);
-
-std::cout&lt;&lt;new_time_step&lt;&lt;std::endl;
+std::cout &lt;&lt; new_time_step &lt;&lt; std::endl;
 
 // get the dynamics of the environment for the given state and action
 auto state = 0;
 auto action = 1;
 auto dynamics = env.p(state, action);
 
-std::cout&lt;&lt;"Dynamics for state="&lt;&lt;state&lt;&lt;" and action="&lt;&lt;action&lt;&lt;std::endl;
-
-for(auto item:dynamics){
-    std::cout&lt;&lt;std::get&lt;0&gt;(item)&lt;&lt;std::endl;
-    std::cout&lt;&lt;std::get&lt;1&gt;(item)&lt;&lt;std::endl;
-    std::cout&lt;&lt;std::get&lt;2&gt;(item)&lt;&lt;std::endl;
-    std::cout&lt;&lt;std::get&lt;3&gt;(item)&lt;&lt;std::endl;
+std::cout &lt;&lt; "Dynamics for state=" &lt;&lt; state &lt;&lt; " and action=" &lt;&lt; action &lt;&lt; std::endl;
+for (auto item : dynamics)
+{
+    std::cout &lt;&lt; std::get&lt;0&gt;(item) &lt;&lt; std::endl;
+    std::cout &lt;&lt; std::get&lt;1&gt;(item) &lt;&lt; std::endl;
+    std::cout &lt;&lt; std::get&lt;2&gt;(item) &lt;&lt; std::endl;
+    std::cout &lt;&lt; std::get&lt;3&gt;(item) &lt;&lt; std::endl;
 }
 
+// discrete action environments can sample
+// actions
 action = env.sample_action();
-std::cout&lt;&lt;"Action sampled: "&lt;&lt;action&lt;&lt;std::endl;
+std::cout &lt;&lt; "Action sampled: " &lt;&lt; action &lt;&lt; std::endl;
 
 new_time_step = env.step(action);
-std::cout&lt;&lt;new_time_step&lt;&lt;std::endl;
+std::cout &lt;&lt; new_time_step &lt;&lt; std::endl;
 
 // close the environment
 env.close();
-</pre><p> } }</p>
-<p>int main(){ </p><pre class="fragment">using namespace example_1;
-
-RESTApiServerWrapper server(SERVER_URL, true);
-
-std::cout&lt;&lt;"Testing FrozenLake..."&lt;&lt;std::endl;
-example_1::test_frozen_lake(server);
-std::cout&lt;&lt;"===================="&lt;&lt;std::endl;
-
-return 0;
 </pre><p> }</p>
+<p>} // namespace example_1</p>
+<p>int main() { using namespace example_1; RESTRLEnvClient server(SERVER_URL, false);</p>
+<p>std::cout &lt;&lt; "Testing FrozenLake..." &lt;&lt; std::endl; example_1::test_frozen_lake(server); std::cout &lt;&lt; "====================" &lt;&lt; std::endl;</p>
+<p>return 0; }</p>
 <p>```</p>
 <p>Gymnasium environments exposed over a REST like API can be found at: <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> Various RL algorithms using the environments can be found at <a href="https://github.com/pockerman/cuberl/tree/master">cuberl</a>.</p>
 <p>Furthermore, there is some minimal support for working with Arduino UNO boards over USB or WiFi. See also <a href="https://rlenvscpp.readthedocs.io/en/latest/working_with_webots.html">Working with Webots</a> for how to integrate <code>bitrl</code> with <a href="https://cyberbotics.com/doc/guide/installing-webots">Webots</a>. </p>
