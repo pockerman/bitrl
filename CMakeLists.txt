@@ -2,8 +2,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
 MESSAGE(STATUS "Using CMake ${CMAKE_VERSION}")
 
 
-SET(BITRL_VERSION_MAJOR 1)
-SET(BITRL_VERSION_MINOR 19)
+SET(BITRL_VERSION_MAJOR 2)
+SET(BITRL_VERSION_MINOR 1)
 SET(BITRL_VERSION_PATCH 0)
 
 SET(BITRL_VERSION "${BITRL_VERSION_MAJOR}.${BITRL_VERSION_MINOR}.${BITRL_VERSION_PATCH}")
@@ -142,7 +142,6 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/network/*.cpp
 		src/bitrl/sensors/*cpp
 		src/bitrl/envs/*.cpp
-		src/bitrl/envs/api_server/*.cpp
 		src/bitrl/envs/gymnasium/*.cpp
 		src/bitrl/envs/gymnasium/toy_text/*.cpp
 		src/bitrl/envs/gymnasium/classic_control/*.cpp
