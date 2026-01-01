@@ -3,14 +3,14 @@
 //
 
 #include "camera.h"
-#include "bitrl/sensors/camera.h"
+#include "camera.h"
 #include <boost/beast/core/detail/base64.hpp>
 #include <vector>
 namespace bitrl
 {
 namespace sensors
 {
-std::optional<CameraReading> CameraReading::parse(const std::string &base64jpeg)
+std::optional<CameraMessage> CameraMessage::parse(const std::string &base64jpeg)
 {
     // Decode base64
     auto tmp = std::string(base64jpeg);
@@ -32,7 +32,7 @@ std::optional<CameraReading> CameraReading::parse(const std::string &base64jpeg)
         return std::nullopt;
     }
 
-    CameraReading reading;
+    CameraMessage reading;
     reading.image = image;
     return reading;
 }
