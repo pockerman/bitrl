@@ -7,7 +7,7 @@
 #ifdef BITRL_MQTT
 
 #include "bitrl/network/mqtt_subscriber.h"
-#include "bitrl/sensors/camera.h"
+#include "../../src/bitrl/sensors/messages/camera.h"
 
 #include <chrono>
 #include <iostream>
@@ -27,7 +27,7 @@ int main()
 
         if (message.has_value())
         {
-            auto reading = sensors::CameraReading::parse(message.value());
+            auto reading = sensors::CameraMessage::parse(message.value());
 
             if (reading.has_value())
             {

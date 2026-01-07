@@ -4,11 +4,7 @@
 
 namespace bitrl
 {
-namespace utils
-{
-namespace maths
-{
-namespace stats
+namespace utils::maths::stats
 {
 
 BernoulliDist::BernoulliDist(real_t p) : p_(p), dist_(p) {}
@@ -65,7 +61,5 @@ void BernoulliDist::reset(real_t p)
     dist_ = std::bernoulli_distribution(p_);
 }
 
-} // namespace stats
-} // namespace maths
-} // namespace utils
+}
 } // namespace bitrl

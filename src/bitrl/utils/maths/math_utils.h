@@ -11,9 +11,7 @@
 
 namespace bitrl
 {
-namespace utils
-{
-namespace maths
+namespace utils::maths
 {
 
 ///
@@ -136,6 +134,5 @@ template <typename T> std::vector<T> lin_space(T start, T stop, uint_t n)
     return v;
 }
 
-} // namespace maths
-} // namespace utils
+}
 } // namespace bitrl

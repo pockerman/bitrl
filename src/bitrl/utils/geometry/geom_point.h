@@ -12,9 +12,7 @@
 
 namespace bitrl
 {
-namespace utils
-{
-namespace geom
+namespace utils::geom
 {
 
 ///
@@ -23,7 +21,7 @@ namespace geom
 template <int spacedim, typename T = real_t> class GeomPoint
 {
 
-  public:
+public:
     ///
     /// \brief value_type. The type of the coordinates
     ///
@@ -147,7 +145,7 @@ template <int spacedim, typename T = real_t> class GeomPoint
     ///
     const std::string to_string() const;
 
-  private:
+private:
     /// \brief Hold the coordinates of the point
     std::array<T, spacedim> data_;
 };
@@ -511,8 +509,7 @@ bool operator!=(const GeomPoint<spacedim, T> &t1, const GeomPoint<spacedim, T> &
     return !(t1 == t2);
 }
 
-} // namespace geom
-} // namespace utils
+}
 } // namespace bitrl
 
 #endif // GEOM_POINT_H
