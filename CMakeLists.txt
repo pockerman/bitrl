@@ -4,7 +4,7 @@ MESSAGE(STATUS "Using CMake ${CMAKE_VERSION}")
 
 SET(BITRL_VERSION_MAJOR 2)
 SET(BITRL_VERSION_MINOR 2)
-SET(BITRL_VERSION_PATCH 0)
+SET(BITRL_VERSION_PATCH 2)
 
 SET(BITRL_VERSION "${BITRL_VERSION_MAJOR}.${BITRL_VERSION_MINOR}.${BITRL_VERSION_PATCH}")
 MESSAGE(STATUS "bitrllib Version ${BITRL_VERSION}")
@@ -29,14 +29,13 @@ ENDIF(COMMAND cmake_policy)
 OPTION(ENABLE_TESTS OFF)
 #OPTION(ENABLE_EXAMPLES OFF)
 OPTION(ENABLE_WEBOTS OFF)
-#OPTION(ENABLE_CHRONO OFF)
 
 # configure packages
 SET(ENABLE_EXAMPLES ON)
 SET(ENABLE_CHRONO OFF)
 SET(ENABLE_OPENCV ON)
 SET(ENABLE_MQTT ON)
-SET(ENABLE_DOCS OFF)
+SET(ENABLE_DOCS ON)
 
 # build options
 SET(CMAKE_BUILD_TYPE "Release")
@@ -141,6 +140,7 @@ INCLUDE_DIRECTORIES(src/)
 FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/network/*.cpp
 		src/bitrl/sensors/*cpp
+		src/bitrl/sensors/messages/*cpp
 		src/bitrl/envs/*.cpp
 		src/bitrl/envs/gymnasium/*.cpp
 		src/bitrl/envs/gymnasium/toy_text/*.cpp

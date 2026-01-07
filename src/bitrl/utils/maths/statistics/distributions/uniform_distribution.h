@@ -1,15 +1,15 @@
 #ifndef UNIFORM_DIST_H
 #define UNIFORM_DIST_H
 
-#include "rlenvs/rlenvs_consts.h"
-#include "rlenvs/rlenvs_types_v2.h"
+#include "bitrl/bitrl_consts.h"
+#include "bitrl/bitrl_types.h"
 
 #include <initializer_list>
 #include <random>
 #include <utility>
 #include <vector>
 
-namespace rlenvscpp
+namespace bitrl
 {
 namespace utils
 {

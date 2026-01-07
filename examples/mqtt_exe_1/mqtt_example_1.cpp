@@ -12,7 +12,7 @@
 #include "bitrl/network/mqtt_subscriber.h"
 #include "bitrl/sensors/ekf_sensor_fusion.h"
 #include "bitrl/sensors/sensor_type_enum.h"
-#include "bitrl/sensors/vector_message.h"
+#include "../../src/bitrl/sensors/messages/vector_message.h"
 #include "bitrl/utils/unit_converter.h"
 
 #include <chrono>

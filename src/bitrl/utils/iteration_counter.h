@@ -1,9 +1,9 @@
 #ifndef ITERATION_COUNTER_H
 #define ITERATION_COUNTER_H
 
-#include "rlenvs/rlenvs_types_v2.h"
+#include "bitrl/bitrl_types.h"
 
-namespace rlenvscpp
+namespace bitrl
 {
 namespace utils
 {

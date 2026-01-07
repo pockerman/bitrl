@@ -1,8 +1,8 @@
 #ifndef NORMAL_DIST_H
 #define NORMAL_DIST_H
 
-#include "rlenvs/rlenvs_consts.h"
-#include "rlenvs/rlenvs_types_v2.h"
+#include "bitrl/bitrl_consts.h"
+#include "bitrl/bitrl_types.h"
 
 #include <cmath>
 #include <numbers>
@@ -10,13 +10,9 @@
 #include <type_traits>
 #include <vector>
 
-namespace rlenvscpp
+namespace bitrl
 {
-namespace utils
-{
-namespace maths
-{
-namespace stats
+namespace utils::maths::stats
 {
 
 ///
@@ -27,7 +23,7 @@ namespace stats
 template <typename RealType = real_t> class NormalDist
 {
 
-  public:
+public:
     static_assert(std::is_floating_point<RealType>::value, "Not a floating point type");
 
     ///
@@ -80,7 +76,7 @@ template <typename RealType = real_t> class NormalDist
     ///
     result_type std() const { return dist_.stddev(); }
 
-  private:
+private:
     ///
     /// \brief The underlying distribution. Mutable
     /// as the API exposes const methods and the compiler
@@ -147,15 +143,13 @@ template <typename RealType> RealType NormalDist<RealType>::pdf(RealType x) cons
 
     auto mu = dist_.mean();
     auto std = dist_.stddev();
-    auto pi = rlenvscpp::consts::maths::PI;
+    auto pi = bitrl::consts::maths::PI;
     auto factor = 1.0 / (std * std::sqrt(2.0 * pi));
     auto exp = std::exp(-0.5 * std::pow((x - mu) / std, 2.0));
     return factor * exp;
 }
 
-} // namespace stats
-} // namespace maths
-} // namespace utils
+}
 } // namespace rlenvscpp
 
 #endif

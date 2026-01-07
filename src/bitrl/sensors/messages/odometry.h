@@ -2,8 +2,8 @@
 // Created by alex on 11/23/25.
 //
 
-#ifndef ULTRASOUND_H
-#define ULTRASOUND_H
+#ifndef ODOMETRY_H
+#define ODOMETRY_H
 
 #include "bitrl/bitrl_types.h"
 #include <optional>
@@ -13,13 +13,16 @@ namespace bitrl
 {
 namespace sensors
 {
-struct UltrasoundReading
+struct OdometryMessage
 {
-    real_t distance_m;
+    real_t x;
+    real_t y;
+    real_t yaw;
     real_t timestamp;
-    static std::optional<UltrasoundReading> parse(const std::string &msg);
+
+    static std::optional<OdometryMessage> parse(const std::string &msg);
 };
 } // namespace sensors
 } // namespace bitrl
 
-#endif // ULTRASOUND_H
+#endif // ODOMETRY_H

@@ -9,11 +9,7 @@
 
 namespace bitrl
 {
-namespace utils
-{
-namespace maths
-{
-namespace stats
+namespace utils::maths::stats
 {
 
 ///
@@ -21,7 +17,7 @@ namespace stats
 ///
 class BernoulliDist
 {
-  public:
+public:
     ///
     /// \breif The return type every time we call pdf, sample
     ///
@@ -72,14 +68,12 @@ class BernoulliDist
     ///
     void reset(real_t p);
 
-  private:
+private:
     real_t p_;
     mutable std::bernoulli_distribution dist_;
 };
 
-} // namespace stats
-} // namespace maths
-} // namespace utils
+}
 } // namespace bitrl
 
 #endif
