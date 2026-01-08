@@ -1,7 +1,7 @@
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/envs/multi_armed_bandits/multi_armed_bandits.h"
 #include "bitrl/envs/time_step_type.h"
-#include "bitrl/utils/utils.h"
+#include "bitrl/utils/bitrl_utils.h"
 
 #include <algorithm>
 #include <exception>

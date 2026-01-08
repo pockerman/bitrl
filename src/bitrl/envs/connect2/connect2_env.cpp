@@ -1,6 +1,6 @@
 #include "bitrl/envs/connect2/connect2_env.h"
 #include "bitrl/envs/time_step.h"
-#include "bitrl/utils/utils.h"
+#include "bitrl/utils/bitrl_utils.h"
 
 #include <algorithm>
 #include <any>
