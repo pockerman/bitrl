@@ -14,7 +14,7 @@
 #include "bitrl/envs/env_base.h"
 #include "bitrl/envs/space_type.h"
 #include "bitrl/envs/time_step.h"
-#include "bitrl/utils/utils.h"
+#include "bitrl/utils/bitrl_utils.h"
 
 #ifdef BITRL_DEBUG
 #include <cassert>
@@ -469,7 +469,7 @@ void Gridworld<side_size_>::make(const std::string &version,
     // set the version and set the board
     // to created
     this->set_version_(version);
-    auto idx = utils::uuid4();
+    auto idx = bitrl::utils::uuid4();
     this->set_idx_(idx);
     this->base_type::make(version, options, reset_options);
     this->make_created_();
