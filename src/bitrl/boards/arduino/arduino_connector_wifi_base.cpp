@@ -31,5 +31,5 @@ std::string ArduinoConnectorWIFIBase::send_cmd(const ArduinoCMDBase &cmd)
     return str_response;
 }
 
-} // namespace boards::arduino
+} // namespace boards::example_15
 } // namespace bitrl

@@ -4,7 +4,6 @@ MESSAGE(STATUS "Using CMake ${CMAKE_VERSION}")
 SET(BITRL_VERSION_MAJOR 2)
 SET(BITRL_VERSION_MINOR 2)
 SET(BITRL_VERSION_PATCH 4)
-
 SET(BITRL_VERSION "${BITRL_VERSION_MAJOR}.${BITRL_VERSION_MINOR}.${BITRL_VERSION_PATCH}")
 MESSAGE(STATUS "bitrllib Version ${BITRL_VERSION}")
 
@@ -25,30 +24,32 @@ IF(COMMAND cmake_policy)
 	CMAKE_POLICY(SET CMP0048 NEW)
 ENDIF(COMMAND cmake_policy)
 
-OPTION(ENABLE_TESTS OFF)
+
 OPTION(ENABLE_WEBOTS OFF)
 
 # configure packages
 SET(ENABLE_EXAMPLES ON)
-SET(ENABLE_CHRONO OFF)
+SET(ENABLE_TESTS OFF)
+SET(ENABLE_CHRONO ON)
 SET(ENABLE_OPENCV ON)
 SET(ENABLE_MQTT ON)
-SET(ENABLE_DOCS ON)
+SET(BITRL_LOG ON)
 
 # build options
 SET(CMAKE_BUILD_TYPE "Release")
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
 SET(CMAKE_LINKER_FLAGS "-pthread")
+SET(ROBOTS_DATA_DIR ${PROJECT_SOURCE_DIR}/robots)
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	SET(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR}/install/dbg)
-	SET(CMAKE_CXX_FLAGS "-g -fPIC") # -Wall -Wextra")
+	SET(CMAKE_CXX_FLAGS "-g -fPIC -DBOOST_LOG_DYN_LINK") # -Wall -Wextra")
     SET(BITRL_DEBUG ON)
 	
 ELSE(CMAKE_BUILD_TYPE STREQUAL "Release")
 	SET(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR}/install/opt)
-	SET(CMAKE_CXX_FLAGS "-O2 -fPIC")
+	SET(CMAKE_CXX_FLAGS "-O2 -fPIC -DBOOST_LOG_DYN_LINK")
     SET(BITRL_DEBUG OFF)
 ENDIF()
 
@@ -70,6 +71,7 @@ ENDIF()
 IF(Boost_FOUND)
 	MESSAGE( STATUS  "Found needed Boost C++ library.")
 	SET(Boost_USE_SHARED_LIBS ON)
+	SET(Boost_USE_STATIC_LIBS ON)
 ELSE()
 	MESSAGE( FATAL_ERROR  "Boost C++ library is required but not found.")
 ENDIF()
@@ -152,6 +154,7 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/envs/gymnasium/box2d/*.cpp
 		src/bitrl/boards/arduino/*.cpp
 		src/bitrl/rigid_bodies/*.cpp
+		src/bitrl/rigid_bodies/chrono_robots/*.cpp
 		src/bitrl/rigid_bodies/webots_robots/*.cpp
 		src/bitrl/dynamics/*.cpp
 		src/bitrl/utils/*.cpp

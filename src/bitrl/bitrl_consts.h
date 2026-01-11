@@ -6,6 +6,7 @@
  */
 
 #include "bitrl/bitrl_types.h"
+#include "bitrl/bitrl_config.h"
 #include <numbers>
 #include <string>
 
@@ -28,6 +29,9 @@ inline const std::string INVALID_STR = std::string("INVALID");
 /// \brief Tolerance to use around the library
 ///
 inline const real_t TOLERANCE = 1.0e-8;
+
+inline const std::string ROBOTS_DIR = std::string(ROBOTS_DATA_DIR);
+
 
 namespace maths
 {
