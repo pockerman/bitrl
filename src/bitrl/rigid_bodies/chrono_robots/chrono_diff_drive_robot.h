@@ -61,6 +61,18 @@ public:
      */
     const std::string& get_name() const noexcept{return name_;}
 
+    /**
+     * @brief Retruns the number of wheels this robot has
+     * @return
+     */
+    uint_t n_wheels()const noexcept{return 3;}
+
+    /**
+     * @brief Returns the number of motors this robot has
+     * @return
+     */
+    uint_t n_motors()const noexcept{return 2;}
+
 protected:
 
     /**

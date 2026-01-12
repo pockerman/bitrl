@@ -30,6 +30,16 @@ class JSONFileReader final : public FileReaderBase
      */
     template <typename T> T get_value(const std::string &label) const;
 
+    /**
+     * Returns the object at the specified label.
+     * T should be constructed using T(json data) and should
+     * be copy constructible
+     * @param label
+     * @return
+     */
+    template <typename T> T at(const std::string &label) const;
+
+
   private:
     using json = nlohmann::json;
     json data_;
@@ -37,12 +47,22 @@ class JSONFileReader final : public FileReaderBase
 
 template <typename T> T JSONFileReader::get_value(const std::string &label) const
 {
-
     if (!this->is_open())
     {
         throw std::logic_error("JSON file is not open. Have you called open()?");
     }
     return data_[label].template get<T>();
+}
+
+template <typename T> T JSONFileReader::at(const std::string &label) const
+{
+    if (!this->is_open())
+    {
+        throw std::logic_error("JSON file is not open. Have you called open()?");
+    }
+
+    auto data = data_.at(label);
+    return T(data);
 }
 
 } // namespace utils::io
