@@ -11,6 +11,7 @@
 #include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChLinkMotorRotationSpeed.h>
 
+
 #ifdef BITRL_LOG
 #include <boost/log/trivial.hpp>
 #endif
@@ -28,8 +29,6 @@ namespace
 {
 
 using json = nlohmann::json;
-
-
 
 // helper class to read chassis
 struct Chassis
@@ -117,6 +116,8 @@ auto build_motor(std::shared_ptr<chrono::ChBody> wheel,
     return motor;
 }
 
+
+
 }
 
 void
@@ -133,7 +134,6 @@ CHRONO_DiffDriveRobotBase::load_from_json(const std::string& filename)
 
     auto chassis = build_chassis(json_reader);
     sys_.Add(chassis);
-
 
     name_ = json_reader.template get_value<std::string>("name");
 
@@ -158,6 +158,9 @@ CHRONO_DiffDriveRobotBase::load_from_json(const std::string& filename)
         chrono::ChFrame<>(chrono::ChCoordsys<>(caster->GetPos()))
     );
     sys_.Add(caster_joint);
+
+    // read the sensors attached to the robot
+
 
 #ifdef BITRL_LOG
     BOOST_LOG_TRIVIAL(info)<<"Loaded robot: " << name_;

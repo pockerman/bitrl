@@ -26,6 +26,16 @@
     "mass": 0.5,
     "mass_units": "kg",
     "position": [ -0.2, 0.0, 0.05]
-  }
+  },
+  "sensors": [
+    {
+      "idx": 0,
+      "type": "distance",
+      "name": "Ultrasonic",
+      "update_rate": 50.0,
+      "mounted_position": [0.3, 0, 0.1],
+      "max_distance": 5.0
+    }
+  ]
 
 }

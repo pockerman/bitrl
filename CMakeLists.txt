@@ -139,8 +139,9 @@ INCLUDE_DIRECTORIES(src/)
 
 FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/network/*.cpp
-		src/bitrl/sensors/*cpp
-		src/bitrl/sensors/messages/*cpp
+		src/bitrl/sensors/*.cpp
+		src/bitrl/sensors/messages/*.cpp
+		src/bitrl/sensors/backends/*.cpp
 		src/bitrl/envs/*.cpp
 		src/bitrl/envs/gymnasium/*.cpp
 		src/bitrl/envs/gymnasium/toy_text/*.cpp
