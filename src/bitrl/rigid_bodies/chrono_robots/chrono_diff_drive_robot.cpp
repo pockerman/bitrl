@@ -17,6 +17,7 @@
 #endif
 
 #include <array>
+#include <optional>
 #include <string>
 #include <memory>
 
@@ -74,6 +75,38 @@ position()
         position[i] = pos.at(i).get<real_t>();
 }
 
+struct Sensor
+{
+    std::array<real_t, 3> position;
+    std::string type;
+    std::string name;
+    real_t update_rate;
+    uint_t idx;
+    // Optional fields
+    std::optional<real_t> max_distance;
+    std::optional<std::string> backend;
+
+    Sensor(const json &j);
+};
+
+Sensor::Sensor(const json &j)
+{
+    idx         = j.at("idx").get<uint_t>();
+    type        = j.at("type").get<std::string>();
+    name        = j.at("name").get<std::string>();
+    update_rate = j.at("update_rate").get<double>();
+
+    auto pos = j.at("mounted_position");
+    for (size_t i = 0; i < 3; ++i)
+        position[i] = pos.at(i).get<double>();
+
+    // Optional fields
+    if (j.contains("max_distance"))
+        max_distance = j.at("max_distance").get<double>();
+
+    if (j.contains("backend"))
+        backend = j.at("backend").get<std::string>();
+}
 
 auto build_chassis(const utils::io::JSONFileReader& json_reader)
 {
@@ -160,6 +193,11 @@ CHRONO_DiffDriveRobotBase::load_from_json(const std::string& filename)
     sys_.Add(caster_joint);
 
     // read the sensors attached to the robot
+    const auto& sensors = json_reader.get("sensors");
+    for (auto it = sensors.begin(); it != sensors.end(); ++it)
+    {
+        Sensor sensor(it.value());
+    }
 
 
 #ifdef BITRL_LOG

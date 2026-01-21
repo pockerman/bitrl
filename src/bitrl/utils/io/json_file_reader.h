@@ -18,11 +18,18 @@ class JSONFileReader final : public FileReaderBase
 {
 
   public:
+
+    using json = nlohmann::json;
+
+    /**
+     * Constructor
+     * @param filename
+     */
     JSONFileReader(const std::string &filename);
 
-    ///
-    /// \brief Attempts to open the file for reading
-    ///
+    /**
+     * @brief Attempts to open the file for reading
+     */
     virtual void open() override final;
 
     /**
@@ -39,9 +46,9 @@ class JSONFileReader final : public FileReaderBase
      */
     template <typename T> T at(const std::string &label) const;
 
+    const json& get(const std::string &label) const{return data_.at(label);};
 
   private:
-    using json = nlohmann::json;
     json data_;
 };
 

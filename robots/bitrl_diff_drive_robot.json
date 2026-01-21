@@ -34,7 +34,15 @@
       "name": "Ultrasonic",
       "update_rate": 50.0,
       "mounted_position": [0.3, 0, 0.1],
-      "max_distance": 5.0
+      "max_distance": 5.0,
+      "backend": "CHRONO"
+    },
+    {
+      "idx": 1,
+      "type": "camera",
+      "name": "cam-0",
+      "update_rate": 3,
+      "mounted_position": [0.3, 0, 0.1]
     }
   ]
 

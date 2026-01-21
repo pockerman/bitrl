@@ -6,6 +6,7 @@
 #ifdef BITRL_CHRONO
 
 #include "bitrl/bitrl_types.h"
+#include "bitrl/sensors/sensor_manager.h"
 #include "chrono/physics/ChSystemSMC.h"
 
 
@@ -84,6 +85,11 @@ protected:
      * environment.
      */
     chrono::ChSystemSMC sys_;
+
+    /**
+     * @brief Manages the sensors on the robot
+     */
+    std::unique_ptr<sensors::SensorManager> sensor_manager_;
 
     /**
      * @brief Motors for the robot

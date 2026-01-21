@@ -78,7 +78,10 @@ public:
 
 private:
 
-
+    /**
+    * @brief Pointer to the instance that handles the MQTT connection
+    * and message exchange
+    */
     network::MqttSubscriber* subscriber_ptr_;
 
     /**
