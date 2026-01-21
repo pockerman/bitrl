@@ -34,7 +34,6 @@ const std::vector<real_t>& UltrasonicSensor::read_values()
     // TODO: Make sure that len(read_values) == len(values)
     auto read_values = backend_ -> read_values();
 
-
     std::copy(read_values.begin(), read_values.end(), values_.begin());
     return this -> values_;
 }

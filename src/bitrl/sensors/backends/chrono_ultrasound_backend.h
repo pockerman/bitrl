@@ -19,11 +19,11 @@ namespace sensors::backends
 {
 
 /**
- * @class ChronoUltrasonicBackend
+ * @class CHRONO_UltrasonicBackend
  * @ingroup bitrl_sensors_backends
  * @brief Class for modelling ultrasonic sensors
  */
-class ChronoUltrasonicBackend final: public RangeSensorBackendBase
+class CHRONO_UltrasonicBackend final: public RangeSensorBackendBase
 {
 public:
 
@@ -35,7 +35,7 @@ public:
     /**
      * @brief Constructor
      */
-    ChronoUltrasonicBackend(chrono::ChSystem& sys_ptr,
+    CHRONO_UltrasonicBackend(chrono::ChSystem& sys_ptr,
                             std::shared_ptr<chrono::ChBody> body);
 
     /**
@@ -67,7 +67,7 @@ public:
      * @brief Set the position of the sensor
      * @param pos
      */
-    void set_position(chrono::ChVector3d& pos){position_ = pos;}
+    void set_position(const chrono::ChVector3d& pos){position_ = pos;}
 
     /**
      * @return A read reference of the position of the sensor

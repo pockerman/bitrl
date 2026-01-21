@@ -1,8 +1,6 @@
 #include "bitrl/bitrl_config.h"
 
-#ifdef BITRL_MQTT
-#include "bitrl/network/mqtt_subscriber.h"
-#endif
+
 
 #include "bitrl/sensors/messages/ultrasound.h"
 #include "bitrl/sensors/ultrasonic_sensor.h"
@@ -21,41 +19,7 @@
 
 namespace example
 {
-#ifdef BITRL_MQTT
 
-void run_mqtt()
-{
-    using namespace bitrl;
-
-    network::MqttSubscriber ultrasound_subscriber("tcp://localhost:1883", "ultrasound");
-    ultrasound_subscriber.connect();
-
-    while (true)
-    {
-        auto message = ultrasound_subscriber.poll(std::chrono::milliseconds(3000));
-
-        if (message.has_value())
-        {
-            auto reading = sensors::UltrasoundMessage::parse(message.value());
-            if (reading.has_value())
-            {
-
-                auto read_message = reading.value();
-
-                std::time_t t = std::chrono::system_clock::to_time_t(read_message.source_timestamp);
-                std::tm tm = *std::localtime(&t);
-                std::cout<<"Distance received: "<<read_message.distance<<std::endl;
-                std::cout<<"Units    received: "<<read_message.unit_str<<std::endl;
-                std::cout<<"Generated      at: "<< std::put_time(&tm, "%Y-%m-%d %H:%M:%S")<<std::endl;
-            }
-
-        }
-
-        std::this_thread::sleep_for(std::chrono::microseconds(200));
-    }
-}
-
-#endif
 
 #ifdef BITRL_CHRONO
 void run_chrono()
@@ -99,12 +63,11 @@ void run_chrono()
 
     sys.DoStepDynamics(0.1);
 
-    auto sensor_backend = std::make_shared<sensors::backends::ChronoUltrasonicBackend>(sys, robot);
+    auto sensor_backend = std::make_shared<sensors::backends::CHRONO_UltrasonicBackend>(sys, robot);
     sensor_backend -> set_max_distance(5.0);
     sensor_backend -> set_sensor_units("m");
 
     sensors::UltrasonicSensor sensor(sensor_backend, "MyUltrasonicSensor");
-
     sensor.init();
 
     std::cout<<"Sensor name: "<<sensor.sensor_name()<<std::endl;
@@ -118,8 +81,6 @@ void run_chrono()
         auto values = sensor.read_values();
         std::cout << "Measured distance: " << values[0] << " in: " <<sensor.sensor_units()<< std::endl;
     }
-
-
 }
 #endif
 
@@ -127,10 +88,6 @@ void run_chrono()
 
 int main()
 {
-
-#ifdef BITRL_MQTT
-    //example::run_mqtt();
-#endif
 
 #ifdef BITRL_CHRONO
     example::run_chrono();

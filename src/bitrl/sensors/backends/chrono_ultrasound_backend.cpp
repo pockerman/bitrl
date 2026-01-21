@@ -16,17 +16,17 @@ namespace bitrl
 namespace sensors::backends
 {
 
-const  std::string ChronoUltrasonicBackend::BACKEND_TYPE = "ChronoUltrasonicBackend";
+const  std::string CHRONO_UltrasonicBackend::BACKEND_TYPE = "CHRONO_UltrasonicBackend";
 
-ChronoUltrasonicBackend::ChronoUltrasonicBackend(chrono::ChSystem& sys_ptr,
+CHRONO_UltrasonicBackend::CHRONO_UltrasonicBackend(chrono::ChSystem& sys_ptr,
                                                 std::shared_ptr<chrono::ChBody> body)
     :
-RangeSensorBackendBase(ChronoUltrasonicBackend::BACKEND_TYPE),
+RangeSensorBackendBase(CHRONO_UltrasonicBackend::BACKEND_TYPE),
 sys_ptr_(&sys_ptr),
 body_(body)
 {}
 
-void ChronoUltrasonicBackend::load_from_json(const std::string& filename)
+void CHRONO_UltrasonicBackend::load_from_json(const std::string& filename)
 {
 
 #ifdef BITRL_LOG
@@ -37,11 +37,11 @@ void ChronoUltrasonicBackend::load_from_json(const std::string& filename)
     json_reader.open();
 
 #ifdef BITRL_LOG
-    BOOST_LOG_TRIVIAL(info)<<"Loaded sensor backend: ChronoUltrasonicBackend";
+    BOOST_LOG_TRIVIAL(info)<<"Loaded sensor backend: CHRONO_UltrasonicBackend";
 #endif
 }
 
-std::vector<real_t> ChronoUltrasonicBackend::read_values()
+std::vector<real_t> CHRONO_UltrasonicBackend::read_values()
 {
 #ifdef BITRL_LOG
     BOOST_LOG_TRIVIAL(info)<<"Reading backend values: "<< this -> backend_type_str();
@@ -53,17 +53,9 @@ std::vector<real_t> ChronoUltrasonicBackend::read_values()
         body_->GetFrameRefToAbs().GetRotMat().GetAxisX();
     dir.Normalize();
 
-#ifdef BITRL_LOG
-    BOOST_LOG_TRIVIAL(info)<<"Reading backend values start: "<< start;
-#endif
-
     chrono::ChVector3d end = start + dir * this -> max_distance();
-#ifdef BITRL_LOG
-    BOOST_LOG_TRIVIAL(info)<<"Reading backend values end: "<< end;
-#endif
 
     auto collision_sys = sys_ptr_ -> GetCollisionSystem();
-
     if (collision_sys == nullptr)
     {
 #ifdef BITRL_LOG
@@ -75,9 +67,6 @@ std::vector<real_t> ChronoUltrasonicBackend::read_values()
     chrono::ChCollisionSystem::ChRayhitResult hit;
     if (collision_sys -> RayHit(start, end, hit))
     {
-#ifdef BITRL_LOG
-        BOOST_LOG_TRIVIAL(info)<<"A Ray was hit: "<< end;
-#endif
         return {(hit.abs_hitPoint - start).Length()};
     }
 
