@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2024 <copyright holder> <email>
-// SPDX-License-Identifier: Apache-2.0
-
 #ifndef JSON_FILE_READER_H
 #define JSON_FILE_READER_H
 
@@ -46,6 +43,11 @@ class JSONFileReader final : public FileReaderBase
      */
     template <typename T> T at(const std::string &label) const;
 
+    /**
+     * @param label The label to get the data
+     * @return Read reference to the underlying json structure that holds the data for the
+     * given label
+     */
     const json& get(const std::string &label) const{return data_.at(label);};
 
   private:

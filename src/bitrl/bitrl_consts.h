@@ -15,35 +15,42 @@ namespace bitrl
 namespace consts
 {
 
-///
-/// \brief INVALID_ID
-///
+/**
+ * @brief Invalid id.
+ */
 inline const uint_t INVALID_ID = static_cast<uint_t>(-1);
 
-///
-/// \brief Invalid string
-///
+/**
+ * @brief Invalid string
+ */
 inline const std::string INVALID_STR = std::string("INVALID");
 
-///
-/// \brief Tolerance to use around the library
-///
+/**
+ * @brief Tolerance used around the library
+ */
 inline const real_t TOLERANCE = 1.0e-8;
 
+/**
+ * @brief Path to robots definitions
+ */
 inline const std::string ROBOTS_DIR = std::string(ROBOTS_DATA_DIR);
 
+/**
+ * @brief Path to sensors definitions
+ */
+inline const std::string SENSORS_DIR = std::string(SENSORS_DATA_DIR);
 
 namespace maths
 {
 
-///
-/// \brief The Pi constant
-///
+/**
+ * @brief The PI constant
+ */
 inline const real_t PI = std::numbers::pi;
 
-///
-/// \brief Acceleration due to gravity m/secs
-///
+/**
+ * @brief Acceleration due to gravity m/secs
+ */
 inline const real_t G = 9.82;
 } // namespace maths
 

@@ -10,6 +10,8 @@
 #include <chrono/functions/ChFunctionConst.h>
 #include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChLinkMotorRotationSpeed.h>
+#include <chrono/assets/ChVisualShapeBox.h>
+#include <chrono/assets/ChVisualShapeCylinder.h>
 
 
 #ifdef BITRL_LOG
@@ -35,7 +37,9 @@ using json = nlohmann::json;
 struct Chassis
 {
     std::array<real_t, 3> position;
+    std::array<real_t, 3> visual_position;
     std::string mass_units;
+    std::string visual_shape;
     real_t mass;
     bool fixed;
 
@@ -47,11 +51,17 @@ Chassis::Chassis(const json &j)
 mass(j["mass"].get<real_t>()),
 mass_units(j["mass_units"].get<std::string>()),
 fixed(j["fixed"].get<bool>()),
-position()
+visual_shape(j["visual_shape"].get<std::string>()),
+position(),
+visual_position()
 {
     auto pos = j.at("position");
     for (size_t i = 0; i < 3; ++i)
         position[i] = pos.at(i).get<real_t>();
+
+    auto vis_position = j.at("visual_position");
+    for (size_t i = 0; i < 3; ++i)
+        visual_position[i] = vis_position.at(i).get<real_t>();
 }
 
 // helper struct to read a wheel
@@ -59,54 +69,29 @@ struct Wheel
 {
     std::array<real_t, 3> position;
     std::string mass_units;
+    std::string visual_shape;
     real_t mass;
+    real_t width;
+    real_t radius;
 
     Wheel(const json &j);
 };
 
 Wheel::Wheel(const json &j)
     :
-mass(j["mass"].get<real_t>()),
+position(),
 mass_units(j["mass_units"].get<std::string>()),
-position()
+visual_shape(j["visual_shape"].get<std::string>()),
+mass(j["mass"].get<real_t>()),
+width(j["width"].get<real_t>()),
+radius(j["radius"].get<real_t>())
+
 {
     auto pos = j.at("position");
     for (size_t i = 0; i < 3; ++i)
         position[i] = pos.at(i).get<real_t>();
 }
 
-struct Sensor
-{
-    std::array<real_t, 3> position;
-    std::string type;
-    std::string name;
-    real_t update_rate;
-    uint_t idx;
-    // Optional fields
-    std::optional<real_t> max_distance;
-    std::optional<std::string> backend;
-
-    Sensor(const json &j);
-};
-
-Sensor::Sensor(const json &j)
-{
-    idx         = j.at("idx").get<uint_t>();
-    type        = j.at("type").get<std::string>();
-    name        = j.at("name").get<std::string>();
-    update_rate = j.at("update_rate").get<double>();
-
-    auto pos = j.at("mounted_position");
-    for (size_t i = 0; i < 3; ++i)
-        position[i] = pos.at(i).get<double>();
-
-    // Optional fields
-    if (j.contains("max_distance"))
-        max_distance = j.at("max_distance").get<double>();
-
-    if (j.contains("backend"))
-        backend = j.at("backend").get<std::string>();
-}
 
 auto build_chassis(const utils::io::JSONFileReader& json_reader)
 {
@@ -116,6 +101,12 @@ auto build_chassis(const utils::io::JSONFileReader& json_reader)
     chassis->SetInertiaXX(chrono::ChVector3d(0.1, 0.1, 0.1));
     chassis->SetPos(chrono::ChVector3d(chassis_data.position[0], chassis_data.position[1], chassis_data.position[2]));
     chassis->SetFixed(false);
+
+    // add visual shape for visualization
+    auto vis_shape = chrono_types::make_shared<chrono::ChVisualShapeBox>(
+    chrono::ChVector3d(chassis_data.visual_position[0], chassis_data.visual_position[1], chassis_data.visual_position[2]));
+    chassis -> AddVisualShape(vis_shape);
+
     return chassis;
 }
 
@@ -127,6 +118,27 @@ auto build_wheel(const utils::io::JSONFileReader& json_reader, const std::string
     wheel->SetMass(wheel_data.mass);
     wheel->SetPos(chrono::ChVector3d(wheel_data.position[0], wheel_data.position[1], wheel_data.position[2]));
     wheel->SetName(wheel_label);
+
+    chrono::ChQuaternion<> q;
+    q.SetFromAngleAxis(chrono::CH_PI_2, chrono::ChVector3d(1, 0, 0));
+    wheel->SetRot(q);
+
+    auto collision = chrono_types::make_shared<chrono::ChCollisionShapeCylinder>(
+    material,
+    wheel_data.radius,
+    wheel_data.width
+    );
+
+    chrono::ChQuaternion<> q_col;
+    q_col.SetFromAngleAxis(chrono::CH_PI_2, chrono::ChVector3d(1, 0, 0));
+
+    wheel->AddCollisionShape(
+        collision,
+        chrono::ChFrame<>(chrono::VNULL, q_col)
+    );
+
+    wheel->AddVisualShape(
+    chrono_types::make_shared<chrono::ChVisualShapeCylinder>(wheel_data.radius, wheel_data.width));
     return wheel;
 }
 
@@ -165,8 +177,8 @@ CHRONO_DiffDriveRobotBase::load_from_json(const std::string& filename)
     // set the gravity acceleration
     sys_.SetGravitationalAcceleration(chrono::ChVector3d(0, 0.0, -9.81));
 
-    auto chassis = build_chassis(json_reader);
-    sys_.Add(chassis);
+    chassis_ = build_chassis(json_reader);
+    sys_.Add(chassis_);
 
     name_ = json_reader.template get_value<std::string>("name");
 
@@ -176,8 +188,8 @@ CHRONO_DiffDriveRobotBase::load_from_json(const std::string& filename)
     sys_.Add(left_wheel);
     sys_.Add(right_wheel);
 
-    auto left_motor = build_motor(left_wheel, chassis, "left-motor");
-    auto right_motor = build_motor(right_wheel, chassis, "right-motor");
+    auto left_motor = build_motor(left_wheel, chassis_, "left-motor");
+    auto right_motor = build_motor(right_wheel, chassis_, "right-motor");
 
     sys_.Add(left_motor);
     sys_.Add(right_motor);
@@ -187,22 +199,28 @@ CHRONO_DiffDriveRobotBase::load_from_json(const std::string& filename)
     auto caster_joint = chrono_types::make_shared<chrono::ChLinkLockSpherical>();
     caster_joint->Initialize(
         caster,
-        chassis,
+        chassis_,
         chrono::ChFrame<>(chrono::ChCoordsys<>(caster->GetPos()))
     );
     sys_.Add(caster_joint);
 
     // read the sensors attached to the robot
-    const auto& sensors = json_reader.get("sensors");
-    for (auto it = sensors.begin(); it != sensors.end(); ++it)
-    {
-        Sensor sensor(it.value());
-    }
+    // const auto& sensors = json_reader.get("sensors");
+    // for (auto it = sensors.begin(); it != sensors.end(); ++it)
+    // {
+    //     Sensor sensor(it.value());
+    // }
 
 
 #ifdef BITRL_LOG
     BOOST_LOG_TRIVIAL(info)<<"Loaded robot: " << name_;
+    BOOST_LOG_TRIVIAL(info)<<"Bodies in loaded robot " << sys_.GetBodies().size();
 #endif
+}
+
+void CHRONO_DiffDriveRobotBase::step(real_t time_step)
+{
+    sys_.DoStepDynamics(time_step);
 }
 }
 }

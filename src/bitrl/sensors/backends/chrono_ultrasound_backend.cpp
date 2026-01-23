@@ -7,9 +7,13 @@
 
 #include "chrono/collision/ChCollisionSystem.h"
 
+
+
 #ifdef BITRL_LOG
 #include <boost/log/trivial.hpp>
 #endif
+
+#include <string>
 
 namespace bitrl
 {
@@ -35,6 +39,21 @@ void CHRONO_UltrasonicBackend::load_from_json(const std::string& filename)
 
     utils::io::JSONFileReader json_reader(filename);
     json_reader.open();
+
+    auto max_distance = json_reader.at<real_t>("max_distance");
+    this -> set_max_distance(max_distance);
+
+    auto min_distance = json_reader.at<real_t>("min_distance");
+    this -> set_min_distance(max_distance);
+
+    auto update_rate = json_reader.at<real_t>("update_rate");
+    this -> set_sampling_period(update_rate);
+
+    auto name = json_reader.at<std::string>("name");
+
+    auto pos = json_reader.get("mounted_position");
+    for (size_t i = 0; i < 3; ++i)
+        position_[i] = pos.at(i).get<real_t>();
 
 #ifdef BITRL_LOG
     BOOST_LOG_TRIVIAL(info)<<"Loaded sensor backend: CHRONO_UltrasonicBackend";

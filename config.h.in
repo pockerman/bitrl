@@ -4,6 +4,9 @@
 /*Path to robots description*/
 #cmakedefine ROBOTS_DATA_DIR "@ROBOTS_DATA_DIR@"
 
+/*Path to sensors */
+#cmakedefine SENSORS_DATA_DIR "@SENSORS_DATA_DIR@"
+
 /*DEBUG*/
 #cmakedefine BITRL_DEBUG
 

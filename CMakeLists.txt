@@ -34,6 +34,7 @@ SET(ENABLE_CHRONO ON)
 SET(ENABLE_OPENCV ON)
 SET(ENABLE_MQTT ON)
 SET(BITRL_LOG ON)
+SET(BITRL_IRRLICHT ON)
 
 # build options
 SET(CMAKE_BUILD_TYPE "Release")
@@ -41,6 +42,7 @@ SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
 SET(CMAKE_LINKER_FLAGS "-pthread")
 SET(ROBOTS_DATA_DIR ${PROJECT_SOURCE_DIR}/robots)
+SET(SENSORS_DATA_DIR ${PROJECT_SOURCE_DIR}/sensors)
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	SET(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR}/install/dbg)
@@ -57,6 +59,7 @@ ENDIF()
 FIND_PACKAGE(Boost 1.74.0 REQUIRED)
 FIND_PACKAGE(BLAS REQUIRED)
 FIND_PACKAGE(Eigen3 REQUIRED)
+#FIND_PACKAGE(libirrlicht-dev REQUIRED)
 
 IF(ENABLE_MQTT)
     FIND_PACKAGE(PahoMqttCpp REQUIRED)
@@ -104,7 +107,7 @@ ENDIF()
 
 IF(ENABLE_CHRONO)
 
-	FIND_PACKAGE(Chrono  REQUIRED)
+	FIND_PACKAGE(Chrono  REQUIRED COMPONENTS Irrlicht)
 	IF (NOT Chrono_FOUND)
   		MESSAGE("Could not find Chrono or one of its required modules")
   		RETURN()
@@ -115,8 +118,10 @@ IF(ENABLE_CHRONO)
 
 	# Manually set this as for some reason it does not work
 	# otherwise
+	INCLUDE_DIRECTORIES(/usr/include/irrlicht)
     INCLUDE_DIRECTORIES(/usr/local/include/chrono_thirdparty/HACD)
 	INCLUDE_DIRECTORIES(/usr/local/include/chrono/collision/bullet)
+
 	LINK_DIRECTORIES(/usr/local/lib)
 ENDIF()
 

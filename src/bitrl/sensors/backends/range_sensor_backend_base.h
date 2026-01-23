@@ -30,6 +30,17 @@ public:
     void set_max_distance(real_t max_distance) noexcept {max_distance_ = max_distance;}
 
     /**
+     * @return The maximum distance the range sensor can read
+     */
+    real_t min_distance()const noexcept {return min_distance_;}
+
+    /**
+     * @brief Set the maximum distance the range sensor can read
+     * @param min_distance
+     */
+    void set_min_distance(real_t min_distance) noexcept {min_distance_ = min_distance;}
+
+    /**
      * @return An instance of std::string representing the units the sensor
      * readings are assumed in
      */
@@ -56,6 +67,8 @@ private:
      *@brief The maximum distance the sensor can read
      */
     real_t max_distance_{0.0};
+
+    real_t min_distance_{0.0};
 
 };
 

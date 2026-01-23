@@ -1,7 +1,4 @@
 #include "bitrl/bitrl_config.h"
-
-
-
 #include "bitrl/sensors/messages/ultrasound.h"
 #include "bitrl/sensors/ultrasonic_sensor.h"
 

@@ -7,6 +7,11 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/sensors/sensor_manager.h"
+
+#ifdef xmlChar
+#undef xmlChar
+#endif
+//#include <irrlicht.h>
 #include "chrono/physics/ChSystemSMC.h"
 
 
@@ -56,6 +61,12 @@ public:
        */
     void load_from_json(const std::string& filename);
 
+    /**
+     * @brief Step the underlying chrono::ChSystemSMC one time step
+     * @param time_step
+     */
+    void step(real_t time_step);
+
 
     /**
      * @brief The name of the robot
@@ -75,6 +86,21 @@ public:
      */
     uint_t n_motors()const noexcept{return 2;}
 
+    /**
+     * Set the pointer to the sensor manager
+     * @param sensors_manager
+     */
+    void set_sensors(sensors::SensorManager& sensor_manager){sensor_manager_ptr_ = &sensor_manager;}
+
+    /**
+     *
+     * @return
+     */
+    chrono::ChSystemSMC& CHRONO_sys() noexcept{return sys_;}
+
+
+    std::shared_ptr<chrono::ChBody> CHRONO_chassis()noexcept{return chassis_;}
+
 protected:
 
     /**
@@ -87,9 +113,14 @@ protected:
     chrono::ChSystemSMC sys_;
 
     /**
+     * The chassis of the robot
+     */
+    std::shared_ptr<chrono::ChBody> chassis_;
+
+    /**
      * @brief Manages the sensors on the robot
      */
-    std::unique_ptr<sensors::SensorManager> sensor_manager_;
+    sensors::SensorManager* sensor_manager_ptr_;
 
     /**
      * @brief Motors for the robot
