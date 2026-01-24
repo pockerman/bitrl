@@ -41,24 +41,5 @@
     "visual_shape": "cylinder",
     "rotation_axis": [1, 0, 0],
     "rotation_angle_deg": 90
-  },
-  "sensors": [
-    {
-      "idx": 0,
-      "type": "ultrasonic-range",
-      "name": "Ultrasonic",
-      "update_rate": 50.0,
-      "mounted_position": [0.3, 0, 0.1],
-      "max_distance": 5.0,
-      "backend": "CHRONO"
-    },
-    {
-      "idx": 1,
-      "type": "camera",
-      "name": "cam-0",
-      "update_rate": 3,
-      "mounted_position": [0.3, 0, 0.1]
-    }
-  ]
-
+  }
 }

@@ -55,6 +55,8 @@ void CHRONO_UltrasonicBackend::load_from_json(const std::string& filename)
     for (size_t i = 0; i < 3; ++i)
         position_[i] = pos.at(i).get<real_t>();
 
+
+
 #ifdef BITRL_LOG
     BOOST_LOG_TRIVIAL(info)<<"Loaded sensor backend: CHRONO_UltrasonicBackend";
 #endif

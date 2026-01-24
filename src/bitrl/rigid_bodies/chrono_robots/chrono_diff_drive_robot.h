@@ -7,12 +7,11 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/sensors/sensor_manager.h"
+#include "bitrl/rigid_bodies/chrono_robots/chrono_robot_pose.h"
 
-#ifdef xmlChar
-#undef xmlChar
-#endif
-//#include <irrlicht.h>
-#include "chrono/physics/ChSystemSMC.h"
+
+#include <chrono/physics/ChSystemSMC.h>
+#include <chrono/physics/ChLinkMotorRotationSpeed.h>
 
 
 #include <string>
@@ -42,6 +41,17 @@ class CHRONO_DiffDriveRobotBase
 {
 public:
 
+    typedef CHRONO_RobotPose pose_type;
+
+    /**
+     * Handle the motors
+     */
+    struct MotorHandle {
+        std::shared_ptr<chrono::ChLinkMotorRotationSpeed> motor;
+        std::shared_ptr<chrono::ChFunctionConst> speed;
+    };
+
+
     /**
        * @brief Load robot and simulation parameters from a JSON file.
        *
@@ -67,6 +77,18 @@ public:
      */
     void step(real_t time_step);
 
+    /**
+     * @brief Set the motor speed
+     * @param motor_name The name of the motor
+     * @param speed The speed
+     */
+    void set_motor_speed(const std::string& motor_name, real_t speed);
+
+    /**
+     * @brief Set the speed for both motors
+     * @param speed
+     */
+    void set_motor_speed(real_t speed);
 
     /**
      * @brief The name of the robot
@@ -93,7 +115,6 @@ public:
     void set_sensors(sensors::SensorManager& sensor_manager){sensor_manager_ptr_ = &sensor_manager;}
 
     /**
-     *
      * @return
      */
     chrono::ChSystemSMC& CHRONO_sys() noexcept{return sys_;}
@@ -101,7 +122,13 @@ public:
 
     std::shared_ptr<chrono::ChBody> CHRONO_chassis()noexcept{return chassis_;}
 
+    /**
+     * @return Pointer to the state of the robot
+     */
+    std::shared_ptr<pose_type> pose()noexcept{return pose_;}
+
 protected:
+
 
     /**
      * @brief Chrono physics system used for simulation.
@@ -118,6 +145,11 @@ protected:
     std::shared_ptr<chrono::ChBody> chassis_;
 
     /**
+     * The state of the robot
+     */
+    std::shared_ptr<pose_type> pose_;
+
+    /**
      * @brief Manages the sensors on the robot
      */
     sensors::SensorManager* sensor_manager_ptr_;
@@ -127,15 +159,20 @@ protected:
      * motors_.first left motor
      * motors.second right motor
      */
-    std::pair<std::shared_ptr<chrono::ChBody>, std::shared_ptr<chrono::ChBody>> motors_;
+    std::pair<MotorHandle, MotorHandle> motors_;
 
     /**
      * @brief The name of the robot
      */
     std::string name_;
 
-
 };
+
+inline void CHRONO_DiffDriveRobotBase::set_motor_speed(real_t speed)
+{
+    set_motor_speed("left_motor", speed);
+    set_motor_speed("right_motor", speed);
+}
 }
 }
 #endif
