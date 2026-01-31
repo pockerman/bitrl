@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2024 <copyright holder> <email>
-// SPDX-License-Identifier: Apache-2.0
-
 #ifndef JSON_FILE_READER_H
 #define JSON_FILE_READER_H
 
@@ -18,11 +15,18 @@ class JSONFileReader final : public FileReaderBase
 {
 
   public:
+
+    using json = nlohmann::json;
+
+    /**
+     * Constructor
+     * @param filename
+     */
     JSONFileReader(const std::string &filename);
 
-    ///
-    /// \brief Attempts to open the file for reading
-    ///
+    /**
+     * @brief Attempts to open the file for reading
+     */
     virtual void open() override final;
 
     /**
@@ -30,19 +34,44 @@ class JSONFileReader final : public FileReaderBase
      */
     template <typename T> T get_value(const std::string &label) const;
 
+    /**
+     * Returns the object at the specified label.
+     * T should be constructed using T(json data) and should
+     * be copy constructible
+     * @param label
+     * @return
+     */
+    template <typename T> T at(const std::string &label) const;
+
+    /**
+     * @param label The label to get the data
+     * @return Read reference to the underlying json structure that holds the data for the
+     * given label
+     */
+    const json& get(const std::string &label) const{return data_.at(label);};
+
   private:
-    using json = nlohmann::json;
     json data_;
 };
 
 template <typename T> T JSONFileReader::get_value(const std::string &label) const
 {
-
     if (!this->is_open())
     {
         throw std::logic_error("JSON file is not open. Have you called open()?");
     }
     return data_[label].template get<T>();
+}
+
+template <typename T> T JSONFileReader::at(const std::string &label) const
+{
+    if (!this->is_open())
+    {
+        throw std::logic_error("JSON file is not open. Have you called open()?");
+    }
+
+    auto data = data_.at(label);
+    return T(data);
 }
 
 } // namespace utils::io

@@ -13,7 +13,7 @@
 int main()
 {
 
-    using namespace bitrl::utils::io;
+    using namespace bitrl;
     using namespace bitrl::envs::connect2;
     using bitrl::uint_t;
 

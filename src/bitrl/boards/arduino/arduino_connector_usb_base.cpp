@@ -99,5 +99,5 @@ std::string ArduinoConnectorUSBBase::send_cmd(const ArduinoCMDBase &cmd)
     return "No response from Arduino.";
 }
 
-} // namespace boards::arduino
+} // namespace boards::example_15
 } // namespace bitrl

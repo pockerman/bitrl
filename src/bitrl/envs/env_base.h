@@ -165,10 +165,16 @@ template <typename TimeStepType, typename SpaceType> class EnvBase : public Spac
      */
     void set_idx_(const std::string &idx) noexcept { idx_ = idx; }
 
-    /** @brief Store make() options for future access */
+    /** @brief Store  options for future access */
     void set_make_options_(const std::unordered_map<std::string, std::any> &options) noexcept
     {
         make_options_ = options;
+    }
+
+    /** @brief Store reset options for future access */
+    void set_reset_options_(const std::unordered_map<std::string, std::any> &options) noexcept
+    {
+        reset_options_ = options;
     }
 
     /** @brief Mark environment as not created */

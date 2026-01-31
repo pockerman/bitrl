@@ -70,6 +70,6 @@ class ArduinoConnectorUSBBase : public ArduinoConnectorBase
     int_t port_id_{-1};
 };
 
-} // namespace boards::arduino
+} // namespace boards::example_15
 } // namespace bitrl
 #endif // ARDUINO_ENV_USB_BASE_H

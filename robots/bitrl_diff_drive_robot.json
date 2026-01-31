@@ -1,0 +1,45 @@
+{
+  "name": "Odysseus",
+  "mass": 1.0,
+  "mass_units": "kg",
+  "chassis": {
+    "mass": 1.0,
+    "mass_units": "kg",
+    "position": [ 0.0, 0.0, 0.0],
+    "fixed": false,
+    "visual_shape": "shape-box",
+    "visual_position": [0.4, 0.3, 0.05]
+  },
+  "left-wheel": {
+    "mass": 1.0,
+    "mass_units": "kg",
+    "position": [ 0.0, 0.175, -0.02],
+    "radius": 0.06,
+    "width": 0.05,
+    "radius_units": "cm",
+    "visual_shape": "cylinder",
+    "rotation_axis": [1, 0, 0],
+    "rotation_angle_deg": 90
+  },
+  "right-wheel": {
+    "mass": 1.0,
+    "mass_units": "kg",
+    "position": [ 0.0, -0.175, -0.02],
+    "radius": 0.06,
+    "width": 0.05,
+    "radius_units": "cm",
+    "visual_shape": "cylinder",
+    "rotation_axis": [1, 0, 0],
+    "rotation_angle_deg": 90
+  },
+  "caster-wheel": {
+    "mass": 0.5,
+    "mass_units": "kg",
+    "position": [ -0.2, 0.0, -0.02],
+    "radius": 0.06,
+    "width": 0.05,
+    "visual_shape": "cylinder",
+    "rotation_axis": [1, 0, 0],
+    "rotation_angle_deg": 90
+  }
+}
