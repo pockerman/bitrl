@@ -4,10 +4,15 @@
 
 #include "bitrl/bitrl_consts.h"
 #include "bitrl/rigid_bodies/chrono_robots/chrono_robot_pose.h"
+#include "bitrl/envs/env_base.h"
+#include "bitrl/envs/time_step.h"
+#include "bitrl/envs/time_step_type.h"
+#include "bitrl/envs/env_types.h"
+#include "bitrl/utils/bitrl_utils.h"
 
 #include <chrono/physics/ChSystemSMC.h>
 #include <chrono/physics/ChBodyEasy.h>
-#include <chrono/physics/ChLinkMotorRotationSpeed.h>
+
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
 
 #ifdef BITRL_LOG
@@ -15,8 +20,9 @@
 #include <boost/log/trivial.hpp>
 #endif
 
-#include <iostream>
 #include <string>
+#include <vector>
+#include <unordered_map>
 
 namespace example14
 {
@@ -27,9 +33,22 @@ using namespace chrono::irrlicht;
 // constants we will be using further below
 const uint_t WINDOW_HEIGHT = 800;
 const uint_t WINDOW_WIDTH = 1024;
-const real_t DT = 0.001;
+const real_t DT = 0.0001;
 const real_t SIM_TIME = 5.0;
 const std::string WINDOW_TITLE( "Example 14");
+
+constexpr uint_t STATE_SPACE_SIZE = 2;
+constexpr uint_t ACTION_SPACE_SIZE = 1;
+
+using bitrl::TimeStepTp;
+using bitrl::TimeStep;
+
+//typedef TimeStep<std::vector<real_t> > time_step_type;
+typedef TimeStep<chrono::ChVector3d> time_step_type;
+typedef bitrl::envs::ContinuousVectorStateContinuousVectorActionEnv<STATE_SPACE_SIZE, STATE_SPACE_SIZE> space_type;
+
+std::shared_ptr<chrono::ChBody> build_wheel(const std::string &wheel_label, real_t radius,
+                                            real_t width, const chrono::ChVector3d& pos);
 
 void draw_world_axes(chrono::irrlicht::ChVisualSystemIrrlicht& vis,
                      double scale = 1.0) {
@@ -54,22 +73,73 @@ void draw_world_axes(chrono::irrlicht::ChVisualSystemIrrlicht& vis,
         irr::video::SColor(255, 0, 0, 255));
 }
 
-auto build_wheel(const std::string &wheel_label, real_t radius,
-                 real_t width, const chrono::ChVector3d& pos)
+// class to model the robot
+class DiffDriveRobot
 {
+public:
 
-    auto material = chrono_types::make_shared<chrono::ChContactMaterialSMC>();
-    material->SetYoungModulus(2e7);     // stiffness (important)
-    material->SetPoissonRatio(0.3);
-    material->SetFriction(0.9f);        // traction
-    material->SetRestitution(0.0f);     // no bouncing
+    // add the components of this robot to the system we simulate
+    void add_to_sys(chrono::ChSystemSMC& sys);
 
-    // Optional but recommended
-    material->SetAdhesion(0.0);
-    material->SetKn(2e5);               // normal stiffness override
-    material->SetGn(40.0);              // normal damping
-    material->SetKt(2e5);               // tangential stiffness
-    material->SetGt(20.0);
+    // build the robot
+    void build();
+
+    // set the speeds of the motors
+    void set_speed(real_t speed);
+
+    // reset the robot
+    void reset();
+
+    // the pose of the robot
+    bitrl::rb::bitrl_chrono::CHRONO_RobotPose& pose()noexcept{return pose_;}
+
+private:
+
+    //The chassis of the robot
+    std::shared_ptr<chrono::ChBody> chassis_;
+    std::pair<std::shared_ptr<chrono::ChBody>, std::shared_ptr<chrono::ChBody>> wheels_;
+    std::shared_ptr<chrono::ChBody> caster_wheel_;
+    bitrl::rb::bitrl_chrono::CHRONO_RobotPose pose_;
+
+};
+
+void DiffDriveRobot::build()
+{
+    // build the chassis of the robot
+    chassis_ = chrono_types::make_shared<chrono::ChBody>();
+    chassis_->SetMass(1.0);
+    chassis_->SetPos(chrono::ChVector3d(0.0, 0.0, 0.22));
+
+    // allow the chassis to move
+    chassis_->SetFixed(false);
+
+    // add visual shape for visualization
+    auto vis_shape = chrono_types::make_shared<chrono::ChVisualShapeBox>(
+    chrono::ChVector3d(0.4, 0.3, 0.05));
+    chassis_ -> AddVisualShape(vis_shape);
+
+    // build the wheels of the robot
+    wheels_.first = build_wheel("left_wheel", 0.06, 0.05, chrono::ChVector3d(0.0, 0.175, 0.16));
+    wheels_.second = build_wheel("right_wheel", 0.06, 0.05, chrono::ChVector3d(0.0, -0.175, 0.16));
+    caster_wheel_ = build_wheel("caster_wheel", 0.06, 0.05, chrono::ChVector3d(0.2, 0.0, 0.16));
+
+    // we want to tract the chassis pose
+    pose_.set_body(chassis_);
+
+}
+
+void
+DiffDriveRobot::reset()
+{
+    chassis_ -> SetPos(chrono::ChVector3d(0.0, 0.0, 0.22));
+    wheels_.first  -> SetPos(chrono::ChVector3d(0.0, 0.175, 0.16));
+    wheels_.second -> SetPos(chrono::ChVector3d(0.0, -0.175, 0.16));
+    caster_wheel_ -> SetPos(chrono::ChVector3d(0.2, 0.0, 0.16));
+}
+
+std::shared_ptr<chrono::ChBody> build_wheel(const std::string &wheel_label, real_t radius,
+                                           real_t width, const chrono::ChVector3d& pos)
+{
 
     // rotation axis for the wheel
     chrono::ChQuaternion<> q;
@@ -79,91 +149,18 @@ auto build_wheel(const std::string &wheel_label, real_t radius,
     wheel->SetMass(1.0);
     wheel->SetPos(pos);
     wheel->SetName(wheel_label);
-    //wheel->SetRot(q);
     wheel->SetRot(chrono::QUNIT);
-    wheel->EnableCollision(true);
+    wheel->SetFixed(false);
 
-    chrono::ChQuaternion<> q_cyl;
-    q_cyl.SetFromAngleAxis(chrono::CH_PI_2, chrono::VECT_X);
+    auto visual_shape =  chrono_types::make_shared<chrono::ChVisualShapeCylinder>(radius, width);
 
-    chrono::ChFrame<> cyl_frame(chrono::VNULL, q_cyl);
+    chrono::ChQuaterniond qvis;
+    qvis.SetFromAngleAxis(chrono::CH_PI_2, chrono::VECT_X);
 
-    auto cyl_shape = chrono_types::make_shared<chrono::ChCollisionShapeCylinder>(
-    material,
-    radius,
-    width * 0.5   // half-length
-    );
+    chrono::ChFrame<> vis_frame(chrono::VNULL, qvis);
 
-    wheel->AddCollisionShape(cyl_shape);
-
-    wheel->AddVisualShape(
-    chrono_types::make_shared<chrono::ChVisualShapeCylinder>(radius, width));
+    wheel->AddVisualShape(visual_shape, vis_frame);
     return wheel;
-}
-
-
-// class to model the robot
-class DiffDriveRobot
-{
-public:
-
-    struct MotorHandle {
-        std::shared_ptr<chrono::ChLinkMotorRotationSpeed> motor;
-        std::shared_ptr<chrono::ChFunctionConst> speed;
-    };
-
-    // add the components of this robot to the systme we simulate
-    void add_to_sys(chrono::ChSystemSMC& sys);
-
-    // build the robot
-    void build();
-
-    // set the speeds of the motors
-    void set_motor_speed(real_t speed);
-
-    // the pose of the robot
-    bitrl::rb::bitrl_chrono::CHRONO_RobotPose& pose()noexcept{return pose_;}
-
-private:
-
-    //The chassis of the robot
-    std::shared_ptr<chrono::ChBody> chassis_;
-
-    bitrl::rb::bitrl_chrono::CHRONO_RobotPose pose_;
-
-    std::pair<std::shared_ptr<chrono::ChBody>, std::shared_ptr<chrono::ChBody>> wheels_;
-    std::shared_ptr<chrono::ChBody> caster_wheel_;
-    std::pair<MotorHandle, MotorHandle> motors_;
-    MotorHandle caster_motor_;
-};
-
-DiffDriveRobot::MotorHandle build_motor(std::shared_ptr<chrono::ChBody> wheel,
-                                        std::shared_ptr<chrono::ChBody> chassis,
-                                        const std::string &motor_label)
-{
-
-    // Build joint frame in ABSOLUTE coordinates
-    chrono::ChQuaterniond q;
-    q.SetFromAngleAxis(chrono::CH_PI_2, chrono::VECT_X);
-    //chrono::ChFrame<> frame(wheel->GetPos(), q);
-
-    // Use the wheel's actual absolute frame
-    chrono::ChFrame<> frame = wheel->GetFrameRefToAbs();
-
-    auto motor =  chrono_types::make_shared<chrono::ChLinkMotorRotationSpeed>();
-    motor->Initialize(
-    wheel,
-    chassis,
-    frame);
-    motor->SetName(motor_label);
-
-    // set the speed function (rad/s)
-    auto speed_func = chrono_types::make_shared<chrono::ChFunctionConst>(0.0);
-    motor -> SetSpeedFunction(speed_func);
-
-    auto z = motor->GetFrame2Abs().GetRotMat().GetAxisZ();
-    std::cout << "Motor Z axis: " << z << std::endl;
-    return {motor, speed_func};
 }
 
 void DiffDriveRobot::add_to_sys(chrono::ChSystemSMC& sys)
@@ -171,56 +168,59 @@ void DiffDriveRobot::add_to_sys(chrono::ChSystemSMC& sys)
     sys.Add(chassis_);
     sys.Add(wheels_.first);
     sys.Add(wheels_.second);
-    sys.AddLink(motors_.first.motor);
-    sys.AddLink(motors_.second.motor);
     sys.Add(caster_wheel_);
 
-    auto caster_joint = chrono_types::make_shared<chrono::ChLinkLockSpherical>();
-    caster_joint->Initialize(
-        caster_wheel_,
-        chassis_,
-        chrono::ChFrame<>(chrono::ChCoordsys<>(caster_wheel_->GetPos()))
-    );
-    sys.Add(caster_joint);
 }
-void DiffDriveRobot::build()
+
+void DiffDriveRobot::set_speed(real_t speed)
 {
-    // build the chassis of the robot
-
-    chassis_ = chrono_types::make_shared<chrono::ChBody>();
-    chassis_->SetMass(1.0);
-    chassis_->SetInertiaXX(chrono::ChVector3d(0.1, 0.1, 0.1));
-    chassis_->SetPos(chrono::ChVector3d(0.0, 0.0, 0.0));
-    chassis_->SetFixed(false);
-
-    // add visual shape for visualization
-    auto vis_shape = chrono_types::make_shared<chrono::ChVisualShapeBox>(
-    chrono::ChVector3d(0.4, 0.3, 0.05));
-    chassis_ -> AddVisualShape(vis_shape);
-
-    // build the wheels of the robot
-    wheels_.first = build_wheel("left_wheel", 0.06, 0.05, chrono::ChVector3d(0.0, 0.175, -0.02));
-    wheels_.second = build_wheel("right_wheel", 0.06, 0.05, chrono::ChVector3d(0.0, -0.175, -0.02));
-    caster_wheel_ = build_wheel("caster_wheel", 0.06, 0.05, chrono::ChVector3d(-0.2, 0.0, -0.02));
-
-    // build the motors of the robot
-    motors_.first = build_motor(wheels_.first, chassis_, "left_wheel");
-    motors_.second = build_motor(wheels_.second, chassis_, "right_wheel");
-    caster_motor_ = build_motor(caster_wheel_, chassis_, "caster_wheel");
-
-    // we want to tract the chassis pose
-    pose_.set_body(chassis_);
+    chassis_ -> SetAngVelLocal(chrono::VNULL);
+    chassis_ -> SetAngAccLocal(chrono::VNULL);
+    chassis_ -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
+    wheels_.first -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
+    wheels_.second -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
+    caster_wheel_ -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
 
 }
 
-void DiffDriveRobot::set_motor_speed(real_t speed)
+class DiffDriveRobotEnv final: public bitrl::envs::EnvBase<time_step_type, space_type>
 {
-    motors_.first.speed -> SetConstant(speed);
-    motors_.second.speed -> SetConstant(speed);
-    caster_motor_.speed -> SetConstant(speed);
-}
+public:
 
-void build_system(chrono::ChSystemSMC& sys)
+
+    typedef typename space_type::action_type action_type;
+
+    DiffDriveRobotEnv();
+
+    virtual void make(const std::string &version,
+                      const std::unordered_map<std::string, std::any> &make_options,
+                      const std::unordered_map<std::string, std::any> &reset_options) override;
+
+    virtual void close()override{}
+
+    virtual time_step_type reset()override;
+    virtual time_step_type step(const action_type &/*action*/)override;
+
+    void simulate();
+
+private:
+
+    DiffDriveRobot robot_;
+    chrono::ChSystemSMC sys_;
+    uint_t sim_counter_{0};
+    real_t current_time_{0.0};
+    void build_system_();
+
+};
+
+DiffDriveRobotEnv::DiffDriveRobotEnv()
+    :
+bitrl::envs::EnvBase<time_step_type, space_type>(bitrl::utils::uuid4(), "DiffDriveRobotEnv"),
+robot_(),
+sys_()
+{}
+
+void DiffDriveRobotEnv::build_system_()
 {
     // create material for the ground
     auto material = chrono_types::make_shared<chrono::ChContactMaterialSMC>();
@@ -238,25 +238,77 @@ void build_system(chrono::ChSystemSMC& sys)
     material->SetGt(20.0);
 
     auto ground = chrono_types::make_shared<chrono::ChBodyEasyBox>(
-        5.0, 5.0, 0.001,
+        5.0, 5.0, 0.2,
         1000,
         true,   // visual
         true,   // collision
         material
     );
     ground->SetFixed(true);
+    ground->SetPos({0, 0, -0.1});
 
     // set the gravity acceleration
-    sys.SetGravitationalAcceleration(chrono::ChVector3d(0, 0.0, -bitrl::consts::maths::G));
-    //sys.Add(ground);
+    sys_.SetGravitationalAcceleration(chrono::ChVector3d(0, 0.0, -bitrl::consts::maths::G));
+    sys_.Add(ground);
 }
 
-void simulate(DiffDriveRobot& robot, chrono::ChSystemSMC& sys)
+void
+DiffDriveRobotEnv::make(const std::string &version,
+                        const std::unordered_map<std::string, std::any> &make_options,
+                        const std::unordered_map<std::string, std::any> &reset_options)
 {
 
+    robot_.build();
+    build_system_();
+
+    robot_.add_to_sys(sys_);
+
+    this -> set_make_options_(make_options);
+    this -> set_reset_options_(reset_options);
+    this -> set_version_(version);
+    this -> make_created_();
+
+}
+
+time_step_type
+DiffDriveRobotEnv::reset()
+{
+    sim_counter_ = 1;
+    current_time_ = 0.0;
+    robot_.reset();
+    robot_.set_speed(15.0);
+
+    auto robot_position  =robot_.pose().position();
+    return time_step_type(TimeStepTp::FIRST, 0.0, robot_position);
+}
+
+time_step_type
+DiffDriveRobotEnv::step(const action_type &/*action*/)
+{
+
+    if (sim_counter_ % 100 == 0)
+    {
+#ifdef BITRL_LOG
+        BOOST_LOG_TRIVIAL(info)<<"Reset simulation: ";
+#endif
+        return reset();
+    }
+
+    sys_.DoStepDynamics(DT);
+    auto robot_position  =robot_.pose().position();
+
+    sim_counter_++;
+    current_time_ += DT;
+    return time_step_type(TimeStepTp::MID, 1.0, robot_position);
+}
+
+
+
+void DiffDriveRobotEnv::simulate()
+{
     // create the object that handles the visualization
     chrono::irrlicht::ChVisualSystemIrrlicht visual;
-    visual.AttachSystem(&sys);
+    visual.AttachSystem(&sys_);
     visual.SetWindowSize(WINDOW_WIDTH, WINDOW_WIDTH); //WINDOW_HEIGHT);
     visual.SetWindowTitle(WINDOW_TITLE);
     visual.Initialize();
@@ -267,15 +319,9 @@ void simulate(DiffDriveRobot& robot, chrono::ChSystemSMC& sys)
     visual.AddTypicalLights();
     visual.BindAll();
 
-    real_t current_time = 0.0;
-    auto& pose = robot.pose();
-
-    robot.set_motor_speed(5.0);
+    // we need this
     while (visual.Run())
     {
-#ifdef BITRL_LOG
-        //BOOST_LOG_TRIVIAL(info)<<"Sim time: " << current_time;
-#endif
 
     // Irrlicht must prepare frame to draw
     visual.BeginScene();
@@ -285,26 +331,16 @@ void simulate(DiffDriveRobot& robot, chrono::ChSystemSMC& sys)
 
     // .. draw a grid
     tools::drawGrid(&visual, 0.5, 0.5);
-        draw_world_axes(visual, 1.5);
- //    tools::drawCoordinateSystem(
- //     &visual,
- //     chrono::ChCoordsys<>(chrono::VNULL, chrono::QUNIT),
- //     0.5   // axis length
- // );
+    draw_world_axes(visual, 1.5);
 
-    // .. draw GUI items belonging to Irrlicht screen, if any
-    visual.GetGUIEnvironment()->drawAll();
-
-    //sys.DoStepDynamics(DT);
+    auto time_step = step( action_type());
 #ifdef BITRL_LOG
-    //BOOST_LOG_TRIVIAL(info)<<"Position: "<<pose.position();
+    BOOST_LOG_TRIVIAL(info)<<"At time: "<<current_time_<<" position: "<<time_step.observation();
 #endif
 
     // Irrlicht must finish drawing the frame
     visual.EndScene();
-
-    current_time += DT;
-}
+    }
 
 }
 
@@ -314,25 +350,19 @@ int main()
 {
     using namespace example14;
 
-    // the system we will be simulating
-    chrono::ChSystemSMC sys;
 
 #ifdef BITRL_LOG
     BOOST_LOG_TRIVIAL(info)<<"Building system...: ";
 #endif
-    build_system(sys);
 
-    DiffDriveRobot robot;
 
-#ifdef BITRL_LOG
-    BOOST_LOG_TRIVIAL(info)<<"Building robot...: ";
-#endif
-    robot.build();
-    robot.add_to_sys(sys);
+    DiffDriveRobotEnv env;
+    env.make("v1", std::unordered_map<std::string, std::any>(),
+    std::unordered_map<std::string, std::any>());
+    env.reset();
 
-    // simulate
-    simulate(robot, sys);
-
+    env.simulate();
+    env.close();
     return 0;
 }
 
