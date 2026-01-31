@@ -2,16 +2,16 @@
 
 in this example we will create an environment for reinforcement learning based
 on the <a href="https://github.com/projectchrono/chrono">Chrono</a> library.
-Specifically, we will create an environment that includes a <a href="https://en.wikipedia.org/wiki/Differential_wheeled_robot2>differential drive system</a>.
+Specifically, we will create an environment that includes a <a href="https://en.wikipedia.org/wiki/Differential_wheeled_robot">differential drive system</a>.
 Note that the model we will create will not be of high fidelity as the purpose of the example is show how
 to use Chrono to create reinforcement learning environments.
 
 In order to be able to run this example you need to configure bitrl with Chrono support. You will also
-need the <a herf="https://irrlicht.sourceforge.io/">Irrlicht</a> library for visualising the robot.
+need the <a href="https://irrlicht.sourceforge.io/">Irrlicht</a> library for visualising the robot.
 
 The following image shows an image of the environment we will create
 
-| ![average-per-epoch-loss](./env.png) |
+| ![Environment overview](./env.png) |
 |:------------------------------------:|
 
 
@@ -19,7 +19,7 @@ The following image shows an image of the environment we will create
 
 Below is the class that handles the robot model.
 
-@code
+@code{.cpp}
 class DiffDriveRobot
 {
 public:
@@ -43,7 +43,7 @@ private:
 The chassis of the robot is a simple rectangular plate. It also has three wheels. The model robot we will develop will not consider motors.
 However, Chrono allows for high fidelity models is this is needed. Below is the function that build the robot
 
-@node
+@code
 void DiffDriveRobot::build()
 {
 // build the chassis of the robot
@@ -105,7 +105,6 @@ wheels_.second -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
 caster_wheel_ -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
 
 }
-
 @endcode
 
 ## Create the environment
