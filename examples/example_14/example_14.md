@@ -1,6 +1,6 @@
 \page bitrl_example_14 Example 14 Create an environment using Chrono
 
-in this example we will create an environment for reinforcement learning based
+In this example we will create an environment for reinforcement learning based
 on the <a href="https://github.com/projectchrono/chrono">Chrono</a> library.
 Specifically, we will create an environment that includes a <a href="https://en.wikipedia.org/wiki/Differential_wheeled_robot">differential drive system</a>.
 Note that the model we will create will not be of high fidelity as the purpose of the example is show how
@@ -43,7 +43,7 @@ private:
 The chassis of the robot is a simple rectangular plate. It also has three wheels. The model robot we will develop will not consider motors.
 However, Chrono allows for high fidelity models is this is needed. Below is the function that build the robot
 
-@code
+@code{.cpp}
 void DiffDriveRobot::build()
 {
 // build the chassis of the robot
@@ -72,7 +72,7 @@ chassis_->SetPos(chrono::ChVector3d(0.0, 0.0, 0.22));
 
 The reset function simple resets the robot to its original position
 
-@code
+@code{.cpp}
 void
 DiffDriveRobot::reset()
 {
@@ -85,7 +85,7 @@ caster_wheel_ -> SetPos(chrono::ChVector3d(0.2, 0.0, 0.16));
 
 Below are some helper functions for the robot.
 
-@code
+@code{.cpp}
 void DiffDriveRobot::add_to_sys(chrono::ChSystemSMC& sys)
 {
 sys.Add(chassis_);
@@ -112,7 +112,7 @@ caster_wheel_ -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
 The environment class inherits from the \ref bitrl::envs::EnvBase "`bitrl::envs::EnvBase`" class. We will need to specify the
 time step type and the space type:
 
-@code
+@code{.cpp}
 constexpr uint_t STATE_SPACE_SIZE = 2;
 constexpr uint_t ACTION_SPACE_SIZE = 1;
 
@@ -124,7 +124,9 @@ typedef TimeStep<chrono::ChVector3d> time_step_type;
 typedef bitrl::envs::ContinuousVectorStateContinuousVectorActionEnv<STATE_SPACE_SIZE, STATE_SPACE_SIZE> space_type;
 @endcode
 
-@code
+Here is the definition of the actual class.
+
+@code{.cpp}
 class DiffDriveRobotEnv final: public bitrl::envs::EnvBase<time_step_type, space_type>
 {
 public:
@@ -153,7 +155,7 @@ private:
 
 Below are the implementations for reset, step and make
 
-@code
+@code{.cpp}
 void
 DiffDriveRobotEnv::make(const std::string &version,
 const std::unordered_map<std::string, std::any> &make_options,
@@ -207,7 +209,7 @@ BOOST_LOG_TRIVIAL(info)<<"Reset simulation: ";
 
 The simulate function wraps everything together
 
-@code
+@code{.cpp}
 void DiffDriveRobotEnv::simulate()
 {
 
