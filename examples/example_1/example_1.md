@@ -5,10 +5,10 @@ specifically how to create an interact with <a href="https://gymnasium.farama.or
 
 In bitrl, Gymnasium-based environment are interacted over a REST-like API maintained here: <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a>.
 bitrl itself implements classes that hide this interaction from the client code. 
-In general, environment classes in bitrl, have to implement the \ref bitrl::envs::EnvBase "`bitrl::envs::EnvBase`" API.
+In general, environment classes in bitrl, have to implement the \ref bitrl::envs::EnvBase "bitrl::envs::EnvBase" API.
 
-In this example we will use the \ref bitrl::envs::gymnasium::FrozenLake "`bitrl::envs::gymnasium::FrozenLake`"  
-class. This is a template class, see the example below, that itself inherits from  \ref bitrl::envs::gymnasium::GymnasiumEnvBase "`bitrl::envs::gymnasium::GymnasiumEnvBase`"
+In this example we will use the \ref bitrl::envs::gymnasium::FrozenLake "bitrl::envs::gymnasium::FrozenLake"  
+class. This is a template class, see the example below, that itself inherits from  \ref bitrl::envs::gymnasium::GymnasiumEnvBase "bitrl::envs::gymnasium::GymnasiumEnvBase"
 class.
 
 Below is the driver code. 
@@ -132,6 +132,6 @@ int main()
 @endcode
 
 In order to run the example you will need an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a> server running
-on your machine listening at por 8001. Note the actual example also shows how to use \ref bitrl::envs::gymnasium::Taxi "`bitrl::envs::gymnasium::Taxi`",
-\ref bitrl::envs::gymnasium::CliffWorld "`bitrl::envs::gymnasium::CliffWorld`" and \ref bitrl::envs::gymnasium::BlackJack "`bitrl::envs::gymnasium::BlackJack`"
+on your machine listening at por 8001. Note the actual example also shows how to use \ref bitrl::envs::gymnasium::Taxi "bitrl::envs::gymnasium::Taxi",
+\ref bitrl::envs::gymnasium::CliffWorld "bitrl::envs::gymnasium::CliffWorld" and \ref bitrl::envs::gymnasium::BlackJack "bitrl::envs::gymnasium::BlackJack"
 environments.
