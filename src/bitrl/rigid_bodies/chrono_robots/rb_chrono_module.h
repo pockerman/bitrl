@@ -1,7 +1,3 @@
-//
-// Created by alex on 1/11/26.
-//
-
 #ifndef RB_CHRONO_MODULE_H
 #define RB_CHRONO_MODULE_H
 
@@ -12,6 +8,5 @@
  * This module contains robot models, simulation utilities,
  * and physics-based components built on Project Chrono.
  */
-
 
 #endif //RB_CHRONO_MODULE_H
