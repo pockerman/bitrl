@@ -160,6 +160,7 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/envs/gymnasium/box2d/*.cpp
 		src/bitrl/boards/arduino/*.cpp
 		src/bitrl/control/*.cpp
+		src/bitrl/planning/*.cpp
 		src/bitrl/rigid_bodies/*.cpp
 		src/bitrl/rigid_bodies/chrono_robots/*.cpp
 		src/bitrl/rigid_bodies/webots_robots/*.cpp
