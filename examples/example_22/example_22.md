@@ -1,4 +1,4 @@
-# EXample 2: Extented Kalman filtering
+\page bitrl_example_22 BitRL Example 22: Extented Kalman filtering
 
 In this example we will develop an Extended Kalaman Filter or EKF for short. In you do not know what an EKF is or how it works have a look at here: 
 https://en.wikipedia.org/wiki/Extended_Kalman_filter. 
@@ -6,12 +6,11 @@ https://en.wikipedia.org/wiki/Extended_Kalman_filter.
 Briefly, the EKF is an improvement over the classic Kalman Filter that can be applied to non-linear systems. The crux of the algorithm 
 remains the predictor-corrector steps as in the Kalman Filter. 
 
-In this example we will use the ```ExtendedKalmaFilter``` class in order to estimate 
+In this example we will use the \ref bitrl::estimation::ExtendedKalmanFilter "bitrl::estimation::ExtendedKalmanFilter" class in order to estimate 
 the state of a differential drive system. 
 
-## The driver code
+@code{.cpp}
 
-```
 #include "cubeai/base/cubeai_types.h"
 #include "cubeai/estimation/extended_kalman_filter.h"
 #include "cubeai/utils/iteration_counter.h"
@@ -234,13 +233,11 @@ int main() {
    
    return 0;
 }
-
-
-```
+@endcode
 
 Running the code above produces the following output:
 
-```
+@code
 2024-12-26 11:02:30.754717] [0x00007f186a82e000] [info]    Starting example...
 [2024-12-26 11:02:30.755323] [0x00007f186a82e000] [info]    Starting simulation... 0
 [2024-12-26 11:02:30.755334] [0x00007f186a82e000] [info]    Simulation time: 0
@@ -311,9 +308,7 @@ Running the code above produces the following output:
 [2024-12-26 11:02:30.782431] [0x00007f186a82e000] [info]    Orientation: (degrees)-22.5
 [2024-12-26 11:02:30.782434] [0x00007f186a82e000] [info]    V: 1, W: 0
 [2024-12-26 11:02:30.782442] [0x00007f186a82e000] [info]    Finished example...
-
-
-```
+@endcode
 
 There is a ```plot.py``` utility script that you can use to visualise the coordinates
 and the orientation with respect to time. This is shown in the figures below. As we don't
