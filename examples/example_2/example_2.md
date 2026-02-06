@@ -1,3 +1,12 @@
+\page bitrl_example_2 BitRL Example 2 Using GymWalk Environment
+
+The \ref bitrl::envs::gdrl::GymWalk "bitrl::envs::gdrl::GymWalk" is an implementation of the
+environment from https://github.com/mimoralea/gym-walk. Just like with \ref bitrl_example_1, you will need
+an instance of the  <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a> server running in order 
+to actually use the environment. Other than that there isn't much to say for this example.
+Below is the driver code.
+
+@code{.cpp}
 #include "bitrl/bitrl_types.h"
 #include "bitrl/envs/gdrl/gym_walk.h"
 #include "bitrl/network/rest_rl_env_client.h"
@@ -18,9 +27,9 @@ using bitrl::network::RESTRLEnvClient;
 
 void test_gymwalk(RESTRLEnvClient &server)
 {
-    // the environment is not registered with the server
-    std::cout << "Is environment registered: " << server.is_env_registered(GymWalk<4>::name)
-              << std::endl;
+// the environment is not registered with the server
+std::cout << "Is environment registered: " << server.is_env_registered(GymWalk<4>::name)
+<< std::endl;
 
     // when the environment is created we register it with the REST client
     GymWalk<4> env(server);
@@ -109,3 +118,5 @@ int main()
     std::cout << "====================" << std::endl;
     return 0;
 }
+
+@endcode
