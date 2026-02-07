@@ -65,21 +65,13 @@ void prepare_visualization(chrono::irrlicht::ChVisualSystemIrrlicht& visual)
 std::shared_ptr<chrono::ChBody> create_box(real_t xlength, real_t ylength, real_t zlength,
                                                  real_t density, bool create_visualization)
 {
-
-    // build the chassis of the robot
     auto box = chrono_types::make_shared<chrono::ChBodyEasyBox>(xlength, ylength, zlength,
                                                                                         density, create_visualization);
     box -> SetMass(1.0);
     box -> SetPos(chrono::ChVector3d(0.0, 0.0, 0.22));
-
-    // allow the chassis to move
-    box -> SetFixed(true);
     return box;
 
 }
-
-
-
 
 } // namespace example_11
 
@@ -132,8 +124,21 @@ int main()
     auto position = box -> GetPos();
     BOOST_LOG_TRIVIAL(info)<<"Position of CoM: "<<position;
     BOOST_LOG_TRIVIAL(info)<<"Linear velocity of CoM: "<<box -> GetLinVel();
-    auto pos_local = box->TransformPointParentToLocal(position);
-    BOOST_LOG_TRIVIAL(info)<<"local position of CoM: "<<pos_local;
+
+    // create a frame this is assumed to be the inertial frame we call this
+    // the world or reference frame
+    chrono::ChFrame ref_frame(chrono::ChVector3d(0.0, 0.0, 0.0));
+    BOOST_LOG_TRIVIAL(info)<<"Position of ref frame: "<<ref_frame.GetPos();
+
+    // child frame DEFINED RELATIVE TO ref_frame
+    chrono::ChFrame child_frame_in_ref(chrono::ChVector3d(0.0, 0.0, 0.22));
+    BOOST_LOG_TRIVIAL(info)<<"Position of translated frame: "<<child_frame_in_ref.GetPos();
+
+    // compose: child frame expressed in WORLD
+    chrono::ChFrame translated_in_world = ref_frame * child_frame_in_ref;
+    BOOST_LOG_TRIVIAL(info)<<"Position of translated in world frame: "<<translated_in_world.GetPos();
+
+
 }
 #else
 #include <iostream>
