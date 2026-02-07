@@ -1,4 +1,4 @@
-\page bitrl_example_14 Example 14 Create an environment using Chrono
+\page bitrl_example_14 BitRL Example 14 Create an RL environment using Chrono
 
 In this example we will create an environment for reinforcement learning based
 on the <a href="https://github.com/projectchrono/chrono">Chrono</a> library.
@@ -6,16 +6,12 @@ Specifically, we will create an environment that includes a <a href="https://en.
 Note that the model we will create will not be of high fidelity as the purpose of the example is show how
 to use Chrono to create reinforcement learning environments.
 
-In order to be able to run this example you need to configure bitrl with Chrono support. You will also
+In order to be able to run this example you need to configure _bitrl_ with Chrono support. You will also
 need the <a href="https://irrlicht.sourceforge.io/">Irrlicht</a> library for visualising the robot.
 
 The following image shows an image of the environment we will create
 
-| ![Environment overview](./env.png) |
-|:------------------------------------:|
-
-
-## Create the robot
+<img src="./env.png" width="600" height="337"/>
 
 Below is the class that handles the robot model.
 

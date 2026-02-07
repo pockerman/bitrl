@@ -7,7 +7,22 @@
  *
  */
 
+#include "bitrl/bitrl_config.h"
+
+#ifdef BITRL_CHRONO
+
 #include "bitrl/bitrl_types.h"
+
+#ifdef BITRL_LOG
+#define BOOST_LOG_DYN_LINK
+#include <boost/log/trivial.hpp>
+#endif
+
+#include <chrono/physics/ChSystemSMC.h>
+#include <chrono/physics/ChBodyEasy.h>
+#include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
+
+
 #include "bitrl/utils/geometry/geom_point.h"
 #include "bitrl/utils/trajectory/line_segment_link.h"
 #include "bitrl/utils/trajectory/waypoint.h"
@@ -24,76 +39,110 @@
 namespace example_11
 {
 
-using bitrl::Null;
-using bitrl::real_t;
-using bitrl::uint_t;
-using bitrl::utils::geom::GeomPoint;
-using bitrl::utils::trajectory::LineSegmentLink;
-using bitrl::utils::trajectory::WayPoint;
-using bitrl::utils::trajectory::WaypointTrajectory;
+using namespace bitrl;
+using namespace chrono::irrlicht;
 
-struct LineSegmentData
+// constants we will be using further below
+const uint_t WINDOW_HEIGHT = 800;
+const uint_t WINDOW_WIDTH = 1024;
+const real_t DT = 0.0001;
+const real_t SIM_TIME = 5.0;
+const std::string WINDOW_TITLE( "Example 11");
+
+void prepare_visualization(chrono::irrlicht::ChVisualSystemIrrlicht& visual)
 {
-    /// \brief The maximum velocity
-    /// allowed on the edge
-    real_t Vmax{0.0};
+    visual.SetWindowSize(WINDOW_WIDTH, WINDOW_WIDTH); //WINDOW_HEIGHT);
+    visual.SetWindowTitle(WINDOW_TITLE);
+    visual.Initialize();
 
-    /// \brief The orientation of the
-    /// segment with respect to the global coordinate
-    /// frame. This may also dictate the orientation
-    /// that a reference vehicle may have on the segment
-    real_t theta{0.0};
+    visual.AddLogo();
+    visual.AddSkyBox();
+    visual.AddCamera({0, -2, 1}, {0, 0, 0});
+    visual.AddTypicalLights();
+    visual.BindAll();
+}
 
-    /// \brief The angular velocity on the segment
-    real_t w{0.0};
+std::shared_ptr<chrono::ChBody> create_box(real_t xlength, real_t ylength, real_t zlength,
+                                                 real_t density, bool create_visualization)
+{
 
-    /// \brief The linear velocity on the segement
-    real_t v{0.0};
-};
+    // build the chassis of the robot
+    auto box = chrono_types::make_shared<chrono::ChBodyEasyBox>(xlength, ylength, zlength,
+                                                                                        density, create_visualization);
+    box -> SetMass(1.0);
+    box -> SetPos(chrono::ChVector3d(0.0, 0.0, 0.22));
 
-typedef LineSegmentLink<2, Null, LineSegmentData> link_type;
-typedef link_type::w_point_type w_point_type;
+    // allow the chassis to move
+    box -> SetFixed(true);
+    return box;
+
+}
+
+
+
 
 } // namespace example_11
+
+/*
+int main()
+{
+
+    using namespace example_11;
+    chrono::ChSystemSMC sys;
+
+    // build the body and add it to the system
+    // we want to simulate
+    auto box = create_box(1.0, 1.0, 1.0, 1.0, true);
+    sys.Add(box);
+
+    // create the object that handles the visualization
+    chrono::irrlicht::ChVisualSystemIrrlicht visual;
+    prepare_visualization(visual);
+    visual.AttachSystem(&sys);
+
+    while (visual.Run())
+    {
+
+        // Irrlicht must prepare frame to draw
+        visual.BeginScene();
+
+        // .. draw items belonging to Irrlicht scene, if any
+        visual.Render();
+
+        // .. draw a grid
+        tools::drawGrid(&visual, 0.5, 0.5);
+
+        // Irrlicht must finish drawing the frame
+        visual.EndScene();
+    }
+
+}*/
 
 int main()
 {
 
     using namespace example_11;
+    chrono::ChSystemSMC sys;
 
-    // create a trajector of 4 links
-    // the waypoints carry not data
-    // but the the links
-    // carry objects of type LineSegmentData
-    WaypointTrajectory<link_type> trajectory(3);
+    // build the body and add it to the system
+    // we want to simulate
+    auto box = create_box(1.0, 1.0, 1.0, 1.0, true);
+    sys.Add(box);
 
-    // start adding the links
-    // that form the trajectory
-    w_point_type p0(GeomPoint<2>({0.0, 0.0}), static_cast<uint_t>(0));
-    w_point_type p1(GeomPoint<2>({1.0, 0.0}), static_cast<uint_t>(1));
-    LineSegmentData data{1.0, 0.0, 0.0, 0.95};
-
-    link_type l0(p0, p1, static_cast<uint_t>(0), data);
-
-    w_point_type p2(GeomPoint<2>({1.0, 0.0}), static_cast<uint_t>(2));
-    w_point_type p3(GeomPoint<2>({2.0, 2.0}), static_cast<uint_t>(3));
-    data.theta = bitrl::utils::unit_converter::degrees_to_rad(45.0);
-    link_type l1(p2, p3, static_cast<uint_t>(1), data);
-
-    w_point_type p4(GeomPoint<2>({2.0, 2.0}), static_cast<uint_t>(4));
-    w_point_type p5(GeomPoint<2>({2.0, 3.0}), static_cast<uint_t>(5));
-    data.theta = bitrl::utils::unit_converter::degrees_to_rad(90.0);
-    link_type l2(p2, p3, static_cast<uint_t>(2), data);
-
-    trajectory[0] = l0;
-    trajectory[1] = l1;
-    trajectory[2] = l2;
-
-    std::cout << "Trajectory number of links: " << trajectory.size() << std::endl;
-
-    for (const auto &link : trajectory)
-    {
-        std::cout << link.get_id() << std::endl;
-    }
-    return 0;
+    auto position = box -> GetPos();
+    BOOST_LOG_TRIVIAL(info)<<"Position of CoM: "<<position;
+    BOOST_LOG_TRIVIAL(info)<<"Linear velocity of CoM: "<<box -> GetLinVel();
+    auto pos_local = box->TransformPointParentToLocal(position);
+    BOOST_LOG_TRIVIAL(info)<<"local position of CoM: "<<pos_local;
 }
+#else
+#include <iostream>
+int main()
+{
+    std::cerr<<"You need PROJECTCHRONO configured with "
+             <<"bitrl in order to run this example "
+             <<"Reconfigure bitrl and set ENABLE_CHRONO=ON"<<std::endl;
+    return 1;
+}
+
+#endif

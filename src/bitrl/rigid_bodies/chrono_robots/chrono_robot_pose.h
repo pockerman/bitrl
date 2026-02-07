@@ -22,25 +22,36 @@ class CHRONO_RobotPose
 public:
 
     /**
-     *@brief Constructr
+     *@brief Constructor. Initialize by passing a pointer to the chrono::ChBody
+     * to monitor
      */
     explicit CHRONO_RobotPose(std::shared_ptr<chrono::ChBody> robot_ptr=nullptr);
 
     /**
-     *
+     * Set/Reset the chrono::ChBody to monitor
      * @param robot_ptr
      */
     void set_body(std::shared_ptr<chrono::ChBody> robot_ptr){robot_ptr_ = robot_ptr;}
 
     /**
-     * @brief Return the position vector
+     * @brief Return the position vector. This is the position of the CoM of the body
      */
-    chrono::ChVector3d position(){return robot_ptr_ -> GetPos();}
+    const chrono::ChVector3d& position() const {return robot_ptr_ -> GetPos();}
+
+    /**
+     * @return The linear velocity of the monitored body
+     */
+    const chrono::ChVector3d& velocity()const {return  robot_ptr_ -> GetLinVel();}
+
+    /**
+     * @return The linear velocity of the monitored body
+     */
+    const chrono::ChVector3d& acceleration()const {return  robot_ptr_ -> GetLinAcc();}
 
     /**
      * @brief Return the rotation matrix
      */
-    chrono::ChMatrix33d rotation_matrix() const {return robot_ptr_ -> GetRotMat();}
+    const chrono::ChMatrix33d& rotation_matrix() const {return robot_ptr_ -> GetRotMat();}
 
     /**
      * @brief Return the transformation of the local to the world coordinats
@@ -54,7 +65,7 @@ public:
 private:
 
     /**
-     * @brief Pointer to the robot
+     * @brief Pointer to the chrono::ChBody to monitor
      */
     std::shared_ptr<chrono::ChBody> robot_ptr_;
 
