@@ -9,7 +9,7 @@ Note that you should have compiled Chrono with <a href="https://irrlicht.sourcef
 The main interface for creating rigid bodies in Chrono is the <a href="https://api.projectchrono.org/9.0.0/classchrono_1_1_ch_body.html">ChBody</a>
 class. You can also find this <a href="https://api.projectchrono.org/9.0.0/rigid_bodies.html"> Rigid Bodies</a> helpful.
 _ChBody_ is an abstract class, and therefore we cannot instantiate it directly. Chrono provides various classes however we can 
-immediately use. The one we will use in this example is the _ChBodyEasyBox_ class. This is defined in the _<chrono/physics/ChBodyEasy.h>_ header.
+immediately use. The one we will use in this example is the _ChBodyEasyBox_ class. This is defined in the _chrono/physics/ChBodyEasy.h_ header.
 Let's first create a box and try to visualize it. Below is the function that constructs a box.
 
 @code{.cpp}

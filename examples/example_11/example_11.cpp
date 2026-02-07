@@ -1,12 +1,3 @@
-/*
- * This example shows how to create
- * a waypoint trajectory consisting of straight
- * lines
- *
- *
- *
- */
-
 #include "bitrl/bitrl_config.h"
 
 #ifdef BITRL_CHRONO
@@ -21,20 +12,6 @@
 #include <chrono/physics/ChSystemSMC.h>
 #include <chrono/physics/ChBodyEasy.h>
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
-
-
-#include "bitrl/utils/geometry/geom_point.h"
-#include "bitrl/utils/trajectory/line_segment_link.h"
-#include "bitrl/utils/trajectory/waypoint.h"
-#include "bitrl/utils/trajectory/waypoint_trajectory.h"
-#include "bitrl/utils/unit_converter.h"
-
-#include <any>
-#include <array>
-#include <iostream>
-#include <map>
-#include <string>
-#include <vector>
 
 namespace example_11
 {
