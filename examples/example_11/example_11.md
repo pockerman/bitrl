@@ -4,8 +4,7 @@ The <a href="https://github.com/projectchrono/chrono">Chrono</a> library is the 
 to simulate robots and create environments for reinforcement learning agents. As such, knowing your way around
 Chrono is essential. However, Chrono is a relatively large library with many components and therefore not necessarily easy
 to grasp. In a series of examples, we will see main components of the library that _bitrl_ utilizes.
-
-You should have compiled Chrono with <a href="https://irrlicht.sourceforge.io/">Irrlicht</a> support.
+Note that you should have compiled Chrono with <a href="https://irrlicht.sourceforge.io/">Irrlicht</a> support in order to be able to run this example.
 
 The main interface for creating rigid bodies in Chrono is the <a href="https://api.projectchrono.org/9.0.0/classchrono_1_1_ch_body.html">ChBody</a>
 class. You can also find this <a href="https://api.projectchrono.org/9.0.0/rigid_bodies.html"> Rigid Bodies</a> helpful.
@@ -159,7 +158,7 @@ $$
 T = (R, p)
 $$
 
-where $R$ is a rotation matrix and $p$ is a translation vector. Chrono uses quaternions to express rotations but
+where \f$R\f$ is a rotation matrix and \f$p\f$ is a translation vector. Chrono uses quaternions to express rotations but
 let's keep the discussion simple. Then 
 
 @code
@@ -167,13 +166,13 @@ ref_frame           = ( R_wr , p_wr )
 child_frame_in_ref  = ( R_rc , p_rc )
 @endcode
 
-where $p_{wr} = (0,0,0)$, $p_{rc}=(0, 0, 0.22)$. When we multiply the two frames we do something equivalent to
+where \f$p_{wr} = (0,0,0)\f$, \f$p_{rc}=(0, 0, 0.22)\f$. When we multiply the two frames we do something equivalent to
 
 @code
 (R_wr, p_wr) * (R_rc, p_rc) = ( R_wr * R_rc , p_wr + R_wr p_rc )
 @endcode
 
-However, the two frames are not rotated so both $R_{wr}$ and $R_{rc}$ are actually the identity matrix. Thus, we end up with
+However, the two frames are not rotated so both \f$R_{wr}\f$ and \f$R_{rc}\f$ are actually the identity matrix. Thus, we end up with
 
 $$
 p_{wr} + R_{wr} p_{rc} = (0, 0, 0.22)
