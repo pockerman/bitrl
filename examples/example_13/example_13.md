@@ -10,7 +10,8 @@ A _ChSystem_ is an abstract class. The Chrono library provides the following sub
 - _ChSystemSMC_ for SMooth Contacts (SMC): contacts are handled using penalty methods, i.e. contacts are deformable
 
 Note that if there are no contacts or collisions in your system, it is indifferent to use _ChSystemNSC_ or _ChSystemSMC_.
-In this example we will create and simulate a differential drive system using Chrono
+In this example we will create and simulate a differential drive system using Chrono. The robot we will develop follows the 
+<a href="https://api.projectchrono.org/group__robot__models__turtlebot.html">Turtlebot robot model</a> defined in Chrono.
 
 @code{.cpp}
 @endcode
