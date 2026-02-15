@@ -2,7 +2,9 @@
 
 #ifdef BITRL_CHRONO
 
-#include "bitrl/rigid_bodies/chrono_robots/impl/diff_drive_robot_part.h"
+#include "diff_drive_robot_part.h"
+
+#include "bitrl/bitrl_consts.h"
 
 namespace bitrl{
 namespace rb::bitrl_chrono{
@@ -28,7 +30,8 @@ CHRONO_DiffDriveRobot_Part::CHRONO_DiffDriveRobot_Part(const std::string& name,
 
 // Create Visulization assets
 void CHRONO_DiffDriveRobot_Part::add_visualization_assets() {
-    auto vis_mesh_file = chrono::GetChronoDataFile("robot/turtlebot/" + m_mesh_name + ".obj");
+    const std::string vis_mesh_file(consts::ROBOTS_DIR + "/diff_drive_robot/" + m_mesh_name + ".obj");
+    //auto vis_mesh_file = chrono::GetChronoDataFile("robot/turtlebot/" + m_mesh_name + ".obj");
     auto trimesh = chrono::ChTriangleMeshConnected::CreateFromWavefrontFile(vis_mesh_file, true, true);
     trimesh->Transform(m_offset, chrono::ChMatrix33<>(1));
     auto trimesh_shape = chrono_types::make_shared<chrono::ChVisualShapeTriangleMesh>();
@@ -44,7 +47,8 @@ void CHRONO_DiffDriveRobot_Part::enable_collision(bool state) {
 
 // Add collision assets
 void CHRONO_DiffDriveRobot_Part::add_collision_shapes() {
-    auto vis_mesh_file = chrono::GetChronoDataFile("robot/turtlebot/" + m_mesh_name + ".obj");
+    const std::string vis_mesh_file(consts::ROBOTS_DIR + "/diff_drive_robot/" + m_mesh_name + ".obj");
+    //auto vis_mesh_file = chrono::GetChronoDataFile("robot/turtlebot/" + m_mesh_name + ".obj");
     auto trimesh = chrono::ChTriangleMeshConnected::CreateFromWavefrontFile(vis_mesh_file, false, false);
     trimesh->Transform(m_offset, chrono::ChMatrix33<>(1));
 

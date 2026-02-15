@@ -5,7 +5,8 @@
 #include "chrono/assets/ChColor.h"
 #include "chrono/physics/ChLinkMotorRotationSpeed.h"
 
-#include "bitrl/rigid_bodies/chrono_robots/impl/diff_drive_robot_chassis.h"
+#include "bitrl/bitrl_consts.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_chassis.h"
 
 namespace bitrl{
 namespace rb::bitrl_chrono
@@ -28,7 +29,11 @@ CHRONO_DiffDriveRobot_Chassis::CHRONO_DiffDriveRobot_Chassis(const std::string& 
 }
 
 void CHRONO_DiffDriveRobot_Chassis::init() {
-    auto vis_mesh_file = chrono::GetChronoDataFile("robot/turtlebot/" + m_mesh_name + ".obj");
+
+    const std::string vis_mesh_file(consts::ROBOTS_DIR + "/diff_drive_robot/" + m_mesh_name + ".obj");
+    std::cout<<"Visualization mesh file: "<<vis_mesh_file<<std::endl;
+    //auto vis_mesh_file = chrono::GetChronoDataFile("robot/turtlebot/" + m_mesh_name + ".obj");
+    //auto vis_mesh_file = chrono::GetChronoDataFile("robot/turtlebot/" + m_mesh_name + ".obj");
     auto trimesh = chrono::ChTriangleMeshConnected::CreateFromWavefrontFile(vis_mesh_file, false, false);
     trimesh->Transform(chrono::ChVector3d(0, 0, 0), chrono::ChMatrix33<>(1));  // scale to a different size
     trimesh->RepairDuplicateVertexes(1e-9);                    // if meshes are not watertight

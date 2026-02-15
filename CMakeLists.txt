@@ -164,6 +164,7 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/rigid_bodies/*.cpp
 		src/bitrl/rigid_bodies/chrono_robots/*.cpp
 		src/bitrl/rigid_bodies/chrono_robots/impl/*.cpp
+		src/bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/*.cpp
 		src/bitrl/rigid_bodies/webots_robots/*.cpp
 		src/bitrl/dynamics/*.cpp
 		src/bitrl/utils/*.cpp

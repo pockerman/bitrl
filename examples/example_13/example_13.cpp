@@ -15,6 +15,7 @@
 #include <chrono/physics/ChBodyEasy.h>
 #include "chrono/physics/ChLinkMotorRotationSpeed.h"
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
+#include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
 
 #include <filesystem>
 #include <iostream>
@@ -33,7 +34,7 @@ const real_t DT = 0.01;
 const real_t SIM_TIME = 5.0;
 const std::string WINDOW_TITLE( "Example 13");
 
-/*void prepare_visualization(chrono::irrlicht::ChVisualSystemIrrlicht& visual)
+void prepare_visualization(chrono::irrlicht::ChVisualSystemIrrlicht& visual)
 {
     visual.SetWindowSize(WINDOW_WIDTH, WINDOW_WIDTH); //WINDOW_HEIGHT);
     visual.SetWindowTitle(WINDOW_TITLE);
@@ -44,32 +45,16 @@ const std::string WINDOW_TITLE( "Example 13");
     visual.AddCamera({0, -2, 1}, {0, 0, 0});
     visual.AddTypicalLights();
     visual.BindAll();
-}*/
-
-
-/*class DiffDriveRobot
-{
-public:
-
-    DiffDriveRobot();
-
-    void set_motor_speed(real_t rad_speed, uint_t id);
-
-    /// Get active drive wheel speed
-    chrono::ChVector3d get_wheel_speed(uint_t id);
-
-    /// Get active driver wheel angular velocity
-    chrono::ChVector3d get_wheel_angular_velocity(uint_t id);
+}
 
 
 
-};*/
 
 } // namespace example_13
 
 int main()
 {
-   /* using namespace example_13;
+   using namespace example_13;
     chrono::ChSystemNSC sys;
     sys.SetGravitationalAcceleration(chrono::ChVector3d(0, 0, -9.81));
 
@@ -84,6 +69,9 @@ int main()
     mfloor->GetVisualShape(0)->SetTexture(chrono::GetChronoDataFile("textures/concrete.jpg"));
     sys.Add(mfloor);
 
+    bitrl::rb::bitrl_chrono::CHRONO_DiffDriveRobot robot(sys,
+                                                 chrono::ChVector3d(0, 0, -0.45), chrono::QUNIT);
+    robot.init();
 
     chrono::irrlicht::ChVisualSystemIrrlicht visual;
     prepare_visualization(visual);
@@ -117,8 +105,6 @@ int main()
         // Irrlicht must finish drawing the frame
         visual.EndScene();
     }
-
-    */
 
     return 0;
 }

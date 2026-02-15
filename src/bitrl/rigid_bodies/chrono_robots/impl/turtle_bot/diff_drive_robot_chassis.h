@@ -13,9 +13,9 @@
 #include <memory>
 
 #include "chrono/physics/ChSystem.h"
-//#include "chrono/physics/ChLinkMotorRotationSpeed.h"
 
-#include "bitrl/rigid_bodies/chrono_robots/impl/diff_drive_robot_part.h"
+
+#include "diff_drive_robot_part.h"
 #include "bitrl/bitrl_types.h"
 
 namespace bitrl{
