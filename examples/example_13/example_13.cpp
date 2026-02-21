@@ -10,16 +10,14 @@
 #include <boost/log/trivial.hpp>
 #endif
 
+#include "bitrl/bitrl_consts.h"
 #include "chrono/core/ChRealtimeStep.h"
 #include "chrono/physics/ChSystemNSC.h"
 #include <chrono/physics/ChBodyEasy.h>
-#include "chrono/physics/ChLinkMotorRotationSpeed.h"
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
 #include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
 
 #include <filesystem>
-#include <iostream>
-#include <random>
 #include <string>
 
 namespace example_13
@@ -71,7 +69,10 @@ int main()
 
     bitrl::rb::bitrl_chrono::CHRONO_DiffDriveRobot robot(sys,
                                                  chrono::ChVector3d(0, 0, -0.45), chrono::QUNIT);
+
     robot.init();
+    robot.set_motor_speed(bitrl::consts::maths::PI, 0);
+    robot.set_motor_speed(bitrl::consts::maths::PI, 1);
 
     chrono::irrlicht::ChVisualSystemIrrlicht visual;
     prepare_visualization(visual);
@@ -99,6 +100,7 @@ int main()
 
         // ADVANCE SYSTEM STATE BY ONE STEP
         sys.DoStepDynamics(DT);
+        
         // Enforce soft real-time
         realtime_timer.Spin(DT);
 
