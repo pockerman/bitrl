@@ -16,7 +16,7 @@
 /*Use Webots*/
 #cmakedefine BITRL_WEBOTS
 
-/*Use Chron*/
+/*Use Chrono*/
 #cmakedefine BITRL_CHRONO
 
 /*Use OpenCV*/

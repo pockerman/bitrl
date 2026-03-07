@@ -11,101 +11,222 @@
 #endif
 
 #include "bitrl/bitrl_consts.h"
+#include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
+
 #include "chrono/core/ChRealtimeStep.h"
 #include "chrono/physics/ChSystemNSC.h"
+#include <chrono/physics/ChSystemSMC.h>
 #include <chrono/physics/ChBodyEasy.h>
+#include "chrono/assets/ChVisualSystem.h"
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
-#include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
+// #include "chrono/assets/ChColorAsset.h"
+// #include "chrono/assets/ChLineShape.h"
+
 
 #include <filesystem>
 #include <string>
 
-namespace example_13
-{
-using namespace bitrl;
+#include "chrono/physics/ChSystemNSC.h"
+#include "chrono/physics/ChBodyEasy.h"
+#include "chrono/physics/ChLinkMotorRotationSpeed.h"
+#include "chrono/functions/ChFunctionConst.h"
+
+#include "chrono_irrlicht/ChVisualSystemIrrlicht.h"
+
+using namespace chrono;
 using namespace chrono::irrlicht;
 
-// constants we will be using further below
-const uint_t WINDOW_HEIGHT = 800;
-const uint_t WINDOW_WIDTH = 1024;
-const real_t DT = 0.01;
-const real_t SIM_TIME = 5.0;
-const std::string WINDOW_TITLE( "Example 13");
-
-void prepare_visualization(chrono::irrlicht::ChVisualSystemIrrlicht& visual)
+namespace
 {
-    visual.SetWindowSize(WINDOW_WIDTH, WINDOW_WIDTH); //WINDOW_HEIGHT);
-    visual.SetWindowTitle(WINDOW_TITLE);
-    visual.Initialize();
+void draw_world_axes(chrono::irrlicht::ChVisualSystemIrrlicht& vis,
+                     double scale = 1.0) {
+    auto* driver = vis.GetVideoDriver();
 
-    visual.AddLogo();
-    visual.AddSkyBox();
-    visual.AddCamera({0, -2, 1}, {0, 0, 0});
-    visual.AddTypicalLights();
-    visual.BindAll();
+    // X axis (red)
+    driver->draw3DLine(
+        {0, 0, 0},
+        {static_cast<float>(scale), 0, 0},
+        irr::video::SColor(255, 255, 0, 0));
+
+    // Y axis (green)
+    driver->draw3DLine(
+        {0, 0, 0},
+        {0, static_cast<float>(scale), 0},
+        irr::video::SColor(255, 0, 255, 0));
+
+    // Z axis (blue)
+    driver->draw3DLine(
+        {0, 0, 0},
+        {0, 0, static_cast<float>(scale)},
+        irr::video::SColor(255, 0, 0, 255));
+}
 }
 
+int main() {
 
+    // -----------------------------
+    // Create Chrono physical system
+    // -----------------------------
+    ChSystemNSC system;
+    //ChSystemSMC system;
+    system.SetGravitationalAcceleration(chrono::ChVector3d(0,0,-9.81));
+    system.SetCollisionSystemType(chrono::ChCollisionSystem::Type::BULLET);
 
+    // -----------------------------
+    // Create ground
+    // -----------------------------
+    auto material = chrono_types::make_shared<ChContactMaterialNSC>();
 
-} // namespace example_13
+    material->SetFriction(0.8f);
+    material->SetRestitution(0.1f);
+    auto floor = chrono_types::make_shared<chrono::ChBodyEasyBox>(
+        5, 5, 0.1,     // size
+        1000,          // density
+        true, true, material);   // visual + collision
 
-int main()
-{
-   using namespace example_13;
-    chrono::ChSystemNSC sys;
-    sys.SetGravitationalAcceleration(chrono::ChVector3d(0, 0, -9.81));
+    floor->SetPos(chrono::ChVector3d(0,0,-0.05));
+    floor->SetFixed(true);
+    floor->EnableCollision(true);
 
-    sys.SetCollisionSystemType(chrono::ChCollisionSystem::Type::BULLET);
-    chrono::ChCollisionModel::SetDefaultSuggestedEnvelope(0.0025);
-    chrono::ChCollisionModel::SetDefaultSuggestedMargin(0.0025);
+    system.Add(floor);
 
-    auto floor_mat = chrono_types::make_shared<chrono::ChContactMaterialNSC>();
-    auto mfloor = chrono_types::make_shared<chrono::ChBodyEasyBox>(20, 20, 1, 1000, true, true, floor_mat);
-    mfloor->SetPos(chrono::ChVector3d(0, 0, -1));
-    mfloor->SetFixed(true);
-    mfloor->GetVisualShape(0)->SetTexture(chrono::GetChronoDataFile("textures/concrete.jpg"));
-    sys.Add(mfloor);
+    // -----------------------------
+    // Robot chassis
+    // -----------------------------
+    double wheel_radius = 0.1;
+    double chassis_height = 0.1;
+    auto chassis = chrono_types::make_shared<ChBodyEasyBox>(
+        0.5, 0.3, chassis_height,
+        1000,
+        true, true, material);
 
-    bitrl::rb::bitrl_chrono::CHRONO_DiffDriveRobot robot(sys,
-                                                 chrono::ChVector3d(0, 0, -0.45), chrono::QUNIT);
+    // 0,0,wheel_radius + chassis_height/2.0
+    //chrono::ChVector3d pos(0,0,0.2);
+    chrono::ChVector3d pos(0.0, 0.0, wheel_radius + chassis_height/2.0 + 0.01);
+    chassis->SetPos(pos);
 
-    robot.init();
-    robot.set_motor_speed(bitrl::consts::maths::PI, 0);
-    robot.set_motor_speed(bitrl::consts::maths::PI, 1);
+    chrono::ChVector3d vel(0.5, 0.0, 0.0);
+    chassis->SetPosDt(vel);
+    system.Add(chassis);
 
-    chrono::irrlicht::ChVisualSystemIrrlicht visual;
-    prepare_visualization(visual);
-    visual.AttachSystem(&sys);
+    // -----------------------------
+    // Wheels
+    // -----------------------------
 
+    double wheel_width = 0.05;
+    //auto material = chrono_types::make_shared<chrono::ChContactMaterialNSC>();
+    auto left_wheel = chrono_types::make_shared<chrono::ChBodyEasyCylinder>(
+        chrono::ChAxis::Y,
+        wheel_radius,
+        wheel_width,
+        1000,
+        true, true, material);
+
+    auto right_wheel = chrono_types::make_shared<chrono::ChBodyEasyCylinder>(
+    chrono::ChAxis::Y,
+        wheel_radius,
+        wheel_width,
+        1000,
+        true, true, material);
+
+    left_wheel->SetPos(chrono::ChVector3d(0, 0.2, 0.1));
+    right_wheel->SetPos(chrono::ChVector3d(0,-0.2, 0.1));
+
+    system.Add(left_wheel);
+    system.Add(right_wheel);
+
+    // -----------------------------
+    // Motors (differential drive)
+    // -----------------------------
+    auto motor_left = chrono_types::make_shared<chrono::ChLinkMotorRotationSpeed>();
+    auto motor_right = chrono_types::make_shared<chrono::ChLinkMotorRotationSpeed>();
+
+    chrono::ChQuaternion<> rot = chrono::QuatFromAngleX(chrono::CH_PI_2);
+    motor_left->Initialize(
+        left_wheel,
+        chassis,
+        chrono::ChFrame<>(chrono::ChVector3d(0,0.2,0.1), rot)
+    );
+
+    motor_right->Initialize(
+        right_wheel,
+        chassis,
+        chrono::ChFrame<>(chrono::ChVector3d(0,-0.2,0.1), rot)
+    );
+
+    system.Add(motor_left);
+    system.Add(motor_right);
+
+    // -----------------------------
+    // Wheel speeds
+    // -----------------------------
+    auto speed_left = chrono_types::make_shared<chrono::ChFunctionConst>(-4.5);
+    auto speed_right = chrono_types::make_shared<chrono::ChFunctionConst>(-4.5);
+
+    motor_left->SetSpeedFunction(speed_left);
+    motor_right->SetSpeedFunction(speed_right);
+
+    double caster_radius = 0.05;
+    auto caster = chrono_types::make_shared<ChBodyEasySphere>(
+    caster_radius,       // radius
+    1000,       // density
+    true,       // visualization
+    true,       // collision
+    material);
+
+    caster->SetPos(chrono::ChVector3d(0.2, 0, 0.05));
+    caster->EnableCollision(true);
+
+    system.Add(caster);
+
+    auto caster_joint = chrono_types::make_shared<ChLinkLockRevolute>();
+
+    caster_joint->Initialize(
+        caster,
+        chassis,
+        ChFrame<>(chrono::ChVector3d(-0.25, 0, caster_radius), QUNIT));
+
+    system.Add(caster_joint);
+
+    floor->EnableCollision(true);
+    chassis->EnableCollision(true);
+    left_wheel->EnableCollision(true);
+    right_wheel->EnableCollision(true);
+
+    // -----------------------------
+    // Irrlicht visualization
+    // -----------------------------
+    chrono::irrlicht::ChVisualSystemIrrlicht vis;
+
+    vis.AttachSystem(&system);
+
+    vis.SetWindowSize(1280,720);
+    vis.SetWindowTitle("Chrono Differential Drive Robot");
+
+    vis.Initialize();
+    vis.AddSkyBox();
+    vis.AddLogo();
+    vis.AddSkyBox();
+    vis.AddCamera({0, -2, 1}, {0, 0, 0});
+    vis.AddTypicalLights();
+    vis.BindAll();
+    // 1 meter length
+    // -----------------------------
     // Simulation loop
+    // -----------------------------
+    double step_size = 0.002;
 
-    // Timer for enforcing soft real-time
-    chrono::ChRealtimeStepTimer realtime_timer;
+    while (vis.Run()) {
 
-    // bool removed = false;
-    while (visual.Run()) {
-        // Irrlicht must prepare frame to draw
-        visual.BeginScene();
+        vis.BeginScene();
+        vis.Render();
+        draw_world_axes(vis, 2.0);
 
-        // Irrlicht now draws simple lines in 3D world representing a
-        // skeleton of the mechanism, in this instant:
-        //
-        // .. draw items belonging to Irrlicht scene, if any
-        visual.Render();
-        // .. draw a grid
-        tools::drawGrid(&visual, 0.5, 0.5);
-        // .. draw GUI items belonging to Irrlicht screen, if any
-        visual.GetGUIEnvironment()->drawAll();
+        auto position = chassis -> GetPos();
+        std::cout << position <<std::endl;
 
-        // ADVANCE SYSTEM STATE BY ONE STEP
-        sys.DoStepDynamics(DT);
-        
-        // Enforce soft real-time
-        realtime_timer.Spin(DT);
-
-        // Irrlicht must finish drawing the frame
-        visual.EndScene();
+        system.DoStepDynamics(step_size);
+        vis.EndScene();
     }
 
     return 0;
