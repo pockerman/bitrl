@@ -51,7 +51,7 @@ inline const real_t PI = std::numbers::pi;
 /**
  * @brief Acceleration due to gravity m/secs
  */
-inline const real_t G = 9.82;
+inline const real_t G = 9.81;
 } // namespace maths
 
 } // namespace consts
