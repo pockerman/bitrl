@@ -3,14 +3,14 @@
 The <a href="https://github.com/projectchrono/chrono">Chrono</a> library is the main library that _bitrl_ is using in order
 to simulate robots and create environments for reinforcement learning agents. As such, knowing your way around
 Chrono is essential. However, Chrono is a relatively large library with many components and therefore not necessarily easy
-to grasp. In a series of examples, we will see main components of the library that _bitrl_ utilizes.
+to grasp. In a series of examples, we will see the main components of the library that _bitrl_ utilizes.
 Note that you should have compiled Chrono with <a href="https://irrlicht.sourceforge.io/">Irrlicht</a> support in order to be able to run this example.
 
 The main interface for creating rigid bodies in Chrono is the <a href="https://api.projectchrono.org/9.0.0/classchrono_1_1_ch_body.html">ChBody</a>
 class. You can also find this <a href="https://api.projectchrono.org/9.0.0/rigid_bodies.html"> Rigid Bodies</a> helpful.
-_ChBody_ is an abstract class, and therefore we cannot instantiate it directly. Chrono provides various classes however we can 
+_ChBody_ is an abstract class, and therefore we cannot instantiate it directly. Chrono provides various classes however, we can 
 immediately use. The one we will use in this example is the _ChBodyEasyBox_ class. This is defined in the _chrono/physics/ChBodyEasy.h_ header.
-Let's first create a box and try to visualize it. Below is the function that constructs a box.
+Let's first create a box and try to visualize it. The function below does exactly that.
 
 @code{.cpp}
 std::shared_ptr<chrono::ChBody> create_box(real_t xlength, real_t ylength, real_t zlength,
@@ -30,12 +30,14 @@ real_t density, bool create_visualization)
 @endcode
 
 
-The following is a helper for setting up the visualization
+The following is a helper for setting up the visualization. We need to build Chrono with Irrlicht support in order to be able to
+use it as a visualization engine. You can find more information about the 
+visualisation system in Chrono at <a href="https://api.projectchrono.org/9.0.0/visualization_system.html">Visualization System</a>.
 
 @code{.cpp}
 void prepare_visualization(chrono::irrlicht::ChVisualSystemIrrlicht& visual)
 {
-visual.SetWindowSize(WINDOW_WIDTH, WINDOW_WIDTH); //WINDOW_HEIGHT);
+visual.SetWindowSize(WINDOW_WIDTH, WINDOW_WIDTH); 
 visual.SetWindowTitle(WINDOW_TITLE);
 visual.Initialize();
 
@@ -47,8 +49,9 @@ visual.Initialize();
 }
 @endcode
 
-Below is the main function:
-
+Below is the main driver for this example. 
+It creates a box and attaches it to a _ChSystem_ (see <a href="https://api.projectchrono.org/9.0.0/simulation_system.html">Simulation system</a> for more information).
+It also sets up a minimal visualization obejct _ChVisualSystemIrrlicht_ for the simulation and finally runs the simulation loop.
 @code{.cpp}
 int main()
 {
