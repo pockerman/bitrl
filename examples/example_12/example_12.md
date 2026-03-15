@@ -17,7 +17,7 @@ Running a simulation with Chrono requires that we create a _ChSystem_ instance
 A _ChSystem_ is an abstract class. The Chrono library provides the following subclasses:
 
 - _ChSystemNSC_ for Non Smooth Contacts (NSC): in case of contacts a complementarity solver will take care of them using non-smooth dynamics; this is very efficient even with large time steps.
-- _ChSystemSMC_ for SMooth Contacts (SMC): contacts are handled using penalty methods, i.e. contacts are deformable.
+- _ChSystemSMC_ for Smooth Contacts (SMC): contacts are handled using penalty methods, i.e. contacts are deformable.
 
 Note that if there are no contacts or collisions in your system, it is indifferent to use _ChSystemNSC_ or _ChSystemSMC_.
 
@@ -59,7 +59,7 @@ $$
 v = \frac{r}{2}(\omega_R + \omega_L)
 $$
 
-where \f$r\f$ is the radius of the wheel and \f$\omega_i\f$ if the angular velocity of motor \f$\i\f$ in rad/s.
+where \f$r\f$ is the radius of the wheel and \f$\omega_i\f$ if the angular velocity of motor \f$i\f$ in rad/s.
 We can use this relationship in a control simulation in order to control either the linear velocity or the motor speed.
 
 @code{.cpp}

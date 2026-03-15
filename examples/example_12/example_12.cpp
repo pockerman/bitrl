@@ -194,7 +194,6 @@ int main() {
 
     // create the visualization system
     chrono::irrlicht::ChVisualSystemIrrlicht vis;
-
     vis.AttachSystem(&system);
     vis.SetWindowSize(1280,720);
     vis.SetWindowTitle("Example 12 Differential Drive Robot");

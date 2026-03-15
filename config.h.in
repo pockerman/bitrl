@@ -19,6 +19,9 @@
 /*Use Chrono*/
 #cmakedefine BITRL_CHRONO
 
+/*Use Irrlicht for visualization*/
+#cmakedefine BITRL_IRRLICHT
+
 /*Use OpenCV*/
 #cmakedefine BITRL_OPENCV
 
