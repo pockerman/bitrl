@@ -30,11 +30,11 @@ OPTION(ENABLE_WEBOTS OFF)
 # configure packages
 SET(ENABLE_EXAMPLES ON)
 SET(ENABLE_TESTS OFF)
-SET(ENABLE_CHRONO ON)
 SET(ENABLE_OPENCV ON)
 SET(ENABLE_MQTT ON)
 SET(BITRL_LOG ON)
 SET(BITRL_IRRLICHT ON)
+SET(ENABLE_CHRONO ON)
 
 # build options
 SET(CMAKE_BUILD_TYPE "Release")
@@ -143,6 +143,7 @@ INCLUDE_DIRECTORIES(/usr/local/include/) # mqtt
 INCLUDE_DIRECTORIES(src/)
 
 FILE(GLOB SRCS src/bitrl/*.cpp
+		src/bitrl/boards/arduino/*.cpp
 		src/bitrl/network/*.cpp
 		src/bitrl/sensors/*.cpp
 		src/bitrl/sensors/messages/*.cpp
@@ -170,12 +171,13 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/utils/*.cpp
 		src/bitrl/utils/io/*.cpp
 		src/bitrl/utils/maths/statistics/distributions/*.cpp
+		src/bitrl/utils/render/*.cpp
+		src/bitrl/systems/*.cpp
 		#src/bitrl/utils/geometry/*.cpp
 		#src/bitrl/utils/geometry/shapes/*.cpp
 		#src/bitrl/utils/geometry/mesh/*.cpp
-		#src/bitrl/utils/trajectory/*.cpp
-		src/bitrl/boards/arduino/*.cpp
-		src/bitrl/systems/*.cpp
+		#src/bitrl/utils/trajectory/*.cp
+
    )
 
 ADD_LIBRARY(bitrllib SHARED ${SRCS})

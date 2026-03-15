@@ -1,11 +1,6 @@
-//
-// Created by alex on 12/13/25.
-//
-
 #ifndef BITRL_UTILS_H
 #define BITRL_UTILS_H
 
-//#include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <string>
