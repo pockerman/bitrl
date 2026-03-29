@@ -1,34 +1,19 @@
-
-// =============================================================================
-// Authors: Jason Zhou
-// =============================================================================
-//
-// Turtlebot Robot Class
-// This is a modified version of the famous turtlebot 2e
-// The geometries use the following resources as references:
-// https://groups.google.com/g/sydney_ros/c/z05uQTCuDTQ
-// https://grabcad.com/library/interbotix-turtlebot-2i-1
-// https://www.turtlebot.com/turtlebot2/
-//
-// =============================================================================
-
-#ifndef DIFF_DRIVE_ROBOT_H
-#define DIFF_DRIVE_ROBOT_H
+#ifndef TURTLE_ROBOT_H
+#define TURTLE_ROBOT_H
 
 #include "bitrl/bitrl_config.h"
 
 #ifdef BITRL_CHRONO
 
-
 #include "bitrl/bitrl_types.h"
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_chassis.h"
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_wheels.h"
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_rods.h"
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_plates.h"
 #include "bitrl/rigid_bodies/chrono_robots/chrono_robot_pose.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_chassis.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_plates.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_rods.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_wheels.h"
 
-#include "chrono/physics/ChSystem.h"
-#include "chrono/physics/ChLinkMotorRotationSpeed.h"
+#include <chrono/physics/ChSystem.h>
+#include <chrono/physics/ChLinkMotorRotationSpeed.h>
 #include <vector>
 
 
@@ -38,7 +23,7 @@ namespace rb::bitrl_chrono{
 
 
 /**
- * @class CHRONO_DiffDriveRobotBase
+ * @class CHRONO_TurtleRobot
  * @ingroup rb_chrono
  * @brief Class for modelling a differential-drive robot using Chrono.
  * in fact the implementation of this class is taken from the
@@ -46,18 +31,18 @@ namespace rb::bitrl_chrono{
  *
  * For more details see here: https://api.projectchrono.org/group__robot__models__turtlebot.html
  */
-class CHRONO_DiffDriveRobot final {
+class CHRONO_TurtleRobot final {
 public:
-    CHRONO_DiffDriveRobot(chrono::ChSystem& system,
+    CHRONO_TurtleRobot(chrono::ChSystem& system,
               const chrono::ChVector3d& robot_pos,
               const chrono::ChQuaternion<>& robot_rot,
               std::shared_ptr<chrono::ChContactMaterial> wheel_mat = {});
 
 
     /// destructor
-    ~CHRONO_DiffDriveRobot()=default;
+    ~CHRONO_TurtleRobot()=default;
 
-    /// Initialize the CHRONO_DiffDriveRobot  robot 
+    /// Initialize the CHRONO_TurtleRobot  robot
     /// The robot will not be constructed in the ChSystem until init() is called.
     void init();
 

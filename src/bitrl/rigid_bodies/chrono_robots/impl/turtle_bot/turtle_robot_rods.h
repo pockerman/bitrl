@@ -1,5 +1,5 @@
-#ifndef DIFF_DRIVE_ROBOT_RODS_H
-#define DIFF_DRIVE_ROBOT_RODS_H
+#ifndef TURTLE_ROBOT_RODS_H
+#define TURTLE_ROBOT_RODS_H
 
 #include "bitrl/bitrl_config.h"
 
@@ -10,7 +10,7 @@
 
 #include "chrono/physics/ChSystem.h"
 
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_part.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_part.h"
 
 namespace bitrl
 {

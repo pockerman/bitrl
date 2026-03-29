@@ -3,6 +3,7 @@
 
 #include "bitrl/extern/nlohmann/json/json.hpp"
 #include "bitrl/utils/io/file_reader_base.h"
+#include <filesystem>
 
 namespace bitrl
 {
@@ -23,6 +24,10 @@ class JSONFileReader final : public FileReaderBase
      * @param filename
      */
     JSONFileReader(const std::string &filename);
+
+    /// Read the JSON file from the given filename
+    /// @param filename The std::filesystem::path to read the file from
+    JSONFileReader(const std::filesystem::path &filename);
 
     /**
      * @brief Attempts to open the file for reading

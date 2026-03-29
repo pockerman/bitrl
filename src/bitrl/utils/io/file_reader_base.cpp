@@ -1,6 +1,10 @@
 #include "bitrl/utils/io/file_reader_base.h"
 #include "bitrl/bitrl_config.h"
 
+#ifdef BITRL_LOG
+#include <boost/log/trivial.hpp>
+#endif
+
 namespace bitrl
 {
 namespace utils::io
@@ -14,6 +18,12 @@ FileReaderBase::FileReaderBase(const std::string &file_name, FileFormats::Type t
 void FileReaderBase::open()
 {
 
+    auto file_name = this->get_filename();
+
+#ifdef BITRL_LOG
+    BOOST_LOG_TRIVIAL(info)<<"Reading file: "<<file_name;;
+#endif
+
     auto &f = this->get_file_stream();
 
     if (!f.is_open())
@@ -21,13 +31,12 @@ void FileReaderBase::open()
 
         try
         {
-            f.open(this->get_filename(), std::ios_base::in);
+            f.open(file_name, std::ios_base::in);
 
 #ifdef BITRL_DEBUG
 
             if (!f.good())
             {
-                auto file_name = this->get_filename();
                 std::string msg = "Failed to open file: " + file_name;
                 assert(false && msg.c_str());
             }
@@ -38,7 +47,6 @@ void FileReaderBase::open()
 
 #ifdef BITRL_DEBUG
             std::string msg("Failed to open file: ");
-            auto file_name = this->get_filename();
             msg += file_name;
             assert(false && msg.c_str());
 #else

@@ -1,45 +1,84 @@
 {
   "name": "Odysseus",
-  "mass": 1.0,
-  "mass_units": "kg",
+  "robot-data": {
+    "max_speed": 5.0,
+    "wheel_radius": 0.1,
+    "wheel_width": 0.05,
+    "axle_length": 1.0,
+    "density": 1000.0,
+    "caster_wheel_radius": 0.05
+  },
+  "material": {
+    "friction": 0.8,
+    "restitution": 0.1
+  },
   "chassis": {
-    "mass": 1.0,
-    "mass_units": "kg",
-    "position": [ 0.0, 0.0, 0.0],
-    "fixed": false,
-    "visual_shape": "shape-box",
-    "visual_position": [0.4, 0.3, 0.05]
+    "description": "chassis_i describes the length of the chassis in the x, y, z axis, pos_i the center of mass of the chassis",
+    "chassis_x": 0.5,
+    "chassis_y": 0.3,
+    "chassis_z": 0.1,
+    "pos_x": 0.0,
+    "pos_y": 0.0,
+    "pos_z": 0.0
   },
   "left-wheel": {
-    "mass": 1.0,
-    "mass_units": "kg",
-    "position": [ 0.0, 0.175, -0.02],
-    "radius": 0.06,
-    "width": 0.05,
-    "radius_units": "cm",
-    "visual_shape": "cylinder",
-    "rotation_axis": [1, 0, 0],
-    "rotation_angle_deg": 90
+    "pos_x": 0.0,
+    "pos_y": 0.2,
+    "pos_z": 0.1
   },
   "right-wheel": {
-    "mass": 1.0,
-    "mass_units": "kg",
-    "position": [ 0.0, -0.175, -0.02],
-    "radius": 0.06,
-    "width": 0.05,
-    "radius_units": "cm",
-    "visual_shape": "cylinder",
-    "rotation_axis": [1, 0, 0],
-    "rotation_angle_deg": 90
+    "pos_x": 0.0,
+    "pos_y": -0.2,
+    "pos_z": 0.1
   },
   "caster-wheel": {
-    "mass": 0.5,
-    "mass_units": "kg",
-    "position": [ -0.2, 0.0, -0.02],
-    "radius": 0.06,
-    "width": 0.05,
-    "visual_shape": "cylinder",
-    "rotation_axis": [1, 0, 0],
-    "rotation_angle_deg": 90
+    "pos_x": 0.2,
+    "pos_y": 0.0,
+    "pos_z": 0.05
+  },
+  "sensors": {
+    "description": "The sensors of the robot. Leave the sensors attribute empty if no sensors. Or set all flags enble to false",
+    "sensors": {
+      "front-sonar": {
+        "idx": 0,
+        "enable": true,
+        "dimensions": [0.04, 0.04, 0.04],
+        "update_rate": 50.0,
+        "max_distance": 5.0,
+        "min_distance": 0.5,
+        "backend": "CHRONO",
+        "type": "ultrasonic-range",
+        "name": "Ultrasonic",
+        "color": [1.0, 0.0, 0.0],
+        "frame_pos": [0.27, 0.0, 0.05]
+
+      },
+      "rear-sonar": {
+        "idx": 1,
+        "enable": true,
+        "pos_x": 0.0,
+        "pos_y": 0.0,
+        "pos_z": 0.0,
+        "update_rate": 50.0,
+        "max_distance": 5.0,
+        "min_distance": 0.5,
+        "backend": "CHRONO",
+        "type": "ultrasonic-range",
+        "name": "Ultrasonic"
+      },
+      "front-camera": {
+        "idx": 2,
+        "enable": true,
+        "pos_x": 0.0,
+        "pos_y": 0.0,
+        "pos_z": 0.0,
+        "update_rate": 50.0,
+        "max_distance": 5.0,
+        "min_distance": 0.5,
+        "backend": "CHRONO",
+        "type": "camera",
+        "name": "Ultrasonic"
+      }
+    }
   }
 }

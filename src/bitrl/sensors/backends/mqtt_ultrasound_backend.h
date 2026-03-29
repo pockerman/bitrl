@@ -10,6 +10,8 @@
 #include "bitrl/sensors/backends/range_sensor_backend_base.h"
 #include "bitrl/sensors/messages/ultrasound.h"
 
+
+
 namespace bitrl{
 namespace sensors::backends
 {
@@ -30,9 +32,14 @@ public:
    */
     static const  std::string BACKEND_TYPE;
 
-    /**
-     * @brief Constructor
-     */
+    ///
+    /// @brief Constructor
+    ///
+    MQTT_UltrasonicBackend();
+
+    ///
+    /// @brief Constructor
+    ///
     explicit MQTT_UltrasonicBackend(network::MqttSubscriber& subscriber);
 
     /**

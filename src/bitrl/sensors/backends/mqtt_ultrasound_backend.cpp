@@ -14,6 +14,12 @@ namespace sensors::backends
 {
 const  std::string MQTT_UltrasonicBackend::BACKEND_TYPE="MQTT_UltrasonicBackend";
 
+MQTT_UltrasonicBackend::MQTT_UltrasonicBackend()
+    :
+RangeSensorBackendBase(MQTT_UltrasonicBackend::BACKEND_TYPE),
+subscriber_ptr_(nullptr)
+{}
+
 
 MQTT_UltrasonicBackend::MQTT_UltrasonicBackend(network::MqttSubscriber& subscriber)
     :

@@ -3,14 +3,10 @@
 #ifdef BITRL_CHRONO
 
 #include "bitrl/bitrl_types.h"
-#include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
+#include "bitrl/rigid_bodies/chrono_robots/turtle_robot.h"
 
-#include <iostream>
+#include <chrono/physics/ChBodyEasy.h>
 #include <cmath>
-
-#include "chrono/physics/ChBodyEasy.h"
-#include "chrono/assets/ChVisualShapeTriangleMesh.h"
-#include "chrono/physics/ChMassProperties.h"
 
 
 
@@ -130,7 +126,7 @@ std::shared_ptr<chrono::ChLinkMotorRotationSpeed> add_motor(std::shared_ptr<chro
 }
 
 
-CHRONO_DiffDriveRobot::CHRONO_DiffDriveRobot(chrono::ChSystem& system,
+CHRONO_TurtleRobot::CHRONO_TurtleRobot(chrono::ChSystem& system,
                      const chrono::ChVector3d& robot_pos,
                      const chrono::ChQuaternion<>& robot_rot,
                      std::shared_ptr<chrono::ChContactMaterial> wheel_mat)
@@ -158,7 +154,7 @@ CHRONO_DiffDriveRobot::CHRONO_DiffDriveRobot(chrono::ChSystem& system,
 
 
 
-void CHRONO_DiffDriveRobot::init() {
+void CHRONO_TurtleRobot::init() {
     // initialize robot chassis
     chassis_ = chrono_types::make_shared<CHRONO_DiffDriveRobot_Chassis>(chassis_material_, system_,
                                                                         robot_pos_, robot_rot_);
@@ -368,7 +364,7 @@ void CHRONO_DiffDriveRobot::init() {
 }
 
 /// Initialize the complete rover and add all constraints
-void CHRONO_DiffDriveRobot::build_motors_() {
+void CHRONO_TurtleRobot::build_motors_() {
 
     // redeclare necessary location variables
     real_t dwx = 0;
@@ -499,15 +495,15 @@ void CHRONO_DiffDriveRobot::build_motors_() {
     }
 }
 
-void CHRONO_DiffDriveRobot::set_motor_speed(real_t rad_speed, uint_t id) {
+void CHRONO_TurtleRobot::set_motor_speed(real_t rad_speed, uint_t id) {
     motors_func_[id]->SetConstant(rad_speed);
 }
 
-chrono::ChVector3d CHRONO_DiffDriveRobot::get_active_wheel_speed(uint_t id)const {
+chrono::ChVector3d CHRONO_TurtleRobot::get_active_wheel_speed(uint_t id)const {
     return drive_wheels_[id]->get_body_ptr()->GetPosDt();
 }
 
-chrono::ChVector3d CHRONO_DiffDriveRobot::get_active_wheel_angular_velocity(uint_t id)const {
+chrono::ChVector3d CHRONO_TurtleRobot::get_active_wheel_angular_velocity(uint_t id)const {
     return drive_wheels_[id]->get_body_ptr()->GetAngVelParent();
 }
 

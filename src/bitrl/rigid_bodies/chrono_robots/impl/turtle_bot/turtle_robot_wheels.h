@@ -1,5 +1,5 @@
-#ifndef DIFF_DRIVE_ROBOT_WHEELS_H
-#define DIFF_DRIVE_ROBOT_WHEELS_H
+#ifndef TURTLE_ROBOT_WHEELS_H
+#define TURTLE_ROBOT_WHEELS_H
 
 #include "bitrl/bitrl_config.h"
 
@@ -8,7 +8,7 @@
 #include <string>
 #include <memory>
 
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_part.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_part.h"
 namespace bitrl{
 namespace rb::bitrl_chrono
 {
