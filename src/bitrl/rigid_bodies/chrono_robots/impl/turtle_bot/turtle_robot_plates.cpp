@@ -2,9 +2,9 @@
 
 #ifdef BITRL_CHRONO
 
-#include "bitrl/bitrl_types.h"
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_plates.h"
 #include "bitrl/bitrl_consts.h"
+#include "bitrl/bitrl_types.h"
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_plates.h"
 
 namespace bitrl
 {

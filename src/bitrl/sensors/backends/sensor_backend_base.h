@@ -3,6 +3,14 @@
 
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
+#include "bitrl/bitrl_config.h"
+
+#ifdef BITRL_CHRONO
+#include <chrono/physics/ChBody.h>
+#include <unordered_map>
+#include <any>
+#endif
+
 #include <string>
 #include <vector>
 
@@ -80,12 +88,32 @@ public:
      */
     std::string backend_type_str()const noexcept{return backend_type_;}
 
+#ifdef BITRL_CHRONO
+    ///
+    /// @brief Add a visual shape for the sensor in order to
+    /// be visualized with Irrlicht. Concrete classes may choose not
+    /// to implement this. In this case the sensor will not be visible
+    ///
+    virtual void add_visual_shape(const std::unordered_map<std::string, std::any>& shape_properties)=0;
+
+    /// @brief Set the pointer to the body that this sensor is attached
+    /// @param body
+    void set_chrono_body(std::shared_ptr<chrono::ChBody> body){body_ = body;}
+#endif
+
 protected:
     /**
      * @brief Constructor
      * @param backend_type
      */
     SensorBackendBase(const std::string& backend_type);
+
+#ifdef BITRL_CHRONO
+    ///
+    /// @brief The body on which the sensor sits
+    ///
+    std::shared_ptr<chrono::ChBody> body_{nullptr};
+#endif
 
 private:
 

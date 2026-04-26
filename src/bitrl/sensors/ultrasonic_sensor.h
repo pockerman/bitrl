@@ -26,6 +26,12 @@ public:
      */
     static const  std::string SENSOR_TYPE;
 
+  ///
+  /// @param backend_type
+  /// @param name
+  /// @return
+  static std::shared_ptr<UltrasonicSensor> create(const std::string& backend_type, const std::string& name);
+
     /**
      * @brief Constructor
      * @param backend
@@ -56,6 +62,9 @@ public:
      * If units have not been established this returns bitrl::consts::INVALID_STR
      */
     virtual std::string sensor_units()const;
+
+
+    virtual std::shared_ptr<backends::SensorBackendBase> backend_ptr()const override{return backend_;}
 
 private:
     /**

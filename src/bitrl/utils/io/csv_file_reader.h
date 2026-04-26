@@ -4,8 +4,6 @@
 #include "bitrl/bitrl_types.h"
 #include "bitrl/utils/io/file_reader_base.h"
 
-#include <boost/noncopyable.hpp>
-#include <fstream>
 #include <string>
 #include <vector>
 

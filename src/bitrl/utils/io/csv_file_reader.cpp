@@ -9,11 +9,11 @@
 #include <cassert>
 #endif
 
+#include <stdexcept>
+
 namespace bitrl
 {
-namespace utils
-{
-namespace io
+namespace utils::io
 {
 
 CSVFileReader::CSVFileReader(const std::string &file_name, const std::string delimeter)
@@ -71,6 +71,5 @@ std::vector<uint_t> CSVFileReader::read_line_as_uint()
     return line_int;
 }
 
-} // namespace io
-} // namespace utils
+} // namespace utils::io
 } // namespace bitrl

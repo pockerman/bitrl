@@ -7,11 +7,13 @@
 
 #include "bitrl/sensors/backends/range_sensor_backend_base.h"
 
-#include "chrono/physics/ChSystem.h"
-#include "chrono/physics/ChBody.h"
+#include <chrono/physics/ChSystem.h>
+#include <chrono/physics/ChBody.h>
 
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <any>
 
 namespace bitrl
 {
@@ -32,9 +34,14 @@ public:
      */
     static const  std::string BACKEND_TYPE;
 
-    /**
-     * @brief Constructor
-     */
+    ///
+    /// @brief Constructor
+    ///
+    CHRONO_UltrasonicBackend();
+
+    ///
+    /// @brief Constructor
+    ///
     CHRONO_UltrasonicBackend(chrono::ChSystem& sys_ptr,
                             std::shared_ptr<chrono::ChBody> body);
 
@@ -63,6 +70,7 @@ public:
       */
     void load_from_json(const std::string& filename);
 
+
     /**
      * @brief Set the position of the sensor
      * @param pos
@@ -80,12 +88,7 @@ private:
     /**
      * @brief Pointer to the system this sensor is attached ot
      */
-    chrono::ChSystem* sys_ptr_;
-
-    /**
-     * @brief The body on which the sensor sits
-     */
-    std::shared_ptr<chrono::ChBody> body_;
+    chrono::ChSystem* sys_ptr_{nullptr};
 
     /**
      * @brief The position of the sensor

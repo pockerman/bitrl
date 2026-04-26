@@ -15,7 +15,7 @@ enum class SensorTypeEnum : uint_t
     INVALID_TYPE = 0,
     CAMERA = 1,
     ULTRASOUND = 2,
-    ODMETRY = 3,
+    ODOMETRY = 3,
     VECTOR_SENSOR = 4
 };
 }

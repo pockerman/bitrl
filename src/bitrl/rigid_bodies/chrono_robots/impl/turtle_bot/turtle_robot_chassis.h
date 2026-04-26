@@ -1,22 +1,15 @@
-//
-// Created by alex on 2/8/26.
-//
-
-#ifndef DIFF_DRIVE_ROBOT_CHASSIS_H
-#define DIFF_DRIVE_ROBOT_CHASSIS_H
+#ifndef TURTLE_ROBOT_CHASSIS_H
+#define TURTLE_ROBOT_CHASSIS_H
 
 #include "bitrl/bitrl_config.h"
 
 #ifdef BITRL_CHRONO
 
-#include <string>
+#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/turtle_robot_part.h"
+#include <chrono/physics/ChSystem.h>
+
+
 #include <memory>
-
-#include "chrono/physics/ChSystem.h"
-
-
-#include "bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/diff_drive_robot_part.h"
-#include "bitrl/bitrl_types.h"
 
 namespace bitrl{
 namespace rb::bitrl_chrono{

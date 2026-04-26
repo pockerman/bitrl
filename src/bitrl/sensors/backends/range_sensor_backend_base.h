@@ -1,10 +1,16 @@
 #ifndef RANGE_SENSOR_BACKEND_BASE_H
 #define RANGE_SENSOR_BACKEND_BASE_H
 
-
+#include "bitrl/bitrl_config.h"
 #include "bitrl/bitrl_types.h"
 #include "bitrl/sensors/backends/sensor_backend_base.h"
 #include <string>
+#include <memory>
+
+#ifdef BITRL_CHRONO
+#include <unordered_map>
+#include <any>
+#endif
 
 namespace bitrl
 {
@@ -18,6 +24,10 @@ namespace sensors::backends
 class RangeSensorBackendBase : public SensorBackendBase
 {
 public:
+
+
+    static std::shared_ptr<RangeSensorBackendBase> create(const std::string& backend_type);
+
     /**
      * @return The maximum distance the range sensor can read
      */
@@ -51,6 +61,15 @@ public:
      * @param units The string representing the sensor units
      */
     void set_sensor_units(const std::string& units){sensor_units_ = units;}
+
+#ifdef BITRL_CHRONO
+    ///
+    /// @brief Add a visual shape for the sensor in order to
+    /// be visualized with Irrlicht. Concrete classes may choose not
+    /// to implement this. In this case the sensor will not be visible
+    ///
+    virtual void add_visual_shape(const std::unordered_map<std::string, std::any>& shape_properties)override;
+#endif
 
 protected:
     /**

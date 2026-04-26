@@ -1,5 +1,6 @@
 #include "bitrl/bitrl_config.h"
 #include "bitrl/sensors/ultrasonic_sensor.h"
+#include "bitrl/sensors/backends/range_sensor_backend_base.h"
 
 #ifdef BITRL_LOG
 #include <boost/log/trivial.hpp>
@@ -13,6 +14,12 @@ namespace sensors
 {
 const  std::string UltrasonicSensor::SENSOR_TYPE = "UltrasonicSensor";
 
+std::shared_ptr<UltrasonicSensor>
+UltrasonicSensor::create(const std::string& backend_type, const std::string& name)
+{
+    auto backend = sensors::backends::RangeSensorBackendBase::create(backend_type);
+    return std::make_shared<UltrasonicSensor>(backend, name);
+}
 
 void UltrasonicSensor::init()
 {

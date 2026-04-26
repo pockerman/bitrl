@@ -5,6 +5,8 @@
 #include "../bitrl_consts.h"
 #include "bitrl/bitrl_types.h"
 #include "bitrl/bitrl_consts.h"
+#include "bitrl/sensors/backends/sensor_backend_base.h"
+
 #include <vector>
 #include <string>
 namespace bitrl
@@ -92,6 +94,8 @@ public:
      */
     std::string sensor_type()const noexcept{return sensor_type_;}
 
+    virtual std::shared_ptr<backends::SensorBackendBase> backend_ptr()const{return backend_ptr_;}
+
 protected:
     /**
      * @param sensor_type The type of the sensor
@@ -103,6 +107,11 @@ protected:
      * @brief The values last read by the sensor
      */
     std::vector<real_t> values_;
+
+    ///
+    /// @brief Pointer to backend tha actually handles the sensor
+    ///
+    std::shared_ptr<backends::SensorBackendBase> backend_ptr_;
 
 private:
 
