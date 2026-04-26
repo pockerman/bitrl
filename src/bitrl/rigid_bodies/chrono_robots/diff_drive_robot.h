@@ -87,11 +87,12 @@ public:
     };
 
     ///
-    /// Constructor
+    /// @brief Constructor
     ///
     CHRONO_DiffDriveRobot()=default;
 
-    /// Load the robot details form the specified filename
+    /// @brief Load the robot details form the specified filename
+    ///
     void load(const std::filesystem::path& filename);
 
     /// Brief return the number of wheel motors this robot has

@@ -1,0 +1,16 @@
+{
+  "name": "ChronoWorld1",
+
+  "floor": {
+    "x": 5.0,
+    "y": 5.0,
+    "z": -0.01,
+    "enable_collision": true,
+    "density": 1000.0
+  },
+  "boxes": {
+  "box1": {
+    }
+  },
+  "robot_file": "bitrl_diff_drive_robot.json"
+}
