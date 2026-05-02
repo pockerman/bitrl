@@ -18,11 +18,6 @@ namespace bitrl
 namespace worlds::chrono_worlds
 {
 
-// forward declarations
-class ChronoWorld1;
-
-
-
 class ChronoWorld1
 {
 public:

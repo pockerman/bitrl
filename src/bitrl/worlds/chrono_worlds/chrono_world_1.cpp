@@ -2,9 +2,11 @@
 
 #ifdef BITRL_CHRONO
 
+#include "bitrl/bitrl_consts.h"
 #include "bitrl/utils/io/json_file_reader.h"
 #include "bitrl/extern/nlohmann/json/json.hpp"
 
+#include <future>
 
 namespace bitrl
 {
@@ -36,6 +38,18 @@ void ChronoWorld1::load(const std::filesystem::path& filename)
 
     utils::io::JSONFileReader reader(filename);
     reader.open();
+
+    // read the file to load the robot from
+    auto robo_file = reader.at<std::string>("robot_file");
+    auto path = consts::build_robot_file_path(robo_file);
+
+    // We can load the robot as an async task
+    auto future = std::async(std::launch::async, [this, path]() {
+        robot_.load(path);
+    });
+
+    // optionally store the future if you need to wait later
+    auto load_future_ = std::move(future);
 
 }
 
