@@ -9,6 +9,7 @@
 #include "bitrl/bitrl_config.h"
 #include <numbers>
 #include <string>
+#include <filesystem>
 
 namespace bitrl
 {
@@ -30,22 +31,37 @@ inline const std::string INVALID_STR = std::string("INVALID");
  */
 inline const real_t TOLERANCE = 1.0e-8;
 
-/**
- * @brief Path to robots definitions
- */
+///
+/// @brief Path to robots definitions
+///
 inline const std::string ROBOTS_DIR = std::string(ROBOTS_DATA_DIR);
 
-/**
- * @brief Path to sensors definitions
- */
+///
+/// @brief Path to sensors definitions
+///
 inline const std::string SENSORS_DIR = std::string(SENSORS_DATA_DIR);
+
+///
+/// @brief Path to worlds definitions
+///
+inline const std::string WORLDS_DIR = std::string(WORLDS_DATA_DIR);
+
+/// Retruns an std::filesystem::path for the robot filename
+/// @param filename The filename of the robot
+/// @return An std::filesystem::path
+inline std::filesystem::path build_robot_file_path(const std::string filename){return std::filesystem::path(ROBOTS_DIR) / filename;}
+
+/// Retruns an std::filesystem::path for the world filename
+/// @param filename The filename of the robot
+/// @return An std::filesystem::path
+inline std::filesystem::path build_world_file_path(const std::string filename){return std::filesystem::path(WORLDS_DIR) / filename;}
 
 namespace maths
 {
 
-/**
- * @brief The PI constant
- */
+///
+/// @brief The PI constant
+///
 inline const real_t PI = std::numbers::pi;
 
 /**

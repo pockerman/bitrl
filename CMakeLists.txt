@@ -43,10 +43,11 @@ SET(CMAKE_CXX_STANDARD_REQUIRED True)
 SET(CMAKE_LINKER_FLAGS "-pthread")
 SET(ROBOTS_DATA_DIR ${PROJECT_SOURCE_DIR}/robots)
 SET(SENSORS_DATA_DIR ${PROJECT_SOURCE_DIR}/sensors)
+SET(WORLDS_DATA_DIR ${PROJECT_SOURCE_DIR}/worlds)
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	SET(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR}/install/dbg)
-	SET(CMAKE_CXX_FLAGS "-g -fPIC -DBOOST_LOG_DYN_LINK") # -Wall -Wextra")
+	SET(CMAKE_CXX_FLAGS "-g –ggdb -fPIC -DBOOST_LOG_DYN_LINK -Wall –Werror -Wpedantic") # -Wall -Wextra")
     SET(BITRL_DEBUG ON)
 	
 ELSE(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -144,10 +145,8 @@ INCLUDE_DIRECTORIES(src/)
 
 FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/boards/arduino/*.cpp
-		src/bitrl/network/*.cpp
-		src/bitrl/sensors/*.cpp
-		src/bitrl/sensors/messages/*.cpp
-		src/bitrl/sensors/backends/*.cpp
+		src/bitrl/control/*.cpp
+		src/bitrl/dynamics/*.cpp
 		src/bitrl/envs/*.cpp
 		src/bitrl/envs/gymnasium/*.cpp
 		src/bitrl/envs/gymnasium/toy_text/*.cpp
@@ -159,20 +158,24 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 		src/bitrl/envs/connect2/*.cpp
 		src/bitrl/envs/webots_envs/*.cpp
 		src/bitrl/envs/gymnasium/box2d/*.cpp
-		src/bitrl/boards/arduino/*.cpp
-		src/bitrl/control/*.cpp
+		src/bitrl/network/*.cpp
 		src/bitrl/planning/*.cpp
 		src/bitrl/rigid_bodies/*.cpp
 		src/bitrl/rigid_bodies/chrono_robots/*.cpp
 		src/bitrl/rigid_bodies/chrono_robots/impl/*.cpp
 		src/bitrl/rigid_bodies/chrono_robots/impl/turtle_bot/*.cpp
 		src/bitrl/rigid_bodies/webots_robots/*.cpp
-		src/bitrl/dynamics/*.cpp
+		src/bitrl/sensors/*.cpp
+		src/bitrl/sensors/messages/*.cpp
+		src/bitrl/sensors/backends/*.cpp
+		src/bitrl/systems/*.cpp
 		src/bitrl/utils/*.cpp
 		src/bitrl/utils/io/*.cpp
 		src/bitrl/utils/maths/statistics/distributions/*.cpp
 		src/bitrl/utils/render/*.cpp
-		src/bitrl/systems/*.cpp
+		src/bitrl/worlds/*.cpp
+		src/bitrl/worlds/chrono_worlds/*.cpp
+
 		#src/bitrl/utils/geometry/*.cpp
 		#src/bitrl/utils/geometry/shapes/*.cpp
 		#src/bitrl/utils/geometry/mesh/*.cpp

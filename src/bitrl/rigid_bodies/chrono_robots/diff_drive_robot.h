@@ -9,6 +9,7 @@
 #include "bitrl/rigid_bodies/chrono_robots/chrono_robot_pose.h"
 #include "bitrl/sensors/sensor_manager.h"
 #include "bitrl/sensors/sensor_base.h"
+#include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChLinkMotorRotationSpeed.h>
@@ -16,6 +17,7 @@
 
 #include <memory>
 #include <filesystem>
+#include <array>
 
 namespace bitrl
 {
@@ -34,6 +36,8 @@ namespace rb::bitrl_chrono
 class CHRONO_DiffDriveRobot
 {
 public:
+
+    using json = nlohmann::json;
 
     ///
     /// Helper class to assemble some robot data
@@ -87,12 +91,19 @@ public:
     };
 
     ///
-    /// Constructor
+    /// @brief Constructor
     ///
     CHRONO_DiffDriveRobot()=default;
 
-    /// Load the robot details form the specified filename
+    ///
+    /// @brief Load the robot details form the specified filename
+    ///
     void load(const std::filesystem::path& filename);
+
+    ///
+    /// @brief Load the robot details form the specified json structure
+    ///
+    void load(const json& j);
 
     /// Brief return the number of wheel motors this robot has
     /// @return
@@ -131,7 +142,22 @@ public:
     /// Read/write reference to the senosr manager for this robot
     /// @return
     ///
-    RobotSensorManager & get_sensor_manager(){return sensor_manager_;}
+    RobotSensorManager & get_sensor_manager(){return sensor_manager_; }
+
+    /// @brief Explicitly set the world position of the robot. This is useful
+    /// for changing the initial position of the robot but avoid using it within
+    /// a simualtion running unless you know what you are doing
+    /// @param position
+    ///
+    void set_world_position(const chrono::ChVector3d& position);
+
+    /// @brief Explicitly set the world position of the robot. This is useful
+    /// for changing the initial position of the robot but avoid using it within
+    /// a simualtion running unless you know what you are doing
+    /// @param position
+    ///
+    void set_world_position(const std::array<real_t, 3>& position);
+
 
 
 private:

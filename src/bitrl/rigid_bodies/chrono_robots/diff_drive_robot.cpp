@@ -8,12 +8,12 @@
 #include "bitrl/sensors/ultrasonic_sensor.h"
 #include <chrono/physics/ChContactMaterialNSC.h>
 
+#include <any>
 #include <cmath>
-#include <vector>
+#include <future>
 #include <stdexcept>
 #include <unordered_map>
-#include <any>
-#include <iostream>
+#include <vector>
 
 namespace bitrl
 {
@@ -187,6 +187,17 @@ void CHRONO_DiffDriveRobot::RobotData::read(const json& j)
     caster_wheel_radius = j.at("caster_wheel_radius").get<real_t>();
 }
 
+void CHRONO_DiffDriveRobot::set_world_position(const chrono::ChVector3d& position)
+{
+    chassis_ -> SetPos(position);
+}
+
+void CHRONO_DiffDriveRobot::set_world_position(const std::array<real_t, 3>& position)
+{
+    chrono::ChVector3d pos(position[0], position[1], position[2]);
+    set_world_position(pos);
+}
+
 namespace
 {
 
@@ -295,6 +306,90 @@ void CHRONO_DiffDriveRobot::set_speed(real_t speed)
 
 }
 
+void CHRONO_DiffDriveRobot::load(const json& j)
+{
+    if (is_loaded_)
+    {
+        return;
+    }
+
+     data_.read(j.at("robot-data"));
+
+    // read/create the material all created in stances depend on it
+    auto md = MaterialData(j.at("material"));
+    auto material = build_material(md);
+
+    // We can load the robot as an async task
+    auto chassis_future = std::async(std::launch::async, [this, material, &j]() {
+        auto cd = ChassisData(j.at("chassis"));
+        cd.wheel_radius = data_.wheel_radius;
+        cd.wheel_width = data_.wheel_width;
+        cd.density = data_.density;
+        chassis_ = build_chassis(material, cd);
+    });
+
+    // load wheels as an asynchronous task
+    // We can load the robot as an async task
+    auto wheels_future = std::async(std::launch::async, [this, material, &j]() -> CasterWheelData {
+        auto lwd = WheelData(j.at("left-wheel"));
+        lwd.wheel_radius = data_.wheel_radius;
+        lwd.wheel_width = data_.wheel_width;
+        lwd.density = data_.density;
+        left_wheel_ = build_wheel(material, lwd);
+
+        auto rwd = WheelData(j.at("right-wheel"));
+        rwd.wheel_radius = data_.wheel_radius;
+        rwd.wheel_width = data_.wheel_width;
+        rwd.density = data_.density;
+        right_wheel_ = build_wheel(material, rwd);
+
+        auto cwd = CasterWheelData(j.at("caster-wheel"));
+        cwd.wheel_radius = data_.caster_wheel_radius;
+        cwd.density = data_.density;
+        caster_wheel_  = build_caster_wheel(material, cwd);
+        return cwd;
+
+    });
+
+    // wait for the chassis
+    chassis_future.get();
+
+    // wait for the wheels
+    auto cwd = wheels_future.get();
+
+    // TODO: The hardcoded position should go into the config file
+    chrono::ChVector3d pos(-0.25, 0, cwd.wheel_radius);
+    caster_link_joint_ = build_caster_joint(caster_wheel_, chassis_, pos);
+
+    auto motors_future = std::async(std::launch::async, [this]()
+    {
+        // TODO: The hardcoded position should go into the config file
+        left_wheel_motor_speed_func_ = chrono_types::make_shared<chrono::ChFunctionConst>(0.0);
+        left_wheel_motor_ = build_motor(left_wheel_,
+                                     left_wheel_motor_speed_func_,
+                                     chassis_, chrono::ChVector3d(0,0.2,0.1));
+
+        // TODO: The hardcoded position should go into the config file
+        right_wheel_motor_speed_func_ = chrono_types::make_shared<chrono::ChFunctionConst>(0.0);
+        right_wheel_motor_ = build_motor(right_wheel_, right_wheel_motor_speed_func_,
+                                     chassis_, chrono::ChVector3d(0.0,-0.2,0.1));
+    });
+
+    // track the chassis for pose reports
+    pose_.set_body(chassis_);
+
+    // read the sensors
+    sensor_manager_.read(j.at("sensors"), chassis_);
+
+    // wait for the motors
+    motors_future.get();
+
+    // set the loaded flag to true to signal
+    // successful loading
+    is_loaded_ = true;
+
+}
+
 void CHRONO_DiffDriveRobot::load(const std::filesystem::path& filename)
 {
 
@@ -308,49 +403,74 @@ void CHRONO_DiffDriveRobot::load(const std::filesystem::path& filename)
 
     data_.read(reader.get("robot-data"));
 
+    // read/create the material all created in stances depend on it
     auto md = reader.at<MaterialData>("material");
     auto material = build_material(md);
 
-    auto cd = reader.at<ChassisData>("chassis");
-    cd.wheel_radius = data_.wheel_radius;
-    cd.wheel_width = data_.wheel_width;
-    cd.density = data_.density;
-    chassis_ = build_chassis(material, cd);
+    // We can load the robot as an async task
+    auto chassis_future = std::async(std::launch::async, [this, material, &reader]() {
+        auto cd = reader.at<ChassisData>("chassis");
+        cd.wheel_radius = data_.wheel_radius;
+        cd.wheel_width = data_.wheel_width;
+        cd.density = data_.density;
+        chassis_ = build_chassis(material, cd);
+    });
 
-    auto lwd = reader.at<WheelData>("left-wheel");
-    lwd.wheel_radius = data_.wheel_radius;
-    lwd.wheel_width = data_.wheel_width;
-    lwd.density = data_.density;
-    left_wheel_ = build_wheel(material, lwd);
+    // load wheels as an asynchronous task
+    // We can load the robot as an async task
+    auto wheels_future = std::async(std::launch::async, [this, material, &reader]() -> CasterWheelData {
+        auto lwd = reader.at<WheelData>("left-wheel");
+        lwd.wheel_radius = data_.wheel_radius;
+        lwd.wheel_width = data_.wheel_width;
+        lwd.density = data_.density;
+        left_wheel_ = build_wheel(material, lwd);
 
-    auto rwd = reader.at<WheelData>("right-wheel");
-    rwd.wheel_radius = data_.wheel_radius;
-    rwd.wheel_width = data_.wheel_width;
-    rwd.density = data_.density;
-    right_wheel_ = build_wheel(material, rwd);
+        auto rwd = reader.at<WheelData>("right-wheel");
+        rwd.wheel_radius = data_.wheel_radius;
+        rwd.wheel_width = data_.wheel_width;
+        rwd.density = data_.density;
+        right_wheel_ = build_wheel(material, rwd);
 
-    auto cwd = reader.at<CasterWheelData>("caster-wheel");
-    cwd.wheel_radius = data_.caster_wheel_radius;
-    cwd.density = data_.density;
-    caster_wheel_  = build_caster_wheel(material, cwd);
+        auto cwd = reader.at<CasterWheelData>("caster-wheel");
+        cwd.wheel_radius = data_.caster_wheel_radius;
+        cwd.density = data_.density;
+        caster_wheel_  = build_caster_wheel(material, cwd);
+        return cwd;
 
+    });
+
+    // wait for the chassis
+    chassis_future.get();
+
+    // wait for the wheels
+    auto cwd = wheels_future.get();
+
+    // TODO: The hardcoded position should go into the config file
     chrono::ChVector3d pos(-0.25, 0, cwd.wheel_radius);
     caster_link_joint_ = build_caster_joint(caster_wheel_, chassis_, pos);
 
-    left_wheel_motor_speed_func_ = chrono_types::make_shared<chrono::ChFunctionConst>(0.0);
-    left_wheel_motor_ = build_motor(left_wheel_,
-                                    left_wheel_motor_speed_func_,
-                                    chassis_, chrono::ChVector3d(0,0.2,0.1));
+    auto motors_future = std::async(std::launch::async, [this]()
+    {
+        // TODO: The hardcoded position should go into the config file
+        left_wheel_motor_speed_func_ = chrono_types::make_shared<chrono::ChFunctionConst>(0.0);
+        left_wheel_motor_ = build_motor(left_wheel_,
+                                     left_wheel_motor_speed_func_,
+                                     chassis_, chrono::ChVector3d(0,0.2,0.1));
 
-    right_wheel_motor_speed_func_ = chrono_types::make_shared<chrono::ChFunctionConst>(0.0);
-    right_wheel_motor_ = build_motor(right_wheel_, right_wheel_motor_speed_func_,
-                                    chassis_, chrono::ChVector3d(0.0,-0.2,0.1));
+        // TODO: The hardcoded position should go into the config file
+        right_wheel_motor_speed_func_ = chrono_types::make_shared<chrono::ChFunctionConst>(0.0);
+        right_wheel_motor_ = build_motor(right_wheel_, right_wheel_motor_speed_func_,
+                                     chassis_, chrono::ChVector3d(0.0,-0.2,0.1));
+    });
 
     // track the chassis for pose reports
     pose_.set_body(chassis_);
 
     // read the sensors
     sensor_manager_.read(reader.get("sensors"), chassis_);
+
+    // wait for the motors
+    motors_future.get();
 
     // set the loaded flag to true to signal
     // successful loading
@@ -364,7 +484,7 @@ void CHRONO_DiffDriveRobot::set_motor_speed(uint_t m, real_t speed)
         throw std::logic_error("Robot has not been loaded have you called load?");
     }
 
-    if (m !=0 || m != 1)
+    if (m !=0 && m != 1)
     {
         throw std::logic_error("Invalid motor index. Index must be either 0 or 1");
     }

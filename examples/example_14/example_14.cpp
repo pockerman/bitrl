@@ -9,8 +9,7 @@
 #include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
 #include "bitrl/utils/render/irrlicht_utils.h"
 
-#include <chrono/physics/ChSystemSMC.h>
-//#include <chrono/physics/ChBodyEasy.h>
+#include <chrono/physics/ChSystemNSC.h>
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
 
 #ifdef BITRL_LOG
@@ -19,8 +18,6 @@
 #endif
 
 #include <string>
-#include <vector>
-#include <unordered_map>
 #include <filesystem>
 
 namespace example14
