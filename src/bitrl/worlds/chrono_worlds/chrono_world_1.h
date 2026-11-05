@@ -6,6 +6,7 @@
 #ifdef BITRL_CHRONO
 
 #include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
+#include "bitrl/extern/nlohmann/json/json.hpp"
 
 #include <chrono/physics/ChSystemNSC.h>
 #include <chrono/physics/ChSystemSMC.h>
@@ -44,6 +45,10 @@ private:
     bool is_loaded_{false};
     friend void assign_to_chrono_system(chrono::ChSystemNSC& system, const ChronoWorld1& world);
 
+    using json = nlohmann::json;
+    void load_boxes_(const json& j);
+    void load_floor_(const json& j);
+    std::shared_ptr<chrono::ChContactMaterialNSC> load_floor_material_(const json& j);
 };
 }
 }
