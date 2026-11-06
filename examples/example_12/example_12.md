@@ -37,7 +37,6 @@ The include files
 #include "bitrl/bitrl_consts.h"
 
 #ifdef BITRL_LOG
-#define BOOST_LOG_DYN_LINK
 #include <boost/log/trivial.hpp>
 #endif
 

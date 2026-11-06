@@ -12,10 +12,7 @@ namespace sensors
 
     auto MessageBase::unix_seconds_since_epoch(std::chrono::system_clock::time_point point)
     {
-        auto seconds = std::chrono::duration_cast<std::chrono::seconds>(
-            point.time_since_epoch()
-        ).count();
-
+        return std::chrono::duration_cast<std::chrono::seconds>(point.time_since_epoch()).count();
     }
 
 

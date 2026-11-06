@@ -35,7 +35,7 @@ const std::vector<real_t>& UltrasonicSensor::read_values()
 #ifdef BITRL_LOG
         BOOST_LOG_TRIVIAL(warning)<<"Sensor: " << this -> sensor_name() << " is not enabled. Returning dummy values";
 #endif
-        this -> values_;
+        return this -> values_;
     }
 
     // TODO: Make sure that len(read_values) == len(values)

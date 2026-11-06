@@ -23,7 +23,6 @@ We have also introduced the headers _robot.h_ and _robot_env.h_ to separate conc
 #include "bitrl/utils/render/irrlicht_utils.h"
 
 #ifdef BITRL_LOG
-#define BOOST_LOG_DYN_LINK
 #include <boost/log/trivial.hpp>
 #endif
 

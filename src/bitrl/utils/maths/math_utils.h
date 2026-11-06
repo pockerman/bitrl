@@ -45,7 +45,7 @@ template <typename T> T sum_sqr(const DynVec<T> &vec)
 {
 
     T sum_ = T(0);
-    for (uint_t i = 0; i < vec.size(); ++i)
+    for (Eigen::Index i = 0; i < vec.size(); ++i)
     {
         sum_ += vec[i] * vec[i];
     }

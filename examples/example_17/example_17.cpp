@@ -84,8 +84,8 @@ const MotionModel::matrix_type &MotionModel::get_matrix(const std::string &name)
     throw std::runtime_error("MotionModel::get_matrix: unknown name");
 }
 
-void MotionModel::evaluate(const std::string &input_message, const std::string &sensor_message,
-                           const std::string &topic)
+void MotionModel::evaluate(const std::string &input_message, const std::string & /*sensor_message*/,
+                           const std::string & /*topic*/)
 {
     // turn the input message into a vector
     auto vector_message = sensors::EigenVectorMessage<real_t>::parse(input_message);

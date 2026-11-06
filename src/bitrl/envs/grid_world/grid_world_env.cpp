@@ -46,8 +46,6 @@ struct not_equal
 bool validate_board(const board &b)
 {
 
-    auto valid = true;
-
     const auto player_itr = b.components.find(board_component_type::PLAYER);
     if (player_itr == b.components.end())
     {
@@ -346,7 +344,7 @@ board_move_type board::validate_move(board_component_type piece, board_position 
         // 1 //block move, player can't move to wall
         outcome = board_move_type::INVALID;
     }
-    else if (max(new_pos) > (board_size - 1))
+    else if (max(new_pos) > static_cast<int_t>(board_size) - 1)
     {
         // #if outside bounds of board
         outcome = board_move_type::INVALID;

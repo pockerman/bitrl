@@ -34,6 +34,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           -DENABLE_CHRONO=OFF
           -DENABLE_TESTS=ON
+          -DBITRL_WERROR=ON
 
       - name: Build
         run: cmake --build build --parallel "$(nproc)"
