@@ -5,83 +5,75 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  build:
-    name: Build
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
-    strategy: 
+  core:
+    # Everything except Project Chrono. This is the fast feedback job.
+    name: Core (${{ matrix.build_type }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
       matrix:
-        BUILD_TYPE: ["Release", "Debug"]
+        build_type: [ Release, Debug ]
     steps:
-    - uses: actions/checkout@v4
-    - name: Install dependencies
-      run: |
-        sudo apt-get install -y build-essential cmake git \
-        libboost-all-dev libgtest-dev libeigen3-dev libblas-dev libopencv-dev
-      # g++ cmake libboost-all-dev libgtest-dev libeigen3-dev libblas-dev
-    - name: Build and install Paho MQTT C
-      run: |
-        git clone https://github.com/eclipse/paho.mqtt.c.git
-        cd paho.mqtt.c
-        cmake -Bbuild -H. \
-          -DPAHO_WITH_SSL=ON \
-          -DPAHO_BUILD_SHARED=ON \
-          -DPAHO_BUILD_STATIC=OFF
-        cmake --build build
-        sudo cmake --install build
-        sudo ldconfig
-    - name: Build and install Paho MQTT C++
-      run: |
-        git clone https://github.com/eclipse/paho.mqtt.cpp.git
-        cd paho.mqtt.cpp
-        cmake -Bbuild -H. \
-          -DPAHO_WITH_SSL=ON \
-          -DPAHO_BUILD_SHARED=ON \
-          -DPAHO_BUILD_STATIC=OFF
-        cmake --build build
-        sudo cmake --install build
-        sudo ldconfig
+      - uses: actions/checkout@v7
 
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Install dependencies
+        run: ./ci/install_deps.sh
 
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{matrix.BUILD_TYPE}}
+      - name: Configure
+        run: >
+          cmake -B build
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DENABLE_CHRONO=OFF
+          -DENABLE_TESTS=ON
 
-    - name: Test
-      # working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      shell: bash
-      run: bash ./execute_tests.sh
-      # run: ctest -C ${{env.BUILD_TYPE}}
-#  bump-version-and-push-tag:
-#      name: Bump version
-#      runs-on: ubuntu-latest
-#      needs: build
-#      steps:
-#      - name: Checkout
-#        # Step 1: Checkout the repository with full history for tagging
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0  # Fetch the full commit history to ensure proper tagging
-#
-#      # Step 2: Bump version and create a tag
-#      # https://github.com/marketplace/actions/github-tag-bump
-#      - name: Create Tag
-#        uses: anothrNick/github-tag-action@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.MERGE_HOT_FIX_SECRET }}
-#          WITH_V: true
-#          PRERELEASE: false
-#          DEFAULT_BUMP: patch
-  
-      
+      - name: Build
+        run: cmake --build build --parallel "$(nproc)"
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --no-tests=error
+
+  chrono:
+    # The full build. Chrono is built from source once and then restored
+    # from the cache for as long as ci/build_chrono.sh does not change.
+    name: Chrono (Release)
+    runs-on: ubuntu-24.04
+    env:
+      CHRONO_PREFIX: ${{ github.workspace }}/.deps/chrono
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install dependencies
+        run: ./ci/install_deps.sh --with-chrono-deps
+
+      - name: Restore Chrono
+        id: chrono-cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.CHRONO_PREFIX }}
+          key: chrono-${{ runner.os }}-24.04-${{ hashFiles('ci/build_chrono.sh') }}
+
+      - name: Build Chrono
+        if: steps.chrono-cache.outputs.cache-hit != 'true'
+        run: ./ci/build_chrono.sh "$CHRONO_PREFIX"
+
+      - name: Configure
+        run: >
+          cmake -B build
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_PREFIX_PATH="$CHRONO_PREFIX"
+          -DENABLE_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --parallel "$(nproc)"
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --no-tests=error

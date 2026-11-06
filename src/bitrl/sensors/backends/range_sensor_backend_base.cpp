@@ -1,3 +1,4 @@
+#include "bitrl/bitrl_config.h"
 #include "bitrl/sensors/backends/range_sensor_backend_base.h"
 #include "bitrl/sensors/backends/chrono_ultrasound_backend.h"
 #include "bitrl/sensors/backends/mqtt_ultrasound_backend.h"
@@ -15,14 +16,19 @@ namespace sensors::backends
 std::shared_ptr<RangeSensorBackendBase> RangeSensorBackendBase::create(const std::string& backend_type)
 {
 
+#ifdef BITRL_CHRONO
     if (backend_type == "CHRONO")
     {
         return std::make_shared<CHRONO_UltrasonicBackend>();
     }
-    else if (backend_type == "MQTT")
+#endif
+
+#ifdef BITRL_MQTT
+    if (backend_type == "MQTT")
     {
         return std::make_shared<MQTT_UltrasonicBackend>();
     }
+#endif
 
     throw std::runtime_error("Unknown backend type: " + backend_type);
 }

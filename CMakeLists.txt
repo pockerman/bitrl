@@ -25,19 +25,27 @@ IF(COMMAND cmake_policy)
 ENDIF(COMMAND cmake_policy)
 
 
-OPTION(ENABLE_WEBOTS OFF)
+# configure packages. These can be overridden from the command line
+# e.g. cmake -DENABLE_CHRONO=OFF -DENABLE_TESTS=ON
+OPTION(ENABLE_WEBOTS "Build with Webots support" OFF)
+OPTION(ENABLE_EXAMPLES "Build the examples" ON)
+OPTION(ENABLE_TESTS "Build the unit tests" OFF)
+OPTION(ENABLE_OPENCV "Build with OpenCV support" ON)
+OPTION(ENABLE_MQTT "Build with MQTT support" ON)
+OPTION(ENABLE_CHRONO "Build with Project Chrono support" ON)
+OPTION(BITRL_LOG "Log various messages from the library" ON)
+OPTION(BITRL_IRRLICHT "Use Irrlicht for visualization. Requires ENABLE_CHRONO" ON)
+OPTION(BITRL_WERROR "Treat compiler warnings as errors in Debug builds" OFF)
 
-# configure packages
-SET(ENABLE_EXAMPLES ON)
-SET(ENABLE_TESTS OFF)
-SET(ENABLE_OPENCV ON)
-SET(ENABLE_MQTT ON)
-SET(BITRL_LOG ON)
-SET(BITRL_IRRLICHT ON)
-SET(ENABLE_CHRONO ON)
+IF(NOT ENABLE_CHRONO)
+	SET(BITRL_IRRLICHT OFF)
+ENDIF()
 
 # build options
-SET(CMAKE_BUILD_TYPE "Release")
+IF(NOT CMAKE_BUILD_TYPE)
+	SET(CMAKE_BUILD_TYPE "Release" CACHE STRING "The build type" FORCE)
+ENDIF()
+
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
 SET(CMAKE_LINKER_FLAGS "-pthread")
@@ -47,7 +55,10 @@ SET(WORLDS_DATA_DIR ${PROJECT_SOURCE_DIR}/worlds)
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	SET(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR}/install/dbg)
-	SET(CMAKE_CXX_FLAGS "-g –ggdb -fPIC -DBOOST_LOG_DYN_LINK -Wall –Werror -Wpedantic") # -Wall -Wextra")
+	SET(CMAKE_CXX_FLAGS "-g -ggdb -fPIC -DBOOST_LOG_DYN_LINK -Wall -Wpedantic") # -Wall -Wextra")
+	IF(BITRL_WERROR)
+		STRING(APPEND CMAKE_CXX_FLAGS " -Werror")
+	ENDIF()
     SET(BITRL_DEBUG ON)
 	
 ELSE(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -80,18 +91,8 @@ ELSE()
 	MESSAGE( FATAL_ERROR  "Boost C++ library is required but not found.")
 ENDIF()
 
-# where to install the library
-IF(ENABLE_TESTS_FLAG)
-	# find gtest
+IF(ENABLE_TESTS)
 	FIND_PACKAGE(GTest REQUIRED)
-
-	IF(GTest_FOUND)
-		INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
-		LINK_DIRECTORIES("/usr/local/lib")
-		MESSAGE( STATUS  "Found Gtest at ${GTEST_INCLUDE_DIRS}.")
-    ELSE()
-	    MESSAGE( FATAL_ERROR  "ENABLE_TESTS_FLAG is ON but could not find GTest library.")
-	ENDIF()
 ENDIF()
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -120,10 +121,6 @@ IF(ENABLE_CHRONO)
 	# Manually set this as for some reason it does not work
 	# otherwise
 	INCLUDE_DIRECTORIES(/usr/include/irrlicht)
-    INCLUDE_DIRECTORIES(/usr/local/include/chrono_thirdparty/HACD)
-	INCLUDE_DIRECTORIES(/usr/local/include/chrono/collision/bullet)
-
-	LINK_DIRECTORIES(/usr/local/lib)
 ENDIF()
 
 configure_file(config.h.in ${PROJECT_SOURCE_DIR}/src/bitrl/bitrl_config.h @ONLY)
@@ -186,6 +183,26 @@ FILE(GLOB SRCS src/bitrl/*.cpp
 ADD_LIBRARY(bitrllib SHARED ${SRCS})
 
 SET_TARGET_PROPERTIES(bitrllib PROPERTIES LINKER_LANGUAGE CXX)
+
+# Everything that links against bitrllib inherits these
+TARGET_COMPILE_DEFINITIONS(bitrllib PUBLIC BOOST_LOG_DYN_LINK)
+TARGET_LINK_LIBRARIES(bitrllib PUBLIC boost_log pthread)
+
+IF(ENABLE_CHRONO)
+	TARGET_LINK_LIBRARIES(bitrllib PUBLIC Chrono::Chrono_core)
+	IF(BITRL_IRRLICHT)
+		TARGET_LINK_LIBRARIES(bitrllib PUBLIC Chrono::Chrono_irrlicht)
+	ENDIF()
+ENDIF()
+
+IF(BITRL_MQTT)
+	TARGET_LINK_LIBRARIES(bitrllib PUBLIC paho-mqttpp3 paho-mqtt3as)
+ENDIF()
+
+IF(BITRL_OPENCV)
+	TARGET_LINK_LIBRARIES(bitrllib PUBLIC ${OpenCV_LIBS})
+ENDIF()
+
 INSTALL(TARGETS bitrllib DESTINATION ${CMAKE_INSTALL_PREFIX})
 MESSAGE(STATUS "Installation destination at: ${CMAKE_INSTALL_PREFIX}")
 
@@ -196,5 +213,6 @@ ENDIF()
 
 IF(ENABLE_TESTS)
 	# Add the tests
+	ENABLE_TESTING()
 	ADD_SUBDIRECTORY(tests)
 ENDIF()

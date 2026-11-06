@@ -4,6 +4,31 @@
 ```bitrl``` is an effort to provide implementations and wrappers of environments suitable for training reinforcement learning agents
 using  C++.  The documentation for the library can be found <a href="https://pockerman.github.io/bitrl/index.html">here</a>.
 
+## Build
+
+Ubuntu 24.04 is the reference platform. ``ci/install_deps.sh`` installs the dependencies and
+``ci/build_chrono.sh <prefix>`` builds the supported Project Chrono commit.
+
+```
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=ON
+cmake --build build --parallel
+ctest --test-dir build --output-on-failure
+```
+
+| Option | Default | Description |
+| ------ | ------- | ----------- |
+| ``ENABLE_CHRONO`` | ``ON`` | Project Chrono simulation. Add ``-DCMAKE_PREFIX_PATH=<prefix>`` for a non-system install |
+| ``ENABLE_MQTT`` | ``ON`` | Paho MQTT support |
+| ``ENABLE_OPENCV`` | ``ON`` | OpenCV support |
+| ``ENABLE_WEBOTS`` | ``OFF`` | Webots support |
+| ``ENABLE_EXAMPLES`` | ``ON`` | Build the examples |
+| ``ENABLE_TESTS`` | ``OFF`` | Build the tests |
+| ``BITRL_IRRLICHT`` | ``ON`` | Irrlicht visualization. Requires ``ENABLE_CHRONO`` |
+| ``BITRL_LOG`` | ``ON`` | Library logging |
+| ``BITRL_WERROR`` | ``OFF`` | Treat warnings as errors in Debug builds |
+
+## Example
+
 The following is an example how to use the 
 ``FrozenLake``   environment from <a href="https://github.com/Farama-Foundation/Gymnasium/tree/main">Gymnasium</a>.
 
