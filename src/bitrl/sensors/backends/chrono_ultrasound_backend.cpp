@@ -55,7 +55,7 @@ void CHRONO_UltrasonicBackend::load_from_json(const std::string& filename)
     this -> set_max_distance(max_distance);
 
     auto min_distance = json_reader.at<real_t>("min_distance");
-    this -> set_min_distance(max_distance);
+    this -> set_min_distance(min_distance);
 
     auto update_rate = json_reader.at<real_t>("update_rate");
     this -> set_sampling_period(update_rate);

@@ -58,7 +58,7 @@ Connect2::time_step_type Connect2::reset()
 bool Connect2::is_win(uint_t player) const noexcept
 {
 
-    auto player_sum = 0;
+    uint_t player_sum = 0;
     std::for_each(board_.begin(), board_.end(),
                   [&player_sum, player](auto val)
                   {

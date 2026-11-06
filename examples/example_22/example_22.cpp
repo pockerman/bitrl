@@ -6,7 +6,6 @@
 #include "bitrl/dynamics/system_state.h"
 #include "bitrl/utils/unit_converter.h"
 
-#define BOOST_LOG_DYN_LINK
 #include <boost/log/trivial.hpp>
 #include <iostream>
 #include <unordered_map>

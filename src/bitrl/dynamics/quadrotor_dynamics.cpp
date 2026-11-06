@@ -62,7 +62,6 @@ void QuadrotorDynamics::update_euler_angles_()
     const auto dt = config_.dt;
     const auto phi = euler_angles_old[0];
     const auto theta = euler_angles_old[1];
-    const auto psi = euler_angles_old[2];
 
     euler_mat_(0, 0) = 1.0;
     euler_mat_(0, 1) = std::sin(phi) * std::tan(theta);

@@ -16,6 +16,8 @@ std::string FileFormats::type_to_string(FileFormats::Type t)
         return "csv";
     case FileFormats::Type::JSON:
         return "json";
+    case FileFormats::Type::INVALID_TYPE:
+        break;
     }
 
     return "INVALID_TYPE";
