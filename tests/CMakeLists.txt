@@ -1,60 +1,21 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
 
-INCLUDE_DIRECTORIES(${PROJECT_INCL_DIR}) 
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIR})
+# Adds the test <name> built from <name>/<name>.cpp and registers it with CTest.
+FUNCTION(BITRL_ADD_TEST name)
+	ADD_EXECUTABLE(${name} ${name}/${name}.cpp)
+	TARGET_LINK_LIBRARIES(${name} PRIVATE bitrllib GTest::gtest GTest::gtest_main)
+	ADD_TEST(NAME ${name} COMMAND ${name})
+ENDFUNCTION()
 
-IF( USE_PYTORCH )
-	LIST(APPEND CMAKE_PREFIX_PATH /home/alex/MySoftware/libtorch)
-	FIND_PACKAGE(Torch REQUIRED CONFIG)
-	INCLUDE_DIRECTORIES(${TORCH_INCLUDE_DIRS})
+# Tests that run on their own
+BITRL_ADD_TEST(test_grid_world)
+BITRL_ADD_TEST(test_generic_line)
+
+IF(BITRL_CHRONO)
+	BITRL_ADD_TEST(test_chrono_ultrasound)
 ENDIF()
 
-SET(CMAKE_CXX_COMPILER /usr/bin/g++-11)
-SET(CMAKE_C_COMPILER /usr/bin/gcc-11)
-SET(CMAKE_CXX_STANDARD 20)
-SET(CMAKE_CXX_STANDARD_REQUIRED True) 
-
-IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-	SET(CMAKE_CXX_FLAGS "-g -Wall -Wextra")
-ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
-	SET(CMAKE_CXX_FLAGS "-O2")
-ENDIF()
-
-SET(CMAKE_LINKER_FLAGS "-pthread")
-
-
-IF(GTEST_INCLUDE_DIRS MATCHES " ")
-
-	# find gtest
-	FIND_PACKAGE(GTest REQUIRED)
-
-	IF(GTest_FOUND)
-		INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
-		SET(GTEST_LIB_DIR "/usr/local/lib")
-	ENDIF()
-
-ELSE()
-	INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
-	SET(GTEST_LIB_DIR "/usr/local/lib")
-ENDIF()
-
-# use the Boost link directories
-LINK_DIRECTORIES(${Boost_LIBRARY_DIR})
-LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX})
-LINK_DIRECTORIES(${GTEST_LIB_DIR})
-
-ADD_SUBDIRECTORY(test_frozen_lake)
-ADD_SUBDIRECTORY(test_black_jack)
-ADD_SUBDIRECTORY(test_cliff_world)
-ADD_SUBDIRECTORY(test_cart_pole)
-#ADD_SUBDIRECTORY(test_mountain_car)
-#ADD_SUBDIRECTORY(test_taxi)
-#ADD_SUBDIRECTORY(test_tiled_cart_pole)
-ADD_SUBDIRECTORY(test_grid_world)
-ADD_SUBDIRECTORY(test_acrobot)
-#ADD_SUBDIRECTORY(test_vector_env_wrapper)
-#ADD_SUBDIRECTORY(test_vector_time_step)
-ADD_SUBDIRECTORY(test_generic_line)
-ADD_SUBDIRECTORY(test_rest_api_server_wrapper)
-
+# TODO: Port the remaining tests. test_frozen_lake, test_black_jack, test_cliff_world,
+# test_cart_pole, test_acrobot and test_rest_api_server_wrapper need a running environments
+# server and the removed apiserver.h API. test_mountain_car, test_taxi, test_tiled_cart_pole,
+# test_vector_env_wrapper, test_vector_time_step and test_numpy_cpp_utils use the gymfcpp API
