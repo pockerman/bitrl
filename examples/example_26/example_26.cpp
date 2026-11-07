@@ -2,6 +2,7 @@
 
 #ifdef BITRL_CHRONO
 
+#include "bitrl/bitrl_consts.h"
 #include "bitrl/bitrl_types.h"
 #include "bitrl/rigid_bodies/chrono_robots/chrono_robot_pose.h"
 
@@ -369,6 +370,21 @@ std::shared_ptr<chrono::ChBody> build_robot_on_mast(const ChVector3d &position)
     return robot;
 }
 
+std::string matrix_text(const ChMatrix33d &R)
+{
+    std::ostringstream text;
+    text << std::fixed << std::setprecision(3);
+    for (int row = 0; row < 3; ++row)
+    {
+        for (int col = 0; col < 3; ++col)
+        {
+            text << std::setw(7) << clean(R(row, col)) << "   ";
+        }
+        text << "\n";
+    }
+    return text.str();
+}
+
 // Draws R_RS = first * second part of the way through the animation, and returns its readout
 std::string draw_sensor(chrono::irrlicht::ChVisualSystemIrrlicht &vis,
                         const ChVector3d &robot_position, const std::string &name,
@@ -406,32 +422,43 @@ std::string draw_sensor(chrono::irrlicht::ChVisualSystemIrrlicht &vis,
 
     irr_draw_label(vis, name, robot_position + ChVector3d(-0.3, -0.3, 0.0));
 
-    std::ostringstream text;
-    text << name << "\n\n" << std::fixed << std::setprecision(3);
-    for (int row = 0; row < 3; ++row)
-    {
-        for (int col = 0; col < 3; ++col)
-        {
-            text << std::setw(7) << clean(R_RS(row, col)) << "   ";
-        }
-        text << "\n";
-    }
-    text << "\nbeam " << to_string(beam);
-    return text.str();
+    return name + "\n\n" + matrix_text(R_RS) + "\nbeam " + to_string(beam);
 }
 
-irr::gui::IGUIStaticText *add_readout(chrono::irrlicht::ChVisualSystemIrrlicht &vis, int left)
+irr::gui::IGUIStaticText *add_readout(chrono::irrlicht::ChVisualSystemIrrlicht &vis, int left,
+                                      int height)
 {
     auto *readout = vis.GetGUIEnvironment()->addStaticText(
-        L"", irr::core::rect<irr::s32>(left, 10, left + 190, 90), true, true);
+        L"", irr::core::rect<irr::s32>(left, 10, left + 190, 10 + height), true, true);
     readout->setBackgroundColor(irr::video::SColor(220, 255, 255, 255));
     readout->setDrawBackground(true);
     return readout;
 }
 
+void open_window(chrono::irrlicht::ChVisualSystemIrrlicht &vis, chrono::ChSystemNSC &system,
+                 const std::string &title, const ChVector3d &camera, const ChVector3d &target)
+{
+    vis.AttachSystem(&system);
+    vis.SetCameraVertical(chrono::CameraVerticalDir::Z);
+    vis.SetWindowSize(1280, 720);
+    vis.SetWindowTitle(title);
+    vis.Initialize();
+    vis.AddCamera(camera, target);
+    vis.GetActiveCamera()->setFOV(0.6f);
+    vis.AddLightDirectional();
+    vis.BindAll();
+}
+
+void draw_floor(chrono::irrlicht::ChVisualSystemIrrlicht &vis)
+{
+    chrono::irrlicht::tools::drawGrid(&vis, 0.5, 0.5, 12, 8,
+                                      chrono::ChCoordsysd(ChVector3d(0.0, 1.0, 0.0)),
+                                      chrono::ChColor(0.35f, 0.45f, 0.55f));
+}
+
 // The two orders of section 4, side by side. Both robots face along the world
 // x axis, so that R_WR is the identity and what we see is R_RS
-void render()
+void render_order_of_rotations()
 {
     chrono::ChSystemNSC system;
     system.SetGravitationalAcceleration(ChVector3d(0.0, 0.0, 0.0));
@@ -442,18 +469,11 @@ void render()
     system.Add(build_robot_on_mast(right_robot));
 
     chrono::irrlicht::ChVisualSystemIrrlicht vis;
-    vis.AttachSystem(&system);
-    vis.SetCameraVertical(chrono::CameraVerticalDir::Z);
-    vis.SetWindowSize(1280, 720);
-    vis.SetWindowTitle("Example 26: The order of rotations");
-    vis.Initialize();
-    vis.AddCamera({6.0, -4.5, 2.6}, {0.0, 0.5, 0.2});
-    vis.GetActiveCamera()->setFOV(0.6f);
-    vis.AddLightDirectional();
-    vis.BindAll();
+    open_window(vis, system, "Example 26: The order of rotations", {6.0, -4.5, 2.6},
+                {0.0, 0.5, 0.2});
 
-    auto *left_readout = add_readout(vis, 10);
-    auto *right_readout = add_readout(vis, 1080);
+    auto *left_readout = add_readout(vis, 10, 80);
+    auto *right_readout = add_readout(vis, 1080, 80);
 
     const Turn turn{Z_AXIS, 90.0 * DEG};
     const Turn tilt{Y_AXIS, 30.0 * DEG};
@@ -468,12 +488,112 @@ void render()
         vis.BeginScene();
         vis.Render();
 
-        chrono::irrlicht::tools::drawGrid(&vis, 0.5, 0.5, 12, 8,
-                                          chrono::ChCoordsysd(ChVector3d(0.0, 1.0, 0.0)),
-                                          chrono::ChColor(0.35f, 0.45f, 0.55f));
+        draw_floor(vis);
 
         const auto left = draw_sensor(vis, left_robot, "Rz(90) * Ry(30)", turn, tilt, time);
         const auto right = draw_sensor(vis, right_robot, "Ry(30) * Rz(90)", tilt, turn, time);
+        left_readout->setText(irr::core::stringw(left.c_str()).c_str());
+        right_readout->setText(irr::core::stringw(right.c_str()).c_str());
+
+        system.DoStepDynamics(step_size);
+        vis.EndScene();
+        real_time.Spin(step_size);
+    }
+}
+
+// A circle in the xy plane of the given frame. Thicker than tools::drawCircle
+void draw_ring(chrono::irrlicht::ChVisualSystemIrrlicht &vis, const ChFrame<> &frame, real_t radius,
+               const chrono::ChColor &color)
+{
+    const int n_segments = 64;
+    const auto point = [&](int i)
+    {
+        const real_t angle = 2.0 * bitrl::consts::maths::PI * i / n_segments;
+        return frame * ChVector3d(radius * std::cos(angle), radius * std::sin(angle), 0.0);
+    };
+
+    for (int i = 0; i < n_segments; ++i)
+    {
+        bitrl::utils::render::irr_draw_line(vis, point(i), point(i + 1), color, 3.0);
+    }
+}
+
+// Three nested rings. The outer one spins around the world z axis and carries
+// the pitch axis, the middle one spins around it and carries the roll axis, and
+// the inner one spins around that. Each ring has the colour of its axis.
+// Returns the readout
+std::string draw_gimbal(chrono::irrlicht::ChVisualSystemIrrlicht &vis, const ChVector3d &centre,
+                        real_t final_pitch, real_t time)
+{
+    using namespace bitrl::utils::render;
+
+    // From (yaw, 0, 0) to the angles of section 5: yaw and roll grow by 20 degrees
+    const real_t pitch = progress(time, WAIT_TIME) * final_pitch;
+    const real_t yaw = (30.0 + 20.0 * progress(time, 2.0 * WAIT_TIME + ROTATION_TIME)) * DEG;
+    const real_t roll = 20.0 * progress(time, 3.0 * WAIT_TIME + 2.0 * ROTATION_TIME) * DEG;
+
+    const ChMatrix33d after_yaw = rot_z(yaw);
+    const ChMatrix33d after_pitch = after_yaw * rot_y(pitch);
+    const ChMatrix33d R = after_pitch * rot_x(roll);
+
+    // draw_ring works in the xy plane. A ring has its spin axis in its own
+    // plane, so the outer and the inner ones have to be turned into place
+    const ChMatrix33d outer = after_yaw * rot_y(90.0 * DEG);
+    const ChMatrix33d inner = R * rot_x(90.0 * DEG);
+    draw_ring(vis, ChFrame<>(centre, outer), 1.0, chrono::ChColor(0.2f, 0.5f, 1.0f));
+    draw_ring(vis, ChFrame<>(centre, after_pitch), 0.8, chrono::ChColor(0.0f, 1.0f, 0.0f));
+    draw_ring(vis, ChFrame<>(centre, inner), 0.6, chrono::ChColor(1.0f, 0.0f, 0.0f));
+
+    irr_draw_frame(vis, ChFrame<>(centre, R), 0.35);
+
+    // The two axes that end up being the same one
+    const ChVector3d yaw_axis = Z_AXIS;
+    const ChVector3d roll_axis = R * X_AXIS;
+    irr_draw_line(vis, centre - yaw_axis * 1.2, centre + yaw_axis * 1.2,
+                  chrono::ChColor(1.0f, 1.0f, 1.0f), 1.0);
+    irr_draw_line(vis, centre - roll_axis * 1.2, centre + roll_axis * 1.2,
+                  chrono::ChColor(0.8f, 0.5f, 1.0f), 1.0);
+
+    const real_t apart = std::acos(std::min(std::abs(yaw_axis.Dot(roll_axis)), 1.0));
+
+    std::ostringstream text;
+    text << std::fixed << std::setprecision(1) << "yaw=" << yaw / DEG << " pitch=" << pitch / DEG
+         << " roll=" << roll / DEG << "\n\n"
+         << matrix_text(R) << "\nyaw and roll axes apart: " << apart / DEG << " deg";
+    return text.str();
+}
+
+// Pitch 30 on the left and pitch 90 on the right: gimbal lock
+void render_gimbal_lock()
+{
+    const real_t cycle_time = 3.0 * ROTATION_TIME + 4.0 * WAIT_TIME;
+
+    chrono::ChSystemNSC system;
+    system.SetGravitationalAcceleration(ChVector3d(0.0, 0.0, 0.0));
+
+    chrono::irrlicht::ChVisualSystemIrrlicht vis;
+    open_window(vis, system, "Example 26: Gimbal lock", {0.5, -8.5, 3.6}, {0.0, 1.0, 1.0});
+
+    auto *left_readout = add_readout(vis, 10, 90);
+    auto *right_readout = add_readout(vis, 1080, 90);
+
+    const ChVector3d left_gimbal(-1.5, 1.0, 1.3);
+    const ChVector3d right_gimbal(1.5, 1.0, 1.3);
+
+    const real_t step_size = 0.01;
+    chrono::ChRealtimeStepTimer real_time;
+
+    while (vis.Run())
+    {
+        const real_t time = std::fmod(system.GetChTime(), cycle_time);
+
+        vis.BeginScene();
+        vis.Render();
+
+        draw_floor(vis);
+
+        const auto left = draw_gimbal(vis, left_gimbal, 30.0 * DEG, time);
+        const auto right = draw_gimbal(vis, right_gimbal, 90.0 * DEG, time);
         left_readout->setText(irr::core::stringw(left.c_str()).c_str());
         right_readout->setText(irr::core::stringw(right.c_str()).c_str());
 
@@ -500,12 +620,20 @@ int main(int argc, char **argv)
     yaw_pitch_roll();
     rotation_of_a_moving_body(R_WR, R_RS);
 
-    if (argc > 1 && std::string(argv[1]) == "--render")
+    const std::string option = argc > 1 ? argv[1] : "";
+    if (option == "--render" || option == "--gimbal")
     {
 #ifdef BITRL_IRRLICHT
-        render();
+        if (option == "--render")
+        {
+            render_order_of_rotations();
+        }
+        else
+        {
+            render_gimbal_lock();
+        }
 #else
-        std::cerr << "--render needs bitrl configured with BITRL_IRRLICHT=ON" << std::endl;
+        std::cerr << option << " needs bitrl configured with BITRL_IRRLICHT=ON" << std::endl;
         return 1;
 #endif
     }

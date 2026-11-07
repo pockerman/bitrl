@@ -242,6 +242,7 @@ const ChMatrix33d R_WS = R_WR * R_RS;
 @code
 ./example_26
 ./example_26 --render
+./example_26 --gimbal
 @endcode
 
 With `--render` an Irrlicht window shows the two orders of section 4 side by side, and repeats the
@@ -256,6 +257,20 @@ its first column is the beam.
 
 In this scene the sensor sits on a 0.6 m mast, since at 0.1 m the beam hits the floor too close to the
 robot to see. The robots face along the world \f$x\f$ axis, so what you see is \f$R_{RS}\f$ alone.
+
+With `--gimbal` the window shows gimbal lock on a real gimbal: three nested rings, each spinning around
+the axis of its colour. The blue ring is the yaw around \f$z\f$, the green ring is the pitch around
+\f$y\f$ and the red ring is the roll around \f$x\f$. The body in the middle is the small frame.
+
+Both gimbals start from a yaw of \f$30^\circ\f$. The left one pitches to \f$30^\circ\f$ and the right
+one to \f$90^\circ\f$. Then both add \f$20^\circ\f$ of yaw, and finally \f$20^\circ\f$ of roll, which
+takes the right one from \f$(30, 90, 0)\f$ to \f$(50, 90, 20)\f$ as in section 5.
+
+- The white line is the yaw axis and the purple line is the roll axis. On the right they are the same
+  line, and the blue and green rings lie in the same plane.
+- On the left the roll moves the body somewhere new. On the right it simply undoes the yaw, and the
+  matrix goes back to what it was. The gimbal has lost a degree of freedom: in this position none of
+  the rings can start turning the body around the axis perpendicular to the blue and green rings.
 
 ## Exercises
 
