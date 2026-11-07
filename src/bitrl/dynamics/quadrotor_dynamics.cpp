@@ -101,7 +101,7 @@ void QuadrotorDynamics::update_rotation_matrix_()
     auto s_phi = std::sin(phi);
 
     rotation_mat_(0, 0) = c_theta * c_psi;
-    rotation_mat_(0, 1) = s_psi * s_theta * c_psi - c_phi * s_psi;
+    rotation_mat_(0, 1) = s_phi * s_theta * c_psi - c_phi * s_psi;
     rotation_mat_(0, 2) = c_phi * s_theta * c_psi + s_phi * s_psi;
 
     rotation_mat_(1, 0) = c_theta * s_psi;

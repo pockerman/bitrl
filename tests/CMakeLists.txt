@@ -10,6 +10,7 @@ ENDFUNCTION()
 # Tests that run on their own
 BITRL_ADD_TEST(test_grid_world)
 BITRL_ADD_TEST(test_generic_line)
+BITRL_ADD_TEST(test_quadrotor_dynamics)
 
 IF(BITRL_CHRONO)
 	BITRL_ADD_TEST(test_chrono_ultrasound)
