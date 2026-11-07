@@ -16,29 +16,6 @@ namespace utils
 namespace render
 {
 
-void irr_draw_world_axes(chrono::irrlicht::ChVisualSystemIrrlicht& vis,
-                     real_t scale) {
-    auto* driver = vis.GetVideoDriver();
-
-    // X axis (red)
-    driver->draw3DLine(
-        {0, 0, 0},
-        {static_cast<float>(scale), 0, 0},
-        irr::video::SColor(255, 255, 0, 0));
-
-    // Y axis (green)
-    driver->draw3DLine(
-        {0, 0, 0},
-        {0, static_cast<float>(scale), 0},
-        irr::video::SColor(255, 0, 255, 0));
-
-    // Z axis (blue)
-    driver->draw3DLine(
-        {0, 0, 0},
-        {0, 0, static_cast<float>(scale)},
-        irr::video::SColor(255, 0, 0, 255));
-}
-
 void irr_draw_line(chrono::irrlicht::ChVisualSystemIrrlicht& vis, const chrono::ChVector3d& start,
                    const chrono::ChVector3d& end, const chrono::ChColor& color, real_t thickness)
 {
@@ -83,6 +60,11 @@ void irr_draw_frame(chrono::irrlicht::ChVisualSystemIrrlicht& vis, const chrono:
     {
         irr_draw_label(vis, label, origin - chrono::ChVector3d(0.0, 0.0, 0.08));
     }
+}
+
+void irr_draw_world_axes(chrono::irrlicht::ChVisualSystemIrrlicht& vis, real_t scale)
+{
+    irr_draw_frame(vis, chrono::ChFrame<>(), scale);
 }
 
 }
