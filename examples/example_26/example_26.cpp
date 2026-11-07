@@ -8,10 +8,19 @@
 #include <chrono/core/ChFrame.h>
 #include <chrono/core/ChMatrix33.h>
 #include <chrono/core/ChQuaternion.h>
+#include <chrono/core/ChRealtimeStep.h>
 #include <chrono/core/ChRotation.h>
 #include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChSystemNSC.h>
 
+#ifdef BITRL_IRRLICHT
+#include "bitrl/utils/render/irrlicht_utils.h"
+#include <chrono/assets/ChVisualShapeBox.h>
+#include <chrono_irrlicht/ChIrrTools.h>
+#include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
+#endif
+
+#include <algorithm>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -322,9 +331,162 @@ void rotation_of_a_moving_body(const ChMatrix33d &R_WR, const ChMatrix33d &R_RS)
     report("t = 1.0 s");
 }
 
+#ifdef BITRL_IRRLICHT
+// One of the two rotations of a product
+struct Turn
+{
+    ChVector3d axis;
+    real_t angle;
+};
+
+// The sensor sits on a mast in this scene. At the real mounting height of 0.1 m
+// the beam reaches the floor too close to the robot to see anything
+const ChVector3d MAST_TOP(0.0, 0.2, 0.6);
+const real_t MAX_BEAM_LENGTH = 2.0;
+
+// One animation: wait, first rotation, wait, second rotation, wait
+const real_t ROTATION_TIME = 2.5;
+const real_t WAIT_TIME = 1.0;
+const real_t CYCLE_TIME = 2.0 * ROTATION_TIME + 3.0 * WAIT_TIME;
+
+// 0 before the interval starts, 1 after it ends
+real_t progress(real_t time, real_t start)
+{
+    return std::clamp((time - start) / ROTATION_TIME, 0.0, 1.0);
+}
+
+std::shared_ptr<chrono::ChBody> build_robot_on_mast(const ChVector3d &position)
+{
+    auto robot =
+        chrono_types::make_shared<chrono::ChBodyEasyBox>(0.6, 0.4, 0.2, 1000.0, true, false);
+    robot->SetPos(position);
+    robot->SetFixed(true);
+    robot->GetVisualShape(0)->SetColor(chrono::ChColor(0.55f, 0.70f, 0.90f));
+
+    auto mast = chrono_types::make_shared<chrono::ChVisualShapeBox>(0.03, 0.03, MAST_TOP.z());
+    mast->SetColor(chrono::ChColor(0.20f, 0.20f, 0.20f));
+    robot->AddVisualShape(mast, ChFrame<>(ChVector3d(MAST_TOP.x(), MAST_TOP.y(), MAST_TOP.z() / 2)));
+    return robot;
+}
+
+// Draws R_RS = first * second part of the way through the animation, and returns its readout
+std::string draw_sensor(chrono::irrlicht::ChVisualSystemIrrlicht &vis,
+                        const ChVector3d &robot_position, const std::string &name,
+                        const Turn &first, const Turn &second, real_t time)
+{
+    using namespace bitrl::utils::render;
+
+    const real_t first_done = progress(time, WAIT_TIME);
+    const real_t second_done = progress(time, 2.0 * WAIT_TIME + ROTATION_TIME);
+
+    const ChMatrix33d A(first_done * first.angle, first.axis);
+    const ChMatrix33d B(second_done * second.angle, second.axis);
+    const ChMatrix33d R_RS = A * B;
+
+    const ChVector3d sensor = robot_position + MAST_TOP;
+    irr_draw_frame(vis, ChFrame<>(sensor, R_RS), 0.5, "S");
+
+    // The axis we turn around. The second one has been carried along by the first rotation
+    const ChVector3d turn_axis = first_done < 1.0 ? first.axis : ChVector3d(A * second.axis);
+    irr_draw_line(vis, sensor - turn_axis * 0.8, sensor + turn_axis * 0.8,
+                  chrono::ChColor(0.8f, 0.5f, 1.0f), 1.0);
+
+    // The beam stops at the floor if it gets there
+    const ChVector3d beam = R_RS * X_AXIS;
+    const real_t to_floor = beam.z() < 0.0 ? -sensor.z() / beam.z() : MAX_BEAM_LENGTH;
+    const real_t length = std::min(to_floor, MAX_BEAM_LENGTH);
+    const ChVector3d end = sensor + beam * length;
+    irr_draw_line(vis, sensor, end, chrono::ChColor(1.0f, 0.8f, 0.2f), 3.0);
+
+    if (to_floor < MAX_BEAM_LENGTH)
+    {
+        chrono::irrlicht::tools::drawCircle(&vis, 0.1, chrono::ChCoordsysd(end),
+                                            chrono::ChColor(1.0f, 0.8f, 0.2f));
+    }
+
+    irr_draw_label(vis, name, robot_position + ChVector3d(-0.3, -0.3, 0.0));
+
+    std::ostringstream text;
+    text << name << "\n\n" << std::fixed << std::setprecision(3);
+    for (int row = 0; row < 3; ++row)
+    {
+        for (int col = 0; col < 3; ++col)
+        {
+            text << std::setw(7) << clean(R_RS(row, col)) << "   ";
+        }
+        text << "\n";
+    }
+    text << "\nbeam " << to_string(beam);
+    return text.str();
+}
+
+irr::gui::IGUIStaticText *add_readout(chrono::irrlicht::ChVisualSystemIrrlicht &vis, int left)
+{
+    auto *readout = vis.GetGUIEnvironment()->addStaticText(
+        L"", irr::core::rect<irr::s32>(left, 10, left + 190, 90), true, true);
+    readout->setBackgroundColor(irr::video::SColor(220, 255, 255, 255));
+    readout->setDrawBackground(true);
+    return readout;
+}
+
+// The two orders of section 4, side by side. Both robots face along the world
+// x axis, so that R_WR is the identity and what we see is R_RS
+void render()
+{
+    chrono::ChSystemNSC system;
+    system.SetGravitationalAcceleration(ChVector3d(0.0, 0.0, 0.0));
+
+    const ChVector3d left_robot(-1.5, 0.0, 0.0);
+    const ChVector3d right_robot(1.5, 0.0, 0.0);
+    system.Add(build_robot_on_mast(left_robot));
+    system.Add(build_robot_on_mast(right_robot));
+
+    chrono::irrlicht::ChVisualSystemIrrlicht vis;
+    vis.AttachSystem(&system);
+    vis.SetCameraVertical(chrono::CameraVerticalDir::Z);
+    vis.SetWindowSize(1280, 720);
+    vis.SetWindowTitle("Example 26: The order of rotations");
+    vis.Initialize();
+    vis.AddCamera({6.0, -4.5, 2.6}, {0.0, 0.5, 0.2});
+    vis.GetActiveCamera()->setFOV(0.6f);
+    vis.AddLightDirectional();
+    vis.BindAll();
+
+    auto *left_readout = add_readout(vis, 10);
+    auto *right_readout = add_readout(vis, 1080);
+
+    const Turn turn{Z_AXIS, 90.0 * DEG};
+    const Turn tilt{Y_AXIS, 30.0 * DEG};
+
+    const real_t step_size = 0.01;
+    chrono::ChRealtimeStepTimer real_time;
+
+    while (vis.Run())
+    {
+        const real_t time = std::fmod(system.GetChTime(), CYCLE_TIME);
+
+        vis.BeginScene();
+        vis.Render();
+
+        chrono::irrlicht::tools::drawGrid(&vis, 0.5, 0.5, 12, 8,
+                                          chrono::ChCoordsysd(ChVector3d(0.0, 1.0, 0.0)),
+                                          chrono::ChColor(0.35f, 0.45f, 0.55f));
+
+        const auto left = draw_sensor(vis, left_robot, "Rz(90) * Ry(30)", turn, tilt, time);
+        const auto right = draw_sensor(vis, right_robot, "Ry(30) * Rz(90)", tilt, turn, time);
+        left_readout->setText(irr::core::stringw(left.c_str()).c_str());
+        right_readout->setText(irr::core::stringw(right.c_str()).c_str());
+
+        system.DoStepDynamics(step_size);
+        vis.EndScene();
+        real_time.Spin(step_size);
+    }
+}
+#endif
+
 } // namespace example_26
 
-int main()
+int main(int argc, char **argv)
 {
     using namespace example_26;
 
@@ -337,6 +499,16 @@ int main()
     const ChMatrix33d R_RS = composing_rotations(R_WR);
     yaw_pitch_roll();
     rotation_of_a_moving_body(R_WR, R_RS);
+
+    if (argc > 1 && std::string(argv[1]) == "--render")
+    {
+#ifdef BITRL_IRRLICHT
+        render();
+#else
+        std::cerr << "--render needs bitrl configured with BITRL_IRRLICHT=ON" << std::endl;
+        return 1;
+#endif
+    }
 
     return 0;
 }
