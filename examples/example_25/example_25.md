@@ -185,9 +185,13 @@ swings around it, and the obstacle, which has not moved, is now somewhere else i
 ./example_25 --render
 @endcode
 
-With `--render` the robot keeps spinning in an Irrlicht window. The axes follow the convention that
-\f$x\f$ is red, \f$y\f$ is green and \f$z\f$ is blue. The long axes are the world frame, then the robot
-frame, and the shortest ones the sensor frame.
+With `--render` the robot keeps spinning in an Irrlicht window, slower than in section 5 so that you can
+follow the numbers. The frames are drawn with their names, and \f$x\f$ is red, \f$y\f$ is green and
+\f$z\f$ is blue. The yellow line goes from the sensor to the obstacle.
+
+Watch the panel at the top right. `obstacle in W` never changes since the obstacle does not move, whereas
+`obstacle in S` changes all the time. It is the same point seen from a frame that moves. The range
+changes too, because the sensor is not at the centre of the rotation.
 
 ## Exercises
 

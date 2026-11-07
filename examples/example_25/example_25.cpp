@@ -8,12 +8,14 @@
 
 #include <chrono/core/ChCoordsys.h>
 #include <chrono/core/ChFrame.h>
+#include <chrono/core/ChRealtimeStep.h>
 #include <chrono/core/ChRotation.h>
 #include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChSystemNSC.h>
 
 #ifdef BITRL_IRRLICHT
 #include "bitrl/utils/render/irrlicht_utils.h"
+#include <chrono/assets/ChVisualShapeBox.h>
 #include <chrono_irrlicht/ChIrrTools.h>
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
 #endif
@@ -223,33 +225,76 @@ void attach_frames_to_body(chrono::ChSystemNSC &system, std::shared_ptr<chrono::
 void render(chrono::ChSystemNSC &system, std::shared_ptr<chrono::ChBody> robot,
             const ChFrame<> &X_RS)
 {
+    using namespace bitrl::utils::render;
+
+    // The robot only needs a colour. The sensor is a visual shape placed with
+    // X_RS, so it moves with the robot without us having to do anything
+    robot->GetVisualShape(0)->SetColor(chrono::ChColor(0.55f, 0.70f, 0.90f));
+    auto sensor = chrono_types::make_shared<chrono::ChVisualShapeBox>(0.15, 0.08, 0.08);
+    sensor->SetColor(chrono::ChColor(0.20f, 0.20f, 0.20f));
+    robot->AddVisualShape(sensor, X_RS);
+
+    // The obstacle does not move. It is only part of the scene to be looked at
+    auto obstacle = chrono_types::make_shared<chrono::ChBodyEasySphere>(0.1, 1000.0, true, false);
+    obstacle->SetPos(OBSTACLE_IN_WORLD);
+    obstacle->SetFixed(true);
+    obstacle->GetVisualShape(0)->SetColor(chrono::ChColor(0.90f, 0.45f, 0.15f));
+    system.Add(obstacle);
+
     chrono::irrlicht::ChVisualSystemIrrlicht vis;
     vis.AttachSystem(&system);
     vis.SetCameraVertical(chrono::CameraVerticalDir::Z);
     vis.SetWindowSize(1280, 720);
     vis.SetWindowTitle("Example 25: Frames");
     vis.Initialize();
-    vis.AddSkyBox();
-    vis.AddCamera({5.0, -3.0, 3.0}, ROBOT_POSITION);
-    vis.AddTypicalLights();
+    vis.AddCamera({0.2, -3.2, 3.6}, {1.0, 0.7, 0.0});
+    vis.GetActiveCamera()->setFOV(0.75f);
+    vis.AddLightDirectional();
     vis.BindAll();
 
-    const real_t step_size = 0.002;
+    auto *readout = vis.GetGUIEnvironment()->addStaticText(
+        L"", irr::core::rect<irr::s32>(1040, 10, 1270, 100), true, true);
+    readout->setBackgroundColor(irr::video::SColor(220, 255, 255, 255));
+    readout->setDrawBackground(true);
+
+    // Slower than the lesson so that the numbers can be followed
+    robot->SetAngVelParent(ChVector3d(0.0, 0.0, YAW_90 / 3.0));
+
+    const real_t step_size = 0.01;
+    chrono::ChRealtimeStepTimer real_time;
+
     while (vis.Run())
     {
         const ChFrame<> &X_WR = robot->GetFrameRefToAbs();
         const ChFrame<> X_WS = X_WR * X_RS;
+        const ChVector3d obstacle_in_sensor = X_WS / OBSTACLE_IN_WORLD;
+
+        std::ostringstream text;
+        text << "t = " << std::fixed << std::setprecision(1) << system.GetChTime() << " s\n\n"
+             << "robot in W:  " << to_string(X_WR.GetPos()) << "\n"
+             << "sensor in W:  " << to_string(X_WS.GetPos()) << "\n\n"
+             << "obstacle in W:  " << to_string(OBSTACLE_IN_WORLD) << "\n"
+             << "obstacle in S:  " << to_string(obstacle_in_sensor) << "\n"
+             << "range = " << std::setprecision(3) << obstacle_in_sensor.Length() << " m\n";
+        readout->setText(irr::core::stringw(text.str().c_str()).c_str());
 
         vis.BeginScene();
         vis.Render();
 
         // x is red, y is green and z is blue
-        bitrl::utils::render::irr_draw_world_axes(vis, 2.0);
-        chrono::irrlicht::tools::drawCoordsys(&vis, X_WR.GetCoordsys(), 1.0);
-        chrono::irrlicht::tools::drawCoordsys(&vis, X_WS.GetCoordsys(), 0.5);
+        chrono::irrlicht::tools::drawGrid(&vis, 0.5, 0.5, 8, 8,
+                                          chrono::ChCoordsysd(ChVector3d(1.0, 1.0, 0.0)),
+                                          chrono::ChColor(0.35f, 0.45f, 0.55f));
+        irr_draw_frame(vis, ChFrame<>(), 1.0, "W");
+        irr_draw_frame(vis, X_WR, 0.6, "R");
+        irr_draw_frame(vis, X_WS, 0.4, "S");
+
+        // What the sensor measures: the line from its origin to the obstacle
+        irr_draw_line(vis, X_WS.GetPos(), OBSTACLE_IN_WORLD, chrono::ChColor(1.0f, 0.8f, 0.2f));
 
         system.DoStepDynamics(step_size);
         vis.EndScene();
+        real_time.Spin(step_size);
     }
 }
 #endif

@@ -241,7 +241,21 @@ const ChMatrix33d R_WS = R_WR * R_RS;
 
 @code
 ./example_26
+./example_26 --render
 @endcode
+
+With `--render` an Irrlicht window shows the two orders of section 4 side by side, and repeats the
+motion. Both start from the same pose and both end up with the same two rotations applied, but only one
+of them reaches the floor. The panels show the matrix \f$R_{RS}\f$ as it is built, so you can check that
+its first column is the beam.
+
+- The red, green and blue axes are the sensor frame, and the yellow line is the beam, which is its
+  \f$x\f$ axis. A circle marks where the beam hits the floor.
+- The purple line is the axis of the current rotation. See how the first rotation moves the axis of the
+  second one: this is what reading the product from left to right means.
+
+In this scene the sensor sits on a 0.6 m mast, since at 0.1 m the beam hits the floor too close to the
+robot to see. The robots face along the world \f$x\f$ axis, so what you see is \f$R_{RS}\f$ alone.
 
 ## Exercises
 
