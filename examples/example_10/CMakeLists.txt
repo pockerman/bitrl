@@ -5,7 +5,7 @@ SET(SOURCE ${EXECUTABLE}.cpp)
 
 ADD_EXECUTABLE(${EXECUTABLE} ${SOURCE})
 
-TARGET_LINK_LIBRARIES(${EXECUTABLE} PRIVATE cuberllib bitrllib pthread openblas tbb boost_log)
+TARGET_LINK_LIBRARIES(${EXECUTABLE} PRIVATE cuberllib bitrl::bitrl pthread openblas tbb boost_log)
 
 IF(USE_MQTT)
     TARGET_LINK_LIBRARIES(${EXECUTABLE} PRIVATE paho-mqttpp3 paho-mqtt3as)
