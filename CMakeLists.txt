@@ -44,8 +44,6 @@ SET(USE_PYTORCH ON)
 SET(ENABLE_OPENCV ON)
 SET(ENABLE_MQTT ON)
 SET(ENABLE_CHRONO ON)
-SET(BITRL_INCLUDE_DIR "/home/alex/qi3/bitrl/src/") # required
-SET(BITRL_LIB_PATH "/home/alex/qi3/bitrl/install/opt") # required
 
 SET(USE_RL ON)
 SET(DATA_SET_FOLDER ${PROJECT_SOURCE_DIR}/data)
@@ -135,6 +133,12 @@ FIND_PACKAGE(Boost 1.74.0 REQUIRED)
 FIND_PACKAGE(BLAS REQUIRED)
 FIND_PACKAGE(Eigen3 REQUIRED)
 
+# bitrl, installed with cmake --install. If it is not in a system prefix,
+# configure with -DCMAKE_PREFIX_PATH=<bitrl prefix>, for example
+# -DCMAKE_PREFIX_PATH=$HOME/qi3/bitrl/install/opt
+FIND_PACKAGE(bitrl 2 REQUIRED)
+MESSAGE(STATUS "Found bitrl ${bitrl_VERSION} in ${bitrl_DIR}")
+
 IF(ENABLE_MQTT)
     FIND_PACKAGE(PahoMqttCpp REQUIRED)
     SET(USE_MQTT ON)
@@ -203,7 +207,6 @@ configure_file(version.h.in ${PROJECT_SOURCE_DIR}/include/cuberl/base/cuberl_ver
 # include directories
 INCLUDE_DIRECTORIES(${BOOST_INCLUDEDIR})
 INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(${BITRL_INCLUDE_DIR})
 
 IF(USE_PYTORCH)
 	INCLUDE_DIRECTORIES(${TORCH_INCLUDE_DIRS})
@@ -226,6 +229,7 @@ FILE(GLOB SRCS src/cuberl/base/*.cpp
 
 ADD_LIBRARY(cuberllib SHARED ${SRCS})
 SET_TARGET_PROPERTIES(cuberllib PROPERTIES LINKER_LANGUAGE CXX)
+TARGET_LINK_LIBRARIES(cuberllib PUBLIC bitrl::bitrl)
 INSTALL(TARGETS cuberllib DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 IF(ENABLE_EXAMPLES_FLAG)

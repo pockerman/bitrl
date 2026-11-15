@@ -52,6 +52,19 @@ In addition, the library also incorporates, see ```(include/cubeai/extern)```, t
 - <a href="https://github.com/elnormous/HTTPRequest">HTTPRequest</a>
 - <a href="https://github.com/nlohmann/json">nlohmann/json</a>
 
+### bitrl
+
+cuberl is built on <a href="https://github.com/pockerman/bitrl">bitrl</a>, which has to be installed first, see its
+<a href="https://github.com/pockerman/bitrl/blob/master/doc/install.md">install page</a>. Then tell CMake where it is:
+
+```
+cmake -B build -DCMAKE_PREFIX_PATH=/path/to/bitrl/install/opt
+cmake --build build --parallel
+```
+
+Without `-DCMAKE_INSTALL_PREFIX`, bitrl installs into `install/opt` in its source tree. Add the Chrono prefix
+to `CMAKE_PREFIX_PATH` too if Chrono is not in a system prefix, separated by `;`.
+
 ### Enabling PyTorch and CUDA
 
 _cuberl_ can be complied with CUDA and/or PyTorch support. If PyTorch has been compiled using CUDA support, then
