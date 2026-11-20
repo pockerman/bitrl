@@ -81,6 +81,25 @@ build runs out of memory on a 16 GB machine.
 Add the Chrono prefix to `CMAKE_PREFIX_PATH` too if bitsim was built with Chrono and Chrono is not in a system prefix.
 `ci/install_bitsim.sh` and `ci/install_libtorch.sh` do both installs the way CI does.
 
+### Install
+
+```
+cmake -B build -DCMAKE_PREFIX_PATH="..." -DCMAKE_INSTALL_PREFIX=$HOME/opt/bitrl
+cmake --build build --parallel 3
+cmake --install build
+```
+
+installs `lib/libbitrllib.so`, the headers in `include/bitrl/` and the CMake package in
+`lib/cmake/bitrl/`. Another project then uses bitrl with
+
+```
+find_package(bitrl 5 REQUIRED)
+target_link_libraries(my_target PRIVATE bitrl::bitrl)
+```
+
+and `-DCMAKE_PREFIX_PATH` with the prefixes of bitrl, bitsim and libtorch. The package finds bitsim,
+libtorch and TBB itself. `ci/check_install.sh` checks that an installed bitrl works this way.
+
 The options are `ENABLE_EXAMPLES` (ON), `ENABLE_TESTS` (OFF), `USE_CUDA` (OFF; libtorch must be built with CUDA too),
 `BITRL_LOG` (ON) and `BITRL_WERROR` (OFF), for example
 

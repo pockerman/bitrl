@@ -64,6 +64,9 @@ jobs:
       - name: Test
         run: ctest --test-dir build --output-on-failure --no-tests=error
 
+      - name: Check the install
+        run: ./ci/check_install.sh build "$DEPS/bitsim;$DEPS/libtorch"
+
   docs:
     # The example pages that the documentation site, bitrl_cuberl_docs, pulls
     # in from here
