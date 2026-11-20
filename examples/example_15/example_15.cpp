@@ -1,9 +1,9 @@
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/rl/algorithms/td/sarsa.h"
-#include "cuberl/rl/policies/epsilon_greedy_policy.h"
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "cuberl/network/rest_rl_env_client.h"
-#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/algorithms/td/sarsa.h"
+#include "bitrl/rl/policies/epsilon_greedy_policy.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <iostream>
@@ -15,16 +15,16 @@ const std::string SOLUTION_FILE = "sarsa_cliff_walking_v0.csv";
 const std::string REWARD_PER_ITR = "reward_per_itr.csv";
 const std::string POLICY = "policy.csv";
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
-using cuberl::rl::algos::td::SarsaSolver;
-using cuberl::rl::algos::td::SarsaConfig;
-using cuberl::rl::policies::EpsilonDecayOption;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::network::RESTRLEnvClient;
-typedef  cuberl::envs::gymnasium::CliffWorld env_type;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
+using bitrl::rl::algos::td::SarsaSolver;
+using bitrl::rl::algos::td::SarsaConfig;
+using bitrl::rl::policies::EpsilonDecayOption;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::network::RESTRLEnvClient;
+typedef  bitrl::envs::gymnasium::CliffWorld env_type;
 
 
 }
@@ -79,7 +79,7 @@ int main(){
 		auto reward = trainer.episodes_total_rewards();
 		auto iterations = trainer.n_itrs_per_episode();
 	
-		bitrl::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
+		bitsim::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
 		csv_writer.open();
 		
 		csv_writer.write_column_names({"epoch", "reward"});

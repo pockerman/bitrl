@@ -1,1 +1,1 @@
-cuberl_add_test(test_connect2)
+bitrl_add_test(test_connect2)

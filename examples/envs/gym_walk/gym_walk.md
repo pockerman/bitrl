@@ -1,15 +1,15 @@
-\page cuberl_example_gym_walk Using GymWalk Environment
+\page bitrl_example_gym_walk Using GymWalk Environment
 
-The \ref cuberl::envs::gdrl::GymWalk "cuberl::envs::gdrl::GymWalk" is an implementation of the
-environment from https://github.com/mimoralea/gym-walk. Just like with \ref cuberl_example_gymnasium_part_1, you will need
-an instance of the  <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a> server running in order 
+The \ref bitrl::envs::gdrl::GymWalk "bitrl::envs::gdrl::GymWalk" is an implementation of the
+environment from https://github.com/mimoralea/gym-walk. Just like with \ref bitrl_example_gymnasium_part_1, you will need
+an instance of the  <a href="https://github.com/pockerman/bitrl-rest-api">bitsim-envs-api</a> server running in order 
 to actually use the environment. Other than that there isn't much to say for this example.
 Below is the driver code.
 
 @code{.cpp}
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/gdrl/gym_walk.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/gdrl/gym_walk.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <any>
 #include <iostream>
@@ -18,12 +18,12 @@ Below is the driver code.
 
 namespace gymnasium_part_1
 {
-using namespace bitrl;
+using namespace bitsim;
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
-using cuberl::envs::gdrl::GymWalk;
-using cuberl::network::RESTRLEnvClient;
+using bitrl::envs::gdrl::GymWalk;
+using bitrl::network::RESTRLEnvClient;
 
 void test_gymwalk(RESTRLEnvClient &server)
 {

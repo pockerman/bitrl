@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Build bitsim, the robotics library (CMake package bitrl), without Chrono
+# Build bitsim, the robotics library (CMake package bitsim), without Chrono
 # and install it into <prefix>. Its own dependencies must already be
 # installed, see bitsim's ci/install_deps.sh.
 # Usage: ci/install_bitsim.sh <prefix> [git ref, default master]
-# Then configure cuberl with -DCMAKE_PREFIX_PATH=<prefix>
+# Then configure bitrl with -DCMAKE_PREFIX_PATH=<prefix>
 set -euo pipefail
 
 prefix="${1:?usage: install_bitsim.sh <prefix> [git ref]}"

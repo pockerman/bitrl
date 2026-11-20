@@ -1,1 +1,1 @@
-cuberl_add_test(test_experience_buffer)
+bitrl_add_test(test_experience_buffer)

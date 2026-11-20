@@ -1,1 +1,1 @@
-cuberl_add_test(test_max_tabular_policy)
+bitrl_add_test(test_max_tabular_policy)

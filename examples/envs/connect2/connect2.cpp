@@ -1,7 +1,7 @@
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/connect2/connect2_env.h"
-#include "bitrl/utils/io/io_utils.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/connect2/connect2_env.h"
+#include "bitsim/utils/io/io_utils.h"
 
 #include <any>
 #include <ios>
@@ -13,9 +13,9 @@
 int main()
 {
 
-    using namespace bitrl;
-    using namespace cuberl::envs::connect2;
-    using bitrl::uint_t;
+    using namespace bitsim;
+    using namespace bitrl::envs::connect2;
+    using bitsim::uint_t;
 
     Connect2 env;
 
@@ -40,7 +40,7 @@ int main()
     std::cout << "Observation vector..." << time_step.observation() << std::endl;
 
     // what are the valid moves remaining?
-    auto val_moves = time_step.template get_extra<std::vector<bitrl::uint_t>>("valid_moves");
+    auto val_moves = time_step.template get_extra<std::vector<bitsim::uint_t>>("valid_moves");
 
     std::cout << "Valid moves remaining..." << val_moves << std::endl;
 

@@ -21,11 +21,11 @@
 namespace rl_example_21
 {
 
-using cuberl::maths::stats::TorchCategorical;
-using cuberl::rl::algos::pg::A2CConfig;
-using cuberl::rl::algos::pg::A2CSolver;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
+using bitrl::maths::stats::TorchCategorical;
+using bitrl::rl::algos::pg::A2CConfig;
+using bitrl::rl::algos::pg::A2CSolver;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
 
 
 

@@ -1,6 +1,8 @@
-\page cuberl_example_14 CubeRL Example 14: Value iteration on FrozenLake
+\page bitrl_example_14 bitrl Example 14: Value iteration on FrozenLake
 
-\ref cuberl_example_13 solved _FrozenLake_ with policy iteration. This example solves it with value iteration,
+
+\ref bitrl_example_13 solved _FrozenLake_ with policy iteration. This example solves it with value iteration,
+
 and then plays the policy it finds. The environment is the 4x4 _FrozenLake_ from
 <a href="https://gymnasium.farama.org/environments/toy_text/frozen_lake/">Gymnasium</a>, made with
 `is_slippery` set to `false`, so every action moves the agent where it was meant to. It runs on the
@@ -18,12 +20,12 @@ V(s) \leftarrow \max_{\alpha} \sum_{s', r} p(s', r | s, \alpha) \left[ r + \gamm
 
 until a sweep changes no value by more than a tolerance. The policy is then read off the value function: in
 each state, take the action with the largest expected return. Like policy iteration, it needs the transition
-probabilities and rewards of the environment, which \ref cuberl::envs::gymnasium::FrozenLake "FrozenLake"
+probabilities and rewards of the environment, which \ref bitrl::envs::gymnasium::FrozenLake "FrozenLake"
 provides.
 
-\ref cuberl::rl::algos::dp::ValueIteration "ValueIteration" uses \f$\gamma = 0.99\f$ and a tolerance of
+\ref bitrl::rl::algos::dp::ValueIteration "ValueIteration" uses \f$\gamma = 0.99\f$ and a tolerance of
 \f$10^{-8}\f$. It updates the values in place, so a state later in a sweep already sees the new values of the
-states before it. \ref cuberl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer" runs one sweep per training
+states before it. \ref bitrl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer" runs one sweep per training
 episode, at most 10000 of them, and stops as soon as a sweep changes no value by more than the tolerance.
 
 ## What it writes

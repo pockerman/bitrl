@@ -1,1 +1,1 @@
-cuberl_add_test(test_random_tabular_policy)
+bitrl_add_test(test_random_tabular_policy)

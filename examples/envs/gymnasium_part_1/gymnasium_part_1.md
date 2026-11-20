@@ -1,22 +1,22 @@
-\page cuberl_example_gymnasium_part_1 Using Gymnasium environments (Part 1)
+\page bitrl_example_gymnasium_part_1 Using Gymnasium environments (Part 1)
 
 In this example we will see how to interact with  <a href="https://gymnasium.farama.org/index.html">Gymnasium</a> environments and 
 specifically how to create an interact with <a href="https://gymnasium.farama.org/environments/toy_text/frozen_lake/">FroznLake</a> environment.
 
-In _cuberl_, Gymnasium-based environments are interacted over a REST-like API maintained here: <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a>.
-_cuberl_ itself implements classes that hide this interaction from the client code. 
-In general, environment classes in _cuberl_, have to implement the \ref cuberl::envs::EnvBase "cuberl::envs::EnvBase" API.
+In _bitrl_, Gymnasium-based environments are interacted over a REST-like API maintained here: <a href="https://github.com/pockerman/bitrl-rest-api">bitsim-envs-api</a>.
+_bitrl_ itself implements classes that hide this interaction from the client code. 
+In general, environment classes in _bitrl_, have to implement the \ref bitrl::envs::EnvBase "bitrl::envs::EnvBase" API.
 
-In this example we will use the \ref cuberl::envs::gymnasium::FrozenLake "cuberl::envs::gymnasium::FrozenLake"  
-class. This is a template class, see the example below, that itself inherits from  \ref cuberl::envs::gymnasium::GymnasiumEnvBase "cuberl::envs::gymnasium::GymnasiumEnvBase"
+In this example we will use the \ref bitrl::envs::gymnasium::FrozenLake "bitrl::envs::gymnasium::FrozenLake"  
+class. This is a template class, see the example below, that itself inherits from  \ref bitrl::envs::gymnasium::GymnasiumEnvBase "bitrl::envs::gymnasium::GymnasiumEnvBase"
 class.
 
 Below is the driver code. 
 
 @code{.cpp}
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <any>
 #include <iostream>
@@ -25,11 +25,11 @@ Below is the driver code.
 
 namespace gymnasium_part_1
 {
-using namespace bitrl;
+using namespace bitsim;
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
-using cuberl::envs::gymnasium::FrozenLake;
-using cuberl::network::RESTRLEnvClient;
+using bitrl::envs::gymnasium::FrozenLake;
+using bitrl::network::RESTRLEnvClient;
 
 void test_frozen_lake(RESTRLEnvClient &server)
 {
@@ -131,7 +131,7 @@ int main()
 }
 @endcode
 
-In order to run the example you will need an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a> server running
-on your machine listening at port 8001. Note the actual example also shows how to use \ref cuberl::envs::gymnasium::Taxi "cuberl::envs::gymnasium::Taxi",
-\ref cuberl::envs::gymnasium::CliffWorld "cuberl::envs::gymnasium::CliffWorld" and \ref cuberl::envs::gymnasium::BlackJack "cuberl::envs::gymnasium::BlackJack"
+In order to run the example you will need an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitsim-envs-api</a> server running
+on your machine listening at port 8001. Note the actual example also shows how to use \ref bitrl::envs::gymnasium::Taxi "bitrl::envs::gymnasium::Taxi",
+\ref bitrl::envs::gymnasium::CliffWorld "bitrl::envs::gymnasium::CliffWorld" and \ref bitrl::envs::gymnasium::BlackJack "bitrl::envs::gymnasium::BlackJack"
 environments.

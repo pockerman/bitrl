@@ -47,16 +47,16 @@ CFLAGS = -std=c++20 -Wno-unused-result
 ###
 ### ---- Linked libraries ----
 ### if your program needs additional libraries:
-INCLUDE = -I"/home/alex/qi3/cuberl/include"
-INCLUDE += -I"/home/alex/qi3/cuberl/external/rlenvs_cpp/src"
+INCLUDE = -I"/home/alex/qi3/bitrl/include"
+INCLUDE += -I"/home/alex/qi3/bitrl/external/rlenvs_cpp/src"
 
 # we are using PyTorch so we need the path for it
 INCLUDE += -I"/home/alex/MySoftware/libtorch_cpu/libtorch/include"
 INCLUDE += -I"/home/alex/MySoftware/libtorch_cpu/libtorch/include/torch/csrc/api/include"
 
 # Libraries to link against
-LIBRARIES = -L"/home/alex/qi3/cuberl/install/dbg" -lcubeailib
-LIBRARIES += -L"/home/alex/qi3/cuberl/external/rlenvs_cpp/install/dbg" -lrlenvscpplib
+LIBRARIES = -L"/home/alex/qi3/bitrl/install/dbg" -lcubeailib
+LIBRARIES += -L"/home/alex/qi3/bitrl/external/rlenvs_cpp/install/dbg" -lrlenvscpplib
 
 # since we are using PyTorch we need to set the path for these libraries
 LIBRARIES += -L"/home/alex/MySoftware/libtorch_cpu/libtorch/lib/" -ltorch_cpu

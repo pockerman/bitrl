@@ -1,7 +1,7 @@
-\page cuberl_example_8 CubeRL Example 8: Working with CUDA
+\page bitrl_example_8 bitrl Example 8: Working with CUDA
 
 Deep learning methods often require excesive training times due to the amount of data that they have to process.
-One way to speed up such applications is to move aspects of the computation into GPU devices. _CubeRL_ can be configured
+One way to speed up such applications is to move aspects of the computation into GPU devices. _bitrl_ can be configured
 to use any available GPU devices by utilising the <a href="https://developer.nvidia.com/cuda-toolkit">CUDA</a> framework.
 This of course means that you need to have a CUDA capable device.
 
@@ -12,7 +12,7 @@ of boilerplate code. Frameworks such as <a href="https://github.com/kokkos/kokko
 to various platforms as seamlessly as possible.
 
 
-Note that this example requires that you have configured _CubeRL_ with ```USE_CUDA=ON```.
+Note that this example requires that you have configured _bitrl_ with ```USE_CUDA=ON```.
 Note also that the integration with CUDA is highly experimental at the moment of writing this example.
 
 ## The driver code
@@ -111,7 +111,7 @@ int main() {
 #else
 #include <iostream>
 int main() {
-	std::cout<<"This example requires CUDA support enabled. Reconfigure CubeRL and set USE_CUDA=ON"<<std::endl;
+	std::cout<<"This example requires CUDA support enabled. Reconfigure bitrl and set USE_CUDA=ON"<<std::endl;
 	return 1;
 }
 #endif

@@ -1,12 +1,12 @@
-#include "bitrl/bitrl_config.h"
+#include "bitsim/bitsim_config.h"
 
-#if defined(BITRL_CHRONO) && defined(BITRL_IRRLICHT)
+#if defined(BITSIM_CHRONO) && defined(BITSIM_IRRLICHT)
 
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/bitrl_types.h"
-#include "bitrl/utils/render/irrlicht_utils.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/bitsim_types.h"
+#include "bitsim/utils/render/irrlicht_utils.h"
 
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
 #include <boost/log/trivial.hpp>
 #endif
 
@@ -182,7 +182,7 @@ time_step_type RobotEnv::step(const action_type & /*action*/)
 
     if (sim_counter_ % 600 == 0)
     {
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
         BOOST_LOG_TRIVIAL(info) << "Reset simulation: ";
 #endif
         return reset();
@@ -198,7 +198,7 @@ time_step_type RobotEnv::step(const action_type & /*action*/)
 
 void RobotEnv::build_system_(std::shared_ptr<chrono::ChContactMaterialNSC> material)
 {
-    sys_.SetGravitationalAcceleration(chrono::ChVector3d(0, 0, -bitrl::consts::maths::G));
+    sys_.SetGravitationalAcceleration(chrono::ChVector3d(0, 0, -bitsim::consts::maths::G));
     sys_.SetCollisionSystemType(chrono::ChCollisionSystem::Type::BULLET);
 
     auto floor = build_floor(material);
@@ -234,7 +234,7 @@ void RobotEnv::simulate()
         utils::render::irr_draw_world_axes(visual);
 
         auto time_step = step(action_type());
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
         BOOST_LOG_TRIVIAL(info) << "At time: " << current_time_
                                 << " position: " << time_step.observation();
 #endif
@@ -264,8 +264,8 @@ int main()
 int main()
 {
     std::cerr << "You need PROJECTCHRONO configured with "
-              << "bitrl in order to run this example "
-              << "Reconfigure bitrl and set ENABLE_CHRONO=ON" << std::endl;
+              << "bitsim in order to run this example "
+              << "Reconfigure bitsim and set ENABLE_CHRONO=ON" << std::endl;
     return 1;
 }
 

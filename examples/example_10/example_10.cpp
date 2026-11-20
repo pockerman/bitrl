@@ -1,9 +1,9 @@
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/maths/vector_math.h"
-#include "cuberl/rl/policies/epsilon_greedy_policy.h"
-#include "bitrl/utils/maths/statistics/distributions/beta_dist.h"
-#include "bitrl/utils/maths/statistics/distributions/bernoulli_dist.h"
-#include "cuberl/envs/multi_armed_bandits/multi_armed_bandits.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/maths/vector_math.h"
+#include "bitrl/rl/policies/epsilon_greedy_policy.h"
+#include "bitsim/maths/statistics/distributions/beta_dist.h"
+#include "bitsim/maths/statistics/distributions/bernoulli_dist.h"
+#include "bitrl/envs/multi_armed_bandits/multi_armed_bandits.h"
 
 #include <cmath>
 #include <utility>
@@ -18,15 +18,15 @@
 namespace rl_example_2
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::int_t;
-using cuberl::DynMat;
-using cuberl::DynVec;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
-using bitrl::utils::maths::stats::BetaDist;
-using bitrl::utils::maths::stats::BernoulliDist;
-using cuberl::envs::bandits::MultiArmedBandits;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::int_t;
+using bitrl::DynMat;
+using bitrl::DynVec;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
+using bitsim::maths::stats::BetaDist;
+using bitsim::maths::stats::BernoulliDist;
+using bitrl::envs::bandits::MultiArmedBandits;
 
 // Number of episodes to play
 uint_t N_EPISODES = 1000;
@@ -100,7 +100,7 @@ run_thompson_sampling(MultiArmedBandits& env){
 		}
 		
 		// find the max
-		auto max_item = cuberl::maths::arg_max(samples);
+		auto max_item = bitrl::maths::arg_max(samples);
 		auto time_step = env.step(max_item);
 		
 		auto reward = time_step.reward();

@@ -1,7 +1,7 @@
-#include "cuberl/base/cuberl_config.h"
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/maths/vector_math.h"
-#include "cuberl/rl/algorithms/utils.h"
+#include "bitrl/base/bitrl_config.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/maths/vector_math.h"
+#include "bitrl/rl/algorithms/utils.h"
 
 
 
@@ -12,23 +12,23 @@
 namespace example_1
 {
 
-	using namespace cuberl;
-using cuberl::uint_t;
-using cuberl::real_t;
+	using namespace bitrl;
+using bitrl::uint_t;
+using bitrl::real_t;
 
 }
 
 int main() {
 
     using namespace example_1;
-	using namespace cuberl::rl::algos;
+	using namespace bitrl::rl::algos;
     try{
 		
 		{
 			std::vector<real_t> rewards(10, 1);
 			auto discounted_reward = calculate_discounted_return(rewards, 1.0);
 																					
-			auto true_reward = cuberl::maths::sum(rewards);
+			auto true_reward = bitrl::maths::sum(rewards);
 																					
 			std::cout<<"Discounted reward: "
 					 <<discounted_reward

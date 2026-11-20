@@ -1,4 +1,4 @@
-\page cuberl_example_7 CubeRL Example 7: Importance sampling
+\page bitrl_example_7 bitrl Example 7: Importance sampling
 
 The vanilla Monte Carlo method we saw in example <a href="../intro_example_1/intro_example_1.md">Monte Carlo intergration</a>
 requires that we sample from a known distribution $f$. However, there may be cases  where it is difficult to sample from it.

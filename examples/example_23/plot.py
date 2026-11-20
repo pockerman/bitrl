@@ -46,9 +46,9 @@ def plot_vals(filename: Path, title: str, N=100) -> None:
 
 
 if __name__ == '__main__':
-    plot_vals("/home/alex/qi3/cuberl/build_cpu/examples/rl/rl_example_20/experiments/2/rewards.csv",
+    plot_vals("/home/alex/qi3/bitrl/build_cpu/examples/rl/rl_example_20/experiments/2/rewards.csv",
               "Episode rewards", N=100)
-    plot_vals("/home/alex/qi3/cuberl/build_cpu/examples/rl/rl_example_20/experiments/2/loss.csv",
+    plot_vals("/home/alex/qi3/bitrl/build_cpu/examples/rl/rl_example_20/experiments/2/loss.csv",
               "Episode loss", N=100)
-    plot_vals("/home/alex/qi3/cuberl/build_cpu/examples/rl/rl_example_20/experiments/2/episode_duration.csv",
+    plot_vals("/home/alex/qi3/bitrl/build_cpu/examples/rl/rl_example_20/experiments/2/episode_duration.csv",
               "Episode duration", N=100)

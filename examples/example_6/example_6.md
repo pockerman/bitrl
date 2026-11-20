@@ -1,7 +1,7 @@
 # Example 6:  Toy Markov chain
 
 This example uses to toy Markov chain model to introduce some operations on the
-main linear algebra backend that _cuberl_ is using namely <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a>.
+main linear algebra backend that _bitrl_ is using namely <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a>.
 
 ## The driver code
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 if __name__ == '__main__':
 
-	filename = Path('/home/alex/qi3/cuberl/build_cpu/examples/rl/rl_example_15/experiments/1/dqn_grid_world_policy_loss.csv')
+	filename = Path('/home/alex/qi3/bitrl/build_cpu/examples/rl/rl_example_15/experiments/1/dqn_grid_world_policy_loss.csv')
 	
 	with open(filename, 'r') as f:
 		reader = csv.reader(f, delimiter=',')

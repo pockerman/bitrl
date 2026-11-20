@@ -1,9 +1,9 @@
 
-#include "cuberl/base/cuberl_types.h"
+#include "bitrl/base/bitrl_types.h"
 
 namespace example_5
 {
-  using namespace cuberl;
+  using namespace bitrl;
   void simulate(SquareMat<real_t, 3>& mat)
   {
 

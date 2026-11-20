@@ -4,11 +4,11 @@
   *
   * */
 
-#include "cuberl/base/cuberl_config.h"
-#include "cuberl/base/cuberl_types.h"
-#include "bitrl/utils/io/json_file_reader.h"
-#include "bitrl/utils/iteration_counter.h"
-#include "bitrl/utils/geometry/shapes/circle.h"
+#include "bitrl/base/bitrl_config.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitsim/utils/io/json_file_reader.h"
+#include "bitsim/utils/iteration_counter.h"
+#include "bitsim/geometry/shapes/circle.h"
 
 #include <boost/log/trivial.hpp>
 #include <iostream>
@@ -18,11 +18,11 @@
 namespace intro_example_1
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using bitrl::utils::IterationCounter;
-using bitrl::utils::geom::Circle;
-using bitrl::utils::io::JSONFileReader;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitsim::utils::IterationCounter;
+using bitsim::geometry::Circle;
+using bitsim::utils::io::JSONFileReader;
 
 const std::string CONFIG = "config.json";
 

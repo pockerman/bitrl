@@ -1,8 +1,8 @@
-\page cuberl_example_15 CubeRL Example 15: SARSA on CliffWorld
+\page bitrl_example_15 bitrl Example 15: SARSA on CliffWorld
 
 In this example we will apply the SARSA algorithm on <a href="https://gymnasium.farama.org/environments/toy_text/cliff_walking/">CliffWorld</a>.
-This is a Gymnasium-based environment implemented in \ref cuberl::envs::gymnasium::CliffWorld "cuberl::envs::gymnasium::CliffWorld" class.
-All Gymnasium-based environments require an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a> server to run.
+This is a Gymnasium-based environment implemented in \ref bitrl::envs::gymnasium::CliffWorld "bitrl::envs::gymnasium::CliffWorld" class.
+All Gymnasium-based environments require an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitsim-envs-api</a> server to run.
 
 
 Temporal Difference Learning is a combination of dynamic programming and Monte Carlo. TDL does not use the environment transition probabilities and therefore is
@@ -58,17 +58,17 @@ If we've reached a terminal state (like the end of a game or a completed transac
 The environment has to inform the agent about whether it reached the end of the game or not. So when we take an action in the environment,
 we will usually receive not just a reward signal and the next state but also a flag indicating if the end of the game or simulation has been reached. 
 
-The SARSA algorithm is implemented in the \ref cuberl::rl::algos::td::SarsaSolver "cuberl::rl::algos::td::SarsaSolver"  class
+The SARSA algorithm is implemented in the \ref bitrl::rl::algos::td::SarsaSolver "bitrl::rl::algos::td::SarsaSolver"  class
 
 Below is the driver code for this example. 
 
 @code{.cpp}
-#include "cuberl/base/cubeai_types.h"
-#include "cuberl/rl/algorithms/td/sarsa.h"
-#include "cuberl/rl/policies/epsilon_greedy_policy.h"
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "cuberl/network/rest_rl_env_client.h"
-#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "bitrl/base/cubeai_types.h"
+#include "bitrl/rl/algorithms/td/sarsa.h"
+#include "bitrl/rl/policies/epsilon_greedy_policy.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <iostream>
@@ -87,14 +87,14 @@ const std::string SOLUTION_FILE = "sarsa_cliff_walking_v0.csv";
 const std::string REWARD_PER_ITR = "reward_per_itr.csv";
 const std::string POLICY = "policy.csv";
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
-using cuberl::rl::algos::td::SarsaSolver;
-using cuberl::rl::algos::td::SarsaConfig;
-using cuberl::rl::policies::EpsilonDecayOption;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
+using bitrl::rl::algos::td::SarsaSolver;
+using bitrl::rl::algos::td::SarsaConfig;
+using bitrl::rl::policies::EpsilonDecayOption;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
 using rlenvscpp::envs::RESTApiServerWrapper;
 typedef  rlenvscpp::envs::gymnasium::CliffWorld env_type;
 }
@@ -148,7 +148,7 @@ int main(){
 		auto reward = trainer.episodes_total_rewards();
 		auto iterations = trainer.n_itrs_per_episode();
 	
-		bitrl::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
+		bitsim::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
 		csv_writer.open();
 		
 		csv_writer.write_column_names({"epoch", "reward"});

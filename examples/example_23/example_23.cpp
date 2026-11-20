@@ -2,19 +2,19 @@
  * This example illustrates how to use the REINFORCE algorithm
  * on the CartPole environment from Gymnasium
  **/
-#include "cuberl/base/cuberl_config.h"
+#include "bitrl/base/bitrl_config.h"
 
 #ifdef USE_PYTORCH
 
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/rl/algorithms/pg/reinforce.h"
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "cuberl/maths/optimization/pytorch_optimizer_factory.h"
-#include "cuberl/maths/statistics/distributions/torch_categorical.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/algorithms/pg/reinforce.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/maths/optimization/pytorch_optimizer_factory.h"
+#include "bitrl/maths/statistics/distributions/torch_categorical.h"
 
-#include "bitrl/utils/io/csv_file_writer.h"
-#include "cuberl/network/rest_rl_env_client.h"
-#include "cuberl/envs/gymnasium/classic_control/cart_pole_env.h"
+#include "bitsim/utils/io/csv_file_writer.h"
+#include "bitrl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
 
 #include <boost/log/trivial.hpp>
 
@@ -36,20 +36,20 @@ const std::string POLICY = "policy.csv";
 
 namespace F = torch::nn::functional;
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::float_t;
-using cuberl::int_t;
-using cuberl::torch_tensor_t;
-using cuberl::DeviceType;
-using cuberl::rl::algos::pg::ReinforceSolver;
-using cuberl::rl::algos::pg::ReinforceConfig;
-using cuberl::rl::algos::pg::BaselineEnumType;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::maths::stats::TorchCategorical;
-	using cuberl::network::RESTRLEnvClient;
-using cuberl::envs::gymnasium::CartPole;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::float_t;
+using bitrl::int_t;
+using bitrl::torch_tensor_t;
+using bitrl::DeviceType;
+using bitrl::rl::algos::pg::ReinforceSolver;
+using bitrl::rl::algos::pg::ReinforceConfig;
+using bitrl::rl::algos::pg::BaselineEnumType;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::maths::stats::TorchCategorical;
+	using bitrl::network::RESTRLEnvClient;
+using bitrl::envs::gymnasium::CartPole;
 
 
 const uint_t L1 = 4;
@@ -175,7 +175,7 @@ int main(){
         std::map<std::string, std::any> opt_options;
         opt_options.insert(std::make_pair("lr", LEARNING_RATE));
 
-		using namespace cuberl::maths;
+		using namespace bitrl::maths;
         auto pytorch_ops = optim::pytorch::build_pytorch_optimizer_options(optim::OptimizerType::ADAM,
 																		   opt_options);
 
@@ -216,8 +216,8 @@ int main(){
 		
 		
 		BOOST_LOG_TRIVIAL(info)<<"Loss values size: "<<loss_vals.size();
-		bitrl::utils::io::CSVWriter loss_csv_writer(experiment_path + "/" + "loss.csv",
-														  bitrl::utils::io::CSVWriter::default_delimiter());
+		bitsim::utils::io::CSVWriter loss_csv_writer(experiment_path + "/" + "loss.csv",
+														  bitsim::utils::io::CSVWriter::default_delimiter());
 		loss_csv_writer.open();
 		
 		auto episode_counter = 0;
@@ -230,8 +230,8 @@ int main(){
 		
 		
 		auto& rewards  = solver.get_monitor().rewards;
-		bitrl::utils::io::CSVWriter rewards_csv_writer(experiment_path + "/" + "rewards.csv",
-														  bitrl::utils::io::CSVWriter::default_delimiter());
+		bitsim::utils::io::CSVWriter rewards_csv_writer(experiment_path + "/" + "rewards.csv",
+														  bitsim::utils::io::CSVWriter::default_delimiter());
 		rewards_csv_writer.open();
 		
 		episode_counter = 0;
@@ -245,8 +245,8 @@ int main(){
 		
 		
 		auto& episode_duration  = solver.get_monitor().episode_duration;
-		bitrl::utils::io::CSVWriter episode_duration_csv_writer(experiment_path + "/" + "episode_duration.csv",
-														            bitrl::utils::io::CSVWriter::default_delimiter());
+		bitsim::utils::io::CSVWriter episode_duration_csv_writer(experiment_path + "/" + "episode_duration.csv",
+														            bitsim::utils::io::CSVWriter::default_delimiter());
 		episode_duration_csv_writer.open();
 		
 		episode_counter = 0;
@@ -271,7 +271,7 @@ int main(){
 #include <iostream>
 int main(){
 
-    std::cout<<"This example requires PyTorch. Reconfigure cuberl with USE_PYTORCH fag turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch. Reconfigure bitrl with USE_PYTORCH fag turned ON."<<std::endl;
     return 0;
 }
 #endif

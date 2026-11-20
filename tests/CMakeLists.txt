@@ -1,10 +1,10 @@
 INCLUDE(GoogleTest)
 
-# Each test links cuberllib and GTest; bitrl, libtorch and TBB come with cuberllib
-FUNCTION(cuberl_add_test name)
+# Each test links bitrllib and GTest; bitsim, libtorch and TBB come with bitrllib
+FUNCTION(bitrl_add_test name)
 	ADD_EXECUTABLE(${name} ${name}.cpp)
-	TARGET_LINK_LIBRARIES(${name} PRIVATE cuberllib GTest::gtest GTest::gtest_main)
-	cuberl_set_warnings(${name})
+	TARGET_LINK_LIBRARIES(${name} PRIVATE bitrllib GTest::gtest GTest::gtest_main)
+	bitrl_set_warnings(${name})
 	GTEST_DISCOVER_TESTS(${name} DISCOVERY_TIMEOUT 60)
 ENDFUNCTION()
 

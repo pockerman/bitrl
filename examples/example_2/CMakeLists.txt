@@ -1,1 +1,1 @@
-cuberl_add_example(example_2)
+bitrl_add_example(example_2)

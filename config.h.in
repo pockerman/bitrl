@@ -2,10 +2,10 @@
 #define CONFIG_H
 
 /*DEBUG*/
-#cmakedefine CUBERL_DEBUG
+#cmakedefine BITRL_DEBUG
 
 /* Print debug messages */
-#cmakedefine CUBERL_PRINT_DBG_MSGS
+#cmakedefine BITRL_PRINT_DBG_MSGS
 
 /*Use log */
 #cmakedefine USE_LOG
@@ -32,7 +32,7 @@
 #cmakedefine USE_MQTT
 
 /*Use Chrono*/
-#cmakedefine BITRL_CHRONO
+#cmakedefine BITSIM_CHRONO
 
 /*Use CUDA */
 #cmakedefine USE_CUDA
@@ -44,7 +44,7 @@
 #cmakedefine BOOST_LOG_DYN_LINK
 
 /* Whether we build with Webots support*/
-#cmakedefine USE_CUBERL_WEBOTS
+#cmakedefine USE_BITRL_WEBOTS
 
 
 #endif

@@ -9,10 +9,10 @@
   *
   * */
 
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/maths/vector_math.h"
-#include "cuberl/rl/policies/softmax_policy.h"
-#include "bitrl/utils/io/csv_file_writer.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/maths/vector_math.h"
+#include "bitrl/rl/policies/softmax_policy.h"
+#include "bitsim/utils/io/csv_file_writer.h"
 #include <cmath>
 #include <utility>
 #include <tuple>
@@ -24,9 +24,9 @@
 namespace exe
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::DynVec;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::DynVec;
 
 
 // number of arms
@@ -136,7 +136,7 @@ int main() {
         auto record = extract_part(records);
 
         // soft-max the vector
-        auto p = cuberl::maths::softmax_vec(record.begin(),
+        auto p = bitrl::maths::softmax_vec(record.begin(),
                                             record.end(), TAU);
 
         std::discrete_distribution<> distribution(p.begin(), p.end());
@@ -156,7 +156,7 @@ int main() {
         std::cout<<"\tReward obtained: "<<rewards[i]<<std::endl;
     }
 
-    auto csv_writer = bitrl::utils::io::CSVWriter("rewards.csv", ',');
+    auto csv_writer = bitsim::utils::io::CSVWriter("rewards.csv", ',');
 
     csv_writer.write_column_vector(rewards);
 

@@ -1,7 +1,7 @@
-#include "cuberl/base/cuberl_types.h"
-#include "bitrl/utils/iteration_counter.h"
-#include "bitrl/utils/maths/statistics/distributions/normal_dist.h"
-#include "cuberl/maths/vector_math.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitsim/utils/iteration_counter.h"
+#include "bitsim/maths/statistics/distributions/normal_dist.h"
+#include "bitrl/maths/vector_math.h"
 #include <boost/log/trivial.hpp>
 
 #include <cmath>
@@ -14,12 +14,12 @@
 namespace intro_example_7
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::DynMat;
-using cuberl::DynVec;
-using bitrl::utils::maths::stats::NormalDist;
-using bitrl::utils::IterationCounter;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::DynMat;
+using bitrl::DynVec;
+using bitsim::maths::stats::NormalDist;
+using bitsim::utils::IterationCounter;
 
 // we will sample from the normal distribution
 // with mu = 4.0 and std = 1.0
@@ -77,8 +77,8 @@ int main() {
 		
 	}
 	
-	auto E_I = cuberl::maths::mean(intergals.begin(), intergals.end(), true);
-	auto V_I = cuberl::maths::variance(intergals.begin(), intergals.end(), true);
+	auto E_I = bitrl::maths::mean(intergals.begin(), intergals.end(), true);
+	auto V_I = bitrl::maths::variance(intergals.begin(), intergals.end(), true);
 	BOOST_LOG_TRIVIAL(info)<<"E[I]="<<E_I;
 	BOOST_LOG_TRIVIAL(info)<<"V[I]="<<V_I;
 	BOOST_LOG_TRIVIAL(info)<<"Finished example...";
