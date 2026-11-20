@@ -117,6 +117,11 @@ class FirstVisitMCSolver
      * */
     void save(const std::string &filename) const;
 
+    ///
+    /// \brief The value of every state, as the solver has it now
+    ///
+    DynVec<real_t> value_function() const { return v_; }
+
   private:
     /**
      * @brief The value function

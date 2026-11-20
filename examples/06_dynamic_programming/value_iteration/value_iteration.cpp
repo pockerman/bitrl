@@ -7,7 +7,9 @@
 #include "bitsim/utils/io/csv_file_writer.h"
 
 #include <boost/log/trivial.hpp>
+#include <fstream>
 #include <tuple>
+#include <vector>
 
 namespace example_14
 {
@@ -63,19 +65,36 @@ int main()
 
     solver_type algorithm(config);
 
-    RLSerialTrainerConfig trainer_config = {10, 10000, 1.0e-8};
-
-    RLSerialAgentTrainer<env_type, solver_type> trainer(trainer_config, algorithm);
-
-    auto info_ = trainer.train(env);
-    BOOST_LOG_TRIVIAL(info) << info_;
+    // the sweeps, as RLSerialAgentTrainer would run them, keeping the value
+    // function after every one in sweeps.csv, which examples/tools/value_gif.py
+    // draws
+    std::ofstream sweeps("sweeps.csv");
+    std::vector<real_t> reward;
+    algorithm.actions_before_training_begins(env);
+    for (uint_t sweep = 0; sweep < 10000; ++sweep)
+    {
+        const auto sweep_info = algorithm.on_training_episode(env, sweep);
+        reward.push_back(sweep_info.episode_reward);
+        const auto values = algorithm.value_function();
+        sweeps << sweep;
+        for (Eigen::Index s = 0; s < values.size(); ++s)
+        {
+            sweeps << "," << values[s];
+        }
+        sweeps << "\n";
+        if (sweep_info.stop_training)
+        {
+            break;
+        }
+    }
+    algorithm.actions_after_training_ends(env);
+    BOOST_LOG_TRIVIAL(info) << "Done after " << reward.size() << " sweeps";
     BOOST_LOG_TRIVIAL(info) << "Saving solution to " << SOLUTION_FILE;
 
     // save the value function into a csv file
     algorithm.save(SOLUTION_FILE);
 
     // save the reward the agent achieved per training epoch
-    auto reward = trainer.episodes_total_rewards();
 
     bitsim::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
     csv_writer.open();

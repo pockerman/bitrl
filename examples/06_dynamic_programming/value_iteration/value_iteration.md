@@ -25,8 +25,9 @@ provides.
 
 \ref bitrl::rl::algos::dp::ValueIteration "ValueIteration" uses \f$\gamma = 0.99\f$ and a tolerance of
 \f$10^{-8}\f$. It updates the values in place, so a state later in a sweep already sees the new values of the
-states before it. \ref bitrl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer" runs one sweep per training
-episode, at most 10000 of them, and stops as soon as a sweep changes no value by more than the tolerance.
+states before it. The example runs the sweeps itself, at most 10000 of them, rather than with
+\ref bitrl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer", so that it can write the value function after every
+sweep to `sweeps.csv`, and stops as soon as a sweep changes no value by more than the tolerance, after 7 sweeps.
 
 ## What it writes
 
@@ -60,6 +61,17 @@ is the number of steps from it to the goal. The start is 6 steps away and has a 
 | ![State value function](images/frozen_lake_state_value_function.png) |
 |:--:|
 | **Figure 1: The state value function.** |
+
+| ![The values converging](value_iteration.gif) |
+|:--:|
+| **The value function sweep by sweep, with the greedy actions of the values.** |
+
+On the lake that does not slip, each sweep carries the value of the goal one more step back, so 6 sweeps reach
+the start and the 7th changes nothing. The GIF is made with
+
+@code{.sh}
+python examples/tools/value_gif.py sweeps.csv --gamma 0.99 --out value_iteration.gif
+@endcode
 
 The policy reaches the goal in those 6 steps, the shortest path around the holes.
 

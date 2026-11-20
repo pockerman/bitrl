@@ -6,7 +6,9 @@
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
 #include <boost/log/trivial.hpp>
+#include <fstream>
 #include <iostream>
+#include <vector>
 
 namespace rl_example_7
 {
@@ -57,11 +59,30 @@ int main()
     solver_type solver(config, env.n_actions(), policy);
 
     // output message frequence, number of episodes, tolerance
-    RLSerialTrainerConfig trainer_config = {10, 100, 1.0e-8};
-
-    RLSerialAgentTrainer<env_type, solver_type> trainer(trainer_config, solver);
-
-    auto info = trainer.train(env);
+    // the sweeps, as RLSerialAgentTrainer would run them, keeping the value
+    // function after every one in sweeps.csv, which examples/tools/value_gif.py
+    // draws
+    std::ofstream sweeps("sweeps.csv");
+    std::vector<real_t> reward;
+    solver.actions_before_training_begins(env);
+    for (uint_t sweep = 0; sweep < 100; ++sweep)
+    {
+        const auto sweep_info = solver.on_training_episode(env, sweep);
+        reward.push_back(sweep_info.episode_reward);
+        const auto values = solver.value_function();
+        sweeps << sweep;
+        for (Eigen::Index s = 0; s < values.size(); ++s)
+        {
+            sweeps << "," << values[s];
+        }
+        sweeps << "\n";
+        if (sweep_info.stop_training)
+        {
+            break;
+        }
+    }
+    solver.actions_after_training_ends(env);
+    BOOST_LOG_TRIVIAL(info) << "Done after " << reward.size() << " sweeps";
 
     BOOST_LOG_TRIVIAL(info) << "Saving solution to " << SOLUTION_FILE;
 
