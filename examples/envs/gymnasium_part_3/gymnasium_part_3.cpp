@@ -11,9 +11,9 @@ namespace box2d_example
 {
 using namespace bitsim;
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
-using bitsim::real_t;
 using bitrl::envs::gymnasium::LunarLanderContinuousEnv;
 using bitrl::envs::gymnasium::LunarLanderDiscreteEnv;
+using bitsim::real_t;
 } // namespace box2d_example
 
 int main()

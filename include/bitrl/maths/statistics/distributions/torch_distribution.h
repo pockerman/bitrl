@@ -10,9 +10,12 @@
 
 #include <vector>
 
-namespace bitrl {
-namespace maths {
-namespace stats {
+namespace bitrl
+{
+namespace maths
+{
+namespace stats
+{
 
 ///
 /// \brief The TorchDistribution class. Base class to derive
@@ -21,8 +24,7 @@ namespace stats {
 class TorchDistributionBase
 {
 
-public:
-
+  public:
     ///
     /// \brief Destructor
     ///
@@ -45,8 +47,7 @@ public:
     ///
     virtual torch_tensor_t sample(c10::ArrayRef<int64_t> sample_shape) = 0;
 
-protected:
-
+  protected:
     /**
      * @brief Constructor
      */
@@ -68,11 +69,10 @@ protected:
     /// \return
     ///
     std::vector<int64_t> extended_shape(c10::ArrayRef<int64_t> sample_shape);
-
 };
 
-}
-}
-}
+} // namespace stats
+} // namespace maths
+} // namespace bitrl
 #endif
 #endif // TORCH_DISTRIBUTION_H

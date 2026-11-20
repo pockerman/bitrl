@@ -1,7 +1,7 @@
-#include "bitsim/bitsim_consts.h"
-#include "bitsim/bitsim_types.h"
 #include "bitrl/envs/gymnasium/classic_control/vector/acrobot_vec_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/bitsim_types.h"
 
 #include <any>
 #include <ios>
@@ -14,8 +14,8 @@ int main()
 {
 
     using namespace bitrl::envs::gymnasium;
-    using bitsim::uint_t;
     using bitrl::network::RESTRLEnvClient;
+    using bitsim::uint_t;
 
     const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 

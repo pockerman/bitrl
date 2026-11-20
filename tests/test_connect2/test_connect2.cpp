@@ -1,5 +1,5 @@
-#include "bitsim/bitsim_types.h"
 #include "bitrl/envs/connect2/connect2_env.h"
+#include "bitsim/bitsim_types.h"
 
 #include <gtest/gtest.h>
 
@@ -11,8 +11,8 @@
 
 namespace
 {
-using bitsim::uint_t;
 using bitrl::envs::connect2::Connect2;
+using bitsim::uint_t;
 
 Connect2 make_game()
 {

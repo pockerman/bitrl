@@ -9,11 +9,11 @@
  * */
 
 #include "bitrl/base/bitrl_config.h"
-#include "bitsim/bitsim_consts.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/envs/env_base.h"
 #include "bitrl/envs/space_type.h"
 #include "bitrl/envs/time_step.h"
+#include "bitsim/bitsim_consts.h"
 #include "bitsim/utils/bitsim_utils.h"
 
 #ifdef BITRL_DEBUG
