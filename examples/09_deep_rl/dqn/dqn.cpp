@@ -19,6 +19,7 @@
 
 #include <any>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
@@ -78,10 +79,11 @@ QNetImpl::QNetImpl()
 torch_tensor_t QNetImpl::forward(torch_tensor_t x)
 {
 
+    // ReLU after the hidden layers only: the Q values are negative, every step
+    // pays -1, and a ReLU on the output could not give them
     x = F::relu(fc1_->forward(x));
-    x = fc2_->forward(x);
-    x = F::relu(fc3_->forward(x));
-    return x;
+    x = F::relu(fc2_->forward(x));
+    return fc3_->forward(x);
 }
 
 // create the model
@@ -266,6 +268,45 @@ int main()
 
             losses.push_back(bitrl::maths::mean(epoch_loss.begin(), epoch_loss.end()));
             rewards.push_back(bitrl::maths::mean(epoch_rewards.begin(), epoch_rewards.end()));
+        }
+
+        // play the greedy policy, the action of the largest Q value, for one episode on the static
+        // board, at most 20 steps each, and write every board to episode.csv for
+        // examples/tools/grid_world_gif.py: a row per step, the episode, the
+        // action that led to the board (-1 for the first), the reward and the 64
+        // values of the board
+        {
+            qnet->eval();
+            torch::NoGradGuard no_grad;
+            std::ofstream episode_file("episode.csv");
+            episode_file << "# episode,action,reward,board\n";
+            uint_t won = 0;
+            for (uint_t episode = 0; episode < 1; ++episode)
+            {
+                auto time_step = env.reset();
+                int action = -1;
+                for (uint_t step = 0; step <= 20; ++step)
+                {
+                    const auto obs = flattened_observation(time_step.observation());
+                    episode_file << episode << "," << action << "," << time_step.reward();
+                    for (auto v : obs)
+                    {
+                        episode_file << "," << v;
+                    }
+                    episode_file << "\n";
+                    if (time_step.done() || step == 20)
+                    {
+                        won += time_step.reward() > 0.0 ? 1 : 0;
+                        break;
+                    }
+                    auto state =
+                        bitrl::utils::pytorch::TorchAdaptor::to_torch(obs, bitrl::DeviceType::CPU);
+                    action = static_cast<int>(torch::argmax(qnet(state)).item<int64_t>());
+                    time_step = env.step(static_cast<uint_t>(action));
+                }
+            }
+            std::cout << "The greedy policy reached the goal in " << won << " of " << 1
+                      << " episodes" << std::endl;
         }
 
         // save the rewards per episode for visualization
