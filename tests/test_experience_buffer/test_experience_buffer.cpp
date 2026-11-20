@@ -1,5 +1,5 @@
 #include "cuberl/base/cuberl_types.h"
-#include "bitrl/utils/experience_buffer.h"
+#include "cuberl/utils/experience_buffer.h"
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -8,7 +8,7 @@ namespace{
 
 using cuberl::real_t;
 using cuberl::uint_t;
-using bitrl::utils::ExperienceBuffer;
+using cuberl::utils::ExperienceBuffer;
 
 struct Experience
 {

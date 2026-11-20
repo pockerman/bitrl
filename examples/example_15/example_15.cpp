@@ -2,8 +2,8 @@
 #include "cuberl/rl/algorithms/td/sarsa.h"
 #include "cuberl/rl/policies/epsilon_greedy_policy.h"
 #include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <iostream>
@@ -23,8 +23,8 @@ using cuberl::rl::algos::td::SarsaConfig;
 using cuberl::rl::policies::EpsilonDecayOption;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
-using bitrl::network::RESTRLEnvClient;
-typedef  bitrl::envs::gymnasium::CliffWorld env_type;
+using cuberl::network::RESTRLEnvClient;
+typedef  cuberl::envs::gymnasium::CliffWorld env_type;
 
 
 }

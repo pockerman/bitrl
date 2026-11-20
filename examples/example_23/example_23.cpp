@@ -13,8 +13,8 @@
 #include "cuberl/maths/statistics/distributions/torch_categorical.h"
 
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/classic_control/cart_pole_env.h"
 
 #include <boost/log/trivial.hpp>
 
@@ -48,8 +48,8 @@ using cuberl::rl::algos::pg::BaselineEnumType;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
 using cuberl::maths::stats::TorchCategorical;
-	using bitrl::network::RESTRLEnvClient;
-using bitrl::envs::gymnasium::CartPole;
+	using cuberl::network::RESTRLEnvClient;
+using cuberl::envs::gymnasium::CartPole;
 
 
 const uint_t L1 = 4;

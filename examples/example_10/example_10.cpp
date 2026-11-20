@@ -3,7 +3,7 @@
 #include "cuberl/rl/policies/epsilon_greedy_policy.h"
 #include "bitrl/utils/maths/statistics/distributions/beta_dist.h"
 #include "bitrl/utils/maths/statistics/distributions/bernoulli_dist.h"
-#include "bitrl/envs/multi_armed_bandits/multi_armed_bandits.h"
+#include "cuberl/envs/multi_armed_bandits/multi_armed_bandits.h"
 
 #include <cmath>
 #include <utility>
@@ -26,7 +26,7 @@ using cuberl::DynVec;
 using cuberl::rl::policies::EpsilonGreedyPolicy;
 using bitrl::utils::maths::stats::BetaDist;
 using bitrl::utils::maths::stats::BernoulliDist;
-using bitrl::envs::bandits::MultiArmedBandits;
+using cuberl::envs::bandits::MultiArmedBandits;
 
 // Number of episodes to play
 uint_t N_EPISODES = 1000;

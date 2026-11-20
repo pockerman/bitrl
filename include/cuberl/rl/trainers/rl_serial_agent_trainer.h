@@ -4,8 +4,8 @@
 #include "cuberl/base/cuberl_types.h"
 #include "bitrl/bitrl_consts.h"
 
-#include "bitrl/utils/iterative_algorithm_result.h"
-#include "bitrl/utils/iterative_algorithm_controller.h"
+#include "cuberl/utils/iterative_algorithm_result.h"
+#include "cuberl/utils/iterative_algorithm_controller.h"
 
 #include <boost/noncopyable.hpp>
 #include <boost/log/trivial.hpp>
@@ -54,7 +54,7 @@ public:
     /// \brief train Iterate to train the agent on the given
     /// environment
     ///
-    virtual bitrl::utils::IterativeAlgorithmResult train(env_type& env);
+    virtual cuberl::utils::IterativeAlgorithmResult train(env_type& env);
 
     ///
     /// \brief actions_before_training_begins.  Execute any actions
@@ -106,7 +106,7 @@ protected:
     /// \brief itr_ctrl_ Handles the iteration over the
     /// episodes
     ///
-    bitrl::utils::IterativeAlgorithmController itr_ctrl_;
+    cuberl::utils::IterativeAlgorithmController itr_ctrl_;
 
     ///
     /// \brief agent_
@@ -170,7 +170,7 @@ RLSerialAgentTrainer<EnvType, AgentType>::actions_after_training_ends(env_type& 
 }
 
 template<typename EnvType, typename AgentType>
-bitrl::utils::IterativeAlgorithmResult
+cuberl::utils::IterativeAlgorithmResult
 RLSerialAgentTrainer<EnvType, AgentType>::train(env_type& env){
 
 	BOOST_LOG_TRIVIAL(info)<<" Start training on environment..."; //<<env.name;

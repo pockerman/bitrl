@@ -1,7 +1,7 @@
 \page cuberl_example_16 CubeRL Example 16: Q-learning on CliffWorld
 
 In this example, we will apply another temporal difference learning algorithm namely <a href="https://en.wikipedia.org/wiki/Q-learning">Q-learning</a>
-on _CliffWorld_.  This is a Gymnasium-based environment implemented in \ref bitrl::envs::gymnasium::CliffWorld "bitrl::envs::gymnasium::CliffWorld" class.
+on _CliffWorld_.  This is a Gymnasium-based environment implemented in \ref cuberl::envs::gymnasium::CliffWorld "cuberl::envs::gymnasium::CliffWorld" class.
 We used this environment in example \ref cuberl_example_13.
 
 Q-learning, just like SARSA, is a model-free reinforcement learning algorithm that learns how good an action is in a given state, 
@@ -61,8 +61,8 @@ The Q-learning algorithm is implemented in the \ref cuberl::rl::algos::td::QLear
 #include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
 
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
 
 #include <iostream>
 #include <iostream>
@@ -87,8 +87,8 @@ using cuberl::rl::algos::td::QLearningConfig;
 using cuberl::rl::policies::EpsilonDecayOption;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
-using bitrl::network::RESTRLEnvClient;
-typedef  bitrl::envs::gymnasium::CliffWorld env_type;
+using cuberl::network::RESTRLEnvClient;
+typedef  cuberl::envs::gymnasium::CliffWorld env_type;
 
 }
 

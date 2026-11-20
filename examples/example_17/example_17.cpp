@@ -11,8 +11,8 @@
 #include "cuberl/maths/optimization/pytorch_optimizer_factory.h"
 
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/classic_control/cart_pole_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <torch/torch.h>
@@ -38,9 +38,9 @@ using cuberl::rl::algos::pg::A2CConfig;
 using cuberl::rl::algos::pg::A2CSolver;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
-	using bitrl::network::RESTRLEnvClient;
+	using cuberl::network::RESTRLEnvClient;
 
-typedef  bitrl::envs::gymnasium::CartPole env_type;
+typedef  cuberl::envs::gymnasium::CartPole env_type;
 
 /// Layer sizes for Actor
 const uint_t L1 = 4;

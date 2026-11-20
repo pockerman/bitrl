@@ -6,9 +6,9 @@
 #include "cuberl/maths/vector_math.h"
 
 
-#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "bitrl/envs/envs_utils.h"
-#include "bitrl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "cuberl/envs/envs_utils.h"
+#include "cuberl/network/rest_rl_env_client.h"
 
 #include <iostream>
 #include <random>
@@ -25,8 +25,8 @@ using cuberl::rl::algos::mc::FirstVisitMCSolver;
 using cuberl::rl::algos::mc::FirstVisitMCSolverConfig;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
-    using bitrl::network::RESTRLEnvClient;
-using bitrl::envs::gymnasium::FrozenLake;
+    using cuberl::network::RESTRLEnvClient;
+using cuberl::envs::gymnasium::FrozenLake;
 
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
@@ -61,7 +61,7 @@ std::vector<FrozenLake<4>::time_step_type>
 TrajectoryGenerator::operator()(FrozenLake<4>& env, uint_t max_steps){
 
     RandomActionSelector action_selector;
-    return bitrl::envs::create_trajectory(env, action_selector, max_steps );
+    return cuberl::envs::create_trajectory(env, action_selector, max_steps );
 }
 
 

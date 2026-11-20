@@ -96,17 +96,7 @@ ENDFUNCTION()
 # -----------------------------------------------------------------------------
 # The library
 # -----------------------------------------------------------------------------
-FILE(GLOB SRCS src/cuberl/base/*.cpp
-		src/cuberl/rl/*.cpp
-		src/cuberl/rl/*/*.cpp
-		src/cuberl/rl/algorithms/*.cpp
-		src/cuberl/rl/algorithms/*/*.cpp
-		src/cuberl/utils/*.cpp
-		src/cuberl/maths/*.cpp
-		src/cuberl/maths/statistics/*.cpp
-		src/cuberl/maths/statistics/distributions/*.cpp
-		src/cuberl/maths/optimization/*.cpp
-	)
+FILE(GLOB_RECURSE SRCS CONFIGURE_DEPENDS src/cuberl/*.cpp)
 
 ADD_LIBRARY(cuberllib SHARED ${SRCS})
 TARGET_INCLUDE_DIRECTORIES(cuberllib PUBLIC
