@@ -1,7 +1,20 @@
 # bitrl
 
 _bitrl_ is a C++ library containing implementations of various reinforcement learning, filtering and planning algorithms.
-The examples, with a page for each, are listed in [examples/examples.md](examples/examples.md). Some of them: 
+The examples, with a page for each, are listed in [examples/examples.md](examples/examples.md).
+
+<table>
+  <tr>
+    <td width="50%"><img src="examples/robotics/mcts_line_following/mcts_line_following_search.gif" alt="Monte Carlo tree search weighing the commands of a robot"></td>
+    <td width="50%"><img src="examples/robotics/mcts_line_following/mcts_line_following_lap.gif" alt="A robot planning its way around a track with Monte Carlo tree search"></td>
+  </tr>
+  <tr>
+    <td>Monte Carlo tree search drives bitsim's Chrono robot along a line and around boxes. Every 0.2 s it runs 400 simulations, 5 s ahead, in a fast model of the track. Each line is where one of the five commands leads; the robot takes the green one, and the wider an orange line, the more simulations tried its command. <a href="examples/robotics/mcts_line_following/mcts_line_following.md">Example</a></td>
+    <td>With nothing but those plans the robot goes once around the track in 47.7 s, without touching a box, faster than bitsim's hand written controller; each decision takes about 4 ms. <a href="examples/robotics/mcts_line_following/mcts_line_following.md">Example</a></td>
+  </tr>
+</table>
+
+Some of the examples:
  
 
 ## Examples

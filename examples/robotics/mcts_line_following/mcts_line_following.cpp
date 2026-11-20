@@ -14,7 +14,7 @@
 // and wheels, so it does not do exactly what the model says. MCTS plans again
 // from where Chrono says the robot is, at every decision.
 //
-// Usage: mcts_line_following [--render] [--record DIR] [--time-limit SECONDS]
+// Usage: mcts_line_following [--render] [--follow] [--record DIR] [--time-limit SECONDS]
 
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/rl/algorithms/mc/mc_tree_search_solver.h"
@@ -78,6 +78,11 @@ const real_t TIME_LIMIT = 150.0;    // [s]
 const real_t PRINT_PERIOD = 2.0;    // [s]
 const real_t RENDER_RATE = 30.0;    // [frames/s] of simulation in the window
 const real_t RECORD_RATE = 10.0;    // [frames/s] of simulation written by --record
+
+// --follow: where the camera is, from the robot
+const real_t FOLLOW_BEHIND = 2.6; // [m]
+const real_t FOLLOW_HEIGHT = 2.4; // [m]
+const real_t FOLLOW_AHEAD = 1.5;  // [m] where it looks
 
 // The track and the boxes, as in bitsim's line_following_infrared_sonar
 const real_t TRACK_HALF_LENGTH = 2.2;   // [m] along x, to the centre of the line
@@ -238,7 +243,12 @@ struct TowardsTheLine
         {
             return random_command(generator);
         }
+        return steer(model);
+    }
 
+    // The command the policy takes when it does not take a random one
+    static uint_t steer(const TrackModel &model)
+    {
         const auto &pose = model.pose();
         const real_t cx = pose.x + CHASSIS_AHEAD * std::cos(pose.heading);
         const real_t cy = pose.y + CHASSIS_AHEAD * std::sin(pose.heading);
@@ -266,30 +276,71 @@ struct TowardsTheLine
     }
 };
 
-// The plan MCTS settled on: from the root, the most visited child each time
-template <typename Solver> std::vector<uint_t> best_actions(const Solver &solver)
+// The names of the commands, for the window
+const std::array<const char *, 5> COMMAND_NAMES{"straight", "left", "right", "hard left",
+                                                "hard right"};
+
+///
+/// What MCTS weighed at a decision: for every first command, the path the
+/// model expects it to lead to, and the share of the simulations that started
+/// with it. The path follows the most visited branch of the tree below the
+/// command, then the rollout policy without its random commands, up to the
+/// look ahead of the search
+///
+struct Candidate
 {
-    std::vector<uint_t> actions;
-    auto node = solver.root();
-    while (node && node->has_children())
+    uint_t action;
+    real_t share;
+    std::vector<Pose> path;
+};
+
+template <typename Solver>
+std::vector<Candidate> candidates(const Solver &solver, const TrackModel &model)
+{
+    std::vector<Candidate> result;
+    const auto root = solver.root();
+    if (!root || root->total_visits() == 0)
     {
-        std::shared_ptr<const typename Solver::node_type> best;
-        for (uint_t c = 0; c < node->n_children(); ++c)
-        {
-            auto child = node->get_child(c);
-            if (!best || child->total_visits() > best->total_visits())
-            {
-                best = child;
-            }
-        }
-        if (!best || best->total_visits() == 0)
-        {
-            break;
-        }
-        actions.push_back(best->get_action());
-        node = best;
+        return result;
     }
-    return actions;
+
+    for (uint_t c = 0; c < root->n_children(); ++c)
+    {
+        std::shared_ptr<const typename Solver::node_type> node = root->get_child(c);
+        Candidate candidate{node->get_action(),
+                            static_cast<real_t>(node->total_visits()) / root->total_visits(),
+                            {model.pose()}};
+
+        // down the tree, the most visited child each time
+        TrackModel ahead(model);
+        bool done = false;
+        while (node && node->total_visits() > 0 && !done)
+        {
+            done = ahead.step(node->get_action()).done();
+            candidate.path.push_back(ahead.pose());
+
+            std::shared_ptr<const typename Solver::node_type> next;
+            for (uint_t k = 0; k < node->n_children(); ++k)
+            {
+                auto child = node->get_child(k);
+                if (child->total_visits() > 0 &&
+                    (!next || child->total_visits() > next->total_visits()))
+                {
+                    next = child;
+                }
+            }
+            node = next;
+        }
+
+        // then the rollout policy, to the end of the look ahead
+        while (!done && candidate.path.size() <= SEARCH.max_depth)
+        {
+            done = ahead.step(TowardsTheLine::steer(ahead)).done();
+            candidate.path.push_back(ahead.pose());
+        }
+        result.push_back(std::move(candidate));
+    }
+    return result;
 }
 
 // ---------------------------------------------------------------------------
@@ -382,8 +433,8 @@ class World
 class Display
 {
   public:
-    Display(World &world, const FloorImage &floor, const std::string &record)
-        : world_(world), recorder_(record, RECORD_RATE)
+    Display(World &world, const FloorImage &floor, const std::string &record, bool follow)
+        : world_(world), recorder_(record, RECORD_RATE), follow_(follow)
     {
         // The paper on the ground goes on before the visual system starts
         const auto texture =
@@ -405,7 +456,7 @@ class Display
     }
 
     // Returns false once the window is closed
-    bool show(const std::vector<Pose> &plan, const Command &command, real_t lap)
+    bool show(const std::vector<Candidate> &candidates, uint_t chosen, real_t lap)
     {
         if (!vis_.Run())
         {
@@ -413,21 +464,46 @@ class Display
         }
         const auto pose = world_.pose();
         trail_.add(pose.x, pose.y);
+        if (follow_)
+        {
+            follow_robot_(pose);
+        }
 
         vis_.BeginScene();
         vis_.Render();
-        trail_.draw(vis_, chrono::ChColor(0.1f, 0.4f, 0.9f));
-        // The plan: where the model expects the robot to go
-        for (std::size_t i = 1; i < plan.size(); ++i)
+        trail_.draw(vis_, chrono::ChColor(0.1f, 0.4f, 0.9f), 3.0);
+
+        // the paths MCTS weighed: the more simulations started with a command,
+        // the wider its path; the command it chose in green, on top
+        for (int pass = 0; pass < 2; ++pass)
         {
-            bitsim::utils::render::irr_draw_line(
-                vis_, chrono::ChVector3d(plan[i - 1].x, plan[i - 1].y, 0.06),
-                chrono::ChVector3d(plan[i].x, plan[i].y, 0.06), chrono::ChColor(0.1f, 0.8f, 0.2f));
+            for (const auto &c : candidates)
+            {
+                const bool is_chosen = c.action == chosen;
+                if (is_chosen != (pass == 1))
+                {
+                    continue;
+                }
+                const auto colour = is_chosen ? chrono::ChColor(0.1f, 0.85f, 0.2f)
+                                              : chrono::ChColor(1.0f, 0.55f, 0.1f);
+                const real_t thickness = is_chosen ? 4.0 : 1.0 + 3.0 * c.share;
+                for (std::size_t i = 1; i < c.path.size(); ++i)
+                {
+                    bitsim::utils::render::irr_draw_line(
+                        vis_, chrono::ChVector3d(c.path[i - 1].x, c.path[i - 1].y, 0.06),
+                        chrono::ChVector3d(c.path[i].x, c.path[i].y, 0.06), colour, thickness);
+                }
+            }
         }
+
         std::ostringstream text;
         text << std::fixed << std::setprecision(1) << "t " << world_.time() << " s    lap "
-             << 100.0 * lap << " %    v " << std::setprecision(2) << command.v << " m/s    w "
-             << command.omega << " rad/s    plan " << plan.size() - 1 << " steps ahead";
+             << 100.0 * lap << " %    simulations:";
+        for (const auto &c : candidates)
+        {
+            text << "  " << COMMAND_NAMES[c.action] << " " << std::setprecision(0)
+                 << 100.0 * c.share << "%" << (c.action == chosen ? "*" : "");
+        }
         bitsim::utils::render::draw_status_bar(vis_, text.str());
         vis_.EndScene();
 
@@ -436,10 +512,30 @@ class Display
     }
 
   private:
+    // Behind and above the robot, looking ahead of it. The camera turns
+    // with a smoothed heading, so that the small turns of the robot do not
+    // shake the picture
+    void follow_robot_(const Pose &pose)
+    {
+        if (!camera_heading_)
+        {
+            camera_heading_ = pose.heading;
+        }
+        *camera_heading_ += 0.05 * std::remainder(pose.heading - *camera_heading_, 2.0 * PI);
+        const real_t c = std::cos(*camera_heading_);
+        const real_t s = std::sin(*camera_heading_);
+        vis_.UpdateCamera(
+            chrono::ChVector3d(pose.x - FOLLOW_BEHIND * c, pose.y - FOLLOW_BEHIND * s,
+                               FOLLOW_HEIGHT),
+            chrono::ChVector3d(pose.x + FOLLOW_AHEAD * c, pose.y + FOLLOW_AHEAD * s, 0.0));
+    }
+
     World &world_;
     chrono::irrlicht::ChVisualSystemIrrlicht vis_;
     FrameRecorder recorder_;
     Trail trail_;
+    bool follow_;
+    std::optional<real_t> camera_heading_;
 };
 
 // ---------------------------------------------------------------------------
@@ -451,6 +547,7 @@ struct Options
     bool render{false};
     std::string record;
     real_t time_limit{TIME_LIMIT};
+    bool follow{false};
 };
 
 Options parse(int argc, char **argv)
@@ -468,6 +565,11 @@ Options parse(int argc, char **argv)
             options.record = argv[++i];
             options.render = true;
         }
+        else if (arg == "--follow")
+        {
+            options.follow = true;
+            options.render = true;
+        }
         else if (arg == "--time-limit" && i + 1 < argc)
         {
             options.time_limit = std::stod(argv[++i]);
@@ -476,6 +578,7 @@ Options parse(int argc, char **argv)
         {
             std::cout << "Usage: mcts_line_following [--render] [--record DIR] [--time-limit S]\n"
                       << "  --render         show the simulation in a window, in real time\n"
+                      << "  --follow         show it with a camera that follows the robot\n"
                       << "  --record DIR     also write the window to DIR, " << RECORD_RATE
                       << " frames a second\n"
                       << "  --time-limit S   stop after S seconds of simulation, " << TIME_LIMIT
@@ -493,7 +596,7 @@ int run(const Options &options)
     std::optional<Display> display;
     if (options.render)
     {
-        display.emplace(world, floor, options.record);
+        display.emplace(world, floor, options.record, options.follow);
     }
 
     MCTSSolver<TrackModel, TowardsTheLine> solver(SEARCH);
@@ -504,7 +607,8 @@ int run(const Options &options)
               << "    t [s]   x [m]   y [m]  head [deg]  line [m]  v [m/s]  w [rad/s]\n";
 
     Command command;
-    std::vector<Pose> plan;
+    uint_t chosen = 0;
+    std::vector<Candidate> weighed;
     real_t next_decision = 0.0;
     real_t next_print = 0.0;
     real_t next_frame = 0.0;
@@ -530,17 +634,10 @@ int run(const Options &options)
                 std::chrono::duration<real_t>(std::chrono::steady_clock::now() - start).count();
             n_decisions += 1;
             command = COMMANDS[action];
-
-            // where the model expects the plan to take the robot
-            plan = {model.pose()};
-            TrackModel ahead(model);
-            for (const auto a : best_actions(solver))
+            chosen = action;
+            if (display)
             {
-                if (ahead.step(a).done())
-                {
-                    break;
-                }
-                plan.push_back(ahead.pose());
+                weighed = candidates(solver, model);
             }
         }
 
@@ -569,7 +666,7 @@ int run(const Options &options)
         if (display && world.time() + 1e-9 >= next_frame)
         {
             next_frame += 1.0 / RENDER_RATE;
-            if (!display->show(plan, command, travelled / (2.0 * PI)))
+            if (!display->show(weighed, chosen, travelled / (2.0 * PI)))
             {
                 break;
             }
