@@ -3,21 +3,23 @@
 
 #include "bitrl/base/bitrl_types.h"
 
+#include <initializer_list>
 #include <random>
 #include <set>
-#include <initializer_list>
 
-namespace bitrl{
-namespace maths{
+namespace bitrl
+{
+namespace maths
+{
 
 ///
 /// \brief Exchange the rows of the matrix
 ///
-template<typename MatType>
-void
-exchange_rows(MatType& mat, uint_t r1, uint_t r2){
+template <typename MatType> void exchange_rows(MatType &mat, uint_t r1, uint_t r2)
+{
 
-    for(uint_t col=0; col<mat.columns(); ++col){
+    for (uint_t col = 0; col < mat.columns(); ++col)
+    {
 
         auto tmp = mat(r1, col);
         mat(r1, col) = mat(r2, col);
@@ -29,30 +31,32 @@ exchange_rows(MatType& mat, uint_t r1, uint_t r2){
 /// \brief Shuffle the rows of the matrix.
 /// Returns a set with the rows that have been shuffled
 ///
-template<typename MatType>
-std::set<uint_t>
-shuffle_matrix_rows(MatType& mat){
+template <typename MatType> std::set<uint_t> shuffle_matrix_rows(MatType &mat)
+{
 
     uint_t min = 0;
     uint_t max = mat.rows();
 
-    //Will be used to obtain a seed for the random number engine
+    // Will be used to obtain a seed for the random number engine
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<uint_t> random(min, max);
 
     std::set<uint_t> touched;
 
-    for(uint_t r=0; r<max; ++r){
+    for (uint_t r = 0; r < max; ++r)
+    {
 
         // this row was touched
-        if(touched.find(r) != touched.end()){
+        if (touched.find(r) != touched.end())
+        {
             continue;
         }
 
         uint_t candidate = random(gen);
 
-        if(touched.find(candidate) != touched.end()){
+        if (touched.find(candidate) != touched.end())
+        {
             continue;
         }
 
@@ -125,23 +129,20 @@ get_column_variances(const DynMat<T>& matrix){
 ///
 /// \brief Extract the row_idx-th row from the matrix
 ///
-template<typename T>
-DynVec<T>
-get_row(const DynMat<T>& matrix, uint_t row_idx){
+template <typename T> DynVec<T> get_row(const DynMat<T> &matrix, uint_t row_idx)
+{
     return matrix.row(row_idx);
 }
 
-template<typename T>
-T
-get_row_max(const DynMat<T>& matrix, uint_t row_idx){
+template <typename T> T get_row_max(const DynMat<T> &matrix, uint_t row_idx)
+{
 
     auto row = get_row(matrix, row_idx);
     return row.maxCoeff();
 }
 
-template<typename T>
-T
-get_row_min(const DynMat<T>& matrix, uint_t row_idx){
+template <typename T> T get_row_min(const DynMat<T> &matrix, uint_t row_idx)
+{
 
     auto row = get_row(matrix, row_idx);
     return row.maxCoeff();
@@ -164,9 +165,9 @@ row_argmin(const DynMat<T>& matrix, uint_t row_idx){
 
 
 template<typename T>
-void 
+void
 extract_randomly(const DynMat<T>& matrix, std::vector<DynVec<T>>& rsult,
-				 uint_t how_many, bool allow_duplicates=false){
+                                 uint_t how_many, bool allow_duplicates=false){
 
     rsult.clear();
     rsult.reserve(how_many);
@@ -262,8 +263,7 @@ DynMat<T> create_diagonal_matrix(const std::initializer_list<T>& diagonal){
     return create_diagonal_matrix(diag);
 }*/
 
-
-}
-}
+} // namespace maths
+} // namespace bitrl
 
 #endif // MATRIX_SHUFFLER_H

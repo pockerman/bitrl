@@ -4,7 +4,8 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-namespace{
+namespace
+{
 
 using bitrl::real_t;
 using bitrl::uint_t;
@@ -14,10 +15,10 @@ struct Experience
 {
     uint_t item;
 };
-}
+} // namespace
 
-
-TEST(TestExperienceBuffer, Test_constructor) {
+TEST(TestExperienceBuffer, Test_constructor)
+{
 
     ExperienceBuffer<Experience> buffer(3);
 
@@ -26,7 +27,8 @@ TEST(TestExperienceBuffer, Test_constructor) {
     ASSERT_EQ(buffer.size(), static_cast<uint_t>(0));
 }
 
-TEST(TestExperienceBuffer, Test_append) {
+TEST(TestExperienceBuffer, Test_append)
+{
 
     ExperienceBuffer<Experience> buffer(3);
 
@@ -48,7 +50,8 @@ TEST(TestExperienceBuffer, Test_append) {
     ASSERT_EQ(buffer[2].item, exp3.item);
 }
 
-TEST(TestExperienceBuffer, Test_replacement) {
+TEST(TestExperienceBuffer, Test_replacement)
+{
 
     ExperienceBuffer<Experience> buffer(3);
 
@@ -76,11 +79,10 @@ TEST(TestExperienceBuffer, Test_replacement) {
     ASSERT_EQ(buffer[0].item, exp2.item);
     ASSERT_EQ(buffer[1].item, exp3.item);
     ASSERT_EQ(buffer[2].item, exp4.item);
-
 }
 
-
-TEST(TestExperienceBuffer, Test_sample) {
+TEST(TestExperienceBuffer, Test_sample)
+{
 
     ExperienceBuffer<Experience> buffer(4);
 
@@ -95,19 +97,15 @@ TEST(TestExperienceBuffer, Test_sample) {
 
     Experience exp3{3};
     buffer.append(exp3);
-	
-	Experience exp4{4};
+
+    Experience exp4{4};
     buffer.append(exp4);
 
     std::vector<Experience> batch;
-	batch.reserve(2);
-	
-	// sample from the buffer
-	buffer.sample(2, batch, 42);
-	
-	ASSERT_EQ(batch.size(), 2);
+    batch.reserve(2);
 
+    // sample from the buffer
+    buffer.sample(2, batch, 42);
+
+    ASSERT_EQ(batch.size(), 2);
 }
-
-
-

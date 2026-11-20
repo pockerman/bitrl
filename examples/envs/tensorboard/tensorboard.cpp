@@ -17,8 +17,8 @@
  *class. Thus you will need to have PyTorch installed on the machine that you run the server.
  */
 
-#include "bitsim/bitsim_types.h"
 #include "bitrl/network/tensorboard_server.h"
+#include "bitsim/bitsim_types.h"
 #include "bitsim/utils/io/json_file_reader.h"
 
 #include <filesystem>

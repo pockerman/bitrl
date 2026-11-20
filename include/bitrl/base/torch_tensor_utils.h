@@ -9,17 +9,17 @@
 #include "bitrl/io/torch_state_dictionary_reader.h"
 #include <torch/torch.h>
 
+namespace cubeai
+{
+namespace torch_utils
+{
 
-namespace cubeai{
-namespace torch_utils {
-	
-	
 ///
 /// \brief create_mask. Create a mask from the given container. The
 /// contaier should contain values convertble to bool
 ///
-template<typename ContainerType>
-torch_tensor_t create_mask(const ContainerType& container){
+template <typename ContainerType> torch_tensor_t create_mask(const ContainerType &container)
+{
 
     return torch::tensor(container.data(), torch::dtype(torch::kBool));
 }
@@ -27,14 +27,15 @@ torch_tensor_t create_mask(const ContainerType& container){
 ///
 ///
 ///
-template<typename TorchNetType>
-void copy_parameters_to(/*TorchNetType& from,*/ TorchNetType& to, const std::string params_path){
+template <typename TorchNetType>
+void copy_parameters_to(/*TorchNetType& from,*/ TorchNetType &to, const std::string params_path)
+{
 
     // make parameters copying possible
     torch::autograd::GradMode::set_enabled(false);
 
     //
-    //from.save(params_path);
+    // from.save(params_path);
 
     auto new_params = TorchStateDictionaryReader(params_path); // implement this
     auto params = to->named_parameters(true /*recurse*/);
@@ -60,9 +61,8 @@ void copy_parameters_to(/*TorchNetType& from,*/ TorchNetType& to, const std::str
     torch::autograd::GradMode::set_enabled(true);
 }
 
-
-}
-}
+} // namespace torch_utils
+} // namespace cubeai
 
 #endif
 

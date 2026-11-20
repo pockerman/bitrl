@@ -1,7 +1,7 @@
 #include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 #include "bitrl/base/bitrl_config.h"
-#include "bitsim/bitsim_consts.h"
 #include "bitrl/envs/time_step_type.h"
+#include "bitsim/bitsim_consts.h"
 #include "bitsim/extern/nlohmann/json/json.hpp"
 
 #ifdef BITRL_DEBUG

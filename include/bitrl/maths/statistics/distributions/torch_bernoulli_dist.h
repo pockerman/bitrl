@@ -15,18 +15,20 @@
 
 #include <torch/torch.h>
 
-namespace bitrl {
-namespace maths {
-namespace stats {
+namespace bitrl
+{
+namespace maths
+{
+namespace stats
+{
 
 /**
  * @brief class  TorchBernoulliDist
  */
 class TorchBernoulliDist final : public TorchDistributionBase
 {
-public:
-
-     /**
+  public:
+    /**
      * @brief Default constructor
      *
      */
@@ -39,7 +41,7 @@ public:
      * to represent logits
      *
      */
-    TorchBernoulliDist(torch_tensor_t probs, bool do_build_from_logits=false);
+    TorchBernoulliDist(torch_tensor_t probs, bool do_build_from_logits = false);
 
     ///
     /// \brief ~TorchCategorical. Destructor
@@ -62,8 +64,7 @@ public:
     ///
     ///
     ///
-    virtual torch_tensor_t sample(c10::ArrayRef<int64_t> sample_shape = {})override;
-
+    virtual torch_tensor_t sample(c10::ArrayRef<int64_t> sample_shape = {}) override;
 
     /**
      * @brief build the distribution form logits
@@ -78,26 +79,24 @@ public:
     ///
     /// \brief get_logits
     ///
-    torch_tensor_t get_logits()const { return logits_; }
+    torch_tensor_t get_logits() const { return logits_; }
 
     ///
     /// \brief get_probs
     /// \return
     ///
-    torch_tensor_t get_probs()const { return probs_; }
+    torch_tensor_t get_probs() const { return probs_; }
 
-private:
-  torch_tensor_t probs_;
-  torch_tensor_t logits_;
-  torch_tensor_t param_;
-  int num_events_;
-
-
+  private:
+    torch_tensor_t probs_;
+    torch_tensor_t logits_;
+    torch_tensor_t param_;
+    int num_events_;
 };
 
-}
-}
-}
+} // namespace stats
+} // namespace maths
+} // namespace bitrl
 
 #endif // TORCH_BERNOULLI_DIST_H
 #endif

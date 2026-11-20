@@ -4,17 +4,19 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-namespace{
+namespace
+{
 
-using bitrl::real_t;
-using bitrl::uint_t;
 using bitrl::DynMat;
 using bitrl::DynVec;
+using bitrl::real_t;
+using bitrl::uint_t;
 using namespace bitrl::rl::policies;
 
-}
+} // namespace
 
-TEST(TestEpsilonGreedyPolicy, Test_1) {
+TEST(TestEpsilonGreedyPolicy, Test_1)
+{
 
     EpsilonGreedyPolicy policy(EpsilonGreedyPolicy::MIN_EPS);
 
@@ -23,24 +25,20 @@ TEST(TestEpsilonGreedyPolicy, Test_1) {
 
     ASSERT_EQ(policy.decay_option(), EpsilonDecayOption::NONE);
     ASSERT_EQ(max_idx, max_idx);
-
 }
 
-TEST(TestEpsilonGreedyPolicy, Test_2) {
+TEST(TestEpsilonGreedyPolicy, Test_2)
+{
 
-    EpsilonGreedyPolicy policy(EpsilonGreedyPolicy::MIN_EPS,
-                               42, EpsilonDecayOption::EXPONENTIAL,
-                               EpsilonGreedyPolicy::MIN_EPS,
-                               EpsilonGreedyPolicy::MAX_EPS,
+    EpsilonGreedyPolicy policy(EpsilonGreedyPolicy::MIN_EPS, 42, EpsilonDecayOption::EXPONENTIAL,
+                               EpsilonGreedyPolicy::MIN_EPS, EpsilonGreedyPolicy::MAX_EPS,
                                EpsilonGreedyPolicy::EPSILON_DECAY_FACTOR);
 
-
     ASSERT_EQ(policy.decay_option(), EpsilonDecayOption::EXPONENTIAL);
-
 }
 
-
-TEST(TestEpsilonGreedyPolicy, Test_3) {
+TEST(TestEpsilonGreedyPolicy, Test_3)
+{
 
     EpsilonGreedyPolicy policy(EpsilonGreedyPolicy::MIN_EPS);
 
@@ -51,29 +49,26 @@ TEST(TestEpsilonGreedyPolicy, Test_3) {
     auto max_idx = policy(vals);
 
     ASSERT_EQ(max_idx, max_idx);
-
 }
 
-TEST(TestEpsilonGreedyPolicy, Test_4) {
+TEST(TestEpsilonGreedyPolicy, Test_4)
+{
 
     EpsilonGreedyPolicy policy(EpsilonGreedyPolicy::MIN_EPS);
 
     DynMat<real_t> vals(3, 3);
-    vals(0,0) = 1.0;
-    vals(0,1) = 2.0;
-    vals(0,2) = 3.0;
+    vals(0, 0) = 1.0;
+    vals(0, 1) = 2.0;
+    vals(0, 2) = 3.0;
 
-    vals(1,0) = 1.0;
-    vals(1,1) = 2.0;
-    vals(1,2) = 3.0;
+    vals(1, 0) = 1.0;
+    vals(1, 1) = 2.0;
+    vals(1, 2) = 3.0;
 
-    vals(2,0) = 1.0;
-    vals(2,1) = 2.0;
-    vals(2,2) = 3.0;
+    vals(2, 0) = 1.0;
+    vals(2, 1) = 2.0;
+    vals(2, 2) = 3.0;
 
     auto max_idx = policy(vals, 0);
     ASSERT_EQ(max_idx, max_idx);
-
 }
-
-

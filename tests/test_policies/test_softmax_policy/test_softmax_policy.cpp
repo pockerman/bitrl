@@ -4,24 +4,24 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-namespace{
+namespace
+{
 
-using bitrl::real_t;
-using bitrl::uint_t;
 using bitrl::DynMat;
 using bitrl::DynVec;
+using bitrl::real_t;
+using bitrl::uint_t;
 using namespace bitrl::rl::policies;
 
-}
+} // namespace
 
-
-TEST(TestMaxTabularSoftmaxPolicy, Test_1) {
+TEST(TestMaxTabularSoftmaxPolicy, Test_1)
+{
 
     MaxTabularSoftmaxPolicy policy;
-    std::vector<real_t> vals{3.0, 2.0, 1.0 ,0.0};
+    std::vector<real_t> vals{3.0, 2.0, 1.0, 0.0};
     auto action = policy(vals);
     ASSERT_EQ(static_cast<uint_t>(0), action);
-
 }
 
 /*TEST(TestMaxTabularPolicy, Test_Operator_1) {

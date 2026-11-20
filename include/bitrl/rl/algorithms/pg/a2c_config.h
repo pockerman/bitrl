@@ -8,13 +8,17 @@
 #include <ostream>
 #include <string>
 
-namespace bitrl {
-namespace rl {
-namespace algos {
-namespace pg {
-	
-//using namespace rlenvscpp::consts;
-	
+namespace bitrl
+{
+namespace rl
+{
+namespace algos
+{
+namespace pg
+{
+
+// using namespace rlenvscpp::consts;
+
 ///
 /// \brief The A2CConfig struct. Configuration for A2CSolver class
 ///
@@ -40,34 +44,34 @@ struct A2CConfig
     /// \brief policy_loss_weight. How much weight to give
     /// on the policy loss when forming the global loss
     ///
-    real_t policy_loss_weight{ 1.0};
+    real_t policy_loss_weight{1.0};
 
     ///
-    /// 
+    ///
     ///
     real_t value_loss_weight{1.0};
-	
-	///
-	/// \brief Flag indicating whether to clip the policy grad
-	///
- 	bool clip_policy_grad{false};
-	
-	///
-	/// \brief Flag indicating whether to clip the critic grad
-	///
- 	bool clip_critic_grad{false};
+
+    ///
+    /// \brief Flag indicating whether to clip the policy grad
+    ///
+    bool clip_policy_grad{false};
+
+    ///
+    /// \brief Flag indicating whether to clip the critic grad
+    ///
+    bool clip_critic_grad{false};
 
     ///
     /// \brief The value to clip the gradient for the policy
     ///
     real_t max_grad_norm_policy{1.0};
-	
-	///
-	/// \brief The value to clip the gradient for the actor
-	///
-	real_t max_grad_norm_critic{1.0};
-	
-	///
+
+    ///
+    /// \brief The value to clip the gradient for the actor
+    ///
+    real_t max_grad_norm_critic{1.0};
+
+    ///
     /// \brief Number of training episodes
     ///
     uint_t n_episodes{100};
@@ -96,29 +100,28 @@ struct A2CConfig
     ///
     ///
     std::string save_model_path{""};
-	
-	///
+
+    ///
     /// \brief print
     /// \param out
     /// \return
     ///
-    std::ostream& print(std::ostream& out)const;
-	
-	///
-	/// \brief Load the configuration from the given json file
-	///
-	void load_from_json(const std::string& filename);
+    std::ostream &print(std::ostream &out) const;
+
+    ///
+    /// \brief Load the configuration from the given json file
+    ///
+    void load_from_json(const std::string &filename);
 };
 
-	
-inline
-std::ostream& operator<<(std::ostream& out, const A2CConfig& opts){
+inline std::ostream &operator<<(std::ostream &out, const A2CConfig &opts)
+{
     return opts.print(out);
 }
 
-}
-}
-}
-}
+} // namespace pg
+} // namespace algos
+} // namespace rl
+} // namespace bitrl
 
 #endif

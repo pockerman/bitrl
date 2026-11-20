@@ -13,8 +13,8 @@
 #include "bitrl/envs/gymnasium/gymnasium_vector_env_base.h"
 #include "bitrl/envs/space_type.h"
 #include "bitrl/envs/vector_time_step.h"
-#include "bitsim/extern/nlohmann/json/json.hpp"
 #include "bitrl/network/rest_rl_env_client.h"
+#include "bitsim/extern/nlohmann/json/json.hpp"
 
 #include <any>
 #include <string>
