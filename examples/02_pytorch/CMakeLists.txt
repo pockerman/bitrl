@@ -2,6 +2,7 @@
 bitrl_add_example(pytorch_tensors FILES config.json SMOKE_TEST)
 bitrl_add_example(pytorch_linear_regression FILES config.json SMOKE_TEST)
 bitrl_add_example(pytorch_custom_model FILES config.json)
+bitrl_add_example(pytorch_policy_network SMOKE_TEST)
 
 # needs CUDA, and libtorch built with it
 IF(USE_CUDA)

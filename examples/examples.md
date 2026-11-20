@@ -22,6 +22,7 @@ bitrl's deep reinforcement learning uses libtorch, PyTorch's C++ API.
 - \ref bitrl_example_pytorch_tensors
 - \ref bitrl_example_pytorch_linear_regression
 - \ref bitrl_example_pytorch_custom_model
+- \ref bitrl_example_pytorch_policy_network
 - \ref bitrl_example_cuda_vector_addition
 
 ## Experiments
