@@ -1,4 +1,4 @@
-\page cuberl_example_114 CubeRL Example 14: Value iteration on FrozenLake
+\page cuberl_example_14 CubeRL Example 14: Value iteration on FrozenLake
 
 
 

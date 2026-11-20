@@ -1,4 +1,4 @@
-# Example 8:  Working with CUDA 
+\page cuberl_example_8 CubeRL Example 8: Working with CUDA
 
 Deep learning methods often require excesive training times due to the amount of data that they have to process.
 One way to speed up such applications is to move aspects of the computation into GPU devices. _CubeRL_ can be configured
