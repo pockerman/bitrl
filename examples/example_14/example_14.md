@@ -1,6 +1,8 @@
 \page bitrl_example_14 bitrl Example 14: Value iteration on FrozenLake
 
+
 \ref bitrl_example_13 solved _FrozenLake_ with policy iteration. This example solves it with value iteration,
+
 and then plays the policy it finds. The environment is the 4x4 _FrozenLake_ from
 <a href="https://gymnasium.farama.org/environments/toy_text/frozen_lake/">Gymnasium</a>, made with
 `is_slippery` set to `false`, so every action moves the agent where it was meant to. It runs on the
