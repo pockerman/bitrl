@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://github.com/pockerman/bitrl/compare/v5.0.0...v5.1.0) (2026-11-20)
+
+
+### Features
+
+* mcts line following ([#196](https://github.com/pockerman/bitrl/issues/196)) ([e92a059](https://github.com/pockerman/bitrl/commit/e92a059485c611778c54b8563300134e3b5afaea))
+
 ## [5.0.0](https://github.com/pockerman/bitrl/compare/v4.0.0...v5.0.0) (2026-11-20)
 
 
