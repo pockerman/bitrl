@@ -2,3 +2,9 @@ include/bitrl/base/bitrl_version.h
 include/bitrl/base/bitrl_config.h
 build/
 install/
+
+# Webots controllers built in place: the executable has the name of its directory
+examples/*/controllers/*/*
+!examples/*/controllers/*/*.cpp
+!examples/*/controllers/*/*.h
+!examples/*/controllers/*/Makefile
