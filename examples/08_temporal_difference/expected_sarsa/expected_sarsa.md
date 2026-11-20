@@ -48,7 +48,7 @@ steps. In the directory it runs from, the example writes
 
 | File | What |
 | ---- | ---- |
-| `expected_sarsa_cliff_walking_v0.csv` | the value of every state and action, a column per action |
+| `expected_sarsa_cliff_walking_v1.csv` | the value of every state and action, a column per action |
 | `reward_per_itr.csv` | the total reward of every training episode |
 | `policy.csv` | the greedy policy, the action to take in each state |
 

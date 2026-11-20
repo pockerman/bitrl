@@ -12,7 +12,7 @@ namespace rl_example_9
 {
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
-const std::string SOLUTION_FILE = "sarsa_cliff_walking_v0.csv";
+const std::string SOLUTION_FILE = "sarsa_cliff_walking_v1.csv";
 const std::string REWARD_PER_ITR = "reward_per_itr.csv";
 const std::string POLICY = "policy.csv";
 
@@ -46,7 +46,7 @@ int main()
         BOOST_LOG_TRIVIAL(info) << "Creating environment...";
         std::unordered_map<std::string, std::any> options;
         std::unordered_map<std::string, std::any> reset_options;
-        env.make("v0", options, reset_options);
+        env.make("v1", options, reset_options);
         env.reset();
         BOOST_LOG_TRIVIAL(info) << "Done...";
 
