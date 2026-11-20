@@ -63,3 +63,31 @@ jobs:
 
       - name: Test
         run: ctest --test-dir build --output-on-failure --no-tests=error
+
+  docs:
+    # The example pages that the documentation site, bitrl_cuberl_docs, pulls
+    # in from here
+    name: Docs
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen
+
+      - name: Check the example pages
+        run: ./ci/check_docs.sh
+
+  format:
+    name: Format
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      # format.sh says which version to use; other versions format some code
+      # differently
+      - name: Install clang-format
+        run: pipx install clang-format==14.0.6
+
+      - name: Check the format
+        run: ./format.sh --check
