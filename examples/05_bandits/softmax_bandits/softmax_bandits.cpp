@@ -15,6 +15,7 @@
 #include "bitsim/utils/io/csv_file_writer.h"
 #include <algorithm>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include <numeric>
 #include <random>
@@ -33,6 +34,9 @@ const uint_t N = 10;
 
 // how many experiments to run
 const auto N_EXPERIMENTS = 500;
+
+// the largest reward an arm pays: 1, plus 1 for each of 10 trials that succeed
+const real_t MAX_REWARD = 11.0;
 
 // temperature parameter for soft-max
 const auto TAU = 0.7;
@@ -122,11 +126,18 @@ int main()
 
     for (uint_t i = 0; i < N; ++i)
     {
-        records[i].resize(2);
+        // the number of pulls of the arm, and its mean reward so far. The mean
+        // starts at the largest reward an arm can pay, 1 + 10: with a mean of
+        // 0, the first arm that paid would outweigh the untried ones so much
+        // that the policy would pull it for ever. Each untried arm looks as
+        // good as any can be, until it is tried
+        records[i] = {0.0, MAX_REWARD};
     }
 
     // the rewards we accumulate
     std::vector<real_t> rewards;
+    std::vector<uint_t> arms;
+    std::vector<real_t> pulled;
     rewards.reserve(N_EXPERIMENTS);
 
     // Will be used to obtain a seed for the random number engine
@@ -147,6 +158,8 @@ int main()
 
         auto r = get_reward(probs[choice]);
         update_record(records, choice, r);
+        arms.push_back(choice);
+        pulled.push_back(r);
 
         if (!rewards.empty())
         {
@@ -159,6 +172,22 @@ int main()
         }
 
         std::cout << "\tReward obtained: " << rewards[i] << std::endl;
+    }
+
+    // the arm and the reward of every pull, for examples/tools/bandit_gif.py,
+    // and the success probability of every arm, for drawing them
+    {
+        std::ofstream file("pulls.csv");
+        file << "# p";
+        for (auto p : probs)
+        {
+            file << "," << p;
+        }
+        file << "\n# method,pull,arm,reward\n";
+        for (uint_t i = 0; i < arms.size(); ++i)
+        {
+            file << "soft-max," << i << "," << arms[i] << "," << pulled[i] << "\n";
+        }
     }
 
     auto csv_writer = bitsim::utils::io::CSVWriter("rewards.csv", ',');

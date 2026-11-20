@@ -7,12 +7,15 @@
 
 #include <algorithm>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include <numeric>
 #include <random>
+#include <string>
 #include <tuple>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 namespace rl_example_2
 {
@@ -35,7 +38,32 @@ struct SamplingResult
 {
     real_t total_reward;
     DynVec<uint_t> lever_pulls;
+
+    // the arm of every pull and its reward, for examples/tools/bandit_gif.py
+    std::vector<uint_t> arms;
+    std::vector<real_t> rewards;
 };
+
+// Write the success probability of every arm, and the pulls of the methods,
+// a row per pull: method, pull, arm, reward
+void write_pulls(const std::string &filename, const std::vector<real_t> &p,
+                 const std::vector<std::pair<std::string, SamplingResult>> &results)
+{
+    std::ofstream file(filename);
+    file << "# p";
+    for (auto pi : p)
+    {
+        file << "," << pi;
+    }
+    file << "\n# method,pull,arm,reward\n";
+    for (const auto &[method, result] : results)
+    {
+        for (uint_t i = 0; i < result.arms.size(); ++i)
+        {
+            file << method << "," << i << "," << result.arms[i] << "," << result.rewards[i] << "\n";
+        }
+    }
+}
 
 SamplingResult run_epsilon_greedy(MultiArmedBandits &env, real_t eps)
 {
@@ -65,6 +93,8 @@ SamplingResult run_epsilon_greedy(MultiArmedBandits &env, real_t eps)
         // the estimate of an arm is the mean of its rewards so far
         result.lever_pulls[action] += 1;
         max_rewards[action] += (reward - max_rewards[action]) / result.lever_pulls[action];
+        result.arms.push_back(action);
+        result.rewards.push_back(reward);
 
         result.total_reward += reward;
     }
@@ -124,6 +154,8 @@ SamplingResult run_thompson_sampling(MultiArmedBandits &env)
         // reset the distribution
         beta_dists[max_item].reset(alpha, beta);
         result.lever_pulls[max_item] += 1;
+        result.arms.push_back(max_item);
+        result.rewards.push_back(reward);
     }
 
     return result;
@@ -196,6 +228,10 @@ int main()
         std::cout << "epsilon-greedy reward: " << epsilon_greedy_result.total_reward << std::endl;
         std::cout << "epsilon-greedy selected levers: " << epsilon_greedy_result.lever_pulls
                   << std::endl;
+
+        write_pulls(
+            "pulls.csv", p,
+            {{"Thompson sampling", thompson_result}, {"epsilon-greedy", epsilon_greedy_result}});
     }
 
     return 0;
