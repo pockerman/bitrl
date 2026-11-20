@@ -69,7 +69,7 @@ template <typename ActionTp, typename StateTp> class MCTSNodeBase
     /// \param cidx
     /// \return
     ///
-    std::shared_ptr<MCTSNodeBase> get_child(uint_t cidx) { return children_[cidx]; }
+    std::shared_ptr<MCTSNodeBase> get_child(uint_t cidx) const { return children_[cidx]; }
 
     ///
     /// \brief n_children

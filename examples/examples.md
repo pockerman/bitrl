@@ -32,6 +32,7 @@ These need bitsim built with Chrono.
 
 - \ref bitrl_example_chrono_smc_system
 - \ref bitrl_example_chrono_rl_env
+- \ref bitrl_example_mcts_line_following
 
 ## Multi-armed bandits
 
