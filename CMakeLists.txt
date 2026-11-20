@@ -29,6 +29,9 @@ ENDIF()
 
 MESSAGE(STATUS "bitrl lib Version ${BITRLLIB_VERSION}")
 
+INCLUDE(GNUInstallDirs)
+INCLUDE(CMakePackageConfigHelpers)
+
 IF(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
 	MESSAGE(FATAL_ERROR "In-source build is not possible. Choose an empty directory for build output.")
 ENDIF()
@@ -104,13 +107,64 @@ ENDFUNCTION()
 FILE(GLOB_RECURSE SRCS CONFIGURE_DEPENDS src/bitrl/*.cpp)
 
 ADD_LIBRARY(bitrllib SHARED ${SRCS})
+ADD_LIBRARY(bitrl::bitrl ALIAS bitrllib)
+
+SET_TARGET_PROPERTIES(bitrllib PROPERTIES
+	EXPORT_NAME bitrl
+	VERSION ${BITRLLIB_VERSION}
+	SOVERSION ${BITRLLIB_VERSION_MAJOR}
+	# The installed library finds the libraries it links to that are not in
+	# a system directory, libtorch for one
+	INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 TARGET_INCLUDE_DIRECTORIES(bitrllib PUBLIC
 	$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-	$<BUILD_INTERFACE:${BITRL_GENERATED_INCLUDE_DIR}>)
-TARGET_INCLUDE_DIRECTORIES(bitrllib SYSTEM PUBLIC ${TORCH_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(bitrllib PUBLIC bitsim::bitsim ${TORCH_LIBRARIES} TBB::tbb)
+	$<BUILD_INTERFACE:${BITRL_GENERATED_INCLUDE_DIR}>
+	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
+# TORCH_LIBRARIES holds the paths of some libtorch libraries on this machine.
+# The installed package links to libtorch's targets instead, which a project
+# that uses bitrl gets from its own find_package(Torch).
+TARGET_LINK_LIBRARIES(bitrllib PUBLIC
+	bitsim::bitsim
+	torch
+	torch_library
+	"$<BUILD_INTERFACE:${TORCH_LIBRARIES}>"
+	TBB::tbb)
 bitrl_set_warnings(bitrllib)
-INSTALL(TARGETS bitrllib LIBRARY DESTINATION lib)
+
+# -----------------------------------------------------------------------------
+# Install: the library, its headers and the CMake package, so that another
+# project can use bitrl with
+#     find_package(bitrl 5 REQUIRED)
+#     target_link_libraries(my_target PRIVATE bitrl::bitrl)
+# -----------------------------------------------------------------------------
+SET(BITRL_CMAKE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/bitrl)
+
+INSTALL(TARGETS bitrllib EXPORT bitrlTargets
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+INSTALL(DIRECTORY include/bitrl DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+	FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
+INSTALL(FILES
+	${BITRL_GENERATED_INCLUDE_DIR}/bitrl/base/bitrl_config.h
+	${BITRL_GENERATED_INCLUDE_DIR}/bitrl/base/bitrl_version.h
+	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/bitrl/base)
+
+INSTALL(EXPORT bitrlTargets NAMESPACE bitrl:: DESTINATION ${BITRL_CMAKE_INSTALL_DIR})
+
+CONFIGURE_PACKAGE_CONFIG_FILE(cmake/bitrlConfig.cmake.in
+	${PROJECT_BINARY_DIR}/bitrlConfig.cmake
+	INSTALL_DESTINATION ${BITRL_CMAKE_INSTALL_DIR})
+WRITE_BASIC_PACKAGE_VERSION_FILE(${PROJECT_BINARY_DIR}/bitrlConfigVersion.cmake
+	VERSION ${BITRLLIB_VERSION}
+	COMPATIBILITY SameMajorVersion)
+INSTALL(FILES
+	${PROJECT_BINARY_DIR}/bitrlConfig.cmake
+	${PROJECT_BINARY_DIR}/bitrlConfigVersion.cmake
+	DESTINATION ${BITRL_CMAKE_INSTALL_DIR})
 
 IF(ENABLE_EXAMPLES)
 	ADD_SUBDIRECTORY(examples)
