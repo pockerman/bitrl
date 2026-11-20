@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.1.1](https://github.com/pockerman/bitrl/compare/v5.1.0...v5.1.1) (2026-11-20)
+
+
+### Bug Fixes
+
+* **algorithms:** SARSA takes the next action from the next state ([#199](https://github.com/pockerman/bitrl/issues/199)) ([ce2d590](https://github.com/pockerman/bitrl/commit/ce2d5905593ed1fec410f853f11806b8d6912c8b))
+* expected sarsa ([#198](https://github.com/pockerman/bitrl/issues/198)) ([4647e91](https://github.com/pockerman/bitrl/commit/4647e9182bff2e6c7750436cb59098fa1026681d))
+
 ## [5.1.0](https://github.com/pockerman/bitrl/compare/v5.0.0...v5.1.0) (2026-11-20)
 
 
