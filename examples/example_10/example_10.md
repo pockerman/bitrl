@@ -41,7 +41,7 @@ In the implementation below, we will use the <a href="https://en.wikipedia.org/w
 but this need not be the case. Feel free to experiment with this.
 
 
-The class \ref bitrl::envs::bandits::MultiArmedBandits "bitrl::envs::bandits::MultiArmedBandits" conveniently wraps the multi-armed bandits
+The class \ref cuberl::envs::bandits::MultiArmedBandits "cuberl::envs::bandits::MultiArmedBandits" conveniently wraps the multi-armed bandits
 framework into an environment we can utilise.
 
 
@@ -53,7 +53,7 @@ framework into an environment we can utilise.
 #include "cubeai/rl/policies/epsilon_greedy_policy.h"
 #include "bitrl/utils/maths/statistics/distributions/beta_dist.h"
 #include "bitrl/utils/maths/statistics/distributions/bernoulli_dist.h"
-#include "bitrl/envs/multi_armed_bandits/multi_armed_bandits.h"
+#include "cuberl/envs/multi_armed_bandits/multi_armed_bandits.h"
 
 #include <cmath>
 #include <utility>
@@ -76,7 +76,7 @@ using cuberl::DynVec;
 using cuberl::rl::policies::EpsilonGreedyPolicy;
 using bitrl::utils::maths::stats::BetaDist;
 using bitrl::utils::maths::stats::BernoulliDist;
-using bitrl::envs::bandits::MultiArmedBandits;
+using cuberl::envs::bandits::MultiArmedBandits;
 
 // Number of episodes to play
 uint_t N_EPISODES = 1000;

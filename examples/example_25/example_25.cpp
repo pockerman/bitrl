@@ -13,8 +13,8 @@
 #include "cuberl/utils/torch_adaptor.h"
 
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/box2d/lunar_lander_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/box2d/lunar_lander_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <torch/torch.h>
@@ -42,9 +42,9 @@ using cuberl::rl::algos::pg::PPOSolver;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
 using cuberl::utils::pytorch::TorchAdaptor;
-	using bitrl::network::RESTRLEnvClient;
+	using cuberl::network::RESTRLEnvClient;
 
-typedef  bitrl::envs::gymnasium::LunarLanderContinuousEnv env_type;
+typedef  cuberl::envs::gymnasium::LunarLanderContinuousEnv env_type;
 
 /// Layer sizes for Actor
 const uint_t L1 = 8;

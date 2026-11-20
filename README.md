@@ -16,6 +16,24 @@ The following is an indicative list of examples.
 - <a href="examples/intro/intro_example_7/intro_example_7.md">Importance sampling</a>
 - <a href="examples/intro/intro_example_8/intro_example_8.md">Vector addition with CUDA</a>
 
+### Environments
+
+- <a href="examples/envs/grid_world/grid_world.md">A grid world</a>
+- <a href="examples/envs/connect2/connect2.md">Connect2</a>
+- <a href="examples/envs/gymnasium_part_1/gymnasium_part_1.md">Using Gymnasium environments (Part 1)</a>
+- <a href="examples/envs/gymnasium_part_2/gymnasium_part_2.md">Using Gymnasium environments (Part 2)</a>
+- <a href="examples/envs/gymnasium_part_3/gymnasium_part_3.md">Using Gymnasium environments (Part 3)</a>
+- <a href="examples/envs/gym_walk/gym_walk.md">Using GymWalk environment</a>
+- <a href="examples/envs/acrobot_vector_env/acrobot_vector_env.md">A vector environment: Acrobot</a>
+- <a href="examples/envs/tensorboard/tensorboard.md">Logging to Tensorboard</a>
+
+### Robotics environments
+
+These need _bitsim_ built with Chrono.
+
+- <a href="examples/robotics/chrono_smc_system/chrono_smc_system.md">A bitsim robot as an RL environment</a>
+- <a href="examples/robotics/chrono_rl_env/chrono_rl_env.md">Create an RL environment using Chrono</a>
+
 ### Reinforcement learning
 
 - <a href="https://pockerman-py-cubeai.readthedocs.io/en/latest/ExamplesCpp/rl/rl_example_0.html">DummyAgent on  ```MountainCar-v0```</a>

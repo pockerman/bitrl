@@ -3,8 +3,8 @@
 #include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
 #include "cuberl/rl/policies/uniform_discrete_policy.h"
 
-#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "bitrl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
 
 #include <iostream>
 
@@ -20,8 +20,8 @@ using cuberl::rl::algos::dp::IterativePolicyEvalutationSolver;
 using cuberl::rl::algos::dp::IterativePolicyEvalConfig;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
-using bitrl::envs::gymnasium::FrozenLake;
-using bitrl::network::RESTRLEnvClient;
+using cuberl::envs::gymnasium::FrozenLake;
+using cuberl::network::RESTRLEnvClient;
 typedef FrozenLake<4> env_type;
 
 }

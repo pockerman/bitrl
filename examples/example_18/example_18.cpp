@@ -12,7 +12,7 @@
 #include "cuberl/maths/vector_math.h"
 
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/envs/grid_world/grid_world_env.h"
+#include "cuberl/envs/grid_world/grid_world_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <torch/torch.h>
@@ -38,7 +38,7 @@ using cuberl::torch_tensor_t;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
 using cuberl::rl::policies::EpsilonGreedyPolicy;
-using bitrl::envs::grid_world::Gridworld;
+using cuberl::envs::grid_world::Gridworld;
 using bitrl::utils::io::CSVWriter;
 
 constexpr uint_t l1 = 64;

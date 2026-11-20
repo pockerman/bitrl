@@ -4,8 +4,8 @@
 #include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
 
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
 
 #include <iostream>
 #include <iostream>
@@ -28,8 +28,8 @@ using cuberl::rl::algos::td::QLearningConfig;
 using cuberl::rl::policies::EpsilonDecayOption;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
-using bitrl::network::RESTRLEnvClient;
-typedef  bitrl::envs::gymnasium::CliffWorld env_type;
+using cuberl::network::RESTRLEnvClient;
+typedef  cuberl::envs::gymnasium::CliffWorld env_type;
 
 }
 

@@ -6,7 +6,7 @@
 #ifdef USE_PYTORCH
 
 #include "cuberl/base/cuberl_types.h"
-#include "bitrl/utils/experience_buffer.h"
+#include "cuberl/utils/experience_buffer.h"
 
 
 #include <vector>
@@ -30,7 +30,7 @@ struct ReinforceMonitor
 					   torch_tensor_t // log prob
 					   > experience_tuple_type;
 
-	typedef bitrl::utils::ExperienceBuffer<experience_tuple_type> experience_buffer_type;
+	typedef cuberl::utils::ExperienceBuffer<experience_tuple_type> experience_buffer_type;
 	
 	/// monitor 
     std::vector<real_t> rewards;

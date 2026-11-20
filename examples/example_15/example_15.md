@@ -1,7 +1,7 @@
 \page cuberl_example_15 CubeRL Example 15: SARSA on CliffWorld
 
 In this example we will apply the SARSA algorithm on <a href="https://gymnasium.farama.org/environments/toy_text/cliff_walking/">CliffWorld</a>.
-This is a Gymnasium-based environment implemented in \ref bitrl::envs::gymnasium::CliffWorld "bitrl::envs::gymnasium::CliffWorld" class.
+This is a Gymnasium-based environment implemented in \ref cuberl::envs::gymnasium::CliffWorld "cuberl::envs::gymnasium::CliffWorld" class.
 All Gymnasium-based environments require an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a> server to run.
 
 
@@ -67,8 +67,8 @@ Below is the driver code for this example.
 #include "cuberl/rl/algorithms/td/sarsa.h"
 #include "cuberl/rl/policies/epsilon_greedy_policy.h"
 #include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <iostream>

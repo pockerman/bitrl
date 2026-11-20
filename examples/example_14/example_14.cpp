@@ -3,8 +3,8 @@
 #include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
 
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/network/rest_rl_env_client.h"
-#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "cuberl/network/rest_rl_env_client.h"
+#include "cuberl/envs/gymnasium/toy_text/frozen_lake_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <tuple>
@@ -23,8 +23,8 @@ using cuberl::rl::algos::dp::ValueIterationConfig;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
 
-using bitrl::envs::gymnasium::FrozenLake;
-using bitrl::network::RESTRLEnvClient;
+using cuberl::envs::gymnasium::FrozenLake;
+using cuberl::network::RESTRLEnvClient;
 
 // the environment to use
 typedef FrozenLake<4> env_type;

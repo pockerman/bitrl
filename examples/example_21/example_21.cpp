@@ -14,9 +14,9 @@
 #include "cuberl/utils/torch_adaptor.h"
 #include "cuberl/maths/vector_math.h"
 
-#include "bitrl/utils/experience_buffer.h"
+#include "cuberl/utils/experience_buffer.h"
 #include "bitrl/utils/io/csv_file_writer.h"
-#include "bitrl/envs/grid_world/grid_world_env.h"
+#include "cuberl/envs/grid_world/grid_world_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <torch/torch.h>
@@ -43,8 +43,8 @@ using cuberl::torch_tensor_t;
 using cuberl::rl::RLSerialAgentTrainer;
 using cuberl::rl::RLSerialTrainerConfig;
 using cuberl::rl::policies::EpsilonGreedyPolicy;
-using bitrl::utils::ExperienceBuffer;
-using bitrl::envs::grid_world::Gridworld;
+using cuberl::utils::ExperienceBuffer;
+using cuberl::envs::grid_world::Gridworld;
 using bitrl::utils::io::CSVWriter;
 
 	
@@ -109,7 +109,7 @@ typedef env_type::time_step_type time_step_type;
 typedef std::tuple<std::vector<float_t>, uint_t, float_t,
 	               std::vector<float_t>, uint_t> experience_tuple_type;
 
-typedef bitrl::utils::ExperienceBuffer<experience_tuple_type> experience_buffer_type;
+typedef cuberl::utils::ExperienceBuffer<experience_tuple_type> experience_buffer_type;
 typedef env_type::state_type state_type;
 
 
@@ -176,7 +176,7 @@ int main(){
 
 		// initialize the environment using random mode
 		std::unordered_map<std::string, std::any> options;
-        options["mode"] = std::any(bitrl::envs::grid_world::GridWorldInitType::RANDOM);
+        options["mode"] = std::any(cuberl::envs::grid_world::GridWorldInitType::RANDOM);
 
     	std::unordered_map<std::string, std::any> reset_options;
         env.make("v0", options, reset_options);

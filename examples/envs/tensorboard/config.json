@@ -1,0 +1,9 @@
+{
+"experiment_dict": "intro_example_2_experiments/",
+"experiment_id": "1",
+"input_size": 1,
+"output_size": 1,
+"num_epochs": 60,
+"lr":0.001,
+"log_path":"/home/alex/qi3/cuberl/examples/intro/intro_example_2/tsb_log"
+}
