@@ -24,6 +24,7 @@
 #include <atomic>
 #include <map>
 #include <memory>
+#include <random>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -148,6 +149,11 @@ struct board
 {
     uint_t board_size;
     uint_t seed = 42;
+
+    // draws the random boards: seeded once, so that every reset in the random
+    // and player modes gives a new board, and the sequence of boards is the
+    // same from run to run
+    std::mt19937 generator{42};
     std::map<board_component_type, board_piece> components;
     std::map<std::string, board_mask> masks;
     bool is_board_init = {false};
@@ -199,7 +205,7 @@ struct board
     ///
     /// \brief build_player_mode
     ///
-    void build_player_mode(uint_t seed);
+    void build_player_mode();
 
     ///
     /// \brief check if the given move is valid and
@@ -448,7 +454,9 @@ void Gridworld<side_size_>::make(const std::string &version,
     if (const auto seed = options.find("seed"); seed != options.end())
     {
         seed_ = std::any_cast<uint_t>(seed->second);
+        board_.seed = seed_;
     }
+    board_.generator.seed(board_.seed);
 
     if (const auto noise_factor = options.find("noise_factor"); noise_factor != options.end())
     {
