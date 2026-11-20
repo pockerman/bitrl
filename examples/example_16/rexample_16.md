@@ -2,7 +2,7 @@
 
 In this example, we will apply another temporal difference learning algorithm namely <a href="https://en.wikipedia.org/wiki/Q-learning">Q-learning</a>
 on _CliffWorld_.  This is a Gymnasium-based environment implemented in \ref cuberl::envs::gymnasium::CliffWorld "cuberl::envs::gymnasium::CliffWorld" class.
-We used this environment in example \ref cuberl_example_13.
+We used this environment in \ref cuberl_example_15.
 
 Q-learning, just like SARSA, is a model-free reinforcement learning algorithm that learns how good an action is in a given state, 
 without needing a model of the environment.
