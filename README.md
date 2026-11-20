@@ -8,13 +8,14 @@ The following is an indicative list of examples.
 
 ### Introductory
 
-- <a href="examples/intro/intro_example_1/intro_example_1.md">Monte Carlo integration</a>
-- <a href="examples/intro/intro_example_2/intro_example_2.md">Using PyTorch C++ API Part 1</a>
-- <a href="examples/intro/intro_example_3/intro_example_3.md">Using PyTorch C++ API Part 2</a>
-- <a href="examples/intro/intro_example_4/intro_example_4.md">Using PyTorch C++ API Part 3</a>
-- <a href="examples/intro/intro_example_6/intro_example_6.md">Toy Markov chain</a>
-- <a href="examples/intro/intro_example_7/intro_example_7.md">Importance sampling</a>
-- <a href="examples/intro/intro_example_8/intro_example_8.md">Vector addition with CUDA</a>
+- <a href="examples/example_1/example_1.md">Monte Carlo integration</a>
+- <a href="examples/example_2/example_2.md">Using the PyTorch C++ API (Part 1)</a>
+- <a href="examples/example_3/example_3.md">Using the PyTorch C++ API (Part 2)</a>
+- <a href="examples/example_4/example_4.md">Using the PyTorch C++ API (Part 3)</a>
+- <a href="examples/example_6/example_6.md">Toy Markov chain</a>
+- <a href="examples/example_7/example_7.md">Importance sampling</a>
+- <a href="examples/example_8/example_8.md">Vector addition with CUDA</a>
+- <a href="examples/example_9/example_9.cpp">Discounted returns</a>
 
 ### Environments
 
@@ -36,24 +37,20 @@ These need _bitsim_ built with Chrono.
 
 ### Reinforcement learning
 
-- <a href="https://pockerman-py-cubeai.readthedocs.io/en/latest/ExamplesCpp/rl/rl_example_0.html">DummyAgent on  ```MountainCar-v0```</a>
-- <a href="examples/rl/rl_example_2/rl_example_2.md">Multi-armed bandits</a>
-- <a href="examples/rl/rl_example_6/rl_example_6.cpp">Iterative policy evaluation on ```FrozenLake```</a>
-- <a href="examples/rl/rl_example_7/rl_example_7.cpp">Policy iteration on ```FrozenLake```</a>
-- <a href="examples/rl/rl_example_8/rl_example_8.md">Value iteration on ```FrozenLake```</a>
-- <a href="examples/rl/rl_example_9/rl_example_9.md">SARSA on ```CliffWalking```</a>
-- <a href="examples/rl/rl_example_10/rl_example_10.md">Q-learning on ```CliffWalking```</a>
-- <a href="examples/rl/rl_example_11/rl_example_11.md">A2C on ```CartPole```</a>
-- <a href="examples/rl/rl_example_12/rl_example_12.md">DQN on ```Gridworld```</a>
-- <a href="examples/rl/rl_example_15/rl_example_15.md">DQN on ```Gridworld``` with experience replay</a>
-- <a href="examples/rl/rl_example_13/rl_example_13.md">REINFORCE algorithm on ```CartPole```</a>
-- <a href="examples/rl/rl_example_14/rl_example_14.cpp">Expected SARSA on ```CliffWalking```</a>
-- <a href="examples/example_15/example_15.cpp">Approximate Monte Carlo on ```MountainCar```</a>
-- <a href="examples/rl_example_16/rl_example_16.md">Monte Carlo tree search on ```Taxi```</a>
-- <a href="examples/rl/rl_example_18.cpp">Double Q-learning on  ```CartPole``` </a>
-- <a href="examples/rl/rl_example_19/rl_example_19.cpp">First visit Monte Carlo on ```FrozenLake```</a>
-- <a href="examples/rl/rl_example_20/rl_example_20.md">REINFORCE algorithm with baseline on ```CartPole```</a>
-- <a href="examples/rl/rl_example_22/rl_example_22.md">PPO on ```LunarLander```</a>
+- <a href="examples/example_10/example_10.md">Multi-armed bandits</a>
+- <a href="examples/example_11/example_11.cpp">Multi-armed bandits with a soft-max policy</a>
+- <a href="examples/example_12/example_12.cpp">Iterative policy evaluation on ```FrozenLake```</a>
+- <a href="examples/example_13/example_13.md">Policy iteration on ```FrozenLake```</a>
+- <a href="examples/example_14/example_14.md">Value iteration on ```FrozenLake```</a>
+- <a href="examples/example_15/example_15.md">SARSA on ```CliffWorld```</a>
+- <a href="examples/example_16/rexample_16.md">Q-learning on ```CliffWorld```</a>
+- <a href="examples/example_17/example_17.md">A2C on ```CartPole```</a>
+- <a href="examples/example_18/example_18.md">DQN on ```Gridworld```</a>
+- <a href="examples/example_21/example_21.md">DQN on ```Gridworld``` with experience replay</a>
+- <a href="examples/example_19/example_19.md">REINFORCE on ```CartPole```</a>
+- <a href="examples/example_23/example_23.md">REINFORCE with baseline on ```CartPole```</a>
+- <a href="examples/example_22/example_22.cpp">First visit Monte Carlo on ```FrozenLake```</a>
+- <a href="examples/example_25/example_25.md">PPO on ```LunarLander```</a>
 
 ## Installation
 
