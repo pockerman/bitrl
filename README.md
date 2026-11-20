@@ -78,6 +78,7 @@ environments run on the <a href="https://github.com/pockerman/bitrl-rest-api">bi
 - <a href="examples/08_temporal_difference/sarsa/sarsa.md">SARSA on ```CliffWalking```</a>
 - <a href="examples/08_temporal_difference/q_learning/q_learning.md">Q-learning on ```CliffWalking```</a>
 - <a href="examples/08_temporal_difference/expected_sarsa/expected_sarsa.md">Expected SARSA on ```CliffWalking```</a>
+- <a href="examples/08_temporal_difference/double_q_learning/double_q_learning.md">Double Q-learning on ```CliffWalking```</a>
 - <a href="examples/09_deep_rl/dqn/dqn.md">DQN on a grid world</a>
 - <a href="examples/09_deep_rl/dqn_experience_replay/dqn_experience_replay.md">DQN with experience replay</a>
 - <a href="examples/09_deep_rl/reinforce/reinforce.md">REINFORCE on ```CartPole```</a>

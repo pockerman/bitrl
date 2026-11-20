@@ -63,6 +63,7 @@ Keeping what training learns, and logging how it went.
 - \ref bitrl_example_sarsa
 - \ref bitrl_example_q_learning
 - \ref bitrl_example_expected_sarsa
+- \ref bitrl_example_double_q_learning
 
 ## Deep reinforcement learning
 

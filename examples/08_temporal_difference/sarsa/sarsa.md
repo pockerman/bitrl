@@ -62,6 +62,19 @@ The SARSA algorithm is implemented in the \ref bitrl::rl::algos::td::SarsaSolver
 
 Below is the driver code for this example. 
 
+## The learned policy
+
+| ![SARSA on CliffWalking](sarsa.gif) |
+|:--:|
+| **The greedy policy SARSA learned, played in Gymnasium: return -17.** |
+
+The greedy policy of the table keeps two rows away from the cliff, along the top of the grid, and takes 17 steps. SARSA learns the value of the policy it follows, which explores: a random step from next to the cliff falls off it, so the cells along the edge are worth less to it than the ones further up. The
+example saves it to `policy.csv`; `examples/tools/episode_gif.py` plays it to make the GIF:
+
+@code{.sh}
+python examples/tools/episode_gif.py --env CliffWalking-v1 --policy policy.csv --out sarsa.gif
+@endcode
+
 \include sarsa/sarsa.cpp
 
 

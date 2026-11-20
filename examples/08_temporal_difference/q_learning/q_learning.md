@@ -70,6 +70,19 @@ The Q-learning algorithm is implemented in the \ref bitrl::rl::algos::td::QLearn
 #include <boost/log/trivial.hpp>
 @endcode
 
+## The learned policy
+
+| ![Q-learning on CliffWalking](q_learning.gif) |
+|:--:|
+| **The greedy policy Q-learning learned, played in Gymnasium: return -13.** |
+
+The greedy policy of the table walks along the edge of the cliff, the shortest path, in 13 steps. Q-learning learns the value of the greedy policy, whatever the policy it explores with does, so the risk of a random step off the edge does not count against the path. The
+example saves it to `policy.csv`; `examples/tools/episode_gif.py` plays it to make the GIF:
+
+@code{.sh}
+python examples/tools/episode_gif.py --env CliffWalking-v1 --policy policy.csv --out q_learning.gif
+@endcode
+
 \include q_learning/q_learning.cpp
 
 

@@ -2,3 +2,4 @@
 bitrl_add_example(sarsa)
 bitrl_add_example(q_learning)
 bitrl_add_example(expected_sarsa)
+bitrl_add_example(double_q_learning)
