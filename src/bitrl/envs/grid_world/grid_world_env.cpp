@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include <set>
+#include <stdexcept>
 #include <string>
 #include <utility>
 
@@ -179,12 +180,10 @@ board_state_type board::init_board(uint_t board_s, GridWorldInitType init_type)
         build_player_mode(seed);
         break;
     }
-#ifdef BITRL_DEBUG
-    default:
+    case GridWorldInitType::INVALID_TYPE:
     {
-        assert(false && "Invalid initialization mode");
+        throw std::logic_error("Invalid initialization mode");
     }
-#endif
     }
 
     if (const auto is_valid_board = validate_board(*this); !is_valid_board)
@@ -226,12 +225,10 @@ board_state_type board::step(GridWorldActionType action)
         check_and_move(0, 1);
         break;
     }
-#ifdef BITRL_DEBUG
-    default:
+    case GridWorldActionType::INVALID_TYPE:
     {
-        assert(false && "Invalid move");
+        throw std::logic_error("Invalid move");
     }
-#endif
     }
 
     return get_state();

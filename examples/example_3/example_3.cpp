@@ -115,6 +115,9 @@ std::string train_model()
     catch(...){
         std::cout<<"Unknown exception occurred"<<std::endl;
     }
+
+    // Training failed; there is no model to test
+    return {};
 }
 
 void test_model(std::string& model_filename)
@@ -165,6 +168,9 @@ int main() {
     // set seed for torch
     torch::manual_seed(42);
     auto model_filename = train_model();
+    if(model_filename.empty()){
+        return 1;
+    }
 
     test_model(model_filename);
 
