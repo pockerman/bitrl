@@ -53,7 +53,7 @@ ENDIF()
 
 # bitrl brings Boost, Eigen and, depending on how it was built, Chrono,
 # OpenCV and MQTT. bitrl_WITH_* say which.
-FIND_PACKAGE(bitrl 2 REQUIRED)
+FIND_PACKAGE(bitrl 3 REQUIRED)
 MESSAGE(STATUS "Found bitrl ${bitrl_VERSION} in ${bitrl_DIR}")
 MESSAGE(STATUS "bitrl built with Chrono: ${bitrl_WITH_CHRONO}, OpenCV: ${bitrl_WITH_OPENCV}, MQTT: ${bitrl_WITH_MQTT}")
 
