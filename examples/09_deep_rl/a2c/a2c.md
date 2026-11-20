@@ -169,6 +169,24 @@ CriticNetImpl::evaluate(const StateTp& state){
 @endcode
 
 
+## The learned policy
+
+| ![A2C balancing the pole](a2c.gif) |
+|:--:|
+| **The greedy policy A2C learned: 500 steps.** |
+
+A2C trained for 1000 episodes of at most 500 steps, about 400,000 steps in all, which took 393 s, most of it in the
+HTTP requests to the server. The mean length of its training episodes, 250 at a time, went 202, 470, 481, 495: by
+the second 250 episodes it keeps the pole up almost always.
+
+After training the example plays one episode with the greedy policy, the action of the larger probability, from
+the seed the environment resets with, and writes its actions to `episode.csv`. It kept the pole up for all 500
+steps. `examples/tools/episode_gif.py` replays the actions in Gymnasium to make the GIF:
+
+@code{.sh}
+python examples/tools/episode_gif.py --env CartPole-v1 --actions episode.csv --fps 50 --out a2c.gif
+@endcode
+
 ## The driver code
 
 The driver code for this tutorial is shown below. 

@@ -18,6 +18,7 @@
 #include <torch/torch.h>
 
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <unordered_map>
 
@@ -48,7 +49,7 @@ const uint_t L1 = 4;
 const uint_t L2 = 128;
 const uint_t L3 = 2;
 const real_t LEARNING_RATE = 0.01;
-const auto N_EPISODES = 2000;
+const auto N_EPISODES = 1000;
 
 // create the Action network
 class ActorNetImpl : public torch::nn::Module
@@ -201,6 +202,29 @@ int main()
         RLSerialAgentTrainer<env_type, solver_type> trainer(config, solver);
 
         auto info = trainer.train(env);
+
+        // one episode with the greedy policy, the action of the largest
+        // probability, from the seed the environment resets with; its actions
+        // are for examples/tools/episode_gif.py
+        {
+            torch::NoGradGuard no_grad;
+            policy->eval();
+            std::ofstream episode("episode.csv");
+            episode << "# seed " << env_type::DEFAULT_ENV_SEED << "\n";
+            auto time_step = env.reset();
+            bitrl::real_t total = 0.0;
+            for (bitrl::uint_t step = 0; step < 500 && !time_step.done(); ++step)
+            {
+                const auto state = torch::tensor(time_step.observation(), torch::kFloat32);
+                const auto action =
+                    static_cast<bitrl::uint_t>(policy->forward(state).argmax().item<int64_t>());
+                episode << action << "\n";
+                time_step = env.step(action);
+                total += time_step.reward();
+            }
+            std::cout << "The greedy policy kept the pole up for " << total << " steps"
+                      << std::endl;
+        }
 
         BOOST_LOG_TRIVIAL(info) << "Training info...";
         BOOST_LOG_TRIVIAL(info) << info;
