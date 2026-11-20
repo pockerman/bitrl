@@ -1,10 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.20 FATAL_ERROR)
 MESSAGE(STATUS "Using CMake ${CMAKE_VERSION}")
 
-SET(BITRLLIB_VERSION_MAJOR 2)
-SET(BITRLLIB_VERSION_MINOR 1)
-SET(BITRLLIB_VERSION_PATCH 0)
-SET(BITRLLIB_VERSION "${BITRLLIB_VERSION_MAJOR}.${BITRLLIB_VERSION_MINOR}.${BITRLLIB_VERSION_PATCH}")
+# version.txt is the only place the version is kept. release-please bumps it
+# when a release is made; do not edit it by hand
+FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" BITRLLIB_VERSION LIMIT_COUNT 1)
+IF(NOT BITRLLIB_VERSION MATCHES "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$")
+	MESSAGE(FATAL_ERROR "version.txt must hold a version such as 1.2.3, not '${BITRLLIB_VERSION}'")
+ENDIF()
+SET(BITRLLIB_VERSION_MAJOR ${CMAKE_MATCH_1})
+SET(BITRLLIB_VERSION_MINOR ${CMAKE_MATCH_2})
+SET(BITRLLIB_VERSION_PATCH ${CMAKE_MATCH_3})
 
 # -----------------------------------------------------------------------------
 # Options. Configure with -D<OPTION>=ON|OFF

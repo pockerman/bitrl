@@ -1,0 +1,26 @@
+name: Release
+
+# On every push to master release-please keeps a release PR up to date. The PR
+# bumps version.txt and CHANGELOG.md from the conventional commits merged since
+# the last release. Merging it tags the release and creates the GitHub release.
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: googleapis/release-please-action@v5
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
