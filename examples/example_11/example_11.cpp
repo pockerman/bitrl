@@ -158,7 +158,9 @@ int main() {
 
     auto csv_writer = bitsim::utils::io::CSVWriter("rewards.csv", ',');
 
+    csv_writer.open();
     csv_writer.write_column_vector(rewards);
+    csv_writer.close();
 
    return 0;
 }
