@@ -1,10 +1,21 @@
 #ifndef MCTS_NODE_H
 #define MCTS_NODE_H
 
-#include "cubeai/base/cubeai_types.h"
-#include <memory>
+#include "bitrl/base/bitrl_config.h"
+#include "bitrl/base/bitrl_types.h"
 
-namespace cubeai
+#include <algorithm>
+#include <cmath>
+#include <limits>
+#include <memory>
+#include <random>
+#include <vector>
+
+#ifdef BITRL_DEBUG
+#include <cassert>
+#endif
+
+namespace bitrl
 {
 namespace rl
 {
@@ -69,7 +80,7 @@ template <typename ActionTp, typename StateTp> class MCTSNodeBase
     ///
     /// \brief shuffle_children
     ///
-    void shuffle_children() noexcept;
+    template <typename RandomEngine> void shuffle_children(RandomEngine &engine);
 
     ///
     /// \brief explored_children
@@ -122,7 +133,7 @@ template <typename ActionTp, typename StateTp> class MCTSNodeBase
     /// \brief get_action
     /// \return
     ///
-    uint_t get_action() const noexcept { return action_; }
+    action_type get_action() const noexcept { return action_; }
 
     ///
     /// \brief parent
@@ -175,7 +186,7 @@ void MCTSNodeBase<ActionTp, StateTp>::add_child(
     std::shared_ptr<MCTSNodeBase<ActionTp, StateTp>> child)
 {
 
-#ifdef CUBEAI_DEBUG
+#ifdef BITRL_DEBUG
     assert(child != nullptr && "Cannot add null children");
 #endif
 
@@ -183,7 +194,8 @@ void MCTSNodeBase<ActionTp, StateTp>::add_child(
 }
 
 template <typename ActionTp, typename StateTp>
-void MCTSNodeBase<ActionTp, StateTp>::shuffle_children() noexcept
+template <typename RandomEngine>
+void MCTSNodeBase<ActionTp, StateTp>::shuffle_children(RandomEngine &engine)
 {
 
     if (children_.empty())
@@ -191,7 +203,7 @@ void MCTSNodeBase<ActionTp, StateTp>::shuffle_children() noexcept
         return;
     }
 
-    std::random_shuffle(children_.begin(), children_.end());
+    std::shuffle(children_.begin(), children_.end(), engine);
 }
 
 template <typename ActionTp, typename StateTp>
@@ -236,11 +248,25 @@ MCTSNodeBase<ActionTp, StateTp>::max_ucb_child(real_t temperature) const
 template <typename ActionTp, typename StateTp>
 real_t MCTSNodeBase<ActionTp, StateTp>::ucb(real_t temperature) const
 {
-    return win_pct() + temperature * std::sqrt(std::log(parent_->total_visits()) / total_visits_);
+    // a node that was never visited is explored first
+    if (total_visits_ == 0)
+    {
+        return std::numeric_limits<real_t>::max();
+    }
+
+    // the root has no parent to compare its visits with
+    if (!parent_)
+    {
+        return win_pct();
+    }
+
+    return win_pct() +
+           temperature * std::sqrt(std::log(static_cast<real_t>(parent_->total_visits())) /
+                                   static_cast<real_t>(total_visits_));
 }
 
 } // namespace mc
 } // namespace algos
 } // namespace rl
-} // namespace cubeai
+} // namespace bitrl
 #endif

@@ -6,6 +6,7 @@
  * */
 #include "bitrl/base/bitrl_config.h"
 #include "bitrl/base/bitrl_types.h"
+#include "bitrl/maths/vector_math.h"
 #include "bitrl/rl/epsilon_decay_options.h"
 
 #ifdef BITRL_DEBUG
@@ -15,12 +16,19 @@
 #include <map>
 #include <random>
 #include <tuple>
+#include <vector>
 
 namespace bitrl::rl
 {
 
 namespace
 {
+
+template <typename StateTp>
+DynVec<real_t> get_table_values_(const DynMat<real_t> &table, const StateTp &state)
+{
+    return table.row(state);
+}
 
 template <typename StateTp>
 const DynVec<real_t> &get_table_values_(const std::map<StateTp, DynVec<real_t>> &table,
@@ -79,6 +87,17 @@ struct with_decay_epsilon_option_mixin
     EpsilonDecayOptionType decay_op;
 
     ///
+    /// \brief The generator of the random numbers. seed_generator() seeds it
+    /// with seed; a new generator in every call would give the same number
+    ///
+    mutable std::mt19937 generator{};
+
+    ///
+    /// \brief seed_generator. Seeds the generator with seed
+    ///
+    void seed_generator() { generator.seed(seed); }
+
+    ///
     /// \brief decay_eps
     /// \param episode_index
     /// \return
@@ -95,20 +114,18 @@ template <typename VectorType>
 uint_t with_decay_epsilon_option_mixin::choose_action_index(const VectorType &values) const
 {
 
-    std::mt19937 gen(this->with_decay_epsilon_option_mixin::seed);
-
     // generate a number in [0, 1]
     std::uniform_real_distribution<> real_dist_(0.0, 1.0);
 
-    if (real_dist_(gen) > this->with_decay_epsilon_option_mixin::eps)
+    if (real_dist_(generator) > this->with_decay_epsilon_option_mixin::eps)
     {
         // select greedy action with probability 1 - epsilon
-        return arg_max(values);
+        return maths::arg_max(values);
     }
 
-    std::uniform_int_distribution<> distrib_(0,
-                                             this->with_decay_epsilon_option_mixin::n_actions - 1);
-    return distrib_(gen);
+    std::uniform_int_distribution<uint_t> distrib_(
+        0, this->with_decay_epsilon_option_mixin::n_actions - 1);
+    return distrib_(generator);
 }
 
 ///
@@ -166,6 +183,16 @@ template <> struct with_double_q_table_mixin<DynMat<real_t>>
                     real_t init_value);
 
     ///
+    /// \brief initialize. Sizes both tables to n_states x n_actions and sets
+    /// every entry to init_value
+    ///
+    void initialize(state_type n_states, action_type n_actions, real_t init_value)
+    {
+        q_table_1 = DynMat<value_type>::Constant(n_states, n_actions, init_value);
+        q_table_2 = DynMat<value_type>::Constant(n_states, n_actions, init_value);
+    }
+
+    ///
     ///
     ///
     template <int index> value_type get(const state_type &state, const action_type action) const;
@@ -175,7 +202,7 @@ template <> struct with_double_q_table_mixin<DynMat<real_t>>
 };
 
 template <>
-with_double_q_table_mixin<DynMat<real_t>>::value_type
+inline with_double_q_table_mixin<DynMat<real_t>>::value_type
 with_double_q_table_mixin<DynMat<real_t>>::get<1>(const state_type &state,
                                                   const action_type action) const
 {
@@ -183,7 +210,7 @@ with_double_q_table_mixin<DynMat<real_t>>::get<1>(const state_type &state,
 }
 
 template <>
-with_double_q_table_mixin<DynMat<real_t>>::value_type
+inline with_double_q_table_mixin<DynMat<real_t>>::value_type
 with_double_q_table_mixin<DynMat<real_t>>::get<2>(const state_type &state,
                                                   const action_type action) const
 {
@@ -191,17 +218,17 @@ with_double_q_table_mixin<DynMat<real_t>>::get<2>(const state_type &state,
 }
 
 template <>
-void with_double_q_table_mixin<DynMat<real_t>>::set<1>(const state_type &state,
-                                                       const action_type action,
-                                                       const value_type value)
+inline void with_double_q_table_mixin<DynMat<real_t>>::set<1>(const state_type &state,
+                                                              const action_type action,
+                                                              const value_type value)
 {
     q_table_1(state, action) = value;
 }
 
 template <>
-void with_double_q_table_mixin<DynMat<real_t>>::set<2>(const state_type &state,
-                                                       const action_type action,
-                                                       const value_type value)
+inline void with_double_q_table_mixin<DynMat<real_t>>::set<2>(const state_type &state,
+                                                              const action_type action,
+                                                              const value_type value)
 {
     q_table_2(state, action) = value;
 }
@@ -318,10 +345,11 @@ uint_t with_double_q_table_max_action_mixin::max_action(const TableTp &q1_table,
                                                         const StateTp &state, uint_t /*n_actions*/)
 {
 
-    const auto &vals1 = get_table_values_(q1_table, state);
-    const auto &vals2 = get_table_values_(q2_table, state);
-    auto sum = vals1 + vals2;
-    return 1; // blaze::argmax(sum);
+    const DynVec<real_t> sum =
+        get_table_values_(q1_table, state) + get_table_values_(q2_table, state);
+    Eigen::Index idx = 0;
+    sum.maxCoeff(&idx);
+    return static_cast<uint_t>(idx);
 }
 
 template <typename TableTp, typename StateTp>
@@ -329,8 +357,10 @@ uint_t with_double_q_table_max_action_mixin::max_action(const TableTp &q_table,
                                                         const StateTp &state, uint_t /*n_actions*/)
 {
 
-    const auto &vals = get_table_values_(q_table, state);
-    return 1; // blaze::argmax(vals);
+    const DynVec<real_t> vals = get_table_values_(q_table, state);
+    Eigen::Index idx = 0;
+    vals.maxCoeff(&idx);
+    return static_cast<uint_t>(idx);
 }
 
 } // namespace bitrl::rl

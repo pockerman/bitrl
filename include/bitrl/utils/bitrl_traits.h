@@ -1,7 +1,7 @@
 #ifndef CUBEAI_TRAITS_H
 #define CUBEAI_TRAITS_H
 
-#include "cubeai/base/cubeai_types.h"
+#include "bitrl/base/bitrl_types.h"
 
 #include <vector>
 

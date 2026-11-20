@@ -1,7 +1,7 @@
 #ifndef POLICY_TYPE_H
 #define POLICY_TYPE_H
 
-namespace cubeai
+namespace bitrl
 {
 namespace rl
 {
@@ -18,6 +18,6 @@ enum class PolicyType
 
 } // namespace rl
 
-} // namespace cubeai
+} // namespace bitrl
 
 #endif // POLICY_TYPE_H

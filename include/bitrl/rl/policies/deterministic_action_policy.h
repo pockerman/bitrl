@@ -1,10 +1,11 @@
 #ifndef DETERMINISTIC_ACTION_POLICY_H
 #define DETERMINISTIC_ACTION_POLICY_H
 
-#include "cubeai/utils/cubeai_concepts.h"
+#include "bitrl/utils/bitrl_concepts.h"
 #include <type_traits>
+#include <utility>
 
-namespace cubeai
+namespace bitrl
 {
 namespace rl
 {
@@ -42,13 +43,13 @@ template <utils::concepts::float_or_integral_vector PolicyValuesType, typename S
 requires(std::is_integral<StateType>::value)
     DeterministicActionPolicy<PolicyValuesType, StateType>::DeterministicActionPolicy(
         policy_values_type &&values)
-    : policy_values_(values)
+    : policy_values_(std::move(values))
 {
 }
 
 } // namespace policies
 
 } // namespace rl
-} // namespace cubeai
+} // namespace bitrl
 
 #endif // DETERMINISTIC_ACTION_POLICY_H

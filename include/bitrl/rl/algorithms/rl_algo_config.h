@@ -1,7 +1,7 @@
 #ifndef RL_ALGO_INPUT_H
 #define RL_ALGO_INPUT_H
 
-#include "bitrl/base/cubeai_types.h"
+#include "bitrl/base/bitrl_types.h"
 
 namespace bitrl
 {

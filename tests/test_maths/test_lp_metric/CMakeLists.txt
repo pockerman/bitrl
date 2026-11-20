@@ -1,0 +1,1 @@
+bitrl_add_test(test_lp_metric)
