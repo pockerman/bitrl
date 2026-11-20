@@ -176,12 +176,11 @@ CriticNetImpl::evaluate(const StateTp& state){
 | **The greedy policy A2C learned: 500 steps.** |
 
 A2C trained for 1000 episodes of at most 500 steps, about 400,000 steps in all, which took 393 s, most of it in the
-HTTP requests to the server. The mean length of its training episodes, 250 at a time, went 202, 470, 481, 495: by
-the second 250 episodes it keeps the pole up almost always.
+HTTP requests to the server. The mean length of its training episodes, 250 at a time, went 337, 465, 376, 486: by
+the second 250 episodes it keeps the pole up most of the time.
 
 After training the example plays one episode with the greedy policy, the action of the larger probability, from
-the seed the environment resets with, and writes its actions to `episode.csv`. It kept the pole up for all 500
-steps. `examples/tools/episode_gif.py` replays the actions in Gymnasium to make the GIF:
+the next seed, and writes its actions and the seed to `episode.csv`. It kept the pole up for all 500 steps. `examples/tools/episode_gif.py` replays the actions in Gymnasium to make the GIF:
 
 @code{.sh}
 python examples/tools/episode_gif.py --env CartPole-v1 --actions episode.csv --fps 50 --out a2c.gif

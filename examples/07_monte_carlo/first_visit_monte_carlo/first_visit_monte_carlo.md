@@ -47,7 +47,7 @@ returns and stay noisy; with the decaying rate they average more of them and set
 |:--:|
 | **The value estimates every 200 episodes, with the greedy actions of the estimates.** |
 
-After 10000 episodes the start has an estimate of 0.019 and the cell left of the goal 0.42, against the true
+After 10000 episodes the start has an estimate of 0.017 and the cell left of the goal 0.49, against the true
 values of 0.014 and 0.44 that \ref bitrl_example_iterative_policy_evaluation computes: estimates from sampled
 returns, close but not exact. The GIF is made with
 

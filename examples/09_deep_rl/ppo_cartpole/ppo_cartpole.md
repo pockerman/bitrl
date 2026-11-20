@@ -8,7 +8,7 @@ episode ends when the pole falls over or the cart leaves the track, or after 500
 
 | ![The greedy policy balancing the pole](ppo_cartpole.gif) |
 |:--:|
-| **The policy PPO learned, playing greedily: it keeps the pole up for all 500 steps.** |
+| **The policy PPO learned, playing greedily: it keeps the pole up for 339 of the 500 steps.** |
 
 ## PPO
 
@@ -50,15 +50,17 @@ The mean return of the training episodes, a hundred at a time:
 
 | Episodes | Mean return |
 | -------- | ----------- |
-| 1-100 | 151 |
-| 101-200 | 222 |
-| 201-300 | 456 |
-| 301-400 | 469 |
-| 401-500 | 461 |
+| 1-100 | 273 |
+| 101-200 | 283 |
+| 201-300 | 357 |
+| 301-400 | 434 |
+| 401-500 | 450 |
 
-The training took 136 s, most of it in the HTTP requests to the server, one per step. After training the example
-plays an episode with the greedy policy, the action with the larger logit, and writes its actions to `episode.csv`;
-the policy kept the pole up for all 500 steps. `examples/tools/episode_gif.py` replays them in Gymnasium to make the
+Every episode starts from the next seed, so from a different state. The training took 119 s, most of it in the
+HTTP requests to the server, one per step. After training the example plays an episode with the greedy policy, the
+action with the larger logit, from the next seed, and writes the seed and its actions to `episode.csv`; the policy
+kept the pole up for 339 of the 500 steps. The returns were still rising when training stopped: more episodes
+would help. `examples/tools/episode_gif.py` replays them in Gymnasium to make the
 GIF above:
 
 @code{.sh}
