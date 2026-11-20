@@ -1,0 +1,1 @@
+bitrl_add_example(example_26)

@@ -1,25 +1,16 @@
-#ifndef MC_TREE_SEARCH_BASE_H
-#define MC_TREE_SEARCH_BASE_H
+#ifndef MC_TREE_SEARCH_SOLVER_H
+#define MC_TREE_SEARCH_SOLVER_H
 
-#include "cubeai/base/cubeai_types.h"
-#include "cubeai/rl/algorithms/mc/mcts_node.h"
-#include "cubeai/rl/algorithms/rl_algo_config.h"
-#include "cubeai/rl/algorithms/rl_algorithm_base.h"
-#include "cubeai/rl/episode_info.h"
-#include "cubeai/utils/iteration_mixin.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/algorithms/mc/mcts_node.h"
 
-#include "cubeai/base/cubeai_config.h"
-
-#ifdef CUBEAI_DEBUG
-#include <cassert>
-#endif
-
-#include <algorithm>
-#include <cmath>
+#include <concepts>
 #include <memory>
+#include <random>
+#include <utility>
 #include <vector>
 
-namespace cubeai
+namespace bitrl
 {
 namespace rl
 {
@@ -29,262 +20,243 @@ namespace mc
 {
 
 ///
-/// \brief The MCTreeSearchConfig struct
+/// \brief What MCTSSolver needs from an environment: it is copied for every
+/// simulation, has a fixed number of discrete actions, and step() returns a
+/// time step with the reward and whether the episode ended
 ///
-struct MCTreeSearchConfig : public RLAlgoConfig
+template <typename EnvTp>
+concept mcts_env_concept = std::copy_constructible<EnvTp> &&
+    requires(EnvTp env, typename EnvTp::action_type a)
 {
-    uint_t max_tree_depth = 1000;
-    real_t temperature = 1.0;
+    typename EnvTp::state_type;
+    {
+        env.n_actions()
+        } -> std::convertible_to<uint_t>;
+    {
+        env.step(a).reward()
+        } -> std::convertible_to<real_t>;
+    {
+        env.step(a).done()
+        } -> std::convertible_to<bool>;
 };
 
 ///
-/// \brief MCTreeSearchBase.
+/// \brief The default rollout policy of MCTSSolver: every action with the same
+/// probability
 ///
-template <typename EnvTp,
-          typename NodeTp = MCTSNodeBase<typename EnvTp::action_type, typename EnvTp::state_type>>
-class MCTSSolver final : public RLSolverBase<EnvTp>
+struct UniformRolloutPolicy
+{
+    template <typename EnvTp>
+    typename EnvTp::action_type operator()(const EnvTp &env, std::mt19937 &generator) const
+    {
+        std::uniform_int_distribution<uint_t> action(0, static_cast<uint_t>(env.n_actions()) - 1);
+        return static_cast<typename EnvTp::action_type>(action(generator));
+    }
+};
+
+///
+/// \brief The configuration of MCTSSolver
+///
+struct MCTSConfig
+{
+    ///
+    /// \brief How many simulations plan() runs before it picks an action
+    ///
+    uint_t n_simulations{200};
+
+    ///
+    /// \brief The most steps a simulation looks ahead, in the tree and in the
+    /// rollout after it
+    ///
+    uint_t max_depth{20};
+
+    ///
+    /// \brief How much UCB favours children that were visited less. It has the
+    /// units of the returns, so scale it with them
+    ///
+    real_t temperature{1.0};
+
+    ///
+    /// \brief The discount factor of the returns
+    ///
+    real_t gamma{1.0};
+
+    ///
+    /// \brief The seed of the generator of the random rollouts and of the order
+    /// the children are tried in
+    ///
+    uint_t seed{42};
+};
+
+///
+/// \brief Monte Carlo tree search, with UCB to pick the children (UCT).
+///
+/// MCTS plans from the state the environment is in. plan(env) grows a tree of
+/// action sequences from that state. Every simulation copies the environment
+/// and
+/// - walks down the tree, always to the child with the largest upper
+///   confidence bound, until it reaches a node with a child it has not tried;
+/// - adds that child, by taking its action;
+/// - goes on with the actions of the rollout policy until the episode ends or
+///   the simulation is max_depth steps deep;
+/// - adds to the score of every node on its path the reward of the step into
+///   the node and the discounted return that followed it.
+/// plan() then returns the action of the child of the root that was visited
+/// most. The environment the simulations run in can be a model of the world
+/// the agent acts in, as long as it is fast to copy and to step.
+///
+/// The rollout policy is called as policy(env, generator), with the
+/// environment of the simulation and the solver's random generator, and
+/// returns an action. Random actions, the default, need no knowledge of the
+/// problem; a policy that plays sensibly gives returns that say much more
+/// about the node the rollout starts from.
+///
+template <mcts_env_concept EnvTp, typename RolloutPolicy = UniformRolloutPolicy> class MCTSSolver
 {
   public:
-    static_assert(std::is_default_constructible<typename EnvTp::action_type>::value,
-                  "Action type is not default constructible");
-
-    static_assert(std::is_default_constructible<typename EnvTp::state_type>::value,
-                  "State type is not default constructible");
-
-    ///
-    /// \brief env_type
-    ///
     typedef EnvTp env_type;
+    typedef typename env_type::action_type action_type;
+    typedef typename env_type::state_type state_type;
+    typedef MCTSNodeBase<action_type, state_type> node_type;
 
-    ///
-    /// \brief node_type
-    ///
-    typedef NodeTp node_type;
-
-    ///
-    /// \brief The time step type
-    ///
-    typedef typename env_type::time_step_type time_step_type;
-
-    ///
-    /// \brief MCTreeSearchBase
-    /// \param config
-    ///
-    MCTSSolver(MCTreeSearchConfig config);
-
-    ///
-    /// \brief actions_before_training_begins. Execute any actions the
-    /// algorithm needs before starting the iterations
-    ///
-    virtual void actions_before_training_begins(env_type &) override final {}
-
-    ///
-    /// \brief actions_after_training_ends. Actions to execute after
-    /// the training iterations have finisehd
-    ///
-    virtual void actions_after_training_ends(env_type &) override final {}
-
-    ///
-    /// \brief actions_before_training_episode
-    ///
-    virtual void actions_before_episode_begins(env_type &, uint_t /*episode_idx*/) {}
-
-    ///
-    /// \brief actions_after_training_episode
-    ///
-    virtual void actions_after_episode_ends(env_type &, uint_t /*episode_idx*/,
-                                            const EpisodeInfo & /*einfo*/)
+    explicit MCTSSolver(const MCTSConfig &config, RolloutPolicy rollout_policy = RolloutPolicy())
+        : config_(config), rollout_policy_(std::move(rollout_policy)), generator_(config.seed)
     {
     }
 
     ///
-    /// \brief on_episode Do one on_episode of the algorithm
+    /// \brief plan. Runs config().n_simulations simulations from copies of env
+    /// and returns the action that is best from the state env is in. env is
+    /// not changed
     ///
-    virtual EpisodeInfo on_training_episode(env_type &, uint_t /*episode_idx*/) override final;
+    action_type plan(const env_type &env);
 
     ///
-    /// \brief simulate_node
-    /// \param node
+    /// \brief The root of the tree of the last plan(), or null before the first
     ///
-    time_step_type simulate_node(std::shared_ptr<node_type> node, env_type &env);
+    std::shared_ptr<const node_type> root() const noexcept { return root_; }
 
-    ///
-    /// \brief expand_node
-    /// \param node
-    ///
-    void expand_node(std::shared_ptr<node_type> node, env_type &env);
+    const MCTSConfig &config() const noexcept { return config_; }
 
-    ///
-    /// \brief backprop
-    ///
-    void backprop(std::shared_ptr<node_type> node);
-
-    ///
-    /// \brief max_depth_tree
-    /// \return
-    ///
-    uint_t max_depth_tree() const noexcept { return max_depth_tree_; }
-
-  protected:
-    ///
-    /// \brief itr_mix_
-    ///
-    IterationMixin itr_mix_;
-
-    ///
-    /// \brief root_
-    ///
+  private:
+    MCTSConfig config_;
+    RolloutPolicy rollout_policy_;
+    std::mt19937 generator_;
     std::shared_ptr<node_type> root_;
 
-    ///
-    /// \brief max_depth_tree_
-    ///
-    uint_t max_depth_tree_;
-
-    ///
-    /// \brief temperature_
-    ///
-    real_t temperature_;
+    void simulate_(const env_type &env);
+    void expand_(const std::shared_ptr<node_type> &node, uint_t n_actions);
 };
 
-template <typename EnvTp, typename NodeTp>
-MCTSSolver<EnvTp, NodeTp>::MCTSSolver(MCTreeSearchConfig config)
-    : RLSolverBase(config.n_episodes, config.tolerance),
-      itr_mix_(config.n_itrs_per_episode, config.render_episode), root_(nullptr),
-      max_depth_tree_(config.max_tree_depth), temperature_(config.temperature)
+template <mcts_env_concept EnvTp, typename RolloutPolicy>
+typename MCTSSolver<EnvTp, RolloutPolicy>::action_type
+MCTSSolver<EnvTp, RolloutPolicy>::plan(const env_type &env)
 {
-}
+    root_ = std::make_shared<node_type>(nullptr, action_type{});
+    expand_(root_, static_cast<uint_t>(env.n_actions()));
 
-template <typename EnvTp, typename NodeTp>
-EpisodeInfo MCTSSolver<EnvTp, NodeTp>::on_training_episode(env_type &env, uint_t /*episode_idx*/)
-{
-
-    auto best_reward = std::numeric_limits<real_t>::min();
-
-    // on every episode we reset
-    // we may want to reset the copy here
-    auto time_step = env.reset();
-
-    while (this->itr_mix_.continue_iterations())
+    for (uint_t i = 0; i < config_.n_simulations; ++i)
     {
-
-        sum_reward_ = 0.0;
-        actions_.clear();
-
-        auto node = this->root_;
-
-        auto time_step = this->simulate_node(node, env_copy);
-
-        auto terminal = time_step.done();
-
-        if (!terminal)
-        {
-            // expand the node if this is not
-            // terminal
-            this->expand_node(node, env_copy);
-        }
-
-        // creating exhaustive list of actions
-        while (!terminal)
-        {
-            auto action = env_copy.sample_action();
-            auto new_time_step = env_copy.step(action);
-            sum_reward_ += new_time_step.reward();
-            actions_.push_back(action);
-
-            if (actions_.size() > this->max_depth_tree())
-            {
-                sum_reward_ -= 100;
-                break;
-            }
-        }
-
-        // do some book keeping retaining the best reward value and actions
-        if (best_reward < sum_reward_)
-        {
-            best_reward = sum_reward_;
-            best_actions_ = actions_;
-        }
-
-        // backpropagating in MCTS for assigning reward value to a node.
-        this->backprop(node);
+        simulate_(env);
     }
 
-    // step in the best actions
-    sum_reward_ = 0.;
-    for (auto action : best_actions_)
+    // the most visited child is the most reliable choice; ties go to the
+    // larger mean return
+    std::shared_ptr<node_type> best;
+    for (uint_t c = 0; c < root_->n_children(); ++c)
     {
-        auto time_step = this->env.step(action);
-
-        sum_reward_ += time_step.reward();
-        if (time_step.done())
+        auto child = root_->get_child(c);
+        if (!best || child->total_visits() > best->total_visits() ||
+            (child->total_visits() == best->total_visits() && child->total_visits() > 0 &&
+             child->win_pct() > best->win_pct()))
         {
-            break;
+            best = child;
         }
     }
-
-    best_rewards_.push_back(sum_reward_);
-}
+    return best->get_action();
 }
 
-template <typename EnvTp, typename NodeTp>
-void MCTSSolver<EnvTp, NodeTp>::backprop(std::shared_ptr<node_type> node)
+template <mcts_env_concept EnvTp, typename RolloutPolicy>
+void MCTSSolver<EnvTp, RolloutPolicy>::expand_(const std::shared_ptr<node_type> &node,
+                                               uint_t n_actions)
 {
-
-    while (node)
+    for (uint_t a = 0; a < n_actions; ++a)
     {
-
-        node->update_visits();
-        node->update_total_score(sum_reward_);
-        node = node->parent();
+        node->add_child(node, static_cast<action_type>(a));
     }
+    // try the children in a random order, so that ties do not always go to
+    // the first action
+    node->shuffle_children(generator_);
 }
 
-template <typename Env, typename NodeTp>
-void MCTSSolver<Env>::expand_node(std::shared_ptr<node_type> node, env_type &env)
+template <mcts_env_concept EnvTp, typename RolloutPolicy>
+void MCTSSolver<EnvTp, RolloutPolicy>::simulate_(const env_type &env)
 {
+    env_type sim(env);
+    const auto n_actions = static_cast<uint_t>(sim.n_actions());
 
-    for (uint_t a = 0; a < env.n_actions(); ++a)
+    // the nodes the simulation goes through, from the root, and the reward
+    // of the step into each of them
+    std::vector<std::shared_ptr<node_type>> path{root_};
+    std::vector<real_t> rewards;
+    bool done = false;
+
+    // Selection: down the tree while every child of the node was tried
+    auto node = root_;
+    while (!done && path.size() <= config_.max_depth && node->has_children() &&
+           node->n_explored_children() == node->n_children())
     {
-        node->add_child(node, a);
+        node = node->max_ucb_child(config_.temperature);
+        auto time_step = sim.step(node->get_action());
+        rewards.push_back(time_step.reward());
+        done = time_step.done();
+        path.push_back(node);
     }
 
-    node->shuffle_children();
-}
-
-template <typename Env, typename NodeTp>
-typename MCTSSolver<Env, NodeTp>::time_step_type
-MCTSSolver<Env, NodeTp>::simulate_node(std::shared_ptr<node_type> node, env_type &env)
-{
-
-    auto time_step = MCTSSolver<Env, NodeTp>::time_step_type();
-    while (node->has_children())
+    // Expansion: try a child the node has not tried yet
+    if (!done && path.size() <= config_.max_depth)
     {
-
-        if (node->n_explored_children() < node->n_children())
+        if (!node->has_children())
         {
-
-            auto child = node->get_child(node->n_explored_children());
-            node->update_explored_children();
-            node = child;
+            expand_(node, n_actions);
         }
-        else
-        {
-
-            node = node->max_ucb_child(this->temperature_);
-        }
-
-        time_step = env.step(node->get_action());
-        sum_reward_ += time_step.reward();
-        actions_.push_back(node->get_action());
+        auto child = node->get_child(node->n_explored_children());
+        node->update_explored_children();
+        auto time_step = sim.step(child->get_action());
+        rewards.push_back(time_step.reward());
+        done = time_step.done();
+        path.push_back(child);
     }
 
-    return time_step;
+    // Rollout: the rollout policy to the end of the episode or of the look ahead
+    real_t rollout_return = 0.0;
+    real_t discount = 1.0;
+    for (auto depth = path.size() - 1; !done && depth < config_.max_depth; ++depth)
+    {
+        auto time_step = sim.step(rollout_policy_(sim, generator_));
+        rollout_return += discount * time_step.reward();
+        discount *= config_.gamma;
+        done = time_step.done();
+    }
+
+    // Backpropagation: every node scores the reward of the step into it and
+    // the discounted return that followed, which is what its parent compares
+    // its children by. After the last node comes the rollout
+    real_t g = rollout_return;
+    for (auto i = path.size(); i-- > 1;)
+    {
+        g = rewards[i - 1] + config_.gamma * g;
+        path[i]->update_visits();
+        path[i]->update_total_score(g);
+    }
+    // the root scores the whole return of the simulation
+    root_->update_visits();
+    root_->update_total_score(g);
 }
 
-}
-}
-}
-}
+} // namespace mc
+} // namespace algos
+} // namespace rl
+} // namespace bitrl
 
-#endif // MC_TREE_SEARCH_BASE_H
+#endif // MC_TREE_SEARCH_SOLVER_H

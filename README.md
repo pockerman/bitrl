@@ -44,6 +44,7 @@ These need _bitsim_ built with Chrono.
 - <a href="examples/example_14/example_14.md">Value iteration on ```FrozenLake```</a>
 - <a href="examples/example_15/example_15.md">SARSA on ```CliffWorld```</a>
 - <a href="examples/example_16/example_16.md">Q-learning on ```CliffWorld```</a>
+- <a href="examples/example_26/example_26.md">Expected SARSA on ```CliffWorld```</a>
 - <a href="examples/example_17/example_17.md">A2C on ```CartPole```</a>
 - <a href="examples/example_18/example_18.md">DQN on ```Gridworld```</a>
 - <a href="examples/example_21/example_21.md">DQN on ```Gridworld``` with experience replay</a>
