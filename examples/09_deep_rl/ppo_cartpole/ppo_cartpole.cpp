@@ -184,8 +184,9 @@ int main()
 
         // one episode with the greedy policy, its actions for the GIF
         std::ofstream episode("episode.csv");
-        episode << "# seed " << SEED << "\n";
         auto time_step = env.reset();
+        // the seed the episode started from, for the GIF to start from it too
+        episode << "# seed " << env.last_reset_seed() << "\n";
         real_t total = 0.0;
         for (uint_t step = 0; step < MAX_STEPS && !time_step.done(); ++step)
         {

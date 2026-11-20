@@ -196,8 +196,9 @@ int main()
             torch::NoGradGuard no_grad;
             policy->eval();
             std::ofstream episode("episode.csv");
-            episode << "# seed " << env_type::DEFAULT_ENV_SEED << "\n";
             auto time_step = env.reset();
+            // the seed the episode started from, for the GIF to start from it too
+            episode << "# seed " << env.last_reset_seed() << "\n";
             bitrl::real_t total = 0.0;
             for (bitrl::uint_t step = 0; step < 500 && !time_step.done(); ++step)
             {

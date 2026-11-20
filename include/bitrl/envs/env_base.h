@@ -3,6 +3,7 @@
 
 #include "bitrl/base/bitrl_types.h"
 #include "bitsim/bitsim_consts.h"
+#include "bitsim/utils/std_map_utils.h"
 
 #include <any>
 #include <string>
@@ -35,7 +36,7 @@ template <typename TimeStepType, typename SpaceType> class EnvBase : public Spac
                   "SpaceType should be default constructible");
 
     /** @brief Default seed used in reset() if none provided */
-    static const uint_t DEFAULT_ENV_SEED = 42;
+    static constexpr uint_t DEFAULT_ENV_SEED = 42;
 
     /** @brief Alias for the type returned when stepping the environment */
     typedef TimeStepType time_step_type;
@@ -141,6 +142,14 @@ template <typename TimeStepType, typename SpaceType> class EnvBase : public Spac
      */
     std::string version() const noexcept { return version_; }
 
+    /**
+     * @brief The seed of the latest reset(), for the environments that take one.
+     * The first reset after make() uses the "seed" reset option, or
+     * DEFAULT_ENV_SEED, and every reset after it the next seed, so that the
+     * episodes start differently and a run is the same every time.
+     */
+    uint_t last_reset_seed() const noexcept { return last_reset_seed_; }
+
   protected:
     /**
      * @brief Constructor (protected — for subclassing only).
@@ -177,6 +186,19 @@ template <typename TimeStepType, typename SpaceType> class EnvBase : public Spac
         reset_options_ = options;
     }
 
+    /**
+     * @brief The seed for the next reset: the "seed" reset option, or
+     * DEFAULT_ENV_SEED, plus the number of resets since make()
+     */
+    uint_t next_reset_seed_()
+    {
+        const uint_t seed = reset_options_.contains("seed")
+                                ? bitsim::utils::resolve<uint_t>("seed", reset_options_)
+                                : DEFAULT_ENV_SEED;
+        last_reset_seed_ = seed + n_resets_++;
+        return last_reset_seed_;
+    }
+
     /** @brief Mark environment as not created */
     void invalidate_is_created_flag_() noexcept { is_created_ = false; }
 
@@ -197,6 +219,8 @@ template <typename TimeStepType, typename SpaceType> class EnvBase : public Spac
     std::unordered_map<std::string, std::any> make_options_;  ///< Copied options from make()
     std::unordered_map<std::string, std::any> reset_options_; ///< Copied options from make()
     time_step_type current_state_;                            ///< Latest environment time step
+    uint_t n_resets_{0};                                      ///< The resets since make()
+    uint_t last_reset_seed_{DEFAULT_ENV_SEED};                ///< The seed of the latest reset
 };
 
 template <typename TimeStepType, typename SpaceType>
@@ -237,6 +261,7 @@ void EnvBase<TimeStepType, SpaceType>::make(
     const std::unordered_map<std::string, std::any> &reset_options)
 {
     version_ = version;
+    n_resets_ = 0;
     make_options_ = make_options;
     reset_options_ = reset_options;
 }
