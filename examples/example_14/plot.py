@@ -6,6 +6,7 @@ import csv
 import math
 import numpy as np
 from pathlib import Path
+import sys
 
 
 def plot_state_values(v, title:str) -> None:
@@ -62,9 +63,7 @@ def main(filename):
        
 		
 if __name__ == '__main__':
-  main("/home/alex/qi3/cuberl/build/examples/rl/rl_example_8/value_iteration_frozen_lake_v1.csv")
-  plot_rewards("/home/alex/qi3/cuberl/build/examples/rl/rl_example_8/reward_per_itr.csv")
-	
-	
-
-
+    # Run it from the directory the example wrote its files to, or pass that directory
+    out_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('.')
+    main(out_dir / "value_iteration_frozen_lake_v1.csv")
+    plot_rewards(out_dir / "reward_per_itr.csv")

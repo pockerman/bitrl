@@ -1,147 +1,90 @@
 \page cuberl_example_14 CubeRL Example 14: Value iteration on FrozenLake
 
+\ref cuberl_example_13 solved _FrozenLake_ with policy iteration. This example solves it with value iteration,
+and then plays the policy it finds. The environment is the 4x4 _FrozenLake_ from
+<a href="https://gymnasium.farama.org/environments/toy_text/frozen_lake/">Gymnasium</a>, made with
+`is_slippery` set to `false`, so every action moves the agent where it was meant to. It runs on the
+<a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server, which the example talks to
+over HTTP at `http://0.0.0.0:8001/api`, so start the server first.
 
+## Value iteration
 
+Policy iteration alternates between evaluating a policy and improving it. Value iteration folds the two into
+one update. It sweeps over the states and replaces the value of each with the value of its best action,
+
+\f[
+V(s) \leftarrow \max_{\alpha} \sum_{s', r} p(s', r | s, \alpha) \left[ r + \gamma V(s') \right],
+\f]
+
+until a sweep changes no value by more than a tolerance. The policy is then read off the value function: in
+each state, take the action with the largest expected return. Like policy iteration, it needs the transition
+probabilities and rewards of the environment, which \ref cuberl::envs::gymnasium::FrozenLake "FrozenLake"
+provides.
+
+\ref cuberl::rl::algos::dp::ValueIteration "ValueIteration" uses \f$\gamma = 0.99\f$ and a tolerance of
+\f$10^{-8}\f$. It updates the values in place, so a state later in a sweep already sees the new values of the
+states before it. \ref cuberl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer" runs one sweep per training
+episode, at most 10000 of them, and stops as soon as a sweep changes no value by more than the tolerance.
+
+## What it writes
+
+In the directory it runs from, the example writes
+
+| File | What |
+| ---- | ---- |
+| `value_iteration_frozen_lake_v1.csv` | the value of each state |
+| `reward_per_itr.csv` | for each sweep, the largest change of a value in it. `ValueIteration` reports it as the reward of the episode, so that the trainer keeps it |
+| `policy.csv` | the greedy policy, the action to take in each state |
+
+`plot.py` draws the value function on the grid of the lake and the largest change per sweep. `play.py` plays
+the policy in Gymnasium and draws each step. Both read the files from the directory they run in, or from the
+path given as their argument:
+
+@code{.sh}
+python plot.py <directory of the csv files>
+python play.py <directory of the csv files>/policy.csv
+@endcode
+
+`play.py` needs the `gymnasium` Python package with its toy text environments.
+
+## The results
+
+The agent starts in the top left corner, the goal is in the bottom right, and the four cyan squares with a
+value of 0 are the holes. The goal itself also has a value of 0: the episode ends there, so no rewards come
+after it. Reaching the goal is the only reward, 1, so the value of a state is \f$\gamma^{n-1}\f$, where \f$n\f$
+is the number of steps from it to the goal. The start is 6 steps away and has a value of
+\f$0.99^5 \approx 0.951\f$.
+
+| ![State value function](frozen_lake_state_value_function.png) |
+|:--:|
+| **Figure 1: The state value function.** |
+
+The policy reaches the goal in those 6 steps, the shortest path around the holes.
+
+| ![fz-vi-step-1](fz_vi_step_1.png) |
+|:--:|
+| **Figure 2: Playing FrozenLake, step 1.** |
+
+| ![fz-vi-step-2](fz_vi_step_2.png) |
+|:--:|
+| **Figure 3: Step 2.** |
+
+| ![fz-vi-step-3](fz_vi_step_3.png) |
+|:--:|
+| **Figure 4: Step 3.** |
+
+| ![fz-vi-step-4](fz_vi_step_4.png) |
+|:--:|
+| **Figure 5: Step 4.** |
+
+| ![fz-vi-step-5](fz_vi_step_5.png) |
+|:--:|
+| **Figure 6: Step 5.** |
+
+| ![fz-vi-step-6](fz_vi_step_6.png) |
+|:--:|
+| **Figure 7: Step 6, the goal.** |
 
 ## The driver code
 
-@code{.cpp}
-#include "cubeai/base/cubeai_types.h"
-#include "cubeai/rl/algorithms/dp/value_iteration.h"
-#include "cubeai/rl/trainers/rl_serial_agent_trainer.h"
-#include "cubeai/rl/policies/uniform_discrete_policy.h"
-#include "cubeai/rl/policies/stochastic_adaptor_policy.h"
-
-#include "rlenvs/utils/io/csv_file_writer.h"
-#include "rlenvs/envs/api_server/apiserver.h"
-#include "rlenvs/envs/gymnasium/toy_text/frozen_lake_env.h"
-
-#include <boost/log/trivial.hpp>
-#include <tuple>
-
-namespace rl_example_8{
-
-const std::string SERVER_URL = "http://0.0.0.0:8001/api";
-const std::string SOLUTION_FILE = "value_iteration_frozen_lake_v1.csv";
-const std::string REWARD_PER_ITR = "reward_per_itr.csv";
-const std::string POLICY = "policy.csv";
-
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::rl::policies::UniformDiscretePolicy;
-using cuberl::rl::policies::StochasticAdaptorPolicy;
-using cuberl::rl::algos::dp::ValueIteration;
-using cuberl::rl::algos::dp::ValueIterationConfig;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-
-using rlenvscpp::envs::gymnasium::FrozenLake;
-using rlenvscpp::envs::RESTApiServerWrapper;
-
-// the environment to use
-typedef FrozenLake<4> env_type;
-
-// value iteration solver
-typedef  ValueIteration<env_type,
-                        UniformDiscretePolicy,
-                        StochasticAdaptorPolicy<UniformDiscretePolicy>> solver_type;
-						
-}
-
-int main() {
-
-	BOOST_LOG_TRIVIAL(info)<<"Starting agent training";
-	
-    using namespace rl_example_8;
-	
-	RESTApiServerWrapper server(SERVER_URL, true);
-
-    // create the environment
-    env_type env(server);
-
-    BOOST_LOG_TRIVIAL(info)<<"Creating environment...";
-    std::unordered_map<std::string, std::any> options;
-
-	options["is_slippery"] = std::any(false);
-    env.make("v1", options);
-    env.reset();
-    BOOST_LOG_TRIVIAL(info)<<"Done...";
-
-    // start with a uniform random policy i.e.
-    // the agnet knows nothing about the environment
-    UniformDiscretePolicy init_policy(env.n_states(), env.n_actions());
-
-    StochasticAdaptorPolicy<UniformDiscretePolicy> policy_adaptor(env.n_states(), 
-	                                                         env.n_actions(), 
-							         init_policy);
-
-    ValueIterationConfig config;
-    config.gamma = 0.99;
-    config.tolerance = 1.0e-8;
-
-    solver_type algorithm(config, init_policy, policy_adaptor);
-
-    RLSerialTrainerConfig trainer_config = {10, 10000, 1.0e-8};
-
-    RLSerialAgentTrainer<env_type, solver_type> trainer(trainer_config, algorithm);
-
-    auto info_ = trainer.train(env);
-	BOOST_LOG_TRIVIAL(info)<<info_;
-	BOOST_LOG_TRIVIAL(info)<<"Saving solution to "<<SOLUTION_FILE;
-
-    // save the value function into a csv file
-    algorithm.save(SOLUTION_FILE);
-	
-	
-	// save the reward the agent achieved per training epoch
-	auto reward = trainer.episodes_total_rewards();
-	auto iterations = trainer.n_itrs_per_episode();
-	
-	rlenvscpp::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
-	csv_writer.open();
-	
-	csv_writer.write_column_names({"epoch", "reward"});
-	
-	auto epoch = static_cast<uint_t>(0);
-	for(auto val: reward){
-		
-		std::tuple<uint_t, real_t> row = {epoch++, val};
-		csv_writer.write_row(row);
-	}
-	
-	csv_writer.close();
-	
-	// build the policy
-	algorithm.build_policy(env).save(POLICY);
-	
-	BOOST_LOG_TRIVIAL(info)<<"Finished agent training";
-    return 0;
-}
-
-@endcode
-
-
-| ![fz-vi-step-1](images/fz_vi_step_1.png) |
-|:--:|
-| **Figure 3:Playing FrozenLake step 1.**|
-
-| ![fz-vi-step-2](images/fz_vi_step_2.png) |
-|:--:|
-| **Figure 4:Playing FrozenLake step 2.**|
-
-| ![fz-vi-step-3](images/fz_vi_step_3.png) |
-|:--:|
-| **Figure 5:Playing FrozenLake step 3.**|
-
-| ![fz-vi-step-4](images/fz_vi_step_4.png) |
-|:--:|
-| **Figure 6:Playing FrozenLake step 3.**|
-
-| ![fz-vi-step-5](images/fz_vi_step_5.png) |
-|:--:|
-| **Figure 7:Playing FrozenLake step 5.**|
-
-| ![fz-vi-step-6](images/fz_vi_step_6.png) |
-|:--:|
-| **Figure 8:Playing FrozenLake step 6.**|
-
+\include example_14/example_14.cpp
