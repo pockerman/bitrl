@@ -1,4 +1,4 @@
-\page cuberl_example_19 CubeRL Example 19: REINFORCE algorithm on CartPole
+\page bitrl_example_19 bitrl Example 19: REINFORCE algorithm on CartPole
 
 The DQN algorithm we used in examples <a href="../rl_example_12/rl_example_12.md">Example 12: DQN algorithm on Gridworld</a>
 and <a href="../rl_example_15/rl_example_15.md">Example 15: DQN algorithm on Gridworld with experience replay</a> approximate a value function
@@ -39,10 +39,10 @@ want to avoid the complexity of directly executing Python code from the C++ driv
 
 We will use the policy network from PyTorch examples: <a href="https://github.com/pytorch/examples/blob/main/reinforcement_learning/reinforce.py">reinforce.py</a>.
 However, feel free to experiment with this. Note that the PyTorch implementation uses a baseline in the implementation.
-We will use this approach in <a href="https://github.com/pockerman/cuberl/blob/master/examples/rl/rl_example_20/rl_example_20.md">REINFORCE with baseline algorithm on CartPole</a>
+We will use this approach in <a href="https://github.com/pockerman/bitrl/blob/master/examples/rl/rl_example_20/rl_example_20.md">REINFORCE with baseline algorithm on CartPole</a>
 
 
-The REINFORCE algorithm is implemented in the class <a href="https://github.com/pockerman/cuberl/blob/master/include/cubeai/rl/algorithms/pg/simple_reinforce.h">ReinforceSolver</a>
+The REINFORCE algorithm is implemented in the class <a href="https://github.com/pockerman/bitrl/blob/master/include/cubeai/rl/algorithms/pg/simple_reinforce.h">ReinforceSolver</a>
 The solver is passed to the ```RLSerialAgentTrainer``` class that manages the loop over the specified number of episodes.
 The ```ReinforceSolver``` is derived from the ```RLSolverBase``` class and overrides some virtual methods.
 The class ```ReinforceSolver``` accepts two template parameters:
@@ -51,7 +51,7 @@ The class ```ReinforceSolver``` accepts two template parameters:
 - The policy type 
 
 
-The environment type is a standard argument for all RL solvers in ```cuberl```. The policy type represents the 
+The environment type is a standard argument for all RL solvers in ```bitrl```. The policy type represents the 
 PyTorch model that we will use. Specifically, it should expose an ```act``` function that has the following signature
 
 @code{.cpp}
@@ -197,17 +197,17 @@ const std::string POLICY = "policy.csv";
 
 namespace F = torch::nn::functional;
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::float_t;
-using cuberl::int_t;
-using cuberl::torch_tensor_t;
-using cuberl::DeviceType;
-using cuberl::rl::algos::pg::ReinforceSolver;
-using cuberl::rl::algos::pg::ReinforceConfig;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::maths::stats::TorchCategorical;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::float_t;
+using bitrl::int_t;
+using bitrl::torch_tensor_t;
+using bitrl::DeviceType;
+using bitrl::rl::algos::pg::ReinforceSolver;
+using bitrl::rl::algos::pg::ReinforceConfig;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::maths::stats::TorchCategorical;
 using rlenvscpp::envs::RESTApiServerWrapper;	
 using rlenvscpp::envs::gymnasium::CartPole;
 
@@ -341,7 +341,7 @@ int main(){
         std::map<std::string, std::any> opt_options;
         opt_options.insert(std::make_pair("lr", LEARNING_RATE));
 
-		using namespace cuberl::maths;
+		using namespace bitrl::maths;
         auto pytorch_ops = optim::pytorch::build_pytorch_optimizer_options(optim::OptimzerType::ADAM,
 																		   opt_options);
 
@@ -440,7 +440,7 @@ int main(){
 #include <iostream>
 int main(){
 
-    std::cout<<"This example requires PyTorch. Reconfigure cuberl with USE_PYTORCH fag turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch. Reconfigure bitrl with USE_PYTORCH fag turned ON."<<std::endl;
     return 0;
 }
 #endif
@@ -472,4 +472,4 @@ Regardless of reasons behind the high variance in the gradient,
 this effect can be detrimental during learning as it destabilizes it. 
 Hence, reducing the high variance is important for feasible training. Using a bseline
 is one approach we can use in order to reduce the variance in the gradient approximation.
-We will use this in <a href="https://github.com/pockerman/cuberl/blob/master/examples/rl/rl_example_20/rl_example_20.md">Example 20: REINFORCE with baseline algorithm on CartPole</a>.
+We will use this in <a href="https://github.com/pockerman/bitrl/blob/master/examples/rl/rl_example_20/rl_example_20.md">Example 20: REINFORCE with baseline algorithm on CartPole</a>.

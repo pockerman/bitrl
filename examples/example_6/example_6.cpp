@@ -1,4 +1,4 @@
-#include "cuberl/base/cuberl_types.h"
+#include "bitrl/base/bitrl_types.h"
 
 #include <cmath>
 #include <utility>
@@ -10,10 +10,10 @@
 namespace exe
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::DynMat;
-using cuberl::DynVec;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::DynMat;
+using bitrl::DynVec;
 
 // create transition matrix
 DynMat<real_t> create_transition_matrix(){

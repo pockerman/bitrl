@@ -1,20 +1,20 @@
-#include "cuberl/base/cuberl_config.h"
+#include "bitrl/base/bitrl_config.h"
 
 #ifdef USE_PYTORCH
 
-#include "cuberl/base/cuberl_types.h"
+#include "bitrl/base/bitrl_types.h"
 
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "cuberl/rl/algorithms/pg/ppo.h"
-#include "cuberl/rl/algorithms/pg/ppo_config.h"
-#include "cuberl/maths/optimization/optimizer_type.h"
-#include "cuberl/maths/statistics/distributions/torch_normal.h"
-#include "cuberl/maths/optimization/pytorch_optimizer_factory.h"
-#include "cuberl/utils/torch_adaptor.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/rl/algorithms/pg/ppo.h"
+#include "bitrl/rl/algorithms/pg/ppo_config.h"
+#include "bitrl/maths/optimization/optimizer_type.h"
+#include "bitrl/maths/statistics/distributions/torch_normal.h"
+#include "bitrl/maths/optimization/pytorch_optimizer_factory.h"
+#include "bitrl/utils/torch_adaptor.h"
 
-#include "bitrl/utils/io/csv_file_writer.h"
-#include "cuberl/network/rest_rl_env_client.h"
-#include "cuberl/envs/gymnasium/box2d/lunar_lander_env.h"
+#include "bitsim/utils/io/csv_file_writer.h"
+#include "bitrl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/box2d/lunar_lander_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <torch/torch.h>
@@ -32,19 +32,19 @@ const std::string POLICY = "policy.csv";
 
 namespace F = torch::nn::functional;
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::torch_tensor_t;
-using cuberl::DeviceType;
-using cuberl::maths::stats::TorchNormalDist;
-using cuberl::rl::algos::pg::PPOConfig;
-using cuberl::rl::algos::pg::PPOSolver;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::utils::pytorch::TorchAdaptor;
-	using cuberl::network::RESTRLEnvClient;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::torch_tensor_t;
+using bitrl::DeviceType;
+using bitrl::maths::stats::TorchNormalDist;
+using bitrl::rl::algos::pg::PPOConfig;
+using bitrl::rl::algos::pg::PPOSolver;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::utils::pytorch::TorchAdaptor;
+	using bitrl::network::RESTRLEnvClient;
 
-typedef  cuberl::envs::gymnasium::LunarLanderContinuousEnv env_type;
+typedef  bitrl::envs::gymnasium::LunarLanderContinuousEnv env_type;
 
 /// Layer sizes for Actor
 const uint_t L1 = 8;
@@ -238,8 +238,8 @@ int main(){
         std::map<std::string, std::any> opt_options;
         opt_options.insert(std::make_pair("lr", LEARNING_RATE));
 
-		using namespace cuberl::maths::optim::pytorch;
-		using namespace cuberl::maths::optim;
+		using namespace bitrl::maths::optim::pytorch;
+		using namespace bitrl::maths::optim;
 
         auto pytorch_ops = build_pytorch_optimizer_options(OptimizerType::ADAM,
 														  opt_options);
@@ -271,8 +271,8 @@ int main(){
 		// write the loss values
 		auto& policy_loss_vals= solver.get_monitor().policy_loss_values;
 		
-		bitrl::utils::io::CSVWriter loss_csv_writer(experiment_path + "/" + "policy_loss.csv",
-														  bitrl::utils::io::CSVWriter::default_delimiter());
+		bitsim::utils::io::CSVWriter loss_csv_writer(experiment_path + "/" + "policy_loss.csv",
+														  bitsim::utils::io::CSVWriter::default_delimiter());
 		loss_csv_writer.open();
 		
 		auto episode_counter = 0;
@@ -286,8 +286,8 @@ int main(){
 		// write the loss values
 		auto& critic_loss_vals  = solver.get_monitor().critic_loss_values;
 		
-		bitrl::utils::io::CSVWriter critic_csv_writer(experiment_path + "/" + "critic_loss.csv",
-														  bitrl::utils::io::CSVWriter::default_delimiter());
+		bitsim::utils::io::CSVWriter critic_csv_writer(experiment_path + "/" + "critic_loss.csv",
+														  bitsim::utils::io::CSVWriter::default_delimiter());
 		critic_csv_writer.open();
 		
 		episode_counter = 0;
@@ -299,8 +299,8 @@ int main(){
 		critic_csv_writer.close();
 
 		auto& rewards  = solver.get_monitor().rewards;
-		bitrl::utils::io::CSVWriter rewards_csv_writer(experiment_path + "/" + "rewards.csv",
-														  bitrl::utils::io::CSVWriter::default_delimiter());
+		bitsim::utils::io::CSVWriter rewards_csv_writer(experiment_path + "/" + "rewards.csv",
+														  bitsim::utils::io::CSVWriter::default_delimiter());
 		rewards_csv_writer.open();
 		
 		episode_counter = 0;
@@ -313,8 +313,8 @@ int main(){
 		
 		
 		auto& episode_duration  = solver.get_monitor().episode_duration;
-		bitrl::utils::io::CSVWriter episode_duration_csv_writer(experiment_path + "/" + "episode_duration.csv",
-														            bitrl::utils::io::CSVWriter::default_delimiter());
+		bitsim::utils::io::CSVWriter episode_duration_csv_writer(experiment_path + "/" + "episode_duration.csv",
+														            bitsim::utils::io::CSVWriter::default_delimiter());
 		episode_duration_csv_writer.open();
 		
 		episode_counter = 0;
@@ -340,7 +340,7 @@ int main(){
 
 int main(){
 
-    std::cout<<"This example requires PyTorch. Reconfigure cuberl with USE_PYTORCH fag turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch. Reconfigure bitrl with USE_PYTORCH fag turned ON."<<std::endl;
     return 1;
 }
 #endif

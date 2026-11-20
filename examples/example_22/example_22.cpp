@@ -1,14 +1,14 @@
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/rl/algorithms/mc/first_visit_mc.h"
-#include "cuberl/rl/learning_rate_scheduler.h"
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "cuberl/rl/policies/epsilon_greedy_policy.h"
-#include "cuberl/maths/vector_math.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/algorithms/mc/first_visit_mc.h"
+#include "bitrl/rl/learning_rate_scheduler.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/rl/policies/epsilon_greedy_policy.h"
+#include "bitrl/maths/vector_math.h"
 
 
-#include "cuberl/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "cuberl/envs/envs_utils.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "bitrl/envs/envs_utils.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <iostream>
 #include <random>
@@ -17,16 +17,16 @@
 namespace rl_example_19
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::rl::ConstantLRScheduler;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
-using cuberl::rl::algos::mc::FirstVisitMCSolver;
-using cuberl::rl::algos::mc::FirstVisitMCSolverConfig;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-    using cuberl::network::RESTRLEnvClient;
-using cuberl::envs::gymnasium::FrozenLake;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::rl::ConstantLRScheduler;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
+using bitrl::rl::algos::mc::FirstVisitMCSolver;
+using bitrl::rl::algos::mc::FirstVisitMCSolverConfig;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+    using bitrl::network::RESTRLEnvClient;
+using bitrl::envs::gymnasium::FrozenLake;
 
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
@@ -61,7 +61,7 @@ std::vector<FrozenLake<4>::time_step_type>
 TrajectoryGenerator::operator()(FrozenLake<4>& env, uint_t max_steps){
 
     RandomActionSelector action_selector;
-    return cuberl::envs::create_trajectory(env, action_selector, max_steps );
+    return bitrl::envs::create_trajectory(env, action_selector, max_steps );
 }
 
 
@@ -77,7 +77,7 @@ template<typename TrajectoryType>
 std::vector<real_t>
 DiscountGenerator::operator()(const TrajectoryType&, uint_t max_steps)
 {
-    return cuberl::maths::logspace(0.0, static_cast<real_t>(max_steps), max_steps, 1.0);
+    return bitrl::maths::logspace(0.0, static_cast<real_t>(max_steps), max_steps, 1.0);
 }
 
 

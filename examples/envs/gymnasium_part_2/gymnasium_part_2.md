@@ -1,26 +1,26 @@
-\page cuberl_example_gymnasium_part_2 Using Gymnasium environments (Part 2)
+\page bitrl_example_gymnasium_part_2 Using Gymnasium environments (Part 2)
 
 In this example we will see how to interact with  <a href="https://gymnasium.farama.org/index.html">Gymnasium</a> environments and
 specifically how to create an interact with <a href="https://gymnasium.farama.org/environments/classic_control/cart_pole/">CartPole</a> environment.
 
-As already mentioned in  \ref cuberl_example_gymnasium_part_1, Gymnasium-based environments are interacted over a REST-like API maintained here: <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a>.
-_cuberl_ itself implements classes that hide this interaction from the client code.
-In general, environment classes in _cuberl_, have to implement the \ref cuberl::envs::EnvBase "cuberl::envs::EnvBase" API.
+As already mentioned in  \ref bitrl_example_gymnasium_part_1, Gymnasium-based environments are interacted over a REST-like API maintained here: <a href="https://github.com/pockerman/bitrl-rest-api">bitsim-envs-api</a>.
+_bitrl_ itself implements classes that hide this interaction from the client code.
+In general, environment classes in _bitrl_, have to implement the \ref bitrl::envs::EnvBase "bitrl::envs::EnvBase" API.
 
-In this example we will use the \ref cuberl::envs::gymnasium::CartPole "cuberl::envs::gymnasium::CartPole"  
-class. This is a template class, see the example below, that itself inherits from  \ref cuberl::envs::gymnasium::GymnasiumEnvBase "cuberl::envs::gymnasium::GymnasiumEnvBase"
+In this example we will use the \ref bitrl::envs::gymnasium::CartPole "bitrl::envs::gymnasium::CartPole"  
+class. This is a template class, see the example below, that itself inherits from  \ref bitrl::envs::gymnasium::GymnasiumEnvBase "bitrl::envs::gymnasium::GymnasiumEnvBase"
 class.
 
 Below is the driver code. 
 
 @code{.cpp}
 
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/gymnasium/classic_control/cart_pole_env.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
-#ifdef BITRL_DEBUG
+#ifdef BITSIM_DEBUG
 #include <cassert>
 #endif
 
@@ -31,9 +31,9 @@ Below is the driver code.
 
 namespace example
 {
-using namespace bitrl;
-using namespace cuberl::envs::gymnasium;
-using cuberl::network::RESTRLEnvClient;
+using namespace bitsim;
+using namespace bitrl::envs::gymnasium;
+using bitrl::network::RESTRLEnvClient;
 
 void test_cart_pole(RESTRLEnvClient &server)
 {
@@ -82,7 +82,7 @@ int main()
 @endcode
 
 
-In order to run the example you will need an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-envs-api</a> server running
-on your machine listening at port 8001. Note the actual example also shows how to use \ref cuberl::envs::gymnasium::Pendulum "cuberl::envs::gymnasium::Pendulum",
-\ref cuberl::envs::gymnasium::Acrobot "cuberl::envs::gymnasium::Acrobot" and \ref cuberl::envs::gymnasium::MountainCar "cuberl::envs::gymnasium::MountainCar"
+In order to run the example you will need an instance of the <a href="https://github.com/pockerman/bitrl-rest-api">bitsim-envs-api</a> server running
+on your machine listening at port 8001. Note the actual example also shows how to use \ref bitrl::envs::gymnasium::Pendulum "bitrl::envs::gymnasium::Pendulum",
+\ref bitrl::envs::gymnasium::Acrobot "bitrl::envs::gymnasium::Acrobot" and \ref bitrl::envs::gymnasium::MountainCar "bitrl::envs::gymnasium::MountainCar"
 environments.

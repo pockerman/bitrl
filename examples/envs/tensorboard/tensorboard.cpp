@@ -17,9 +17,9 @@
  *class. Thus you will need to have PyTorch installed on the machine that you run the server.
  */
 
-#include "bitrl/bitrl_types.h"
-#include "cuberl/network/tensorboard_server.h"
-#include "bitrl/utils/io/json_file_reader.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/network/tensorboard_server.h"
+#include "bitsim/utils/io/json_file_reader.h"
 
 #include <filesystem>
 #include <iostream>
@@ -28,8 +28,8 @@
 
 namespace tensorboard
 {
-using namespace bitrl;
-using cuberl::network::TensorboardServer;
+using namespace bitsim;
+using bitrl::network::TensorboardServer;
 using utils::io::JSONFileReader;
 
 namespace fs = std::filesystem;

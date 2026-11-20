@@ -1,4 +1,4 @@
-\page cuberl_example_18 CubeRL Example 18: DQN algorithm on Gridworld
+\page bitrl_example_18 bitrl Example 18: DQN algorithm on Gridworld
 
 
 
@@ -48,13 +48,13 @@ const std::string EXPERIMENT_ID = "3";
 
 namespace F = torch::nn::functional;
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::float_t;
-using cuberl::torch_tensor_t;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::float_t;
+using bitrl::torch_tensor_t;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
 using rlenvscpp::envs::grid_world::Gridworld;
 using rlenvscpp::utils::io::CSVWriter;
 
@@ -169,7 +169,7 @@ int main(){
         // we will use an epsilon-greedy policy
         EpsilonGreedyPolicy policy(	EPSILON, 
 									SEED, 
-									cuberl::rl::policies::EpsilonDecayOption::NONE);
+									bitrl::rl::policies::EpsilonDecayOption::NONE);
 
         // the loss function to use
         auto loss_fn = torch::nn::MSELoss();
@@ -199,17 +199,17 @@ int main(){
 				
 				float_t a = 0.0;
 				float_t b = 1.0;
-				rand_vec = cuberl::maths::randomize(rand_vec, a, b, 64);
-				rand_vec = cuberl::maths::divide(rand_vec, 10.0);
+				rand_vec = bitrl::maths::randomize(rand_vec, a, b, 64);
+				rand_vec = bitrl::maths::divide(rand_vec, 10.0);
 				
 				// randomize the flattened observation
-				obs = cuberl::maths::add(obs, rand_vec);
-				auto torch_state = cuberl::utils::pytorch::TorchAdaptor::to_torch(obs, 
-				                                                                  cuberl::DeviceType::CPU);
+				obs = bitrl::maths::add(obs, rand_vec);
+				auto torch_state = bitrl::utils::pytorch::TorchAdaptor::to_torch(obs, 
+				                                                                  bitrl::DeviceType::CPU);
                 
                 // get the qvals
                 auto qvals = qnet(torch_state);
-                auto action_idx = policy(qvals, cuberl::torch_tensor_value_type<float_t>());
+                auto action_idx = policy(qvals, bitrl::torch_tensor_value_type<float_t>());
 				
 				BOOST_LOG_TRIVIAL(info)<<"\tAction selected: "<<action_idx<<std::endl;
 
@@ -218,10 +218,10 @@ int main(){
 
 				obs = flattened_observation(time_step.observation());
 				// randomize the flattened observation
-				obs = cuberl::maths::add(obs, rand_vec);
+				obs = bitrl::maths::add(obs, rand_vec);
 				
-                torch_state = cuberl::utils::pytorch::TorchAdaptor::to_torch(obs, 
-				                                                             cuberl::DeviceType::CPU);
+                torch_state = bitrl::utils::pytorch::TorchAdaptor::to_torch(obs, 
+				                                                             bitrl::DeviceType::CPU);
 
                 // tell the model that we don't use grad here
                 qnet->eval();
@@ -276,9 +276,9 @@ int main(){
 				policy.set_eps_value(eps);
 			}
 			
-			losses.push_back(cuberl::maths::mean(epoch_loss.begin(),
+			losses.push_back(bitrl::maths::mean(epoch_loss.begin(),
 													epoch_loss.end()));
-			rewards.push_back(cuberl::maths::mean(epoch_rewards.begin(),
+			rewards.push_back(bitrl::maths::mean(epoch_rewards.begin(),
                                                     epoch_rewards.end()));
         }
 
@@ -313,7 +313,7 @@ int main(){
 int main(){
 
 	std::cout<<"This example requires PyTorch"<<std::endl;
-	std::cout<<"Reconfigure cuberl with USE_PYTORCH flag turned ON."<<std::endl;
+	std::cout<<"Reconfigure bitrl with USE_PYTORCH flag turned ON."<<std::endl;
     return 0;
 }
 @endcode

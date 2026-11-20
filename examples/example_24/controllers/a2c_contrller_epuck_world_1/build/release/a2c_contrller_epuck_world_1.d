@@ -2,10 +2,10 @@ build/release/a2c_contrller_epuck_world_1.o: \
  a2c_contrller_epuck_world_1.cpp \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/Robot.hpp \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/../../c/webots/types.h \
- /home/alex/qi3/cuberl/include/cubeai/base/cubeai_types.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/rlenvs_types_v2.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/rlenvscpp_config.h \
- /home/alex/qi3/cuberl/include/cubeai/base/cubeai_config.h \
+ /home/alex/qi3/bitrl/include/cubeai/base/cubeai_types.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/rlenvs_types_v2.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/rlenvscpp_config.h \
+ /home/alex/qi3/bitrl/include/cubeai/base/cubeai_config.h \
  /home/alex/MySoftware/libtorch_cpu/libtorch/include/torch/csrc/api/include/torch/torch.h \
  /home/alex/MySoftware/libtorch_cpu/libtorch/include/torch/csrc/api/include/torch/all.h \
  /home/alex/MySoftware/libtorch_cpu/libtorch/include/torch/csrc/api/include/torch/autograd.h \
@@ -4661,32 +4661,32 @@ build/release/a2c_contrller_epuck_world_1.o: \
  /home/alex/MySoftware/libtorch_cpu/libtorch/include/torch/csrc/api/include/torch/special.h \
  /home/alex/MySoftware/libtorch_cpu/libtorch/include/torch/csrc/api/include/torch/version.h \
  /home/alex/MySoftware/libtorch_cpu/libtorch/include/torch/csrc/api/include/torch/xpu.h \
- /home/alex/qi3/cuberl/include/cubeai/maths/statistics/distributions/torch_categorical.h \
- /home/alex/qi3/cuberl/include/cubeai/maths/statistics/distributions/torch_distribution.h \
- /home/alex/qi3/cuberl/include/cubeai/rl/trainers/rl_serial_agent_trainer.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/rlenvs_consts.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/utils/iterative_algorithm_result.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/utils/iterative_algorithm_controller.h \
- /home/alex/qi3/cuberl/include/cubeai/rl/algorithms/pg/a2c.h \
- /home/alex/qi3/cuberl/include/cubeai/utils/torch_adaptor.h \
- /home/alex/qi3/cuberl/include/cubeai/rl/algorithms/rl_algorithm_base.h \
- /home/alex/qi3/cuberl/include/cubeai/rl/episode_info.h \
- /home/alex/qi3/cuberl/include/cubeai/rl/algorithms/utils.h \
- /home/alex/qi3/cuberl/include/cubeai/maths/vector_math.h \
- /home/alex/qi3/cuberl/include/cubeai/utils/cubeai_concepts.h \
- /home/alex/qi3/cuberl/include/cubeai/data_structs/experience_buffer.h \
- /home/alex/qi3/cuberl/include/cubeai/maths/optimization/optimizer_type.h \
- /home/alex/qi3/cuberl/include/cubeai/extern/enum.h \
- /home/alex/qi3/cuberl/include/cubeai/maths/optimization/pytorch_optimizer_factory.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/webots_envs/epuck_simple_grid_world.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/time_step.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/time_step_type.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/utils/io/io_utils.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/env_types.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/space_type.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/rigid_bodies/webots_robots/epuck_robot.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/rigid_bodies/body_translation.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/rigid_bodies/body_rotation.h \
+ /home/alex/qi3/bitrl/include/cubeai/maths/statistics/distributions/torch_categorical.h \
+ /home/alex/qi3/bitrl/include/cubeai/maths/statistics/distributions/torch_distribution.h \
+ /home/alex/qi3/bitrl/include/cubeai/rl/trainers/rl_serial_agent_trainer.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/rlenvs_consts.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/utils/iterative_algorithm_result.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/utils/iterative_algorithm_controller.h \
+ /home/alex/qi3/bitrl/include/cubeai/rl/algorithms/pg/a2c.h \
+ /home/alex/qi3/bitrl/include/cubeai/utils/torch_adaptor.h \
+ /home/alex/qi3/bitrl/include/cubeai/rl/algorithms/rl_algorithm_base.h \
+ /home/alex/qi3/bitrl/include/cubeai/rl/episode_info.h \
+ /home/alex/qi3/bitrl/include/cubeai/rl/algorithms/utils.h \
+ /home/alex/qi3/bitrl/include/cubeai/maths/vector_math.h \
+ /home/alex/qi3/bitrl/include/cubeai/utils/cubeai_concepts.h \
+ /home/alex/qi3/bitrl/include/cubeai/data_structs/experience_buffer.h \
+ /home/alex/qi3/bitrl/include/cubeai/maths/optimization/optimizer_type.h \
+ /home/alex/qi3/bitrl/include/cubeai/extern/enum.h \
+ /home/alex/qi3/bitrl/include/cubeai/maths/optimization/pytorch_optimizer_factory.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/webots_envs/epuck_simple_grid_world.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/time_step.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/time_step_type.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/utils/io/io_utils.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/env_types.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/space_type.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/rigid_bodies/webots_robots/epuck_robot.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/rigid_bodies/body_translation.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/rigid_bodies/body_rotation.h \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/DistanceSensor.hpp \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/Device.hpp \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/PositionSensor.hpp \
@@ -4695,6 +4695,6 @@ build/release/a2c_contrller_epuck_world_1.o: \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/Node.hpp \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/Field.hpp \
  /home/alex/qi3/rlenvs_from_cpp/external/webots/include/controller/cpp/webots/../../c/webots/contact_point.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/webots_envs/webots_base_env.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/env_base.h \
- /home/alex/qi3/cuberl/external/rlenvs_cpp/src/rlenvs/envs/synchronized_env_mixin.h
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/webots_envs/webots_base_env.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/env_base.h \
+ /home/alex/qi3/bitrl/external/rlenvs_cpp/src/rlenvs/envs/synchronized_env_mixin.h

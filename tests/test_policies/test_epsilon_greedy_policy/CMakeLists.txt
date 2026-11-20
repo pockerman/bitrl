@@ -1,1 +1,1 @@
-cuberl_add_test(test_epsilon_greedy_policy)
+bitrl_add_test(test_epsilon_greedy_policy)

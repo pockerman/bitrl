@@ -1,6 +1,6 @@
-\page cuberl_example_23 CubeRL Example 22: REINFORCE with baseline algorithm on CartPole
+\page bitrl_example_23 bitrl Example 22: REINFORCE with baseline algorithm on CartPole
 
-The example <a href="https://github.com/pockerman/cuberl/blob/master/examples/rl/rl_example_13/rl_example_13.md"> REINFORCE algorithm on CartPole</a>
+The example <a href="https://github.com/pockerman/bitrl/blob/master/examples/rl/rl_example_13/rl_example_13.md"> REINFORCE algorithm on CartPole</a>
 used the REINFORCE algorithm to build an agent that can control the ```CratPole``` environment.
 The REINFORCE algorithm is very sensitive to gradient variance which in turn can affect
 training. 
@@ -28,7 +28,7 @@ Specifically, we will use the class <a href="https://github.com/pockerman/rlenvs
 sent HTTP requests to a server that actually runs the environment. We need this as ```gymnasium.CartPole``` is written in Python and we 
 want to avoid the complexity of directly executing Python code from the C++ driver.
 
-We will use the policy network we used in <a href="https://github.com/pockerman/cuberl/blob/master/examples/rl/rl_example_13/rl_example_13.md">REINFORCE algorithm on CartPole</a>
+We will use the policy network we used in <a href="https://github.com/pockerman/bitrl/blob/master/examples/rl/rl_example_13/rl_example_13.md">REINFORCE algorithm on CartPole</a>
 The configuation of the REINFORCE solver supports three types of baseline values
 
 - A user specified constant
@@ -96,18 +96,18 @@ const std::string POLICY = "policy.csv";
 
 namespace F = torch::nn::functional;
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::float_t;
-using cuberl::int_t;
-using cuberl::torch_tensor_t;
-using cuberl::DeviceType;
-using cuberl::rl::algos::pg::ReinforceSolver;
-using cuberl::rl::algos::pg::ReinforceConfig;
-using cuberl::rl::algos::pg::BaselineEnumType;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::maths::stats::TorchCategorical;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::float_t;
+using bitrl::int_t;
+using bitrl::torch_tensor_t;
+using bitrl::DeviceType;
+using bitrl::rl::algos::pg::ReinforceSolver;
+using bitrl::rl::algos::pg::ReinforceConfig;
+using bitrl::rl::algos::pg::BaselineEnumType;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::maths::stats::TorchCategorical;
 using rlenvscpp::envs::RESTApiServerWrapper;	
 using rlenvscpp::envs::gymnasium::CartPole;
 
@@ -234,7 +234,7 @@ int main(){
         std::map<std::string, std::any> opt_options;
         opt_options.insert(std::make_pair("lr", LEARNING_RATE));
 
-		using namespace cuberl::maths;
+		using namespace bitrl::maths;
         auto pytorch_ops = optim::pytorch::build_pytorch_optimizer_options(optim::OptimzerType::ADAM,
 																		   opt_options);
 
@@ -330,7 +330,7 @@ int main(){
 #include <iostream>
 int main(){
 
-    std::cout<<"This example requires PyTorch. Reconfigure cuberl with USE_PYTORCH fag turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch. Reconfigure bitrl with USE_PYTORCH fag turned ON."<<std::endl;
     return 0;
 }
 #endif
@@ -353,5 +353,5 @@ Running the driver above produces the following plots.
 
 ## Summary
 
-This example extened example <a href="https://github.com/pockerman/cuberl/blob/master/examples/rl/rl_example_13/rl_example_13.md"> REINFORCE algorithm on CartPole</a>
+This example extened example <a href="https://github.com/pockerman/bitrl/blob/master/examples/rl/rl_example_13/rl_example_13.md"> REINFORCE algorithm on CartPole</a>
 by using a baseline term. Specifically, it used standarization or whitening as a baseline.

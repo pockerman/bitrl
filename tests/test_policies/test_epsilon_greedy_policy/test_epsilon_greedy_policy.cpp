@@ -1,16 +1,16 @@
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/rl/policies/epsilon_greedy_policy.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/policies/epsilon_greedy_policy.h"
 
 #include <gtest/gtest.h>
 #include <vector>
 
 namespace{
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::DynMat;
-using cuberl::DynVec;
-using namespace cuberl::rl::policies;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::DynMat;
+using bitrl::DynVec;
+using namespace bitrl::rl::policies;
 
 }
 

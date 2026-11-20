@@ -1,7 +1,7 @@
 
 
-#include "cuberl/envs/gymnasium/box2d/lunar_lander_env.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/box2d/lunar_lander_env.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <iostream>
 #include <unordered_map>
@@ -9,24 +9,24 @@
 
 namespace box2d_example
 {
-using namespace bitrl;
+using namespace bitsim;
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
-using bitrl::real_t;
-using cuberl::envs::gymnasium::LunarLanderContinuousEnv;
-using cuberl::envs::gymnasium::LunarLanderDiscreteEnv;
+using bitsim::real_t;
+using bitrl::envs::gymnasium::LunarLanderContinuousEnv;
+using bitrl::envs::gymnasium::LunarLanderDiscreteEnv;
 } // namespace box2d_example
 
 int main()
 {
     using namespace box2d_example;
 
-    cuberl::network::RESTRLEnvClient server(SERVER_URL, true);
+    bitrl::network::RESTRLEnvClient server(SERVER_URL, true);
 
     std::unordered_map<std::string, std::any> options;
-    options["wind_power"] = std::any(static_cast<bitrl::real_t>(10.0));
+    options["wind_power"] = std::any(static_cast<bitsim::real_t>(10.0));
     options["enable_wind"] = std::any(static_cast<bool>(true));
-    options["gravity"] = std::any(static_cast<bitrl::real_t>(-9.86));
-    options["turbulence_power"] = std::any(static_cast<bitrl::real_t>(1.5));
+    options["gravity"] = std::any(static_cast<bitsim::real_t>(-9.86));
+    options["turbulence_power"] = std::any(static_cast<bitsim::real_t>(1.5));
 
     std::unordered_map<std::string, std::any> reset_ops;
     reset_ops.insert({"seed", static_cast<uint_t>(42)});

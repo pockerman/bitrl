@@ -1,7 +1,7 @@
-\page cuberl_example_3 CubeRL Example 3: Using PyTorch C++ API Part 2
+\page bitrl_example_3 bitrl Example 3: Using PyTorch C++ API Part 2
 
 Example intro_example_1 demonstrated some functionality
-cuberl is heavily based on the C++ API exposed by PyTorch. 
+bitrl is heavily based on the C++ API exposed by PyTorch. 
 Therefore, this tutorial is mean to show you some basics on how to create
 and train PyTorch models using the C++ API. There are many resources you can
 consult for further info:
@@ -11,8 +11,8 @@ consult for further info:
 - <a href="https://github.com/prabhuomkar/pytorch-cpp/tree/master">pytorch-cpp</a>
 
 In this tutorial we will reproduce the code in <a href="https://github.com/prabhuomkar/pytorch-cpp/blob/master/tutorials/basics/linear_regression/main.cpp">linear regression with PyTorch</a>.
-We will also show how to read a json file with cuberl, how to use the ```IterativeAlgorithmController``` class. Finally, we will see how to use the logging utilities from the boost C++ library.
-Note that this tutorial requires cuberl to be configured with PyTorch support.
+We will also show how to read a json file with bitrl, how to use the ```IterativeAlgorithmController``` class. Finally, we will see how to use the logging utilities from the boost C++ library.
+Note that this tutorial requires bitrl to be configured with PyTorch support.
 
 
 ## The driver code
@@ -26,8 +26,8 @@ The driver code for this tutorial is shown below.
 #ifdef USE_PYTORCH
 
 #include "cubeai/base/cubeai_types.h"
-#include "bitrl/utils/iteration_counter.h"
-#include "bitrl/utils/io/json_file_reader.h"
+#include "bitsim/utils/iteration_counter.h"
+#include "bitsim/utils/io/json_file_reader.h"
 
 #include <torch/torch.h>
 #include <boost/log/trivial.hpp>
@@ -39,10 +39,10 @@ The driver code for this tutorial is shown below.
 namespace example
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using bitrl::utils::io::JSONFileReader;
-using bitrl::utils::IterationCounter;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitsim::utils::io::JSONFileReader;
+using bitsim::utils::IterationCounter;
 
 namespace fs = std::filesystem;
 const std::string CONFIG = "config.json";
@@ -197,7 +197,7 @@ return 0;
 #include <iostream>
 int main(){
 
-    std::cout<<"This example requires PyTorch and gymfcpp. Reconfigure cuberl with USE_PYTORCH flags turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch and gymfcpp. Reconfigure bitrl with USE_PYTORCH flags turned ON."<<std::endl;
     return 0;
 }
 #endif

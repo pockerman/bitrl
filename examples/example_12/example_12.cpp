@@ -1,10 +1,10 @@
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/rl/algorithms/dp/iterative_policy_evaluation.h"
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "cuberl/rl/policies/uniform_discrete_policy.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/algorithms/dp/iterative_policy_evaluation.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/rl/policies/uniform_discrete_policy.h"
 
-#include "cuberl/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <iostream>
 
@@ -13,15 +13,15 @@ namespace rl_example_6
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::rl::policies::UniformDiscretePolicy;
-using cuberl::rl::algos::dp::IterativePolicyEvalutationSolver;
-using cuberl::rl::algos::dp::IterativePolicyEvalConfig;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::envs::gymnasium::FrozenLake;
-using cuberl::network::RESTRLEnvClient;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::rl::policies::UniformDiscretePolicy;
+using bitrl::rl::algos::dp::IterativePolicyEvalutationSolver;
+using bitrl::rl::algos::dp::IterativePolicyEvalConfig;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::envs::gymnasium::FrozenLake;
+using bitrl::network::RESTRLEnvClient;
 typedef FrozenLake<4> env_type;
 
 }

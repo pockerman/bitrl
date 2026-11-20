@@ -1,14 +1,14 @@
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/utils/experience_buffer.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/utils/experience_buffer.h"
 
 #include <gtest/gtest.h>
 #include <vector>
 
 namespace{
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::utils::ExperienceBuffer;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::utils::ExperienceBuffer;
 
 struct Experience
 {

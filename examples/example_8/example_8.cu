@@ -89,7 +89,7 @@ int main() {
 #else
 #include <iostream>
 int main() {
-	std::cout<<"This example requires CUDA support enabled. Reconfigure CubeRL and set USE_CUDA=ON"<<std::endl;
+	std::cout<<"This example requires CUDA support enabled. Reconfigure bitrl and set USE_CUDA=ON"<<std::endl;
 	return 1;
 }
 #endif

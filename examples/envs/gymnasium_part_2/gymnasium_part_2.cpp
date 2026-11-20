@@ -1,13 +1,13 @@
 
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/gymnasium/classic_control/acrobot_env.h"
-#include "cuberl/envs/gymnasium/classic_control/cart_pole_env.h"
-#include "cuberl/envs/gymnasium/classic_control/mountain_car_env.h"
-#include "cuberl/envs/gymnasium/classic_control/pendulum_env.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/gymnasium/classic_control/acrobot_env.h"
+#include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
+#include "bitrl/envs/gymnasium/classic_control/mountain_car_env.h"
+#include "bitrl/envs/gymnasium/classic_control/pendulum_env.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
-#ifdef BITRL_DEBUG
+#ifdef BITSIM_DEBUG
 #include <cassert>
 #endif
 
@@ -18,9 +18,9 @@
 
 namespace example
 {
-using namespace bitrl;
-using namespace cuberl::envs::gymnasium;
-using cuberl::network::RESTRLEnvClient;
+using namespace bitsim;
+using namespace bitrl::envs::gymnasium;
+using bitrl::network::RESTRLEnvClient;
 
 void test_cart_pole(RESTRLEnvClient &server)
 {

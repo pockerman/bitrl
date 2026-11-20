@@ -1,6 +1,6 @@
-# cuberl
+# bitrl
 
-_cuberl_ is a C++ library containing implementations of various reinforcement learning, filtering and planning algorithms.
+_bitrl_ is a C++ library containing implementations of various reinforcement learning, filtering and planning algorithms.
 The following is an indicative list of examples. 
  
 
@@ -72,25 +72,28 @@ In addition, the library also incorporates, see ```(include/cubeai/extern)```, t
 
 ### bitsim and libtorch
 
-cuberl is built on <a href="https://github.com/pockerman/bitsim">bitsim</a>, which has to be installed first, see its
+bitrl is built on <a href="https://github.com/pockerman/bitsim">bitsim</a>, which has to be installed first, see its
 <a href="https://github.com/pockerman/bitsim/blob/master/doc/install.md">install page</a>. bitsim installs as the CMake
-package `bitrl`. cuberl also needs <a href="https://pytorch.org/get-started/locally/">libtorch</a>, built with the
+package `bitsim`. bitrl also needs <a href="https://pytorch.org/get-started/locally/">libtorch</a>, built with the
 C++11 ABI, and TBB (`sudo apt-get install libtbb-dev`). Tell CMake where bitsim and libtorch are:
 
 ```
 cmake -B build -DCMAKE_PREFIX_PATH="/path/to/bitsim/prefix;/path/to/libtorch"
-cmake --build build --parallel
+cmake --build build --parallel 3
 ```
+
+Give `--parallel` a number. Files that include libtorch take a lot of memory to compile, and an unlimited
+build runs out of memory on a 16 GB machine.
 
 Add the Chrono prefix to `CMAKE_PREFIX_PATH` too if bitsim was built with Chrono and Chrono is not in a system prefix.
 `ci/install_bitsim.sh` and `ci/install_libtorch.sh` do both installs the way CI does.
 
 The options are `ENABLE_EXAMPLES` (ON), `ENABLE_TESTS` (OFF), `USE_CUDA` (OFF; libtorch must be built with CUDA too),
-`CUBERL_LOG` (ON) and `CUBERL_WERROR` (OFF), for example
+`BITRL_LOG` (ON) and `BITRL_WERROR` (OFF), for example
 
 ```
 cmake -B build -DCMAKE_PREFIX_PATH="..." -DENABLE_TESTS=ON
-cmake --build build --parallel
+cmake --build build --parallel 3
 ctest --test-dir build --output-on-failure
 ```
 
@@ -138,7 +141,7 @@ You may want to check with ```nvidia-msi``` your CUDA Version and make sure it i
 
 #### TypeError: Descriptors cannot be created directly.
 
-This issue may be occur when using the TensorBoardServer in _cuberl_.
+This issue may be occur when using the TensorBoardServer in _bitrl_.
 This issue  is related with an issue with _protobuf_. See: https://stackoverflow.com/questions/72441758/typeerror-descriptors-cannot-not-be-created-directly for 
 possible solutions.
 

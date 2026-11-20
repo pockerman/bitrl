@@ -1,9 +1,9 @@
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/gymnasium/toy_text/black_jack_env.h"
-#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
-#include "cuberl/envs/gymnasium/toy_text/frozen_lake_env.h"
-#include "cuberl/envs/gymnasium/toy_text/taxi_env.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/gymnasium/toy_text/black_jack_env.h"
+#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
+#include "bitrl/envs/gymnasium/toy_text/taxi_env.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <any>
 #include <iostream>
@@ -12,15 +12,15 @@
 
 namespace gymnasium_part_1
 {
-using namespace bitrl;
+using namespace bitsim;
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
-using cuberl::envs::gymnasium::BlackJack;
-using cuberl::envs::gymnasium::CliffWorld;
-using cuberl::envs::gymnasium::FrozenLake;
-using cuberl::envs::gymnasium::Taxi;
-using cuberl::network::RESTRLEnvClient;
+using bitrl::envs::gymnasium::BlackJack;
+using bitrl::envs::gymnasium::CliffWorld;
+using bitrl::envs::gymnasium::FrozenLake;
+using bitrl::envs::gymnasium::Taxi;
+using bitrl::network::RESTRLEnvClient;
 
 void test_frozen_lake(RESTRLEnvClient &server)
 {
@@ -212,7 +212,7 @@ void test_cliff_world(RESTRLEnvClient &server)
 
     // make the environment
     std::unordered_map<std::string, std::any> options;
-    options["max_episode_steps"] = std::any(static_cast<bitrl::uint_t>(10));
+    options["max_episode_steps"] = std::any(static_cast<bitsim::uint_t>(10));
     std::unordered_map<std::string, std::any> reset_ops;
     reset_ops.insert({"seed", static_cast<uint_t>(42)});
     env.make("v1", options, reset_ops);

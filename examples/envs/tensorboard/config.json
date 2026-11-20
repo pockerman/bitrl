@@ -5,5 +5,5 @@
 "output_size": 1,
 "num_epochs": 60,
 "lr":0.001,
-"log_path":"/home/alex/qi3/cuberl/examples/intro/intro_example_2/tsb_log"
+"log_path":"/home/alex/qi3/bitrl/examples/intro/intro_example_2/tsb_log"
 }

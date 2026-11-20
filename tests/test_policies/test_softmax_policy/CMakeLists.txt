@@ -1,1 +1,1 @@
-cuberl_add_test(test_softmax_policy)
+bitrl_add_test(test_softmax_policy)

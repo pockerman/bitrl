@@ -1,4 +1,4 @@
-\page cuberl_example_4 CubeRL Example 4: Using PyTorch C++ API Part 3
+\page bitrl_example_4 bitrl Example 4: Using PyTorch C++ API Part 3
 
 Example 3 showed you how to create a simple PyTorch model for linear regression.
 However, we did so by utilzing _torch::nn::Linear_. In this example,
@@ -277,7 +277,7 @@ int main() {
 #include <iostream>
 int main(){
 
-    std::cout<<"This example requires PyTorch. Reconfigure cuberl with USE_PYTORCH  flag turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch. Reconfigure bitrl with USE_PYTORCH  flag turned ON."<<std::endl;
     return 0;
 }
 #endif

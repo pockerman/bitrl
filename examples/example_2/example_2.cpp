@@ -1,8 +1,8 @@
-#include "cuberl/base/cuberl_config.h"
+#include "bitrl/base/bitrl_config.h"
 
 #ifdef USE_PYTORCH
 
-#include "cuberl/base/cuberl_types.h"
+#include "bitrl/base/bitrl_types.h"
 
 #include <torch/torch.h>
 #include <boost/log/trivial.hpp>
@@ -14,9 +14,9 @@
 
 namespace example2{
 	
-	using cuberl::real_t;
-	using cuberl::uint_t;
-	using cuberl::int_t;
+	using bitrl::real_t;
+	using bitrl::uint_t;
+	using bitrl::int_t;
 }
 
 
@@ -98,7 +98,7 @@ int main() {
 #include <iostream>
 int main(){
 
-    std::cout<<"This example requires PyTorch and gymfcpp. Reconfigure cuberl with USE_PYTORCH flags turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch and gymfcpp. Reconfigure bitrl with USE_PYTORCH flags turned ON."<<std::endl;
     return 0;
 }
 #endif

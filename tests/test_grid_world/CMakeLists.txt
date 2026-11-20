@@ -1,1 +1,1 @@
-cuberl_add_test(test_grid_world)
+bitrl_add_test(test_grid_world)

@@ -1,4 +1,4 @@
-\page cuberl_example_chrono_rl_env Create an RL environment using Chrono
+\page bitrl_example_chrono_rl_env Create an RL environment using Chrono
 
 In this example we will create an environment for reinforcement learning based
 on the <a href="https://github.com/projectchrono/chrono">Chrono</a> library.
@@ -24,14 +24,14 @@ public:
     void build();
     void set_speed(real_t speed);
     void reset();
-    bitrl::rb::bitrl_chrono::CHRONO_RobotPose& pose()noexcept{return pose_;}
+    bitsim::rb::bitsim_chrono::CHRONO_RobotPose& pose()noexcept{return pose_;}
 
 private:
 
     std::shared_ptr<chrono::ChBody> chassis_;
     std::pair<std::shared_ptr<chrono::ChBody>, std::shared_ptr<chrono::ChBody>> wheels_;
     std::shared_ptr<chrono::ChBody> caster_wheel_;
-    bitrl::rb::bitrl_chrono::CHRONO_RobotPose pose_;
+    bitsim::rb::bitsim_chrono::CHRONO_RobotPose pose_;
 
 };
 @endcode
@@ -105,25 +105,25 @@ caster_wheel_ -> SetLinVel(chrono::ChVector3d(speed, 0.0, 0.0));
 
 ## Create the environment
 
-The environment class inherits from the \ref cuberl::envs::EnvBase "`cuberl::envs::EnvBase`" class. We will need to specify the
+The environment class inherits from the \ref bitrl::envs::EnvBase "`bitrl::envs::EnvBase`" class. We will need to specify the
 time step type and the space type:
 
 @code{.cpp}
 constexpr uint_t STATE_SPACE_SIZE = 2;
 constexpr uint_t ACTION_SPACE_SIZE = 1;
 
-using cuberl::TimeStepTp;
-using cuberl::TimeStep;
+using bitrl::TimeStepTp;
+using bitrl::TimeStep;
 
 //typedef TimeStep<std::vector<real_t> > time_step_type;
 typedef TimeStep<chrono::ChVector3d> time_step_type;
-typedef cuberl::envs::ContinuousVectorStateContinuousVectorActionEnv<STATE_SPACE_SIZE, STATE_SPACE_SIZE> space_type;
+typedef bitrl::envs::ContinuousVectorStateContinuousVectorActionEnv<STATE_SPACE_SIZE, STATE_SPACE_SIZE> space_type;
 @endcode
 
 Here is the definition of the actual class.
 
 @code{.cpp}
-class DiffDriveRobotEnv final: public cuberl::envs::EnvBase<time_step_type, space_type>
+class DiffDriveRobotEnv final: public bitrl::envs::EnvBase<time_step_type, space_type>
 {
 public:
 
@@ -188,7 +188,7 @@ DiffDriveRobotEnv::step(const action_type &/*action*/)
 
     if (sim_counter_ % 100 == 0)
     {
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
 BOOST_LOG_TRIVIAL(info)<<"Reset simulation: ";
 #endif
         return reset();
@@ -236,7 +236,7 @@ void DiffDriveRobotEnv::simulate()
     draw_world_axes(visual, 1.5);
 
     auto time_step = step( action_type());
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
 BOOST_LOG_TRIVIAL(info)<<"At time: "<<current_time_<<" position: "<<time_step.observation();
 #endif
 

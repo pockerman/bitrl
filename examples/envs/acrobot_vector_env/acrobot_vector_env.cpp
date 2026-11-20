@@ -1,7 +1,7 @@
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/gymnasium/classic_control/vector/acrobot_vec_env.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/gymnasium/classic_control/vector/acrobot_vec_env.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <any>
 #include <ios>
@@ -13,9 +13,9 @@
 int main()
 {
 
-    using namespace cuberl::envs::gymnasium;
-    using bitrl::uint_t;
-    using cuberl::network::RESTRLEnvClient;
+    using namespace bitrl::envs::gymnasium;
+    using bitsim::uint_t;
+    using bitrl::network::RESTRLEnvClient;
 
     const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 

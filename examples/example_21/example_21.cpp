@@ -2,21 +2,21 @@
  * Use DQN on Gridworld
  *
  * */
-#include "cuberl/base/cuberl_config.h"
+#include "bitrl/base/bitrl_config.h"
 
 #ifdef USE_PYTORCH
 
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
-#include "cuberl/maths/optimization/optimizer_type.h"
-#include "cuberl/maths/optimization/pytorch_optimizer_factory.h"
-#include "cuberl/rl/policies/epsilon_greedy_policy.h"
-#include "cuberl/utils/torch_adaptor.h"
-#include "cuberl/maths/vector_math.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/maths/optimization/optimizer_type.h"
+#include "bitrl/maths/optimization/pytorch_optimizer_factory.h"
+#include "bitrl/rl/policies/epsilon_greedy_policy.h"
+#include "bitrl/utils/torch_adaptor.h"
+#include "bitrl/maths/vector_math.h"
 
-#include "cuberl/utils/experience_buffer.h"
-#include "bitrl/utils/io/csv_file_writer.h"
-#include "cuberl/envs/grid_world/grid_world_env.h"
+#include "bitrl/utils/experience_buffer.h"
+#include "bitsim/utils/io/csv_file_writer.h"
+#include "bitrl/envs/grid_world/grid_world_env.h"
 
 #include <boost/log/trivial.hpp>
 #include <torch/torch.h>
@@ -34,18 +34,18 @@ namespace rl_example_12{
 
 	namespace F = torch::nn::functional;
 	
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::int_t;
-using cuberl::float_t;
-using cuberl::torch_tensor_t;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::int_t;
+using bitrl::float_t;
+using bitrl::torch_tensor_t;
 
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
-using cuberl::utils::ExperienceBuffer;
-using cuberl::envs::grid_world::Gridworld;
-using bitrl::utils::io::CSVWriter;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
+using bitrl::utils::ExperienceBuffer;
+using bitrl::envs::grid_world::Gridworld;
+using bitsim::utils::io::CSVWriter;
 
 	
 const std::string EXPERIMENT_ID = "1";
@@ -109,7 +109,7 @@ typedef env_type::time_step_type time_step_type;
 typedef std::tuple<std::vector<float_t>, uint_t, float_t,
 	               std::vector<float_t>, uint_t> experience_tuple_type;
 
-typedef cuberl::utils::ExperienceBuffer<experience_tuple_type> experience_buffer_type;
+typedef bitrl::utils::ExperienceBuffer<experience_tuple_type> experience_buffer_type;
 typedef env_type::state_type state_type;
 
 
@@ -155,7 +155,7 @@ get(const std::vector<experience_tuple_type>& experience){
 int main(){
 
     using namespace rl_example_12;
-	using namespace cuberl;
+	using namespace bitrl;
 
     try{
 
@@ -176,7 +176,7 @@ int main(){
 
 		// initialize the environment using random mode
 		std::unordered_map<std::string, std::any> options;
-        options["mode"] = std::any(cuberl::envs::grid_world::GridWorldInitType::RANDOM);
+        options["mode"] = std::any(bitrl::envs::grid_world::GridWorldInitType::RANDOM);
 
     	std::unordered_map<std::string, std::any> reset_options;
         env.make("v0", options, reset_options);
@@ -230,19 +230,19 @@ int main(){
 
 				auto obs1 = flattened_observation(time_step.observation());
 				
-				rand_vec = cuberl::maths::randomize(rand_vec, a, b, 64);
-				rand_vec = cuberl::maths::divide(rand_vec, 100.0);
+				rand_vec = bitrl::maths::randomize(rand_vec, a, b, 64);
+				rand_vec = bitrl::maths::divide(rand_vec, 100.0);
 				
 				// randomize the flattened observation by adding
 				// some noise
 				obs1 = maths::add(obs1, rand_vec);
-				auto torch_state_1 = cuberl::utils::pytorch::TorchAdaptor::to_torch(obs1, 
+				auto torch_state_1 = bitrl::utils::pytorch::TorchAdaptor::to_torch(obs1, 
 																		            DeviceType::CPU);
                 
                 // get the qvals
                 auto qvals = qnet(torch_state_1);
                 auto action_idx = policy(qvals, 
-				                         cuberl::torch_tensor_value_type<float_t>());
+				                         bitrl::torch_tensor_value_type<float_t>());
 				
 				BOOST_LOG_TRIVIAL(info)<<"Action selected: "<<action_idx<<std::endl;
 
@@ -252,11 +252,11 @@ int main(){
 				auto step_finished = time_step.done() ? static_cast<uint_t>(1) : static_cast<uint_t>(0);
 				
 				auto obs2 = flattened_observation(time_step.observation());
-				rand_vec = cuberl::maths::randomize(rand_vec, a, b, 64);
-				rand_vec = cuberl::maths::divide(rand_vec, 100.0);
+				rand_vec = bitrl::maths::randomize(rand_vec, a, b, 64);
+				rand_vec = bitrl::maths::divide(rand_vec, 100.0);
 				obs2 = maths::add(obs2, rand_vec);
 				
-				auto torch_state_2 = cuberl::utils::pytorch::TorchAdaptor::to_torch(obs2, 
+				auto torch_state_2 = bitrl::utils::pytorch::TorchAdaptor::to_torch(obs2, 
 																		 DeviceType::CPU);
 
 				experience_tuple_type exp = {obs1, action_idx, reward, obs2, step_finished}; 
@@ -281,26 +281,26 @@ int main(){
 					auto reward_batch          = get<float_t, 2>(batch_sample);
 					auto done_batch     = get<uint_t, 4>(batch_sample);
 					
-					auto state_1_batch_t = cuberl::utils::pytorch::TorchAdaptor::stack(state_1_batch, 
-																			cuberl::DeviceType::CPU);
+					auto state_1_batch_t = bitrl::utils::pytorch::TorchAdaptor::stack(state_1_batch, 
+																			bitrl::DeviceType::CPU);
 					auto q1 = qnet(state_1_batch_t);
 					
 					// tell the model that we don't use grad here
 					qnet->eval();
 					
-					auto state_2_batch_t = cuberl::utils::pytorch::TorchAdaptor::stack(state_2_batch, 
-																			cuberl::DeviceType::CPU);
+					auto state_2_batch_t = bitrl::utils::pytorch::TorchAdaptor::stack(state_2_batch, 
+																			bitrl::DeviceType::CPU);
 					auto q2 = qnet(state_2_batch_t);
 				
 					// we are training again
 					qnet->train();
 					
-					auto reward_batch_t = cuberl::utils::pytorch::TorchAdaptor::to_torch(reward_batch, 
-																		cuberl::DeviceType::CPU);
-					auto done_batch_t =   cuberl::utils::pytorch::TorchAdaptor::to_torch(done_batch, 
-																		cuberl::DeviceType::CPU);
-					auto action_batch_t = cuberl::utils::pytorch::TorchAdaptor::to_torch(action_batch, 
-																			  cuberl::DeviceType::CPU);
+					auto reward_batch_t = bitrl::utils::pytorch::TorchAdaptor::to_torch(reward_batch, 
+																		bitrl::DeviceType::CPU);
+					auto done_batch_t =   bitrl::utils::pytorch::TorchAdaptor::to_torch(done_batch, 
+																		bitrl::DeviceType::CPU);
+					auto action_batch_t = bitrl::utils::pytorch::TorchAdaptor::to_torch(action_batch, 
+																			  bitrl::DeviceType::CPU);
 															
 					auto state_max = torch::max(q2, 1);
 					auto state_max_val = std::get<0>(state_max);
@@ -338,7 +338,7 @@ int main(){
 				policy.set_eps_value(eps);
 			}*/
 			
-			losses.push_back(cuberl::maths::mean(epoch_loss.begin(),
+			losses.push_back(bitrl::maths::mean(epoch_loss.begin(),
 													epoch_loss.end()));
         }
 
@@ -364,7 +364,7 @@ int main(){
 int main(){
 
 	std::cout<<"This example requires PyTorch"<<std::endl;
-	std::cout<<"Reconfigure cuberl with USE_PYTORCH flag turned ON."<<std::endl;
+	std::cout<<"Reconfigure bitrl with USE_PYTORCH flag turned ON."<<std::endl;
     return 0;
 }
 #endif

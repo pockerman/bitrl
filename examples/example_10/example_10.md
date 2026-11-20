@@ -1,4 +1,4 @@
-\page cuberl_example_10 CubeRL Example 10: Multi-armed bandits
+\page bitrl_example_10 bitrl Example 10: Multi-armed bandits
 
 In this example we will look at how to solve the <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit">multi-armed bandits problem</a>.
 In particular, we will look at how to use two specific algorithms namely 
@@ -29,7 +29,7 @@ most of the time will greedily select the action with the highest accumulated re
 However for a small probability, \f$\epsilon\f$, the algorithm will randomly select an action
 amonst the available ones. This is a very simple algorithm and often provides quite good results.
 
-The \f$\epsilon\f$-greedy sampling is implemented in the class  \ref cuberl::rl::policies::EpsilonGreedyPolicy "cuberl::rl::policies::EpsilonGreedyPolicy".
+The \f$\epsilon\f$-greedy sampling is implemented in the class  \ref bitrl::rl::policies::EpsilonGreedyPolicy "bitrl::rl::policies::EpsilonGreedyPolicy".
 
 ### Thompson sampling
 
@@ -41,7 +41,7 @@ In the implementation below, we will use the <a href="https://en.wikipedia.org/w
 but this need not be the case. Feel free to experiment with this.
 
 
-The class \ref cuberl::envs::bandits::MultiArmedBandits "cuberl::envs::bandits::MultiArmedBandits" conveniently wraps the multi-armed bandits
+The class \ref bitrl::envs::bandits::MultiArmedBandits "bitrl::envs::bandits::MultiArmedBandits" conveniently wraps the multi-armed bandits
 framework into an environment we can utilise.
 
 
@@ -51,9 +51,9 @@ framework into an environment we can utilise.
 #include "cubeai/base/cubeai_types.h"
 #include "cubeai/maths/vector_math.h"
 #include "cubeai/rl/policies/epsilon_greedy_policy.h"
-#include "bitrl/utils/maths/statistics/distributions/beta_dist.h"
-#include "bitrl/utils/maths/statistics/distributions/bernoulli_dist.h"
-#include "cuberl/envs/multi_armed_bandits/multi_armed_bandits.h"
+#include "bitsim/maths/statistics/distributions/beta_dist.h"
+#include "bitsim/maths/statistics/distributions/bernoulli_dist.h"
+#include "bitrl/envs/multi_armed_bandits/multi_armed_bandits.h"
 
 #include <cmath>
 #include <utility>
@@ -68,15 +68,15 @@ framework into an environment we can utilise.
 namespace rl_example_2
 {
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::int_t;
-using cuberl::DynMat;
-using cuberl::DynVec;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
-using bitrl::utils::maths::stats::BetaDist;
-using bitrl::utils::maths::stats::BernoulliDist;
-using cuberl::envs::bandits::MultiArmedBandits;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::int_t;
+using bitrl::DynMat;
+using bitrl::DynVec;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
+using bitsim::maths::stats::BetaDist;
+using bitsim::maths::stats::BernoulliDist;
+using bitrl::envs::bandits::MultiArmedBandits;
 
 // Number of episodes to play
 uint_t N_EPISODES = 1000;
@@ -148,7 +148,7 @@ run_thompson_sampling(MultiArmedBandits& env){
 		}
 		
 		// find the max
-		auto max_item = cuberl::maths::arg_max(samples);
+		auto max_item = bitrl::maths::arg_max(samples);
 		auto time_step = env.step(max_item);
 		
 		auto reward = time_step.reward();

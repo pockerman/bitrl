@@ -1,18 +1,18 @@
-#include "bitrl/bitrl_config.h"
+#include "bitsim/bitsim_config.h"
 
-#if defined(BITRL_CHRONO) && defined(BITRL_IRRLICHT)
+#if defined(BITSIM_CHRONO) && defined(BITSIM_IRRLICHT)
 
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/rigid_bodies/chrono_robots/chrono_robot_pose.h"
-#include "bitrl/utils/bitrl_utils.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/rigid_bodies/chrono_robots/chrono_robot_pose.h"
+#include "bitsim/utils/bitsim_utils.h"
 
-#include "bitrl/rigid_bodies/chrono_robots/diff_drive_robot.h"
-#include "bitrl/utils/render/irrlicht_utils.h"
+#include "bitsim/rigid_bodies/chrono_robots/diff_drive_robot.h"
+#include "bitsim/utils/render/irrlicht_utils.h"
 
 #include <chrono/physics/ChSystemNSC.h>
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
 
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
 #include <boost/log/trivial.hpp>
 #endif
 
@@ -22,8 +22,8 @@
 namespace example14
 {
 
-using namespace bitrl;
-using bitrl::rb::bitrl_chrono::CHRONO_DiffDriveRobot;
+using namespace bitsim;
+using bitsim::rb::bitsim_chrono::CHRONO_DiffDriveRobot;
 
 auto build_generic_material()
 {
@@ -52,29 +52,29 @@ int main()
 {
     using namespace example14;
 
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
     BOOST_LOG_TRIVIAL(info) << "Starting simulation...: ";
 #endif
 
     // create the system and attach the robot to it
     chrono::ChSystemNSC system;
-    system.SetGravitationalAcceleration(chrono::ChVector3d(0, 0, -bitrl::consts::maths::G));
+    system.SetGravitationalAcceleration(chrono::ChVector3d(0, 0, -bitsim::consts::maths::G));
     system.SetCollisionSystemType(chrono::ChCollisionSystem::Type::BULLET);
 
     auto floor = build_floor(build_generic_material());
     system.Add(floor);
 
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
     BOOST_LOG_TRIVIAL(info) << "Building robot...: ";
 #endif
     CHRONO_DiffDriveRobot robot;
-    auto path = std::filesystem::path(bitrl::consts::ROBOTS_DIR + "/bitrl_diff_drive_robot.json");
+    auto path = std::filesystem::path(bitsim::consts::ROBOTS_DIR + "/bitsim_diff_drive_robot.json");
     robot.load(path);
 
     robot.add_to_sys(system);
 
     auto &sensor_manager = robot.get_sensor_manager();
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
     BOOST_LOG_TRIVIAL(info) << "Numner of sensors: " << sensor_manager.n_sensors();
 #endif
 
@@ -116,8 +116,8 @@ int main()
 int main()
 {
     std::cerr << "You need PROJECTCHRONO configured with "
-              << "bitrl in order to run this example "
-              << "Reconfigure bitrl and set ENABLE_CHRONO=ON" << std::endl;
+              << "bitsim in order to run this example "
+              << "Reconfigure bitsim and set ENABLE_CHRONO=ON" << std::endl;
     return 1;
 }
 
