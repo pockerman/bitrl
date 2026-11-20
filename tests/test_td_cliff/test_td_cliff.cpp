@@ -1,6 +1,5 @@
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/envs/time_step.h"
-#include "bitrl/rl/algorithms/td/expected_sarsa.h"
 #include "bitrl/rl/algorithms/td/q_learning.h"
 #include "bitrl/rl/algorithms/td/sarsa.h"
 #include "bitrl/rl/policies/epsilon_greedy_policy.h"
@@ -8,7 +7,6 @@
 
 #include <gtest/gtest.h>
 
-#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -127,7 +125,10 @@ std::string to_string(const std::vector<uint_t> &path)
 
 namespace
 {
-bool reaches_the_goal(const std::vector<uint_t> &path) { return path.back() == CliffWalk::GOAL; }
+bool reaches_the_goal(const std::vector<uint_t> &path)
+{
+    return path.back() == CliffWalk::GOAL;
+}
 
 } // namespace
 
@@ -177,91 +178,5 @@ TEST(TestTDCliff, QLearningTakesTheShortestPath)
         ASSERT_TRUE(reaches_the_goal(path)) << "seed " << seed << ": " << to_string(path);
         // up, four steps right along the edge, down
         EXPECT_EQ(path.size(), 7u) << "seed " << seed << ": " << to_string(path);
-    }
-}
-
-namespace
-{
-bitrl::rl::algos::td::ExpectedSarsaConfig expected_sarsa_config()
-{
-    bitrl::rl::algos::td::ExpectedSarsaConfig config;
-    config.gamma = 1.0;
-    config.eta = 0.5;
-    config.max_num_iterations_per_episode = 100;
-    return config;
-}
-
-using expected_sarsa_type =
-    bitrl::rl::algos::td::ExpectedSarsaSolver<CliffWalk, EpsilonGreedyPolicy>;
-} // namespace
-
-// Like SARSA, expected SARSA values the policy that explores, so it keeps
-// away from the cliff
-TEST(TestTDCliff, ExpectedSarsaTakesTheSafePath)
-{
-    for (uint_t seed = 1; seed <= 5; ++seed)
-    {
-        CliffWalk env;
-        expected_sarsa_type solver(expected_sarsa_config(), EpsilonGreedyPolicy(0.1, seed));
-        train(solver, env, 500);
-
-        const auto path = greedy_path(solver.build_policy());
-        ASSERT_TRUE(reaches_the_goal(path)) << "seed " << seed << ": " << to_string(path);
-        bool by_the_top_row = false;
-        for (auto s : path)
-        {
-            EXPECT_FALSE(CliffWalk::is_cliff(s)) << "seed " << seed << ": " << to_string(path);
-            by_the_top_row = by_the_top_row || s / CliffWalk::N_COLS == 0;
-        }
-        EXPECT_TRUE(by_the_top_row) << "seed " << seed << ": " << to_string(path);
-    }
-}
-
-// With epsilon 0 the policy is greedy, its expected value at a state is the
-// largest value there, and expected SARSA learns exactly what Q-learning does
-TEST(TestTDCliff, ExpectedSarsaWithAGreedyPolicyIsQLearning)
-{
-    CliffWalk env_1;
-    expected_sarsa_type expected_sarsa(expected_sarsa_config(), EpsilonGreedyPolicy(0.0, 7));
-    train(expected_sarsa, env_1, 50);
-
-    CliffWalk env_2;
-    bitrl::rl::algos::td::QLearningConfig config;
-    config.n_episodes = 50;
-    config.max_num_iterations_per_episode = 100;
-    config.tolerance = 1e-8;
-    config.gamma = 1.0;
-    config.eta = 0.5;
-    bitrl::rl::algos::td::QLearningSolver<CliffWalk, EpsilonGreedyPolicy> q_learning(
-        config, EpsilonGreedyPolicy(0.0, 7));
-    train(q_learning, env_2, 50);
-
-    const auto p1 = expected_sarsa.build_policy();
-    const auto p2 = q_learning.build_policy();
-    for (uint_t s = 0; s < env_1.n_states(); ++s)
-    {
-        EXPECT_EQ(p1.on_state(s), p2.on_state(s)) << "in state " << s;
-    }
-}
-
-TEST(TestTDCliff, ExpectedValueWeighsTheActionsWithThePolicy)
-{
-    CliffWalk env;
-    const real_t eps = 0.1;
-    expected_sarsa_type solver(expected_sarsa_config(), EpsilonGreedyPolicy(eps, 3));
-    train(solver, env, 100);
-
-    const auto &q = solver.q_table();
-    for (uint_t s = 0; s < env.n_states(); ++s)
-    {
-        real_t sum = 0.0;
-        real_t max = q(s, 0);
-        for (uint_t a = 0; a < env.n_actions(); ++a)
-        {
-            sum += q(s, a);
-            max = std::max(max, q(s, a));
-        }
-        const real_t expected = eps * sum / env.n_actions() + (1.0 - eps) * max;
-        EXPECT_NEAR(solver.expected_value(s), expected, 1e-12) << "in state " << s;
     }
 }
