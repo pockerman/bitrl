@@ -57,33 +57,33 @@ after it. Reaching the goal is the only reward, 1, so the value of a state is \f
 is the number of steps from it to the goal. The start is 6 steps away and has a value of
 \f$0.99^5 \approx 0.951\f$.
 
-| ![State value function](frozen_lake_state_value_function.png) |
+| ![State value function](images/frozen_lake_state_value_function.png) |
 |:--:|
 | **Figure 1: The state value function.** |
 
 The policy reaches the goal in those 6 steps, the shortest path around the holes.
 
-| ![fz-vi-step-1](fz_vi_step_1.png) |
+| ![fz-vi-step-1](images/fz_vi_step_1.png) |
 |:--:|
 | **Figure 2: Playing FrozenLake, step 1.** |
 
-| ![fz-vi-step-2](fz_vi_step_2.png) |
+| ![fz-vi-step-2](images/fz_vi_step_2.png) |
 |:--:|
 | **Figure 3: Step 2.** |
 
-| ![fz-vi-step-3](fz_vi_step_3.png) |
+| ![fz-vi-step-3](images/fz_vi_step_3.png) |
 |:--:|
 | **Figure 4: Step 3.** |
 
-| ![fz-vi-step-4](fz_vi_step_4.png) |
+| ![fz-vi-step-4](images/fz_vi_step_4.png) |
 |:--:|
 | **Figure 5: Step 4.** |
 
-| ![fz-vi-step-5](fz_vi_step_5.png) |
+| ![fz-vi-step-5](images/fz_vi_step_5.png) |
 |:--:|
 | **Figure 6: Step 5.** |
 
-| ![fz-vi-step-6](fz_vi_step_6.png) |
+| ![fz-vi-step-6](images/fz_vi_step_6.png) |
 |:--:|
 | **Figure 7: Step 6, the goal.** |
 

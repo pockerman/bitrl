@@ -9,16 +9,16 @@ without needing a model of the environment.
 As the name suggests, the algorithms learns a state-action value function \f$Q(s,\alpha)\f$.
 The algorithm is very similar to SARSA. Before we show the algorithmic steps, here is the update function used in Q-learning
 
-$$
+\f[
 Q(s,\alpha) = Q(s,\alpha) + \eta \big[r_t + \gamma \max_{\alpha_{t+1}} Q(s_{t+1}, \alpha_{t+1}) - Q(s,\alpha)\big]
-$$
+\f]
 
-The algorithm just like SARSA looks into the future but always selects the action that provides the best $Q$. Contrast this with the update formula
+The algorithm just like SARSA looks into the future but always selects the action that provides the best \f$Q\f$. Contrast this with the update formula
 for SARSA:
 
-$$
+\f[
 Q(s_t, \alpha_t) = Q(s_t, \alpha_t) + \eta \left[r_{t+1} + \gamma Q(s_{t+1}, \alpha_{t+1}) - Q(s_t, \alpha_t) \right]
-$$
+\f]
 
 So Q-learning instead of consulting \f$\pi\f$ about \f$\alpha_{t+1}\f$ it simply acts greedily and selects the action that provides the best state-action value function.
 This is called optimistic bootstrapping; assume the best possible action will be taken next, regardless of what we'll actually do.
@@ -26,13 +26,13 @@ Here are the steps for Q-learning. These are very similar to SARSA:
 
 #### Step 1
 
-The first step is to initialize the table that represents $Q(s,\alpha)$ to arbitrary values; often this is just zero. This however, can also
+The first step is to initialize the table that represents \f$Q(s,\alpha)\f$ to arbitrary values; often this is just zero. This however, can also
 be values that encourage exploration.
 
 #### Step 2
 
 The algorithm begins by some be presented with a state. Q-learning needs to decide what to do whilst at this state. This is done using a policy
-$\pi$ which most often will be an \f$\epsilon-\f$greedy policy.
+\f$\pi\f$ which most often will be an \f$\epsilon-\f$greedy policy.
 
 #### Step 3
 
@@ -70,106 +70,7 @@ The Q-learning algorithm is implemented in the \ref bitrl::rl::algos::td::QLearn
 #include <boost/log/trivial.hpp>
 @endcode
 
-@code{.cpp}
-namespace rl_example_10{
-
-const std::string SERVER_URL = "http://0.0.0.0:8001/api";
-
-const std::string SOLUTION_FILE = "qlearning_cliff_walking_v1.csv";
-const std::string REWARD_PER_ITR = "reward_per_itr.csv";
-const std::string POLICY = "policy.csv";
-
-using bitrl::real_t;
-using bitrl::uint_t;
-using bitrl::rl::policies::EpsilonGreedyPolicy;
-using bitrl::rl::algos::td::QLearningSolver;
-using bitrl::rl::algos::td::QLearningConfig;
-using bitrl::rl::policies::EpsilonDecayOption;
-using bitrl::rl::RLSerialAgentTrainer;
-using bitrl::rl::RLSerialTrainerConfig;
-using bitrl::network::RESTRLEnvClient;
-typedef  bitrl::envs::gymnasium::CliffWorld env_type;
-
-}
-
-
-int main(){
-
-	BOOST_LOG_TRIVIAL(info)<<"Starting agent training";
-    using namespace rl_example_10;
-
-    try{
-		
-		RESTRLEnvClient server(SERVER_URL, true);
-
-        // create the environment
-        env_type env(server);
-
-        BOOST_LOG_TRIVIAL(info)<<"Creating environment...";
-        
-		std::unordered_map<std::string, std::any> options;
-    	std::unordered_map<std::string, std::any> reset_options;
-        env.make("v0", options, reset_options);
-        env.reset();
-		
-        BOOST_LOG_TRIVIAL(info)<<"Done...";
-        BOOST_LOG_TRIVIAL(info)<<"Number of states="<<env.n_states();
-        BOOST_LOG_TRIVIAL(info)<<"Number of actions="<<env.n_actions();
-
-		// create an e-greedy policy. Use the number 
-		// of actions as a seed. Use a constant epsilon
-        EpsilonGreedyPolicy policy(0.01, env.n_actions(), 
-		                           EpsilonDecayOption::NONE);
-
-        QLearningConfig qlearn_config;
-        qlearn_config.gamma = 0.9;
-        qlearn_config.eta = 0.5;
-        qlearn_config.tolerance = 1.0e-8;
-        qlearn_config.max_num_iterations_per_episode = 1000;
-        qlearn_config.path = SOLUTION_FILE;
-
-        QLearningSolver<env_type, EpsilonGreedyPolicy> algorithm(qlearn_config, policy);
-
-        RLSerialTrainerConfig trainer_config = {10, 1000, 1.0e-8};
-
-        RLSerialAgentTrainer<env_type,
-                QLearningSolver<env_type, EpsilonGreedyPolicy>> trainer(trainer_config, algorithm);
-
-        auto info = trainer.train(env);
-        BOOST_LOG_TRIVIAL(info)<<info;
-		
-		// save the reward the agent achieved per training epoch
-		auto reward = trainer.episodes_total_rewards();
-		auto iterations = trainer.n_itrs_per_episode();
-	
-		bitsim::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
-		csv_writer.open();
-		
-		csv_writer.write_column_names({"epoch", "reward"});
-		
-		auto epoch = static_cast<uint_t>(0);
-		for(auto val: reward){
-			
-			std::tuple<uint_t, real_t> row = {epoch++, val};
-			csv_writer.write_row(row);
-		}
-		
-		csv_writer.close();
-		
-		// build the policy
-		algorithm.build_policy().save(POLICY);
-
-    }
-    catch(std::exception& e){
-        std::cout<<e.what()<<std::endl;
-    }
-    catch(...){
-
-        std::cout<<"Unknown exception occured"<<std::endl;
-    }
-    return 0;
-}
-@endcode
+\include example_16/example_16.cpp
 
 
 
