@@ -20,6 +20,8 @@
 #include <torch/torch.h>
 
 #include <filesystem>
+#include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -51,7 +53,7 @@ typedef bitrl::envs::gymnasium::LunarLanderContinuousEnv env_type;
 const uint_t L1 = 8;
 const uint_t L2 = 128;
 const uint_t L3 = 64;
-constexpr real_t LEARNING_RATE = 0.001;
+constexpr real_t LEARNING_RATE = 3.0e-4;
 const auto N_EPISODES = 2000;
 
 // create the Action network
@@ -73,22 +75,25 @@ class ActorNetImpl : public torch::nn::Module
 
   private:
     torch::nn::Linear fc1_;
-    torch::nn::Dropout dp_;
     torch::nn::Linear fc2_;
     torch::nn::Linear mean_layer_;
-    torch::nn::Linear log_std_;
+
+    // the log of the standard deviation of every action, learned but the same
+    // in every state
+    torch_tensor_t log_std_;
 };
 
 ActorNetImpl::ActorNetImpl()
-    : torch::nn::Module(), fc1_(torch::nn::Linear(L1, L2)), dp_(torch::nn::Dropout(0.6)),
-      fc2_(torch::nn::Linear(L2, L3)), mean_layer_(torch::nn::Linear(64, 2)),
-      log_std_(torch::nn::Linear(64, 2))
+    : torch::nn::Module(), fc1_(torch::nn::Linear(L1, L2)), fc2_(torch::nn::Linear(L2, L3)),
+      mean_layer_(torch::nn::Linear(L3, 2))
 {
     register_module("fc1_", fc1_);
-    register_module("dp_", dp_);
     register_module("fc2_", fc2_);
     register_module("mean_layer_", mean_layer_);
-    register_module("log_std_", log_std_);
+
+    // start with a standard deviation of exp(-0.5) = 0.6: wide enough to
+    // explore, narrow enough that tanh does not squash most samples to -1 or 1
+    log_std_ = register_parameter("log_std_", torch::full({2}, -0.5));
 }
 
 template <typename StateTp>
@@ -119,15 +124,13 @@ std::tuple<std::vector<real_t>, torch_tensor_t> ActorNetImpl::act(const StateTp 
 std::pair<torch_tensor_t, torch_tensor_t> ActorNetImpl::forward(torch_tensor_t state)
 {
 
-    state = torch::relu(fc1_->forward(state));
-    state = torch::relu(fc2_->forward(state));
+    state = torch::tanh(fc1_->forward(state));
+    state = torch::tanh(fc2_->forward(state));
     auto mean = mean_layer_->forward(state);
-    auto log_std = log_std_->forward(state);
-    // auto std = torch::exp(log_std);
 
-    // Clamp for numerical stability
-    log_std = torch::clamp(log_std, -20.0f, 2.0f);
-
+    // a standard deviation between exp(-5) and exp(0.5), the same shape as the
+    // mean so that it works for one state and for a batch
+    auto log_std = torch::clamp(log_std_, -5.0, 0.5).expand_as(mean);
     return {mean, log_std};
 }
 
@@ -222,7 +225,10 @@ int main()
         BOOST_LOG_TRIVIAL(info) << "Number of actions=" << env.n_actions();
 
         PPOConfig ppo_config;
-        ppo_config.max_itrs_per_episode = 500;
+        // Gymnasium ends LunarLander after 1000 steps
+        ppo_config.max_itrs_per_episode = 1000;
+        ppo_config.clip_epsilon = 0.2;
+        ppo_config.gamma = 0.99;
         ppo_config.n_episodes = N_EPISODES;
         ppo_config.device_type = DeviceType::CPU;
 
@@ -255,6 +261,46 @@ int main()
 
         BOOST_LOG_TRIVIAL(info) << "Training info...";
         BOOST_LOG_TRIVIAL(info) << info;
+
+        // land 10 times with the greedy policy, tanh of the mean, each from the
+        // next seed, and write the actions of every landing to episode_<k>.csv
+        // for examples/tools/episode_gif.py
+        {
+            policy->eval();
+            torch::NoGradGuard no_grad;
+            real_t sum = 0.0;
+            uint_t landed = 0;
+            for (uint_t k = 0; k < 10; ++k)
+            {
+                std::ofstream episode_file("episode_" + std::to_string(k) + ".csv");
+                // all the digits: a landing is chaotic, and a replay from rounded
+                // actions drifts away from it
+                episode_file << std::setprecision(17);
+                auto time_step = env.reset();
+                episode_file << "# seed " << env.last_reset_seed() << "\n";
+                real_t total_reward = 0.0;
+                uint_t steps = 0;
+                while (!time_step.done() && steps < 1000)
+                {
+                    auto state =
+                        torch::tensor(time_step.observation(), torch::dtype(torch::kFloat32));
+                    auto [mean, log_std] = policy->forward(state);
+                    const auto action =
+                        TorchAdaptor::to_vector<real_t>(torch::tanh(mean).to(torch::kDouble));
+                    episode_file << action[0] << "," << action[1] << "\n";
+                    time_step = env.step(action);
+                    total_reward += time_step.reward();
+                    steps += 1;
+                }
+                sum += total_reward;
+                landed += total_reward >= 200.0 ? 1 : 0;
+                std::cout << "Greedy landing " << k << " from seed " << env.last_reset_seed()
+                          << ": return " << total_reward << " in " << steps << " steps"
+                          << std::endl;
+            }
+            std::cout << "The greedy policy scored 200 or more in " << landed
+                      << " of 10 landings, with a mean return of " << sum / 10.0 << std::endl;
+        }
 
         auto experiment_path = std::string("experiments/") + EXPERIMENT_ID;
 
