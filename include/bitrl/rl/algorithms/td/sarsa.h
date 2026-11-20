@@ -88,9 +88,11 @@ class SarsaSolver final : public TDAlgoBase<EnvType>
     ///
     /// \brief actions_after_training_episode
     ///
-    virtual void actions_after_episode_ends(env_type &, uint_t /*episode_idx*/,
+    virtual void actions_after_episode_ends(env_type &, uint_t episode_idx,
                                             const EpisodeInfo & /*einfo*/)
     {
+        // let the policy adjust, for example decay its epsilon
+        policy_.on_episode(episode_idx);
     }
 
     ///
@@ -171,12 +173,13 @@ EpisodeInfo SarsaSolver<EnvTp, PolicyType>::on_training_episode(env_type &env, u
     auto time_step = env.reset();
     auto state = time_step.observation();
 
+    // SARSA is on-policy: it takes the action it chose for the next state
+    // when it updated the table
+    auto action = policy_(q_table_, state);
+
     uint_t itr = 0;
     for (; itr < config_.max_num_iterations_per_episode; ++itr)
     {
-
-        // select an action
-        auto action = policy_(q_table_, state);
 
         // Take a on_episode
         auto step_type_result = env.step(action);
@@ -192,7 +195,7 @@ EpisodeInfo SarsaSolver<EnvTp, PolicyType>::on_training_episode(env_type &env, u
         {
 
             // use the policy to select the next action
-            auto next_action = policy_(q_table_, state);
+            auto next_action = policy_(q_table_, next_state);
             update_q_table_(action, state, next_state, next_action, reward);
             state = next_state;
             action = next_action;
