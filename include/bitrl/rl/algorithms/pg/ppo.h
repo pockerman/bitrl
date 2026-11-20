@@ -28,6 +28,8 @@
 #endif
 
 #include <chrono>
+#include <type_traits>
+#include <vector>
 
 namespace bitrl
 {
@@ -145,19 +147,31 @@ PPOSolver<EnvType, PolicyType, CriticType>::train_with_batch_(experience_buffer_
     // the batch for this episode
     auto batch = buffer.template get<batch_type>();
     auto states = this->monitor_.template get<state_type, 0>(batch);
-    std::vector<std::vector<float_t>> states_f(states.size());
+    auto actions = this->monitor_.template get<action_type, 1>(batch);
 
+    // a state or an action is a vector, or a single number such as the index
+    // of a discrete action; either way a row of floats
+    auto as_floats = [](const auto &value)
+    {
+        using value_type = std::decay_t<decltype(value)>;
+        if constexpr (std::is_arithmetic_v<value_type>)
+        {
+            return std::vector<float_t>{static_cast<float_t>(value)};
+        }
+        else
+        {
+            return std::vector<float_t>(value.begin(), value.end());
+        }
+    };
+    std::vector<std::vector<float_t>> states_f(states.size());
     for (uint_t i = 0; i < states.size(); ++i)
     {
-        states_f[i] = std::vector<float_t>(states[i].begin(), states[i].end());
+        states_f[i] = as_floats(states[i]);
     }
-
-    auto actions = this->monitor_.template get<action_type, 1>(batch);
     std::vector<std::vector<float_t>> actions_f(actions.size());
-
     for (uint_t i = 0; i < actions.size(); ++i)
     {
-        actions_f[i] = std::vector<float_t>(actions[i].begin(), actions[i].end());
+        actions_f[i] = as_floats(actions[i]);
     }
 
     auto rewards_batch = this->monitor_.template get<float_t, 2>(batch);
@@ -171,12 +185,21 @@ PPOSolver<EnvType, PolicyType, CriticType>::train_with_batch_(experience_buffer_
     auto torch_actions_batch = TorchAdaptor::stack(actions_f, this->config_.device_type, true);
     auto torch_rewards_batch =
         TorchAdaptor::to_torch(discounted_returns, this->config_.device_type, false).detach();
-    auto torch_values_batch = TorchAdaptor::stack(values_batch, this->config_.device_type);
+    // one value per step: the critic and the policy give tensors of one
+    // element, which stack into a column, and a column minus a row would
+    // broadcast into a matrix
+    torch_rewards_batch = torch_rewards_batch.view({-1});
+    auto torch_values_batch =
+        TorchAdaptor::stack(values_batch, this->config_.device_type).view({-1});
     auto old_torch_logprobs_batch =
-        TorchAdaptor::stack(logprobs_batch, this->config_.device_type).detach();
+        TorchAdaptor::stack(logprobs_batch, this->config_.device_type).view({-1}).detach();
 
-    // form the advantage
+    // form the advantage: how much better the return was than the critic said
     auto advantages = (torch_rewards_batch - torch_values_batch).detach();
+    if (this->config_.normalize_advantages && advantages.numel() > 1)
+    {
+        advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8);
+    }
 
     std::vector<real_t> loss_vals(this->config_.max_passes_over_batch, 0.0);
     for (uint_t p = 0; p < this->config_.max_passes_over_batch; ++p)
@@ -184,14 +207,14 @@ PPOSolver<EnvType, PolicyType, CriticType>::train_with_batch_(experience_buffer_
         auto [new_log_probs, entropy, _] =
             this->policy_->evaluate(torch_states_batch, torch_actions_batch);
 
-        auto ratio = (new_log_probs - old_torch_logprobs_batch).exp();
+        auto ratio = (new_log_probs.view({-1}) - old_torch_logprobs_batch).exp();
         auto surr1 = ratio * advantages;
         auto surr2 =
             torch::clamp(ratio, 1 - this->config_.clip_epsilon, 1 + this->config_.clip_epsilon) *
             advantages;
         auto actor_loss = -torch::min(surr1, surr2).mean();
 
-        auto value_estimates = this->critic_->forward(torch_states_batch).squeeze();
+        auto value_estimates = this->critic_->forward(torch_states_batch).view({-1});
         auto critic_loss = torch::nn::functional::mse_loss(value_estimates, torch_rewards_batch);
 
         auto total_loss = actor_loss + 0.5 * critic_loss - 0.01 * entropy;

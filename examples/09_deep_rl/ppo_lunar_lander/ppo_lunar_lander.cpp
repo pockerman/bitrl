@@ -134,10 +134,17 @@ std::pair<torch_tensor_t, torch_tensor_t> ActorNetImpl::forward(torch_tensor_t s
 std::tuple<torch_tensor_t, torch_tensor_t, torch_tensor_t>
 ActorNetImpl::evaluate(torch_tensor_t states, torch_tensor_t actions)
 {
-    auto [mean, std] = this->forward(states);
-    auto dist = TorchNormalDist(mean, std);
-    auto log_probs = dist.log_prob(actions).sum(1);
-    auto entropy = dist.entropy().sum(1).mean();
+    // forward gives the log of the standard deviation
+    auto [mean, log_std] = this->forward(states);
+    auto dist = TorchNormalDist(mean, torch::exp(log_std));
+
+    // act squashed the sampled action into [-1, 1] with tanh, and corrected its
+    // log probability for that; do the same for the stored actions: undo the
+    // tanh to get the sample, and correct its log probability the same way
+    const auto squashed = actions.clamp(-1.0 + 1e-6, 1.0 - 1e-6);
+    const auto raw = torch::atanh(squashed);
+    auto log_probs = dist.log_prob(raw).sum(-1) - torch::log(1 - squashed.pow(2) + 1e-6).sum(-1);
+    auto entropy = dist.entropy().sum(-1).mean();
     return {log_probs, entropy, mean};
 }
 
