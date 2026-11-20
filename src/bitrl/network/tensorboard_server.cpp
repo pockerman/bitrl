@@ -26,7 +26,7 @@ void TensorboardServer::init(const std::string &log_dir)
     j["log_dir_path"] = log_dir;
 
     auto body = j.dump();
-    const auto response = request.send("POST", body);
+    const auto response = request.send("POST", body, {{"Content-Type", "application/json"}});
 
     if (response.status.code != 201)
     {
@@ -52,7 +52,7 @@ void TensorboardServer::close()
     json j;
 
     auto body = j.dump();
-    const auto response = request.send("POST", body);
+    const auto response = request.send("POST", body, {{"Content-Type", "application/json"}});
     log_dir_ = bitsim::consts::INVALID_STR;
 }
 
@@ -78,7 +78,7 @@ void TensorboardServer::add_scalar(const std::string &tag, real_t value, uint_t 
     }
 
     auto body = j.dump();
-    const auto response = request.send("POST", body);
+    const auto response = request.send("POST", body, {{"Content-Type", "application/json"}});
 
     if (response.status.code != 201)
     {
@@ -111,7 +111,7 @@ void TensorboardServer::add_scalars(const std::string &main_tag,
     }
 
     auto body = j.dump();
-    const auto response = request.send("POST", body);
+    const auto response = request.send("POST", body, {{"Content-Type", "application/json"}});
 
     if (response.status.code != 201)
     {
@@ -143,7 +143,7 @@ void TensorboardServer::add_text(const std::string &tag, const std::string &text
     }
 
     auto body = j.dump();
-    const auto response = request.send("POST", body);
+    const auto response = request.send("POST", body, {{"Content-Type", "application/json"}});
 
     if (response.status.code != 201)
     {

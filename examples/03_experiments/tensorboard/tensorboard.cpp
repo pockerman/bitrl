@@ -9,7 +9,7 @@
  *	- ```add_text```
  *
  *	We will use ```add_scalar``` and ```add_text```. In order to run this example, fire up the
- *server using the ```torchboard_server/start_uvicorn.sh```. The server listens at port 8002. You
+ *bitrl-rest-api server, which runs Tensorboard's Python side and listens at port 8001. You
  *can change this however you want just make sure that the port is not used and also update the
  *	variable ```TORCH_SERVER_HOST``` in the code below accordingly. Note that the implementation
  *uses <a
@@ -73,10 +73,10 @@ int main()
         std::cout << "Max epochs: " << num_epochs << std::endl;
         std::cout << "Learning rate: " << learning_rate << std::endl;
 
-        TensorboardServer logger("http://0.0.0.0:8002");
+        TensorboardServer logger("http://0.0.0.0:8001");
 
         std::cout << "Logging results at " << logger.get_log_dir_path() << std::endl;
-        logger.init(log_path);
+        logger.init(std::filesystem::absolute(log_path).string());
 
         logger.add_scalar("lr", learning_rate);
         logger.add_scalar("seed", 42);
