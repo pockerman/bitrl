@@ -9,7 +9,7 @@
 #include <boost/log/trivial.hpp>
 #include <tuple>
 
-namespace rl_example_8{
+namespace example_14{
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 const std::string SOLUTION_FILE = "value_iteration_frozen_lake_v1.csv";
@@ -38,7 +38,7 @@ int main() {
 
 	BOOST_LOG_TRIVIAL(info)<<"Starting agent training";
 	
-    using namespace rl_example_8;
+    using namespace example_14;
 	
 	RESTRLEnvClient server(SERVER_URL, true);
 
@@ -75,7 +75,6 @@ int main() {
 	
 	// save the reward the agent achieved per training epoch
 	auto reward = trainer.episodes_total_rewards();
-	auto iterations = trainer.n_itrs_per_episode();
 	
 	bitrl::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
 	csv_writer.open();

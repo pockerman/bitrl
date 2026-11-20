@@ -1,5 +1,6 @@
 import gymnasium as gym
 from pathlib import Path
+import sys
 import csv
 import time
 
@@ -22,7 +23,8 @@ def load_policy(filename: Path) -> dict:
 if __name__ == '__main__':
 
 
-    policy_path = Path('/home/alex/qi3/cuberl/build/examples/rl/rl_example_8/policy.csv')
+    # Run it from the directory the example wrote policy.csv to, or pass the file
+    policy_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('policy.csv')
     policy = load_policy(policy_path)
     is_slippery = False
     max_episode_steps = 200
