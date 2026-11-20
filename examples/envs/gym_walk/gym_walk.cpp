@@ -1,6 +1,6 @@
 #include "bitrl/envs/gdrl/gym_walk.h"
-#include "bitsim/bitsim_types.h"
 #include "bitrl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_types.h"
 
 #include <any>
 #include <iostream>

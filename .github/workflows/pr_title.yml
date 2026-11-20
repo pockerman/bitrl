@@ -1,0 +1,34 @@
+name: PR title
+
+# PRs are squash merged, so the PR title becomes the commit message on master.
+# It must be a conventional commit, see CONTRIBUTING.md.
+on:
+  pull_request_target:
+    branches: [ master ]
+    types: [ opened, edited, reopened, synchronize ]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  conventional-commit:
+    runs-on: ubuntu-24.04
+    steps:
+      # Reads only the PR title; it never checks out the PR code
+      - uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            perf
+            refactor
+            docs
+            test
+            build
+            ci
+            chore
+            style
+            revert
+          requireScope: false

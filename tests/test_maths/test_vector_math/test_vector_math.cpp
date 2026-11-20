@@ -2,21 +2,23 @@
 #include "bitrl/maths/vector_math.h"
 
 #include <gtest/gtest.h>
-#include <vector>
 #include <iostream>
+#include <vector>
 
-namespace{
+namespace
+{
 
+using bitrl::DynVec;
 using bitrl::real_t;
 using bitrl::uint_t;
-using bitrl::DynVec;
-}
+} // namespace
 
-
-TEST(TestSoftMaxVector, Test_1) {
+TEST(TestSoftMaxVector, Test_1)
+{
 
     DynVec<real_t> vals(4);
-    for(uint_t i=0; i< static_cast<uint_t>(vals.size()); ++i){
+    for (uint_t i = 0; i < static_cast<uint_t>(vals.size()); ++i)
+    {
         vals[i] = 10.0;
     }
 
@@ -26,13 +28,14 @@ TEST(TestSoftMaxVector, Test_1) {
     EXPECT_DOUBLE_EQ(0.25, softmax_vec[1]);
     EXPECT_DOUBLE_EQ(0.25, softmax_vec[2]);
     EXPECT_DOUBLE_EQ(0.25, softmax_vec[3]);
-
 }
 
-TEST(TestZeroCenter, Test_2) {
+TEST(TestZeroCenter, Test_2)
+{
 
     DynVec<real_t> vals(4);
-    for(uint_t i=0; i< static_cast<uint_t>(vals.size()); ++i){
+    for (uint_t i = 0; i < static_cast<uint_t>(vals.size()); ++i)
+    {
         vals[i] = 10.0;
     }
 
@@ -43,11 +46,10 @@ TEST(TestZeroCenter, Test_2) {
     EXPECT_DOUBLE_EQ(vals[1] - mean, zero_center_mean[1]);
     EXPECT_DOUBLE_EQ(vals[2] - mean, zero_center_mean[2]);
     EXPECT_DOUBLE_EQ(vals[3] - mean, zero_center_mean[3]);
-
 }
 
-
-TEST(TestLogSpace, Test_3) {
+TEST(TestLogSpace, Test_3)
+{
 
     // this is taken from NumPy:
     // https://numpy.org/doc/stable/reference/generated/numpy.logspace.html
@@ -58,7 +60,6 @@ TEST(TestLogSpace, Test_3) {
     EXPECT_NEAR(vals[1], 215.44, 1.0e-2);
     EXPECT_NEAR(vals[2], 464.15, 1.0e-2);
     EXPECT_NEAR(vals[3], 1000.0, 1.0e-2);
-
 }
 
 /*

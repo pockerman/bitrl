@@ -3,8 +3,8 @@
 #ifndef REST_RL_ENV_CLIENT_H
 #define REST_RL_ENV_CLIENT_H
 
-#include "bitsim/bitsim_consts.h"
 #include "bitrl/base/bitrl_types.h"
+#include "bitsim/bitsim_consts.h"
 #include "bitsim/extern/HTTPRequest.hpp"
 #include "bitsim/extern/nlohmann/json/json.hpp"
 

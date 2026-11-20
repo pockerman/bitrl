@@ -1,6 +1,6 @@
+#include "bitrl/envs/connect2/connect2_env.h"
 #include "bitsim/bitsim_consts.h"
 #include "bitsim/bitsim_types.h"
-#include "bitrl/envs/connect2/connect2_env.h"
 #include "bitsim/utils/io/io_utils.h"
 
 #include <any>

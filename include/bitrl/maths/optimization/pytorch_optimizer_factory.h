@@ -5,29 +5,31 @@
 
 #ifdef USE_PYTORCH
 
-
 #include "bitrl/maths/optimization/optimizer_type.h"
-#include <torch/torch.h>
-#include <memory>
-#include <map>
 #include <any>
+#include <map>
+#include <memory>
 #include <string>
+#include <torch/torch.h>
 
 #ifdef BITRL_DEBUG
 #include <cassert>
 #endif
 
-namespace bitrl {
-namespace maths{
-namespace optim {
-namespace pytorch {
-
+namespace bitrl
+{
+namespace maths
+{
+namespace optim
+{
+namespace pytorch
+{
 
 ///
 ///
 ///
 std::unique_ptr<torch::optim::OptimizerOptions>
-build_pytorch_optimizer_options(OptimizerType type, const std::map<std::string, std::any>& options);
+build_pytorch_optimizer_options(OptimizerType type, const std::map<std::string, std::any> &options);
 
 ///
 /// \brief build_pytorch_optimizer
@@ -35,7 +37,8 @@ build_pytorch_optimizer_options(OptimizerType type, const std::map<std::string, 
 /// \param model
 /// \return
 std::unique_ptr<torch::optim::Optimizer>
-build_pytorch_optimizer(OptimizerType type, torch::nn::Module& model, const torch::optim::OptimizerOptions& options);
+build_pytorch_optimizer(OptimizerType type, torch::nn::Module &model,
+                        const torch::optim::OptimizerOptions &options);
 
 ///
 /// \brief build_pytorch_optimizer
@@ -43,13 +46,15 @@ build_pytorch_optimizer(OptimizerType type, torch::nn::Module& model, const torc
 /// \param model
 /// \return
 std::unique_ptr<torch::optim::Optimizer>
-build_pytorch_optimizer(OptimizerType type, torch::nn::Module& model, std::unique_ptr<torch::optim::OptimizerOptions>& options){
+build_pytorch_optimizer(OptimizerType type, torch::nn::Module &model,
+                        std::unique_ptr<torch::optim::OptimizerOptions> &options)
+{
     return build_pytorch_optimizer(type, model, *options.get());
 }
 
-}
-}
-}
-}
+} // namespace pytorch
+} // namespace optim
+} // namespace maths
+} // namespace bitrl
 #endif
 #endif // PYTORCH_OPTIMIZER_FACTORY_H

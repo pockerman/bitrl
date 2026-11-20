@@ -1,11 +1,11 @@
 #ifndef ROBOT_ENV_H
 #define ROBOT_ENV_H
 
-#include "bitsim/bitsim_types.h"
 #include "bitrl/envs/env_base.h"
 #include "bitrl/envs/env_types.h"
 #include "bitrl/envs/time_step.h"
 #include "bitrl/envs/time_step_type.h"
+#include "bitsim/bitsim_types.h"
 
 #include <chrono/physics/ChSystemNSC.h>
 

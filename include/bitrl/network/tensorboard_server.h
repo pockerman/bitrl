@@ -1,8 +1,8 @@
 #ifndef TENSORBOARD_SERVER_H
 #define TENSORBOARD_SERVER_H
 
-#include "bitsim/bitsim_consts.h"
 #include "bitrl/base/bitrl_types.h"
+#include "bitsim/bitsim_consts.h"
 
 #include <boost/noncopyable.hpp>
 #include <string>
