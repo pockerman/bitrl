@@ -181,7 +181,7 @@ nlohmann::json RESTRLEnvClient::step(const std::string &env_name, const std::str
 
     std::cout << "Sending body: " << body.dump() << std::endl;
 
-    const auto response = request.send("POST", body.dump());
+    const auto response = request.send("POST", body.dump(), {{"Content-Type", "application/json"}});
     if (response.status.code != 202)
     {
         throw std::runtime_error("Environment server failed to step environment");

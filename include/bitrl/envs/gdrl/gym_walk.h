@@ -197,7 +197,10 @@ typename GymWalk<state_size>::time_step_type GymWalk<state_size>::reset()
     }
 
     auto &reset_ops = this->reset_options();
-    auto seed = bitsim::utils::resolve<uint_t>("seed", reset_ops);
+    // the seed given to make(), or the default seed of the environments
+    const uint_t seed = reset_ops.contains("seed")
+                            ? bitsim::utils::resolve<uint_t>("seed", reset_ops)
+                            : this->DEFAULT_ENV_SEED;
     auto response = this->api_server_->reset(this->env_name(), this->idx(), seed, nlohmann::json());
 
     this->create_time_step_from_response_(response);
