@@ -23,7 +23,7 @@ const std::string FrozenLake<side_size>::URI = "/gymnasium/frozen-lake-env";
 
 template <uint_t side_size>
 FrozenLake<side_size>::FrozenLake(network::RESTRLEnvClient &api_server)
-    : ToyTextEnvBase<TimeStep<uint_t>, frozenlake_state_size<side_size>::size, 3>(
+    : ToyTextEnvBase<TimeStep<uint_t>, frozenlake_state_size<side_size>::size, 4>(
           api_server, FrozenLake<side_size>::name)
 {
     this->get_api_server().register_if_not(FrozenLake<side_size>::name, FrozenLake<side_size>::URI);
@@ -31,7 +31,7 @@ FrozenLake<side_size>::FrozenLake(network::RESTRLEnvClient &api_server)
 
 template <uint_t side_size>
 FrozenLake<side_size>::FrozenLake(const FrozenLake<side_size> &other)
-    : ToyTextEnvBase<TimeStep<uint_t>, frozenlake_state_size<side_size>::size, 3>(other)
+    : ToyTextEnvBase<TimeStep<uint_t>, frozenlake_state_size<side_size>::size, 4>(other)
 {
 }
 

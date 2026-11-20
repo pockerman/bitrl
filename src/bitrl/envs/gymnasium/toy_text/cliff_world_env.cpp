@@ -37,13 +37,13 @@ CliffWorld::create_time_step_from_response_(const nlohmann::json &response) cons
 }
 
 CliffWorld::CliffWorld(network::RESTRLEnvClient &api_server)
-    : ToyTextEnvBase<TimeStep<uint_t>, 37, 4>(api_server, CliffWorld::name), max_episode_steps_(200)
+    : ToyTextEnvBase<TimeStep<uint_t>, 48, 4>(api_server, CliffWorld::name), max_episode_steps_(200)
 {
     this->get_api_server().register_if_not(CliffWorld::name, CliffWorld::URI);
 }
 
 CliffWorld::CliffWorld(const CliffWorld &other)
-    : ToyTextEnvBase<TimeStep<uint_t>, 37, 4>(other), max_episode_steps_(other.max_episode_steps_)
+    : ToyTextEnvBase<TimeStep<uint_t>, 48, 4>(other), max_episode_steps_(other.max_episode_steps_)
 {
 }
 

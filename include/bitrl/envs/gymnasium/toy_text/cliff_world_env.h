@@ -55,7 +55,7 @@ namespace envs::gymnasium
 ///
 /// \brief The CliffWorld class
 ///
-class CliffWorld final : public ToyTextEnvBase<TimeStep<uint_t>, 37, 4>
+class CliffWorld final : public ToyTextEnvBase<TimeStep<uint_t>, 48, 4>
 {
 
   public:
@@ -77,7 +77,7 @@ class CliffWorld final : public ToyTextEnvBase<TimeStep<uint_t>, 37, 4>
     ///
     /// \brief The base type
     ///
-    typedef typename ToyTextEnvBase<TimeStep<uint_t>, 37, 4>::base_type base_type;
+    typedef typename ToyTextEnvBase<TimeStep<uint_t>, 48, 4>::base_type base_type;
 
     ///
     /// \brief The time step type we return every time a step in the
