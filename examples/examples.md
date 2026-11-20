@@ -49,6 +49,7 @@ These need bitsim built with Chrono.
 - \ref bitrl_example_22
 - \ref bitrl_example_15
 - \ref bitrl_example_16
+- \ref bitrl_example_26
 
 ## Deep reinforcement learning
 
