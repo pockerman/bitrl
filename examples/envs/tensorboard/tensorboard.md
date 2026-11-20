@@ -1,7 +1,7 @@
-\page cuberl_example_tensorboard Logging to Tensorboard
+\page bitrl_example_tensorboard Logging to Tensorboard
 
 An experiment is easier to follow when its numbers are plotted as it runs.
-\ref cuberl::network::TensorboardServer "TensorboardServer" sends values to a small server that
+\ref bitrl::network::TensorboardServer "TensorboardServer" sends values to a small server that
 writes them for <a href="https://www.tensorflow.org/tensorboard">Tensorboard</a>, with PyTorch's
 `SummaryWriter`. This example reads the settings of an experiment from `config.json` and logs some
 of them.

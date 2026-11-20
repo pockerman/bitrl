@@ -1,13 +1,13 @@
-\page cuberl_example_connect2 Connect2
+\page bitrl_example_connect2 Connect2
 
 Connect2 is a two player game on a board of four cells: the players take turns to put a stone in
 an empty cell, and the first to have two stones in cells next to each other wins. A full board
 with no winner, such as 1, 2, 1, 2, is a draw. The game is small enough to search completely,
-which makes it a test bed for self-play algorithms such as AlphaZero. This example plays it with \ref cuberl::envs::connect2::Connect2 "Connect2".
+which makes it a test bed for self-play algorithms such as AlphaZero. This example plays it with \ref bitrl::envs::connect2::Connect2 "Connect2".
 
 ## What you need
 
-Nothing beyond cuberl itself.
+Nothing beyond bitrl itself.
 
 ## The environment
 

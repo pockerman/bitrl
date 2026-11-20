@@ -1,6 +1,6 @@
-\page cuberl_example_17 CubeRL Example 17: An A2C Solver for CartPole
+\page bitrl_example_17 bitrl Example 17: An A2C Solver for CartPole
 
-Example <a href="https://github.com/pockerman/cuberl/blob/master/examples/rl/rl_example_13/rl_example_13.md">Example 13: REINFORCE algorithm on CartPole</a>
+Example <a href="https://github.com/pockerman/bitrl/blob/master/examples/rl/rl_example_13/rl_example_13.md">Example 13: REINFORCE algorithm on CartPole</a>
 introduce the vanilla REINFORCE algorithm in order to solve the pole balancing problem. 
 The REINFORCE algorithm is a simple algorithm and easy to use however it exhibits a large variance in the reward signal.
 
@@ -13,7 +13,7 @@ $$G = \sum_{k = t}^T R(s_{k}, \alpha_{k})$$
 For this example to work, you will need to have both PyTorch and ```rlenvs_cpp``` enabled.
 
 
-The workings of the A2C algorithm are handled by the <a href="https://github.com/pockerman/cuberl/blob/master/include/cubeai/rl/algorithms/actor_critic/a2c.h">A2CSolver</a>
+The workings of the A2C algorithm are handled by the <a href="https://github.com/pockerman/bitrl/blob/master/include/cubeai/rl/algorithms/actor_critic/a2c.h">A2CSolver</a>
 class. The class accepts three template parameters
 
 - The environment type 
@@ -37,7 +37,7 @@ at the output layer.
 
 ### The Actor network class
 
-Just like with the <a href="https://github.com/pockerman/cuberl/blob/master/examples/rl/rl_example_13/rl_example_13.md">Example 13: REINFORCE algorithm on CartPole</a>
+Just like with the <a href="https://github.com/pockerman/bitrl/blob/master/examples/rl/rl_example_13/rl_example_13.md">Example 13: REINFORCE algorithm on CartPole</a>
 example the, actor class has to expose an act function with the following signature:
 
 @code{.cpp}
@@ -206,15 +206,15 @@ const std::string POLICY = "policy.csv";
 
 namespace F = torch::nn::functional;
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::torch_tensor_t;
-using cuberl::DeviceType;
-using cuberl::maths::stats::TorchCategorical;
-using cuberl::rl::algos::pg::A2CConfig;
-using cuberl::rl::algos::pg::A2CSolver;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::torch_tensor_t;
+using bitrl::DeviceType;
+using bitrl::maths::stats::TorchCategorical;
+using bitrl::rl::algos::pg::A2CConfig;
+using bitrl::rl::algos::pg::A2CSolver;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
 using rlenvscpp::envs::RESTApiServerWrapper;
 
 typedef  rlenvscpp::envs::gymnasium::CartPole env_type;
@@ -377,8 +377,8 @@ int main(){
         std::map<std::string, std::any> opt_options;
         opt_options.insert(std::make_pair("lr", LEARNING_RATE));
 
-		using namespace cuberl::maths::optim::pytorch;
-		using namespace cuberl::maths::optim;
+		using namespace bitrl::maths::optim::pytorch;
+		using namespace bitrl::maths::optim;
 
         auto pytorch_ops = build_pytorch_optimizer_options(OptimzerType::ADAM,
 														  opt_options);
@@ -483,7 +483,7 @@ int main(){
 
 int main(){
 
-    std::cout<<"This example requires PyTorch. Reconfigure cuberl with USE_PYTORCH fag turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch. Reconfigure bitrl with USE_PYTORCH fag turned ON."<<std::endl;
     return 1;
 }
 #endif

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Download the CPU build of libtorch into <dir>.
 # Usage: ci/install_libtorch.sh <dir>
-# Then configure cuberl with -DCMAKE_PREFIX_PATH=<dir>/libtorch
+# Then configure bitrl with -DCMAKE_PREFIX_PATH=<dir>/libtorch
 set -euo pipefail
 
 # Keep this in sync with what the code is developed against

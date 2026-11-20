@@ -22,14 +22,14 @@ namespace rl_example_11{
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::torch_tensor_t;
-using cuberl::maths::stats::TorchCategorical;
-using cuberl::rl::algos::pg::A2CConfig;
-using cuberl::rl::algos::pg::A2CSolver;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::torch_tensor_t;
+using bitrl::maths::stats::TorchCategorical;
+using bitrl::rl::algos::pg::A2CConfig;
+using bitrl::rl::algos::pg::A2CSolver;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
 using rlenvscpp::envs::RESTApiServerWrapper;
 
 
@@ -169,8 +169,8 @@ int main(){
         opt_options.insert(std::make_pair("lr", 0.001));
 
 
-		using namespace cuberl::maths::optim::pytorch;
-		using namespace cuberl::maths::optim;
+		using namespace bitrl::maths::optim::pytorch;
+		using namespace bitrl::maths::optim;
 
         auto pytorch_ops = build_pytorch_optimizer_options(OptimzerType::ADAM,
 														  opt_options);

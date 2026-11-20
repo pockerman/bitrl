@@ -1,7 +1,7 @@
 
-\page cuberl_example_1 CubeRL Example 1: Monte Carlo integration
+\page bitrl_example_1 bitrl Example 1: Monte Carlo integration
 
-In this first example we explore some of the basic elements of _cuberl_. In particular,
+In this first example we explore some of the basic elements of _bitrl_. In particular,
 we will see how to read a json file, how to use boost logging, various types exposed by the library.
 We will do so by using a simple <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> example.
 
@@ -75,10 +75,10 @@ The driver code for this tutorial is shown below.
 
 
 @code
-#include "cuberl/base/cubeai_types.h"
-#include "cuberl/utils/iteration_counter.h"
-#include "cuberl/geom_primitives/shapes/circle.h"
-#include "bitrl/extern/nlohmann/json/json.hpp"
+#include "bitrl/base/cubeai_types.h"
+#include "bitrl/utils/iteration_counter.h"
+#include "bitrl/geom_primitives/shapes/circle.h"
+#include "bitsim/extern/nlohmann/json/json.hpp"
 
 #include <boost/log/trivial.hpp>
 #include <iostream>

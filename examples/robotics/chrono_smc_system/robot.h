@@ -1,7 +1,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include "bitrl/bitrl_types.h"
+#include "bitsim/bitsim_types.h"
 #include <chrono/functions/ChFunctionConst.h>
 #include <chrono/physics/ChBodyEasy.h>
 #include <chrono/physics/ChLinkMotorRotationSpeed.h>
@@ -11,7 +11,7 @@
 namespace chrono_smc_system
 {
 
-using namespace bitrl;
+using namespace bitsim;
 
 const real_t WHEEL_RADIUS = 0.1;
 const real_t CHASSIS_HEIGHT = 0.1;

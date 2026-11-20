@@ -34,7 +34,7 @@ def plot_rewards(filename: Path) -> None:
 
 		
 if __name__ == '__main__':
-  plot_rewards("/home/alex/qi3/cuberl/build/examples/rl/rl_example_10/reward_per_itr.csv")
+  plot_rewards("/home/alex/qi3/bitrl/build/examples/rl/rl_example_10/reward_per_itr.csv")
 	
 	
 

@@ -1,9 +1,9 @@
 
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/grid_world/grid_world_env.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/grid_world/grid_world_env.h"
 
-#ifdef BITRL_DEBUG
+#ifdef BITSIM_DEBUG
 #include <cassert>
 #endif
 
@@ -16,9 +16,9 @@
 namespace grid_world
 {
 
-using namespace bitrl;
+using namespace bitsim;
 
-using namespace cuberl::envs::grid_world;
+using namespace bitrl::envs::grid_world;
 
 void create_static()
 {
@@ -52,7 +52,7 @@ void create_random()
 
     std::cout << "Creating RANDOM Gridworld..." << std::endl;
 
-    cuberl::envs::grid_world::Gridworld<4> env;
+    bitrl::envs::grid_world::Gridworld<4> env;
 
     std::unordered_map<std::string, std::any> options;
     options["mode"] = std::any(GridWorldInitType::RANDOM);

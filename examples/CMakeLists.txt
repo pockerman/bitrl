@@ -1,18 +1,18 @@
-# cuberl_add_example(<name>
+# bitrl_add_example(<name>
 #                    [REQUIRES CHRONO IRRLICHT MQTT OPENCV ...]
 #                    [FILES <file> ...]
 #                    [SMOKE_TEST] [SMOKE_ARGS <arg> ...])
 #
 # Builds <name>.cpp, or <name>/<name>.cpp when <name> is a directory, into the
 # executable <name>, if bitsim was built with everything in REQUIRES (see
-# bitrl_WITH_*). FILES are copied next to the executable. With SMOKE_TEST and
+# bitsim_WITH_*). FILES are copied next to the executable. With SMOKE_TEST and
 # ENABLE_TESTS=ON, ctest runs the example with SMOKE_ARGS and expects it to
 # exit with 0; ctest -L examples runs only these. Each example links only
-# cuberllib; bitsim, libtorch and TBB come with it.
-FUNCTION(cuberl_add_example name)
+# bitrllib; bitsim, libtorch and TBB come with it.
+FUNCTION(bitrl_add_example name)
 	CMAKE_PARSE_ARGUMENTS(EXAMPLE "SMOKE_TEST" "" "REQUIRES;FILES;SMOKE_ARGS" ${ARGN})
 	FOREACH(feature ${EXAMPLE_REQUIRES})
-		IF(NOT bitrl_WITH_${feature})
+		IF(NOT bitsim_WITH_${feature})
 			MESSAGE(STATUS "Example ${name} needs bitsim with ${feature}; not building it")
 			RETURN()
 		ENDIF()
@@ -27,8 +27,8 @@ FUNCTION(cuberl_add_example name)
 
 	ADD_EXECUTABLE(${name} ${dir}/${name}.cpp)
 	TARGET_INCLUDE_DIRECTORIES(${name} PRIVATE ${dir})
-	TARGET_LINK_LIBRARIES(${name} PRIVATE cuberllib)
-	IF(bitrl_WITH_IRRLICHT)
+	TARGET_LINK_LIBRARIES(${name} PRIVATE bitrllib)
+	IF(bitsim_WITH_IRRLICHT)
 		TARGET_COMPILE_DEFINITIONS(${name} PRIVATE IRRLICHT_NO_XML)
 	ENDIF()
 	SET_TARGET_PROPERTIES(${name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${out})

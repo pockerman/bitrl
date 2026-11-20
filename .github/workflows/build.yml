@@ -1,4 +1,4 @@
-name: Build cuberl
+name: Build bitrl
 
 on:
   push:
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    # cuberl against bitsim master built without Chrono, and the CPU libtorch
+    # bitrl against bitsim master built without Chrono, and the CPU libtorch
     name: Build and test (${{ matrix.build_type }})
     runs-on: ubuntu-24.04
     strategy:

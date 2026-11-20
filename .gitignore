@@ -1,4 +1,4 @@
-include/cuberl/base/cuberl_version.h
-include/cuberl/base/cuberl_config.h
+include/bitrl/base/bitrl_version.h
+include/bitrl/base/bitrl_config.h
 build/
 install/

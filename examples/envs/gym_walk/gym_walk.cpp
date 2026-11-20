@@ -1,6 +1,6 @@
-#include "cuberl/envs/gdrl/gym_walk.h"
-#include "bitrl/bitrl_types.h"
-#include "cuberl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gdrl/gym_walk.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/network/rest_rl_env_client.h"
 
 #include <any>
 #include <iostream>
@@ -9,12 +9,12 @@
 
 namespace gym_walk
 {
-using namespace bitrl;
+using namespace bitsim;
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
-using cuberl::envs::gdrl::GymWalk;
-using cuberl::network::RESTRLEnvClient;
+using bitrl::envs::gdrl::GymWalk;
+using bitrl::network::RESTRLEnvClient;
 
 void test_gymwalk(RESTRLEnvClient &server)
 {

@@ -1,7 +1,7 @@
-\page cuberl_example_2 CubeRL Example 2: Using PyTorch C++ API Part 1
+\page bitrl_example_2 bitrl Example 2: Using PyTorch C++ API Part 1
 
-Example intro_example_1 demonstrated some basic functionality that _cuberl_ implements.
-In addition, _cuberl_ is heavily based on the C++ API exposed by PyTorch. 
+Example intro_example_1 demonstrated some basic functionality that _bitrl_ implements.
+In addition, _bitrl_ is heavily based on the C++ API exposed by PyTorch. 
 Therefore, this tutorial is meant to show you some basics on how to create and manipulate PyTorch
 tensors.  There are many resources you can consult for further info:
 
@@ -9,7 +9,7 @@ tensors.  There are many resources you can consult for further info:
 - <a href="https://pytorch.org/tutorials/advanced/cpp_frontend.html">Using the PyTorch C++ Frontend</a>
 - <a href="https://github.com/prabhuomkar/pytorch-cpp/tree/master">pytorch-cpp</a>
 
-Note that this tutorial requires cuberl to be configured with PyTorch support.
+Note that this tutorial requires bitrl to be configured with PyTorch support.
 
 
 ## The driver code
@@ -102,7 +102,7 @@ int main() {
 #include <iostream>
 int main(){
 
-    std::cout<<"This example requires PyTorch and gymfcpp. Reconfigure cuberl with USE_PYTORCH flags turned ON."<<std::endl;
+    std::cout<<"This example requires PyTorch and gymfcpp. Reconfigure bitrl with USE_PYTORCH flags turned ON."<<std::endl;
     return 0;
 }
 #endif

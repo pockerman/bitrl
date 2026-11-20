@@ -22,7 +22,7 @@ def load_policy(filename: Path) -> dict:
 if __name__ == '__main__':
 
 
-    policy_path = Path('/home/alex/qi3/cuberl/build/examples/rl/rl_example_9/policy.csv')
+    policy_path = Path('/home/alex/qi3/bitrl/build/examples/rl/rl_example_9/policy.csv')
     policy = load_policy(policy_path)
     max_episode_steps = 200
     version = 'v0'

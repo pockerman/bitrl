@@ -1,11 +1,11 @@
 #ifndef ROBOT_ENV_H
 #define ROBOT_ENV_H
 
-#include "bitrl/bitrl_types.h"
-#include "cuberl/envs/env_base.h"
-#include "cuberl/envs/env_types.h"
-#include "cuberl/envs/time_step.h"
-#include "cuberl/envs/time_step_type.h"
+#include "bitsim/bitsim_types.h"
+#include "bitrl/envs/env_base.h"
+#include "bitrl/envs/env_types.h"
+#include "bitrl/envs/time_step.h"
+#include "bitrl/envs/time_step_type.h"
 
 #include <chrono/physics/ChSystemNSC.h>
 
@@ -18,20 +18,20 @@
 namespace chrono_smc_system
 {
 
-using namespace bitrl;
+using namespace bitsim;
 
 constexpr uint_t STATE_SPACE_SIZE = 3;
 constexpr uint_t ACTION_SPACE_SIZE = 3;
 
-using cuberl::TimeStep;
-using cuberl::TimeStepTp;
+using bitrl::TimeStep;
+using bitrl::TimeStepTp;
 
 typedef TimeStep<chrono::ChVector3d> time_step_type;
-typedef cuberl::envs::ContinuousVectorStateContinuousVectorActionEnv<STATE_SPACE_SIZE,
+typedef bitrl::envs::ContinuousVectorStateContinuousVectorActionEnv<STATE_SPACE_SIZE,
                                                                     STATE_SPACE_SIZE>
     space_type;
 
-class RobotEnv final : public cuberl::envs::EnvBase<time_step_type, space_type>
+class RobotEnv final : public bitrl::envs::EnvBase<time_step_type, space_type>
 {
   public:
     typedef typename space_type::action_type action_type;

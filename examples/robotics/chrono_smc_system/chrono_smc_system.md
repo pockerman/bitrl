@@ -1,28 +1,28 @@
-\page cuberl_example_chrono_smc_system Using chrono::ChSystemSMC
+\page bitrl_example_chrono_smc_system Using chrono::ChSystemSMC
 
-Example \ref bitrl_example_chrono_rigid_body_simulation showed you how to create a rigid body simulation in Chrono. We will extend this example
+Example \ref bitsim_example_chrono_rigid_body_simulation showed you how to create a rigid body simulation in Chrono. We will extend this example
 and show how to create a reinforcement learning environment that can be queried by reinforcement learning agents.
 
-Reinforcement learning environments in _cuberl_ should implement the \ref cuberl::envs::EnvBase "`cuberl::envs::EnvBase`" class.
+Reinforcement learning environments in _bitrl_ should implement the \ref bitrl::envs::EnvBase "`bitrl::envs::EnvBase`" class.
 This is an abstract base class that defines the main endpoints that a reinforcement learning environment should implement.
 We will keep things simple in this example and assume that the action space is discrete with three actions available.
 We won't be doing anything meaningful in this example other than showing how a reinforcement learning environment can be 
 implemented using Chrono. 
 
 The state space is equally simple and returns the position of the robot. 
-Below is the driver implementing this. To  a large extent this is the same as example \ref bitrl_example_chrono_rigid_body_simulation.
+Below is the driver implementing this. To  a large extent this is the same as example \ref bitsim_example_chrono_rigid_body_simulation.
 We have also introduced the headers _robot.h_ and _robot_env.h_ to separate concerns.
 
 @code{.cpp}
-#include "bitrl/bitrl_config.h"
+#include "bitsim/bitsim_config.h"
 
-#if defined(BITRL_CHRONO) && defined(BITRL_IRRLICHT)
+#if defined(BITSIM_CHRONO) && defined(BITSIM_IRRLICHT)
 
-#include "bitrl/bitrl_types.h"
-#include "bitrl/bitrl_consts.h"
-#include "bitrl/utils/render/irrlicht_utils.h"
+#include "bitsim/bitsim_types.h"
+#include "bitsim/bitsim_consts.h"
+#include "bitsim/utils/render/irrlicht_utils.h"
 
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
 #include <boost/log/trivial.hpp>
 #endif
 
@@ -217,7 +217,7 @@ RobotEnv::step(const action_type &/*action*/)
 
     if (sim_counter_ % 600 == 0)
     {
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
 BOOST_LOG_TRIVIAL(info)<<"Reset simulation: ";
 #endif
 return reset();
@@ -233,7 +233,7 @@ return reset();
 
 void RobotEnv::build_system_(std::shared_ptr<chrono::ChContactMaterialNSC> material)
 {
-sys_.SetGravitationalAcceleration(chrono::ChVector3d(0,0,-bitrl::consts::maths::G));
+sys_.SetGravitationalAcceleration(chrono::ChVector3d(0,0,-bitsim::consts::maths::G));
 sys_.SetCollisionSystemType(chrono::ChCollisionSystem::Type::BULLET);
 
     auto floor = build_floor(material);
@@ -270,7 +270,7 @@ void RobotEnv::simulate()
         utils::render::irr_draw_world_axes(visual);
 
         auto time_step = step( action_type());
-#ifdef BITRL_LOG
+#ifdef BITSIM_LOG
 BOOST_LOG_TRIVIAL(info)<<"At time: "<<current_time_<<" position: "<<time_step.observation();
 #endif
 
@@ -299,8 +299,8 @@ int main() {
 int main()
 {
 std::cerr<<"You need PROJECTCHRONO configured with "
-<<"bitrl in order to run this example "
-<<"Reconfigure bitrl and set ENABLE_CHRONO=ON"<<std::endl;
+<<"bitsim in order to run this example "
+<<"Reconfigure bitsim and set ENABLE_CHRONO=ON"<<std::endl;
 return 1;
 }
 

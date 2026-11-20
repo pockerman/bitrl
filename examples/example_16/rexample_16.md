@@ -1,8 +1,8 @@
-\page cuberl_example_16 CubeRL Example 16: Q-learning on CliffWorld
+\page bitrl_example_16 bitrl Example 16: Q-learning on CliffWorld
 
 In this example, we will apply another temporal difference learning algorithm namely <a href="https://en.wikipedia.org/wiki/Q-learning">Q-learning</a>
-on _CliffWorld_.  This is a Gymnasium-based environment implemented in \ref cuberl::envs::gymnasium::CliffWorld "cuberl::envs::gymnasium::CliffWorld" class.
-We used this environment in \ref cuberl_example_15.
+on _CliffWorld_.  This is a Gymnasium-based environment implemented in \ref bitrl::envs::gymnasium::CliffWorld "bitrl::envs::gymnasium::CliffWorld" class.
+We used this environment in \ref bitrl_example_15.
 
 Q-learning, just like SARSA, is a model-free reinforcement learning algorithm that learns how good an action is in a given state, 
 without needing a model of the environment.
@@ -51,18 +51,18 @@ we will usually receive not just a reward signal and the next state but also a f
 All in all, Q-learning learns the optimal policy. It is a fast and efficient algorithm that is ideal for batch learning.
 Q-learning, compared to SARSA, is more optimistic which can be dangerous in risky domains, and it suffers from maximization bias that can overestimate action values when estimates are noisy [2].
 
-The Q-learning algorithm is implemented in the \ref cuberl::rl::algos::td::QLearningSolver "cuberl::rl::algos::td::QLearningSolver"  class
+The Q-learning algorithm is implemented in the \ref bitrl::rl::algos::td::QLearningSolver "bitrl::rl::algos::td::QLearningSolver"  class
 
 
 @code{.cpp}
-#include "cuberl/base/cuberl_types.h"
-#include "cuberl/rl/algorithms/td/q_learning.h"
-#include "cuberl/rl/policies/epsilon_greedy_policy.h"
-#include "cuberl/rl/trainers/rl_serial_agent_trainer.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/algorithms/td/q_learning.h"
+#include "bitrl/rl/policies/epsilon_greedy_policy.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
-#include "bitrl/utils/io/csv_file_writer.h"
-#include "cuberl/network/rest_rl_env_client.h"
-#include "cuberl/envs/gymnasium/toy_text/cliff_world_env.h"
+#include "bitsim/utils/io/csv_file_writer.h"
+#include "bitrl/network/rest_rl_env_client.h"
+#include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 
 #include <iostream>
 #include <iostream>
@@ -79,16 +79,16 @@ const std::string SOLUTION_FILE = "qlearning_cliff_walking_v1.csv";
 const std::string REWARD_PER_ITR = "reward_per_itr.csv";
 const std::string POLICY = "policy.csv";
 
-using cuberl::real_t;
-using cuberl::uint_t;
-using cuberl::rl::policies::EpsilonGreedyPolicy;
-using cuberl::rl::algos::td::QLearningSolver;
-using cuberl::rl::algos::td::QLearningConfig;
-using cuberl::rl::policies::EpsilonDecayOption;
-using cuberl::rl::RLSerialAgentTrainer;
-using cuberl::rl::RLSerialTrainerConfig;
-using cuberl::network::RESTRLEnvClient;
-typedef  cuberl::envs::gymnasium::CliffWorld env_type;
+using bitrl::real_t;
+using bitrl::uint_t;
+using bitrl::rl::policies::EpsilonGreedyPolicy;
+using bitrl::rl::algos::td::QLearningSolver;
+using bitrl::rl::algos::td::QLearningConfig;
+using bitrl::rl::policies::EpsilonDecayOption;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::network::RESTRLEnvClient;
+typedef  bitrl::envs::gymnasium::CliffWorld env_type;
 
 }
 
@@ -142,7 +142,7 @@ int main(){
 		auto reward = trainer.episodes_total_rewards();
 		auto iterations = trainer.n_itrs_per_episode();
 	
-		bitrl::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
+		bitsim::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
 		csv_writer.open();
 		
 		csv_writer.write_column_names({"epoch", "reward"});
