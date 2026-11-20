@@ -69,9 +69,13 @@ only guides the rollouts: the tree is free to choose other commands where its si
 
 ## The results
 
+| ![The search](mcts_line_following_search.gif) |
+|:--:|
+| **The first 20 s at twice real speed, with the camera following the robot. Blue is the path of the robot. At every decision there is a path for each of the five commands: where the model expects the command to lead, along the most visited branch of the tree below it and then the rollout policy, to the end of the 5 s the search looks ahead. Green is the command MCTS chose; the other paths are orange, wider the more of the simulations started with their command.** |
+
 | ![One lap](mcts_line_following_lap.gif) |
 |:--:|
-| **One lap at twice real speed. Blue is the path of the robot, green the plan of the model.** |
+| **One lap at twice real speed.** |
 
 On one run the robot went once around the track in 47.7 s of simulation, without touching a box, and was never more
 than 0.82 m from the line, around the boxes. bitsim's hand written controller takes 59.3 s for the same lap, at the
@@ -82,8 +86,9 @@ without a window:
 ./mcts_line_following
 @endcode
 
-With `--render` it shows the run in a window: the robot's path in blue, and in green the path the model expects
-the current plan to take. `--record DIR` also writes the window to `DIR`, ten frames a second of simulation, and
+With `--render` it shows the run in a window, drawn as in the pictures above, with the share of the simulations that
+started with each command in the bar at the bottom; the star marks the command MCTS chose. `--follow` shows it with a
+camera that follows the robot. `--record DIR` also writes the window to `DIR`, ten frames a second of simulation, and
 `--time-limit S` stops after `S` seconds of simulation.
 
 ## The driver code

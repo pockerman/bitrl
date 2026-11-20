@@ -125,10 +125,7 @@ std::string to_string(const std::vector<uint_t> &path)
 
 namespace
 {
-bool reaches_the_goal(const std::vector<uint_t> &path)
-{
-    return path.back() == CliffWalk::GOAL;
-}
+bool reaches_the_goal(const std::vector<uint_t> &path) { return path.back() == CliffWalk::GOAL; }
 
 } // namespace
 
