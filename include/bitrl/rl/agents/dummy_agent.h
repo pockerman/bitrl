@@ -1,23 +1,22 @@
 #ifndef DUMMY_AGENT_H
 #define DUMMY_AGENT_H
 
-
 #include <boost/noncopyable.hpp>
 
-namespace bitrl {
-namespace rl {
-namespace agents {
-
+namespace bitrl
+{
+namespace rl
+{
+namespace agents
+{
 
 ///
 ///
 ///
-template<typename EnvType, typename PolicyType>
-class DummyAgent final: private boost::noncopyable{
+template <typename EnvType, typename PolicyType> class DummyAgent final : private boost::noncopyable
+{
 
-public:
-
-
+  public:
     typedef EnvType env_type;
     typedef typename env_type::state_type state_type;
     typedef typename env_type::action_type action_type;
@@ -27,65 +26,64 @@ public:
     /// \brief DummyAgent
     /// \param policy
     ///
-    explicit DummyAgent(const policy_type& policy );
+    explicit DummyAgent(const policy_type &policy);
 
     ///
     ///
     ///
-    template<typename Criteria>
-    void play(EnvType& env, Criteria& criteria);
+    template <typename Criteria> void play(EnvType &env, Criteria &criteria);
 
     ///
     /// \brief on_state
     /// \param state
     /// \return
     ///
-    action_type on_state(const state_type& state);
+    action_type on_state(const state_type &state);
 
-protected:
-
+  protected:
     ///
     /// \brief policy_
     ///
-    const policy_type& policy_;
-
+    const policy_type &policy_;
 };
 
-template<typename EnvType, typename PolicyType>
-DummyAgent<EnvType, PolicyType>::DummyAgent(const policy_type& policy)
-    :
-      policy_(policy)
-{}
+template <typename EnvType, typename PolicyType>
+DummyAgent<EnvType, PolicyType>::DummyAgent(const policy_type &policy) : policy_(policy)
+{
+}
 
-template<typename EnvType, typename PolicyType>
-template<typename Criteria>
-void
-DummyAgent<EnvType, PolicyType>::play(EnvType& env, Criteria& criteria){
+template <typename EnvType, typename PolicyType>
+template <typename Criteria>
+void DummyAgent<EnvType, PolicyType>::play(EnvType &env, Criteria &criteria)
+{
 
     auto time_step = env.reset();
 
-    while(criteria.continue_iterations()){
+    while (criteria.continue_iterations())
+    {
 
         auto action = on_state(time_step.observation());
         auto time_step = env.step(action);
 
-        if(time_step.done()){
+        if (time_step.done())
+        {
             time_step = env.reset();
         }
     }
 }
 
-template<typename EnvType, typename PolicyType>
+template <typename EnvType, typename PolicyType>
 typename DummyAgent<EnvType, PolicyType>::action_type
-DummyAgent<EnvType, PolicyType>::on_state(const state_type& state){
+DummyAgent<EnvType, PolicyType>::on_state(const state_type &state)
+{
 
     return policy_.on_state(state);
 }
 
-}
+} // namespace agents
 
-}
+} // namespace rl
 
-}
+} // namespace bitrl
 
 #endif // DUMMY_AGENT_H

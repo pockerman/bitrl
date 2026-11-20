@@ -4,17 +4,19 @@
 #include "cubeai/rl/policies/policy_type.h"
 #include <ostream>
 
-namespace cubeai {
-namespace rl {
-namespace policies {
+namespace cubeai
+{
+namespace rl
+{
+namespace policies
+{
 
 ///
 /// \brief The PolicyBase class
 ///
 class PolicyBase
 {
-public:
-
+  public:
     ///
     /// \brief ~PolicyBase. Destructor
     ///
@@ -24,16 +26,14 @@ public:
     /// \brief type. Returns the policy identifier type
     /// \return
     ///
-    PolicyType type()const noexcept{return type_;}
+    PolicyType type() const noexcept { return type_; }
 
     ///
     /// \brief print
     ///
-    virtual std::ostream& print(std::ostream& out)const = 0;
+    virtual std::ostream &print(std::ostream &out) const = 0;
 
-
-protected:
-
+  protected:
     ///
     ///
     ///
@@ -45,20 +45,12 @@ protected:
     PolicyType type_;
 };
 
-inline
-PolicyBase::PolicyBase(PolicyType type)
-    :
-      type_(type)
-{}
+inline PolicyBase::PolicyBase(PolicyType type) : type_(type) {}
 
+inline std::ostream &operator<<(std::ostream &out, const PolicyBase &p) { return p.print(out); }
 
-inline
-std::ostream& operator<<(std::ostream& out, const PolicyBase& p){
-    return p.print(out);
-}
-
-}
-}
-}
+} // namespace policies
+} // namespace rl
+} // namespace cubeai
 
 #endif // POLICY_BASE_H

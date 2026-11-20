@@ -1,47 +1,48 @@
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/rl/algorithms/dp/iterative_policy_evaluation.h"
-#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 #include "bitrl/rl/policies/uniform_discrete_policy.h"
+#include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 
 #include <iostream>
 
-namespace rl_example_6
+namespace example_12
 {
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
 
 using bitrl::real_t;
 using bitrl::uint_t;
-using bitrl::rl::policies::UniformDiscretePolicy;
-using bitrl::rl::algos::dp::IterativePolicyEvalutationSolver;
-using bitrl::rl::algos::dp::IterativePolicyEvalConfig;
-using bitrl::rl::RLSerialAgentTrainer;
-using bitrl::rl::RLSerialTrainerConfig;
 using bitrl::envs::gymnasium::FrozenLake;
 using bitrl::network::RESTRLEnvClient;
+using bitrl::rl::RLSerialAgentTrainer;
+using bitrl::rl::RLSerialTrainerConfig;
+using bitrl::rl::algos::dp::IterativePolicyEvalConfig;
+using bitrl::rl::algos::dp::IterativePolicyEvalutationSolver;
+using bitrl::rl::policies::UniformDiscretePolicy;
 typedef FrozenLake<4> env_type;
 
-}
+} // namespace example_12
 
-int main() {
+int main()
+{
 
-    using namespace rl_example_6;
-	
-	RESTRLEnvClient server(SERVER_URL, true);
+    using namespace example_12;
+
+    RESTRLEnvClient server(SERVER_URL, true);
 
     // create the environment
     FrozenLake<4> env(server);
 
-    std::cout<<"Environment URL: "<<env.get_url()<<std::endl;
+    std::cout << "Environment URL: " << env.get_url() << std::endl;
     std::unordered_map<std::string, std::any> options;
-	std::unordered_map<std::string, std::any> reset_options;
-    std::cout<<"Creating the environment..."<<std::endl;
+    std::unordered_map<std::string, std::any> reset_options;
+    std::cout << "Creating the environment..." << std::endl;
     env.make("v1", options, reset_options);
     env.reset();
-    std::cout<<"Done..."<<std::endl;
+    std::cout << "Done..." << std::endl;
 
     UniformDiscretePolicy policy(env.n_states(), env.n_actions());
     IterativePolicyEvalConfig config;
@@ -52,15 +53,14 @@ int main() {
     RLSerialTrainerConfig trainer_config = {10, 10000, 1.0e-8};
 
     RLSerialAgentTrainer<env_type,
-                        IterativePolicyEvalutationSolver<env_type, UniformDiscretePolicy>> trainer(trainer_config, algorithm);
+                         IterativePolicyEvalutationSolver<env_type, UniformDiscretePolicy>>
+        trainer(trainer_config, algorithm);
 
     auto info = trainer.train(env);
-    std::cout<<info<<std::endl;
+    std::cout << info << std::endl;
 
     // save the value function for plotting
-    //algorithm.save("iterative_policy_evaluation_frozen_lake.csv");
+    algorithm.save("iterative_policy_evaluation_frozen_lake.csv");
 
-   return 0;
+    return 0;
 }
-
-

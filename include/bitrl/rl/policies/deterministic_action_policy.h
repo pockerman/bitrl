@@ -4,20 +4,21 @@
 #include "cubeai/utils/cubeai_concepts.h"
 #include <type_traits>
 
-namespace cubeai{
-namespace rl {
-namespace policies{
+namespace cubeai
+{
+namespace rl
+{
+namespace policies
+{
 
 ///
 /// \brief class DeterministicActionPolicy. a deterministic action apolicy
 /// always selects the action indicated
 ///
-template<utils::concepts::float_or_integral_vector PolicyValuesType, typename StateType>
-requires(std::is_integral<StateType>::value)
-class DeterministicActionPolicy
+template <utils::concepts::float_or_integral_vector PolicyValuesType, typename StateType>
+requires(std::is_integral<StateType>::value) class DeterministicActionPolicy
 {
-public:
-
+  public:
     typedef PolicyValuesType policy_values_type;
     typedef typename policy_values_type::value_type action_type;
     typedef StateType state_type;
@@ -26,31 +27,28 @@ public:
     /// \brief DeterministicActionPolicy
     /// \param values
     ///
-    explicit DeterministicActionPolicy(policy_values_type&& values);
+    explicit DeterministicActionPolicy(policy_values_type &&values);
 
     ///
     ///
     ///
-    const action_type& on_state(const state_type& state)const{return policy_values_[state];}
+    const action_type &on_state(const state_type &state) const { return policy_values_[state]; }
 
-private:
-
+  private:
     policy_values_type policy_values_;
-
 };
 
-template<utils::concepts::float_or_integral_vector PolicyValuesType, typename StateType>
+template <utils::concepts::float_or_integral_vector PolicyValuesType, typename StateType>
 requires(std::is_integral<StateType>::value)
-DeterministicActionPolicy<PolicyValuesType, StateType>::DeterministicActionPolicy(policy_values_type&& values)
-    :
-    policy_values_(values)
-{}
-
-
-
+    DeterministicActionPolicy<PolicyValuesType, StateType>::DeterministicActionPolicy(
+        policy_values_type &&values)
+    : policy_values_(values)
+{
 }
 
-}
-}
+} // namespace policies
+
+} // namespace rl
+} // namespace cubeai
 
 #endif // DETERMINISTIC_ACTION_POLICY_H

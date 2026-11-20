@@ -1,9 +1,9 @@
-#include "bitsim/bitsim_types.h"
 #include "bitrl/envs/gymnasium/toy_text/black_jack_env.h"
 #include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/envs/gymnasium/toy_text/taxi_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
+#include "bitsim/bitsim_types.h"
 
 #include <any>
 #include <iostream>

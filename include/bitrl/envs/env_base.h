@@ -1,8 +1,8 @@
 #ifndef ENV_BASE_H
 #define ENV_BASE_H
 
-#include "bitsim/bitsim_consts.h"
 #include "bitrl/base/bitrl_types.h"
+#include "bitsim/bitsim_consts.h"
 
 #include <any>
 #include <string>

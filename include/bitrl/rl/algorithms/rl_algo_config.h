@@ -3,9 +3,12 @@
 
 #include "bitrl/base/cubeai_types.h"
 
-namespace bitrl{
-namespace rl{
-namespace algos{
+namespace bitrl
+{
+namespace rl
+{
+namespace algos
+{
 
 ///
 /// \brief The RLAlgoConfig struct
@@ -19,10 +22,9 @@ struct RLAlgoConfig
     real_t tolerance;
     bool render_environment{false};
     bool render_episode{false};
-
 };
-}
-}
-}
+} // namespace algos
+} // namespace rl
+} // namespace bitrl
 
 #endif // RL_ALGO_INPUT_H

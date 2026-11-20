@@ -4,19 +4,22 @@
 #include "bitrl/base/bitrl_types.h"
 #include <string>
 
-namespace bitrl {
-namespace maths{
-namespace optim{
+namespace bitrl
+{
+namespace maths
+{
+namespace optim
+{
 
 ///
 /// \brief The RenderModeType enum
 ///
-//BETTER_ENUM(OptimzerType, char, INVALID_TYPE=-1, GD=0, SGD, ADAM, RSPROP);
+// BETTER_ENUM(OptimzerType, char, INVALID_TYPE=-1, GD=0, SGD, ADAM, RSPROP);
 
-enum class OptimizerType: int_t
+enum class OptimizerType : int_t
 {
-    INVALID_TYPE=-1,
-    GD=0,
+    INVALID_TYPE = -1,
+    GD = 0,
     SGD,
     ADAM,
     RSPROP
@@ -27,16 +30,13 @@ enum class OptimizerType: int_t
 /// \param type The RenderModeType to convert
 /// \return std::string
 
-//inline
-//std::string to_string(OptimizerType type){return type._to_string();}
+// inline
+// std::string to_string(OptimizerType type){return type._to_string();}
 
-inline
-constexpr bool compare(OptimizerType tp1, OptimizerType tp2){
-    return tp1 == tp2;
-}
+inline constexpr bool compare(OptimizerType tp1, OptimizerType tp2) { return tp1 == tp2; }
 
-}
+} // namespace optim
 
-}
-}
+} // namespace maths
+} // namespace bitrl
 #endif // OPTIMIZER_TYPE_H

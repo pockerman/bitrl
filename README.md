@@ -1,7 +1,7 @@
 # bitrl
 
 _bitrl_ is a C++ library containing implementations of various reinforcement learning, filtering and planning algorithms.
-The following is an indicative list of examples. 
+The examples, with a page for each, are listed in [examples/examples.md](examples/examples.md). Some of them: 
  
 
 ## Examples
@@ -15,7 +15,7 @@ The following is an indicative list of examples.
 - <a href="examples/example_6/example_6.md">Toy Markov chain</a>
 - <a href="examples/example_7/example_7.md">Importance sampling</a>
 - <a href="examples/example_8/example_8.md">Vector addition with CUDA</a>
-- <a href="examples/example_9/example_9.cpp">Discounted returns</a>
+- <a href="examples/example_9/example_9.md">Discounted returns</a>
 
 ### Environments
 
@@ -38,34 +38,30 @@ These need _bitsim_ built with Chrono.
 ### Reinforcement learning
 
 - <a href="examples/example_10/example_10.md">Multi-armed bandits</a>
-- <a href="examples/example_11/example_11.cpp">Multi-armed bandits with a soft-max policy</a>
-- <a href="examples/example_12/example_12.cpp">Iterative policy evaluation on ```FrozenLake```</a>
+- <a href="examples/example_11/example_11.md">Multi-armed bandits with a soft-max policy</a>
+- <a href="examples/example_12/example_12.md">Iterative policy evaluation on ```FrozenLake```</a>
 - <a href="examples/example_13/example_13.md">Policy iteration on ```FrozenLake```</a>
 - <a href="examples/example_14/example_14.md">Value iteration on ```FrozenLake```</a>
 - <a href="examples/example_15/example_15.md">SARSA on ```CliffWorld```</a>
-- <a href="examples/example_16/rexample_16.md">Q-learning on ```CliffWorld```</a>
+- <a href="examples/example_16/example_16.md">Q-learning on ```CliffWorld```</a>
 - <a href="examples/example_17/example_17.md">A2C on ```CartPole```</a>
 - <a href="examples/example_18/example_18.md">DQN on ```Gridworld```</a>
 - <a href="examples/example_21/example_21.md">DQN on ```Gridworld``` with experience replay</a>
 - <a href="examples/example_19/example_19.md">REINFORCE on ```CartPole```</a>
 - <a href="examples/example_23/example_23.md">REINFORCE with baseline on ```CartPole```</a>
-- <a href="examples/example_22/example_22.cpp">First visit Monte Carlo on ```FrozenLake```</a>
+- <a href="examples/example_22/example_22.md">First visit Monte Carlo on ```FrozenLake```</a>
 - <a href="examples/example_25/example_25.md">PPO on ```LunarLander```</a>
 
 ## Installation
 
-The cubeai library has a host of dependencies:
+bitrl needs
 
-- A compiler that supports C++20 e.g. g++-11
-- <a href="https://www.boost.org/">Boost C++</a> 
-- <a href="https://cmake.org/">CMake</a> >= 3.6
-- <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a>
-- <a href="https://github.com/google/googletest">Gtest</a> (if configured with tests)
+- a compiler that supports C++20, for example g++ 11
+- <a href="https://cmake.org/">CMake</a> 3.20 or later
+- <a href="https://www.boost.org/">Boost</a> and <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a>
+- <a href="https://github.com/google/googletest">GoogleTest</a>, if it is built with the tests
 
-In addition, the library also incorporates, see ```(include/cubeai/extern)```, the following libraries (you don't need to install these):
-
-- <a href="https://github.com/elnormous/HTTPRequest">HTTPRequest</a>
-- <a href="https://github.com/nlohmann/json">nlohmann/json</a>
+HTTPRequest and nlohmann/json come with bitsim.
 
 ### bitsim and libtorch
 

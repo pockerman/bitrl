@@ -4,12 +4,12 @@
 #include "cubeai/robots/diff_drive_robot.h"
 
 
+#include <algorithm>
 #include <cmath>
-#include <utility>
-#include <tuple>
 #include <iostream>
 #include <random>
-#include <algorithm>
+#include <tuple>
+#include <utility>
 
 namespace path_track_example_1
 {
@@ -96,7 +96,8 @@ Agent::step(const path_type& path){
 
 }*/
 
-int main() {
+int main()
+{
 
     /*using namespace path_track_example_1;
 
@@ -110,7 +111,5 @@ int main() {
         agent.step(path);
     }*/
 
-   return 0;
+    return 0;
 }
-
-

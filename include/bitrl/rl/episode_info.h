@@ -3,14 +3,16 @@
 
 #include "bitrl/base/bitrl_types.h"
 #include "bitsim/bitsim_consts.h"
-#include <chrono>
-#include <string>
-#include <map>
 #include <any>
+#include <chrono>
+#include <map>
 #include <ostream>
+#include <string>
 
-namespace bitrl {
-namespace rl {
+namespace bitrl
+{
+namespace rl
+{
 
 ///
 /// \brief The EpisodeInfo struct
@@ -42,16 +44,16 @@ struct EpisodeInfo
     /// \param out
     /// \return
     ///
-    std::ostream& print(std::ostream& out)const noexcept;
+    std::ostream &print(std::ostream &out) const noexcept;
 };
 
-inline
-std::ostream& operator<<(std::ostream& out, const EpisodeInfo& info){
+inline std::ostream &operator<<(std::ostream &out, const EpisodeInfo &info)
+{
     return info.print(out);
 }
 
-}
+} // namespace rl
 
-}
+} // namespace bitrl
 
 #endif // EPISODE_INFO_H

@@ -1,7 +1,7 @@
 
+#include "bitrl/envs/grid_world/grid_world_env.h"
 #include "bitsim/bitsim_consts.h"
 #include "bitsim/bitsim_types.h"
-#include "bitrl/envs/grid_world/grid_world_env.h"
 
 #ifdef BITSIM_DEBUG
 #include <cassert>

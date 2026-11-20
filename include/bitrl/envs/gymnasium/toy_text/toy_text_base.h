@@ -5,8 +5,8 @@
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/envs/env_types.h"
 #include "bitrl/envs/gymnasium/gymnasium_env_base.h"
-#include "bitsim/extern/nlohmann/json/json.hpp"
 #include "bitrl/network/rest_rl_env_client.h"
+#include "bitsim/extern/nlohmann/json/json.hpp"
 
 #include <any>
 #include <string>

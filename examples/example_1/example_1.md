@@ -1,4 +1,3 @@
-
 \page bitrl_example_1 bitrl Example 1: Monte Carlo integration
 
 In this first example we explore some of the basic elements of _bitrl_. In particular,
@@ -16,155 +15,65 @@ but it becomes increasingly efficient as the dimensionality of the integral grow
 
 Let's assume that we want to evaluate the integral
 
-$$
+\f[
 I=\int_a^b h(x) dx
-$$
+\f]
 
-If $f$ is a polynomial or a trigonometric function, then this integral can be calculated in closed form. 
-However, in many cases there may not be  a closed for solution for $I$. Numerical techniques, such as <a href="https://en.wikipedia.org/wiki/Gaussian_quadrature">Gaussian quadrature</a> or the the <a href="https://en.wikipedia.org/wiki/Trapezoidal_rule">trapezoid rule</a> can  be 
-employed in order to evaluate $I$. Monte Carlo integration is yet another techinque for evaluating complex integrals that is
+If \f$f\f$ is a polynomial or a trigonometric function, then this integral can be calculated in closed form. 
+However, in many cases there may not be  a closed for solution for \f$I\f$. Numerical techniques, such as <a href="https://en.wikipedia.org/wiki/Gaussian_quadrature">Gaussian quadrature</a> or the the <a href="https://en.wikipedia.org/wiki/Trapezoidal_rule">trapezoid rule</a> can  be 
+employed in order to evaluate \f$I\f$. Monte Carlo integration is yet another techinque for evaluating complex integrals that is
 notable for its simplicity and generality [1].
 
-Let's begine by rewriting $I$ as follows
+Let's begine by rewriting \f$I\f$ as follows
 
-$$
+\f[
 I=\int_a^b \omega(x)f(x) dx
-$$
+\f]
 
-where $\omega=h(x)(b-a)$ and $f(x) = 1/(b-a)$ i.e. $f$ is the probability density for a uniform random variable over $(a,b)$ [1]. 
-Recall that the expectation for a continuous variable $X$ is given by
+where \f$\omega=h(x)(b-a)\f$ and \f$f(x) = 1/(b-a)\f$ i.e. \f$f\f$ is the probability density for a uniform random variable over \f$(a,b)\f$ [1]. 
+Recall that the expectation for a continuous variable \f$X\f$ is given by
 
-$$E\left[X\right]=\int xf(x)dx$$
+\f[E\left[X\right]=\int xf(x)dx\f]
 
 Hence, 
 
-$$I=E\left[\omega(X)\right]$$
+\f[I=E\left[\omega(X)\right]\f]
 
-This is the basic Monte Carlo integration method [1]. In order to evaluate the integral $I$, we evaluate the following expression
+This is the basic Monte Carlo integration method [1]. In order to evaluate the integral \f$I\f$, we evaluate the following expression
 
-$$\hat{I} = \frac{1}{n}\sum_{i=1}^{N}\omega(x_i)$$
+\f[\hat{I} = \frac{1}{n}\sum_{i=1}^{N}\omega(x_i)\f]
 
-where $x \sim U(a,b)$. By the <a href="https://en.wikipedia.org/wiki/Law_of_large_numbers">law of large numbers</a> it follows, [1],
+where \f$x \sim U(a,b)\f$. By the <a href="https://en.wikipedia.org/wiki/Law_of_large_numbers">law of large numbers</a> it follows, [1],
 
-$$
+\f[
 \hat{I}\rightarrow E\left[\omega(X)\right] = I
-$$
+\f]
 
 Notice that the law of large numbers provides us with probability convergence. 
-Hence $\hat{I}$ will converge in probability to $I$. The standard error, $\hat{se}$, for the estimate is [1]
+Hence \f$\hat{I}\f$ will converge in probability to \f$I\f$. The standard error, \f$\hat{se}\f$, for the estimate is [1]
 
-$$
+\f[
 \hat{se} = \frac{s}{\sqrt{n}}
-$$
+\f]
 
 where
 
-$$
+\f[
 s^2  = \frac{\sum_{i}^{N}(\omega(x_i) - \hat{I} )^2}{n - 1}
-$$
+\f]
 
-A $1-\alpha$ confidence interval for the estimate is given from, [1], 
+A \f$1-\alpha\f$ confidence interval for the estimate is given from, [1], 
 
-$$
+\f[
 \hat{I} \pm z_{\alpha/2}\hat{se}
-$$
+\f]
 
 ## The driver code
 
 The driver code for this tutorial is shown below. 
 
 
-@code
-#include "bitrl/base/cubeai_types.h"
-#include "bitrl/utils/iteration_counter.h"
-#include "bitrl/geom_primitives/shapes/circle.h"
-#include "bitsim/extern/nlohmann/json/json.hpp"
-
-#include <boost/log/trivial.hpp>
-#include <iostream>
-#include <random>
-#include <fstream>
-
-namespace intro_example_1
-{
-
-using cubeai::real_t;
-using cubeai::uint_t;
-using cubeai::utils::IterationCounter;
-using cubeai::geom_primitives::Circle;
-
-using json = nlohmann::json;
-
-const std::string CONFIG = "config.json";
-
-// read the JSON file
-json
-load_config(const std::string& filename){
-
-  std::ifstream f(filename);
-  json data = json::parse(f);
-  return data;
-}
-
-
-}
-
-int main() {
-
-    using namespace intro_example_1;
-
-    try{
-
-        BOOST_LOG_TRIVIAL(info)<<"Reading configuration file...";
-
-        // load the json configuration
-        auto data = load_config(CONFIG);
-
-        // read properties from the configuration
-        const auto R = data["R"].template get<real_t>();
-        const auto N_POINTS = data["N_POINTS"].template get<uint_t>();
-        const auto SEED = data["SEED"].template get<uint_t>();
-        const auto X = data["X"].template get<real_t>();
-        const auto Y = data["Y"].template get<real_t>();
-
-        // create a circle
-        Circle c(R, {X, Y});
-
-        // simple object to control iterations
-        IterationCounter counter(N_POINTS);
-
-        // how many points we found in the Circle
-        auto points_inside_circle = 0;
-
-        // the box has side 2
-        const real_t SQUARE_SIDE = R*2.0;
-        std::uniform_real_distribution dist(0.0,SQUARE_SIDE);
-        std::mt19937 gen(SEED);
-
-        BOOST_LOG_TRIVIAL(info)<<"Starting computation...";
-        while(counter.continue_iterations()){
-            auto x = dist(gen);
-            auto y = dist(gen);
-            if(c.is_inside(x,y, 1.0e-4)){
-              points_inside_circle += 1;
-            }
-        }
-
-        BOOST_LOG_TRIVIAL(info)<<"Finished computation...";
-        auto area = (static_cast<real_t>(points_inside_circle) / static_cast<real_t>(N_POINTS)) * std::pow(SQUARE_SIDE, 2);
-        BOOST_LOG_TRIVIAL(info)<<"Circle area calculated with:" <<N_POINTS<<" is: "<<area;
-        BOOST_LOG_TRIVIAL(info)<<"Circle area: "<<c.area();
-    }
-    catch(std::exception& e){
-        BOOST_LOG_TRIVIAL(error)<<e.what();
-    }
-    catch(...){
-        BOOST_LOG_TRIVIAL(error)<<"Unknown exception occured";
-    }
-
-   return 0;
-} 
-@endcode
+\include example_1/example_1.cpp
 
 Running the code above produces the following output
 
