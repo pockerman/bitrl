@@ -1,43 +1,65 @@
-name: build-cuberl 
+name: Build cuberl
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
-	strategy:
-	  matrix:
-	      BUILD_TYPE: ["Release", "Debug"]
-	     
+    # cuberl against bitsim master built without Chrono, and the CPU libtorch
+    name: Build and test (${{ matrix.build_type }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [ Release, Debug ]
+    env:
+      DEPS: ${{ github.workspace }}/.deps
     steps:
-	- uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install dependencies
-	  run: |
-        sudo apt-get install -y g++ cmake libboost-program-options-dev libyaml-cpp-dev clang-tidy clang-format graphviz doxygen
-        pip3 install cvxpy matplotlib numpy
-    - name: Checkout Cmake
-      uses: actions/checkout@v4
+      # bitsim's script installs what it needs: Boost, Eigen, GTest,
+      # OpenCV and Paho MQTT
+      - name: Install dependencies
+        run: |
+          curl --fail --silent --show-error --location \
+            https://raw.githubusercontent.com/pockerman/bitsim/master/ci/install_deps.sh \
+            --output "$RUNNER_TEMP/install_deps.sh"
+          bash "$RUNNER_TEMP/install_deps.sh"
+          sudo apt-get install -y libtbb-dev unzip
 
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Restore libtorch
+        id: libtorch-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.DEPS }}/libtorch
+          key: libtorch-${{ runner.os }}-${{ hashFiles('ci/install_libtorch.sh') }}
 
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      - name: Download libtorch
+        if: steps.libtorch-cache.outputs.cache-hit != 'true'
+        run: ./ci/install_libtorch.sh "$DEPS"
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}}
+      - name: Install bitsim
+        run: ./ci/install_bitsim.sh "$DEPS/bitsim"
 
+      - name: Configure
+        run: >
+          cmake -B build
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_PREFIX_PATH="$DEPS/bitsim;$DEPS/libtorch"
+          -DENABLE_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --parallel "$(nproc)"
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --no-tests=error

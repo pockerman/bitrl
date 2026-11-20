@@ -1,27 +1,6 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.20 FATAL_ERROR)
+ADD_EXECUTABLE(example_8 example_8.cu)
 
-SET(EXECUTABLE  example_8)
-SET(SOURCE ${EXECUTABLE}.cu)
-
-ADD_EXECUTABLE(${EXECUTABLE} ${SOURCE})
-
-# We need to explicitly state that we need all CUDA files
-# to be built with -dc as the member functions 
-# could be called by other libraries and executable
-SET_TARGET_PROPERTIES(${EXECUTABLE} PROPERTIES CUDA_SEPARABLE_COMPLILATION ON)
-			 
-TARGET_LINK_LIBRARIES(${EXECUTABLE} cubeailib)
-TARGET_LINK_LIBRARIES(${EXECUTABLE} rlenvscpplib)
-
-IF( USE_PYTORCH )
-    TARGET_LINK_LIBRARIES(${EXECUTABLE} ${TORCH_LIBRARIES})
-ENDIF()
-
-IF(ENABLE_WEBOTS_FLAG)
-	TARGET_LINK_LIBRARIES(${EXECUTABLE} CppController)
-ENDIF()
-
-TARGET_LINK_LIBRARIES(${EXECUTABLE} pthread)
-TARGET_LINK_LIBRARIES(${EXECUTABLE} openblas)
-target_link_libraries(${EXECUTABLE} tbb)
-target_link_libraries(${EXECUTABLE} boost_log)
+# Build all CUDA files with -dc as the member functions
+# could be called by other libraries and executables
+SET_TARGET_PROPERTIES(example_8 PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+TARGET_LINK_LIBRARIES(example_8 PRIVATE cuberllib)

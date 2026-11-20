@@ -1,4 +1,4 @@
-#include "cuberl/base/cubeai_types.h"
+#include "cuberl/base/cuberl_types.h"
 #include "cuberl/rl/policies/softmax_policy.h"
 
 #include <gtest/gtest.h>
