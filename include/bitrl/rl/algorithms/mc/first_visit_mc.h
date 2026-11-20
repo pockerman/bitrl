@@ -10,6 +10,7 @@
 #include "bitrl/rl/episode_info.h"
 #include "bitrl/maths/vector_math.h"
 #include "bitsim/bitsim_consts.h"
+#include "bitsim/utils/io/csv_file_writer.h"
 
 #ifdef CUBEAI_PRINT_DBG_MSGS
     #include <boost/log/trivial.hpp>
@@ -19,6 +20,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <tuple>
 
 namespace bitrl{
 namespace rl::algos::mc
@@ -254,6 +256,22 @@ namespace rl::algos::mc
 
     }
 
+
+    template<typename EnvType,
+             typename TrajectoryGenerator, typename DecayLRSchedule, typename DiscountGenerator>
+    void
+    FirstVisitMCSolver<EnvType,
+                       TrajectoryGenerator, DecayLRSchedule, DiscountGenerator>::save(const std::string& filename)const{
+
+        bitsim::utils::io::CSVWriter file_writer(filename, ',');
+        file_writer.open();
+        file_writer.write_column_names({"state_index", "value_function"});
+
+        for(uint_t s=0; s < static_cast<uint_t>(v_.size()); ++s){
+            auto row = std::make_tuple(s, v_[s]);
+            file_writer.write_row(row);
+        }
+    }
 
 }
 }

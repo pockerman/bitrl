@@ -14,7 +14,7 @@
 #include <random>
 
 
-namespace rl_example_19
+namespace example_22
 {
 
 using bitrl::real_t;
@@ -39,15 +39,16 @@ struct RandomActionSelector
     FrozenLake<4>::action_type operator()(const StateType state)const;
 };
 
+// One generator for the whole run. A generator made in every call would
+// start from the same seed each time and always pick the same action.
+std::mt19937 generator(SEED);
+
 template<typename StateType>
 FrozenLake<4>::action_type
 RandomActionSelector::operator()(const StateType /*state*/)const{
-
-    // randomly select an action
-        std::mt19937 generator(SEED);
-        std::uniform_int_distribution<> real_dist(0, 4);
-        auto action = real_dist(generator);
-		return action;
+    // FrozenLake has 4 actions, 0 to 3
+    std::uniform_int_distribution<> action_dist(0, 3);
+    return action_dist(generator);
 }
 
 struct TrajectoryGenerator
@@ -95,7 +96,7 @@ typedef FirstVisitMCSolver<env_type, trajectory_generator_type,
 
 int main() {
 
-    using namespace rl_example_19;
+    using namespace example_22;
 
 	RESTRLEnvClient server(SERVER_URL, true);
 
@@ -125,6 +126,9 @@ int main() {
     auto info = trainer.train(env);
     std::cout<<"Trainer info: "<<std::endl;
     std::cout<<"\t"<<info<<std::endl;
+
+    // the value of each state under the random policy
+    solver.save("first_visit_mc_frozen_lake.csv");
 
     // save the value function for plotting
     //algorithm.save("iterative_policy_evaluation_frozen_lake.csv");

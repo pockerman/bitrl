@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-namespace rl_example_6
+namespace example_12
 {
 
 const std::string SERVER_URL = "http://0.0.0.0:8001/api";
@@ -28,7 +28,7 @@ typedef FrozenLake<4> env_type;
 
 int main() {
 
-    using namespace rl_example_6;
+    using namespace example_12;
 	
 	RESTRLEnvClient server(SERVER_URL, true);
 
@@ -58,7 +58,7 @@ int main() {
     std::cout<<info<<std::endl;
 
     // save the value function for plotting
-    //algorithm.save("iterative_policy_evaluation_frozen_lake.csv");
+    algorithm.save("iterative_policy_evaluation_frozen_lake.csv");
 
    return 0;
 }

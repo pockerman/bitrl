@@ -3,6 +3,7 @@ Utility script for plotting with matplotlib
 """
 import matplotlib.pyplot as plt
 import csv
+import sys
 import math
 import numpy as np
 
@@ -37,8 +38,5 @@ def main(filename):
        
 		
 if __name__ == '__main__':
-  main("/home/alex/qi3/cubeAI/build/examples/rl/rl_example_6/iterative_policy_evaluation_frozen_lake.csv")
-	
-	
-
-
+  # Run it from the directory the example wrote its file to, or pass the file
+  main(sys.argv[1] if len(sys.argv) > 1 else "iterative_policy_evaluation_frozen_lake.csv")
