@@ -1,7 +1,7 @@
 #ifndef LP_METRIC_H
 #define LP_METRIC_H
 
-#include "cubeai/base/cubeai_types.h"
+#include "bitrl/base/bitrl_types.h"
 #include <vector>
 
 namespace bitrl
@@ -57,6 +57,6 @@ using EuclideanMetric = LpMetric<2, true>;
 } // namespace maths
 } // namespace bitrl
 
-#include "cubeai/maths/lp_metric_impl.h"
+#include "bitrl/maths/lp_metric_impl.h"
 
 #endif // LP_METRIC_H

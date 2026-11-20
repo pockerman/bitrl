@@ -1,11 +1,11 @@
 #ifndef EPSILON_DOUBLE_QTABLE_GREEDY_POLICY_H
 #define EPSILON_DOUBLE_QTABLE_GREEDY_POLICY_H
 
-#include "cubeai/base/cubeai_types.h"
-#include "cubeai/rl/epsilon_decay_options.h"
-#include "cubeai/rl/rl_mixins.h"
+#include "bitrl/base/bitrl_types.h"
+#include "bitrl/rl/epsilon_decay_options.h"
+#include "bitrl/rl/rl_mixins.h"
 
-namespace cubeai
+namespace bitrl
 {
 namespace rl
 {
@@ -45,12 +45,6 @@ class EpsilonDoubleQTableGreedyPolicy : protected with_decay_epsilon_option_mixi
     uint_t operator()(const TableType &q1, const TableType &q2, const StateTp &state) const;
 
     ///
-    /// \brief choose_action_index
-    ///
-    // template<typename VectorType>
-    // uint_t choose_action_index(const VectorType& values)const;
-
-    ///
     /// \brief adjust_on_episode
     /// \param episode
     ///
@@ -86,6 +80,7 @@ class EpsilonDoubleQTableGreedyPolicy : protected with_decay_epsilon_option_mixi
     void set_seed(const uint_t seed) noexcept
     {
         this->with_decay_epsilon_option_mixin::seed = seed;
+        this->with_decay_epsilon_option_mixin::seed_generator();
     }
 };
 
@@ -96,6 +91,7 @@ EpsilonDoubleQTableGreedyPolicy<TableType>::EpsilonDoubleQTableGreedyPolicy(
     : with_decay_epsilon_option_mixin(
           {eps, eps, min_eps, max_eps, eps_decay, n_actions, seed, decay_op})
 {
+    this->with_decay_epsilon_option_mixin::seed_generator();
 }
 
 template <typename TableType>
@@ -105,21 +101,20 @@ uint_t EpsilonDoubleQTableGreedyPolicy<TableType>::operator()(const TableType &q
                                                               const StateTp &state) const
 {
 
-    std::mt19937 gen(this->with_decay_epsilon_option_mixin::seed);
-
     // generate a number in [0, 1]
     std::uniform_real_distribution<> real_dist_(0.0, 1.0);
 
-    if (real_dist_(gen) > this->with_decay_epsilon_option_mixin::eps)
+    if (real_dist_(this->with_decay_epsilon_option_mixin::generator) >
+        this->with_decay_epsilon_option_mixin::eps)
     {
         // select greedy action with probability 1 - epsilon
         return this->with_double_q_table_max_action_mixin::max_action(
             q1, q2, state, this->with_decay_epsilon_option_mixin::n_actions);
     }
 
-    std::uniform_int_distribution<> distrib_(0,
-                                             this->with_decay_epsilon_option_mixin::n_actions - 1);
-    return distrib_(gen);
+    std::uniform_int_distribution<uint_t> distrib_(
+        0, this->with_decay_epsilon_option_mixin::n_actions - 1);
+    return distrib_(this->with_decay_epsilon_option_mixin::generator);
 }
 
 template <typename TableType>
@@ -129,30 +124,10 @@ void EpsilonDoubleQTableGreedyPolicy<TableType>::adjust_on_episode(uint_t episod
         this->with_decay_epsilon_option_mixin::decay_eps(episode);
 }
 
-/*template<typename TableType>
-template<typename VectorType>
-uint_t
-EpsilonDoubleQTableGreedyPolicy<TableType>::choose_action_index(const VectorType& values)const{
-
-    std::mt19937 gen(this->with_decay_epsilon_option_mixin::seed);
-
-    // generate a number in [0, 1]
-    std::uniform_real_distribution<> real_dist_(0.0, 1.0);
-
-    if(real_dist_(gen) > this->with_decay_epsilon_option_mixin::eps){
-        // select greedy action with probability 1 - epsilon
-        return arg_max(values);
-    }
-
-    std::uniform_int_distribution<> distrib_(0,  this->with_decay_epsilon_option_mixin::n_actions -
-1); return distrib_(gen);
-
-}*/
-
 } // namespace policies
 
 } // namespace rl
 
-} // namespace cubeai
+} // namespace bitrl
 
 #endif // EPSILON_DOUBLE_QTABLE_GREEDY_POLICY_H

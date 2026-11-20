@@ -1,10 +1,10 @@
 #ifndef POLICY_BASE_H
 #define POLICY_BASE_H
 
-#include "cubeai/rl/policies/policy_type.h"
+#include "bitrl/rl/policies/policy_type.h"
 #include <ostream>
 
-namespace cubeai
+namespace bitrl
 {
 namespace rl
 {
@@ -51,6 +51,6 @@ inline std::ostream &operator<<(std::ostream &out, const PolicyBase &p) { return
 
 } // namespace policies
 } // namespace rl
-} // namespace cubeai
+} // namespace bitrl
 
 #endif // POLICY_BASE_H

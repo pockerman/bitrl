@@ -63,7 +63,7 @@ void DummyAgent<EnvType, PolicyType>::play(EnvType &env, Criteria &criteria)
     {
 
         auto action = on_state(time_step.observation());
-        auto time_step = env.step(action);
+        time_step = env.step(action);
 
         if (time_step.done())
         {
