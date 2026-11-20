@@ -5,8 +5,8 @@ An example lives in examples/<name>/ or examples/<section>/<name>/, with the
 source <name>.cpp (or <name>.cu). It is built when the CMakeLists.txt of its
 directory or of its section calls bitrl_add_example(<name> ...), and
 examples/CMakeLists.txt reaches that CMakeLists.txt through ADD_SUBDIRECTORY. Its page id is bitrl_example_<id>, where
-<id> is <name> without a leading "example_": example_14 is bitrl_example_14,
-grid_world is bitrl_example_grid_world. Every example that is built
+<id> is <name> without a leading "example_": value_iteration is
+bitrl_example_value_iteration, and an example_14 would be bitrl_example_14. Every example that is built
 - has a page <name>.md whose first line is
       \\page bitrl_example_<id> <title>
 - is linked from examples/examples.md.
