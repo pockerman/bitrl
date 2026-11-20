@@ -1,0 +1,1 @@
+bitrl_add_test(test_multi_armed_bandits)

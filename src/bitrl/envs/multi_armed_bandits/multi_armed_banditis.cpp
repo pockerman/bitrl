@@ -48,7 +48,7 @@ void MultiArmedBandits::make(const std::string &version,
     }
 
     auto fail_reward_itr = options.find("fail_reward");
-    if (success_reward_itr != options.end())
+    if (fail_reward_itr != options.end())
     {
         fail_reward_ = std::any_cast<real_t>(fail_reward_itr->second);
     }
@@ -61,13 +61,19 @@ void MultiArmedBandits::make(const std::string &version,
     auto idx = bitsim::utils::uuid4();
     this->set_idx_(idx);
     this->base_type::make(version, options, reset_options);
+
+    // the generator is seeded once, with the seed given to make() or the
+    // default seed of the environments. Every pull is an episode of its own,
+    // so reset() must not seed it again, or every pull would draw the same
+    // number
+    seed_ = reset_options.contains("seed") ? std::any_cast<uint_t>(reset_options.at("seed"))
+                                           : DEFAULT_ENV_SEED;
+    generator_.seed(seed_);
     this->make_created_();
 }
 
 MultiArmedBandits::time_step_type MultiArmedBandits::reset()
 {
-    seed_ = 42;
-
     static auto res = [](auto &bernoulli) { bernoulli.reset(); };
 
     std::for_each(bandits_.begin(), bandits_.end(), res);
@@ -83,11 +89,8 @@ MultiArmedBandits::time_step_type MultiArmedBandits::step(const action_type &act
         throw std::logic_error("Invalid action index");
     }
 
-    auto result = bandits_[action].sample();
-    if (seed_ != consts::INVALID_ID)
-    {
-        result = bandits_[action].sample(seed_);
-    }
+    // the arm pays with its probability of success
+    const bool result = std::bernoulli_distribution(bandits_[action].mean())(generator_);
 
     if (result)
     {

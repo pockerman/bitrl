@@ -62,11 +62,11 @@ SamplingResult run_epsilon_greedy(MultiArmedBandits &env, real_t eps)
         // get the reward from the action
         auto reward = time_step.reward();
 
-        // update the table
-        max_rewards[action] += reward;
+        // the estimate of an arm is the mean of its rewards so far
+        result.lever_pulls[action] += 1;
+        max_rewards[action] += (reward - max_rewards[action]) / result.lever_pulls[action];
 
         result.total_reward += reward;
-        result.lever_pulls[action] += 1;
     }
 
     return result;
