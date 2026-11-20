@@ -1,2 +1,4 @@
-include/cuberl/base/cubeai_version.h
-include/cuberl/base/cubeai_config.h
+include/cuberl/base/cuberl_version.h
+include/cuberl/base/cuberl_config.h
+build/
+install/

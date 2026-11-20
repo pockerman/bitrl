@@ -1,55 +1,16 @@
-SET(CMAKE_CXX_COMPILER /usr/bin/g++-11)
-SET(CMAKE_C_COMPILER /usr/bin/gcc-11)
-SET(CMAKE_CXX_STANDARD 20)
-SET(CMAKE_CXX_STANDARD_REQUIRED True) 
+INCLUDE(GoogleTest)
 
-IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-SET(CMAKE_CXX_FLAGS "-g -Wall -Wextra")
-ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
-SET(CMAKE_CXX_FLAGS "-O2")
-ENDIF()
+# Each test links cuberllib and GTest; bitrl, libtorch and TBB come with cuberllib
+FUNCTION(cuberl_add_test name)
+	ADD_EXECUTABLE(${name} ${name}.cpp)
+	TARGET_LINK_LIBRARIES(${name} PRIVATE cuberllib GTest::gtest GTest::gtest_main)
+	cuberl_set_warnings(${name})
+	GTEST_DISCOVER_TESTS(${name} DISCOVERY_TIMEOUT 60)
+ENDFUNCTION()
 
-#SET(CMAKE_CXX_FLAGS "-g -Wall -Wextra")
-SET(CMAKE_LINKER_FLAGS "-pthread")
-
-IF(GTEST_INCLUDE_DIRS MATCHES " ")
-
-	# find gtest
-	FIND_PACKAGE(GTest REQUIRED)
-
-	IF(GTest_FOUND)
-		INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
-		LINK_DIRECTORIES("/usr/local/lib")
-	ENDIF()
-
-ELSE()
-	INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
-	LINK_DIRECTORIES("/usr/local/lib")
-ENDIF()
-
-
-INCLUDE_DIRECTORIES(${EIGEN_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${BOOST_INCLUDEDIR})
-INCLUDE_DIRECTORIES(${RLENVS_CPP_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
-
-LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX})
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-LINK_DIRECTORIES(${RLENVS_CPP_LIB_PATH})
-
-# add the test dirs
 ADD_SUBDIRECTORY(test_policies/test_max_tabular_policy)
 ADD_SUBDIRECTORY(test_policies/test_random_tabular_policy)
 ADD_SUBDIRECTORY(test_policies/test_epsilon_greedy_policy)
 ADD_SUBDIRECTORY(test_policies/test_softmax_policy)
 ADD_SUBDIRECTORY(test_maths/test_vector_math)
 ADD_SUBDIRECTORY(test_experience_buffer)
-
-#ADD_SUBDIRECTORY(test_array_utils)
-#ADD_SUBDIRECTORY(test_mc_tree_search)
-#ADD_SUBDIRECTORY(test_kd_tree)
-#ADD_SUBDIRECTORY(test_basic_stats)
-#ADD_SUBDIRECTORY(test_iteration_counter)
-#ADD_SUBDIRECTORY(test_fixed_priority_queue)
-#ADD_SUBDIRECTORY(test_a2c)
-

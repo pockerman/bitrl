@@ -1,34 +1,8 @@
-SET(CMAKE_CXX_COMPILER /usr/bin/g++-11)
-SET(CMAKE_C_COMPILER /usr/bin/gcc-11)
-SET(CMAKE_CXX_STANDARD 20)
-SET(CMAKE_CXX_STANDARD_REQUIRED True) 
-
-IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    SET(CMAKE_CXX_FLAGS "-g -Wall -Wextra")
-ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
-    SET(CMAKE_CXX_FLAGS "-O2")
-ENDIF()
-
-#SET(CMAKE_CXX_FLAGS "-g -Wall -Wextra")
-SET(CMAKE_LINKER_FLAGS "-pthread")
-
-INCLUDE_DIRECTORIES(${BOOST_INCLUDEDIR})
-INCLUDE_DIRECTORIES(${NLOHMANN_JSON_INCL_DIR})
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include) 
-
-IF( USE_PYTORCH )
-    INCLUDE_DIRECTORIES(${TORCH_INCLUDE_DIRS})
-ENDIF()
-
-# libraries to link against this should be conditional
-# to the specified configuration
-# see also: # see https://cmake.org/cmake/help/latest/command/link_directories.html
-LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX})
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-
-IF( USE_PYTORCH )
-    LINK_DIRECTORIES("/home/alex/MySoftware/libtorch/lib")
-ENDIF()
+# Each example links only cuberllib; bitrl, libtorch and TBB come with it
+FUNCTION(cuberl_add_example name)
+	ADD_EXECUTABLE(${name} ${name}.cpp)
+	TARGET_LINK_LIBRARIES(${name} PRIVATE cuberllib)
+ENDFUNCTION()
 
 ADD_SUBDIRECTORY(example_1)
 ADD_SUBDIRECTORY(example_2)
@@ -38,10 +12,8 @@ ADD_SUBDIRECTORY(example_6)
 ADD_SUBDIRECTORY(example_7)
 # we need CUDA for this to work
 IF(USE_CUDA)
-    ADD_SUBDIRECTORY(example_8)
+	ADD_SUBDIRECTORY(example_8)
 ENDIF()
-
-
 ADD_SUBDIRECTORY(example_9)
 ADD_SUBDIRECTORY(example_10)
 ADD_SUBDIRECTORY(example_11)
@@ -53,10 +25,8 @@ ADD_SUBDIRECTORY(example_16)
 ADD_SUBDIRECTORY(example_17)
 ADD_SUBDIRECTORY(example_18)
 ADD_SUBDIRECTORY(example_19)
-
 ADD_SUBDIRECTORY(example_21)
 ADD_SUBDIRECTORY(example_22)
 ADD_SUBDIRECTORY(example_23)
 #ADD_SUBDIRECTORY(example_24)
 ADD_SUBDIRECTORY(example_25)
-

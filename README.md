@@ -52,25 +52,29 @@ In addition, the library also incorporates, see ```(include/cubeai/extern)```, t
 - <a href="https://github.com/elnormous/HTTPRequest">HTTPRequest</a>
 - <a href="https://github.com/nlohmann/json">nlohmann/json</a>
 
-### bitrl
+### bitsim and libtorch
 
-cuberl is built on <a href="https://github.com/pockerman/bitrl">bitrl</a>, which has to be installed first, see its
-<a href="https://github.com/pockerman/bitrl/blob/master/doc/install.md">install page</a>. Then tell CMake where it is:
+cuberl is built on <a href="https://github.com/pockerman/bitsim">bitsim</a>, which has to be installed first, see its
+<a href="https://github.com/pockerman/bitsim/blob/master/doc/install.md">install page</a>. bitsim installs as the CMake
+package `bitrl`. cuberl also needs <a href="https://pytorch.org/get-started/locally/">libtorch</a>, built with the
+C++11 ABI, and TBB (`sudo apt-get install libtbb-dev`). Tell CMake where bitsim and libtorch are:
 
 ```
-cmake -B build -DCMAKE_PREFIX_PATH=/path/to/bitrl/install/opt
+cmake -B build -DCMAKE_PREFIX_PATH="/path/to/bitsim/prefix;/path/to/libtorch"
 cmake --build build --parallel
 ```
 
-Without `-DCMAKE_INSTALL_PREFIX`, bitrl installs into `install/opt` in its source tree. Add the Chrono prefix
-to `CMAKE_PREFIX_PATH` too if Chrono is not in a system prefix, separated by `;`.
+Add the Chrono prefix to `CMAKE_PREFIX_PATH` too if bitsim was built with Chrono and Chrono is not in a system prefix.
+`ci/install_bitsim.sh` and `ci/install_libtorch.sh` do both installs the way CI does.
 
-### Enabling PyTorch and CUDA
+The options are `ENABLE_EXAMPLES` (ON), `ENABLE_TESTS` (OFF), `USE_CUDA` (OFF; libtorch must be built with CUDA too),
+`CUBERL_LOG` (ON) and `CUBERL_WERROR` (OFF), for example
 
-_cuberl_ can be complied with CUDA and/or PyTorch support. If PyTorch has been compiled using CUDA support, then
-you need to enable CUDA as well. In order to do so set the flag _USE_CUDA_ in the _CMakeLists.txt_ to _ON_.
-_cuberl_ assumes that PyTorch is compiled with the C++11 ABI.
-
+```
+cmake -B build -DCMAKE_PREFIX_PATH="..." -DENABLE_TESTS=ON
+cmake --build build --parallel
+ctest --test-dir build --output-on-failure
+```
 
 ### Documentation dependencies
 
