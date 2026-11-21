@@ -12,11 +12,10 @@
 #include "bitrl/rl/algorithms/pg/reinforce.h"
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitsim/utils/io/csv_file_writer.h"
-
-#include <boost/log/trivial.hpp>
 
 #include <torch/torch.h>
 
@@ -122,7 +121,7 @@ typedef ReinforceSolver<env_type, PolicyNet> solver_type;
 int main()
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
     using namespace rl_example_13;
 
     try
@@ -133,7 +132,7 @@ int main()
         std::filesystem::create_directories("experiments/" + EXPERIMENT_ID);
         torch::manual_seed(42);
 
-        BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+        BITRL_LOG_INFO << "Creating environment...";
 
         RESTRLEnvClient server(SERVER_URL, true);
         auto env = CartPole(server);
@@ -145,8 +144,8 @@ int main()
         env.make("v1", options, reset_options);
         env.reset();
 
-        BOOST_LOG_TRIVIAL(info) << "Done...";
-        BOOST_LOG_TRIVIAL(info) << "Number of actions=" << env.n_actions();
+        BITRL_LOG_INFO << "Done...";
+        BITRL_LOG_INFO << "Number of actions=" << env.n_actions();
 
         PolicyNet policy;
 
@@ -204,8 +203,8 @@ int main()
             std::cout << "The greedy policy kept the pole up for " << total << " steps"
                       << std::endl;
         }
-        BOOST_LOG_TRIVIAL(info) << "Training info...";
-        BOOST_LOG_TRIVIAL(info) << info;
+        BITRL_LOG_INFO << "Training info...";
+        BITRL_LOG_INFO << info;
 
         // save the rewards per episode for visualization
         // purposes
@@ -226,7 +225,7 @@ int main()
         // write the loss values
         auto &loss_vals = solver.get_monitor().policy_loss_values;
 
-        BOOST_LOG_TRIVIAL(info) << "Loss values size: " << loss_vals.size();
+        BITRL_LOG_INFO << "Loss values size: " << loss_vals.size();
         bitsim::utils::io::CSVWriter loss_csv_writer(
             experiment_path + "/" + "loss.csv", bitsim::utils::io::CSVWriter::default_delimiter());
         loss_csv_writer.open();
@@ -271,7 +270,7 @@ int main()
 
         episode_duration_csv_writer.close();
 
-        BOOST_LOG_TRIVIAL(info) << "Finished agent training";
+        BITRL_LOG_INFO << "Finished agent training";
     }
     catch (std::exception &e)
     {

@@ -12,6 +12,7 @@
 
 #ifdef USE_PYTORCH
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/rl/algorithms/pg/a2c_config.h"
 #include "bitrl/rl/algorithms/pg/a2c_monitor.h"
@@ -24,7 +25,6 @@
 #include <torch/torch.h>
 
 #ifdef BITRL_DEBUG
-#include <boost/log/trivial.hpp>
 #include <cassert>
 #endif
 
@@ -239,7 +239,7 @@ ACSolverBase<EnvType, PolicyType, CriticType, MonitorType, ConfigType>::create_e
 {
 
 #ifdef BITRL_DEBUG
-    BOOST_LOG_TRIVIAL(info) << "Collecting batch for episode: " << episode_idx;
+    BITRL_LOG_INFO << "Collecting batch for episode: " << episode_idx;
 #endif
 
     /// we want to push into the monitor
@@ -280,7 +280,7 @@ ACSolverBase<EnvType, PolicyType, CriticType, MonitorType, ConfigType>::create_e
     }
 
 #ifdef BITRL_DEBUG
-    BOOST_LOG_TRIVIAL(info) << "Done... ";
+    BITRL_LOG_INFO << "Done... ";
 #endif
 
     return itrs + 1;

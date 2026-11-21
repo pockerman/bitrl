@@ -67,7 +67,7 @@ The Q-learning algorithm is implemented in the \ref bitrl::rl::algos::td::QLearn
 #include <iostream>
 #include <iostream>
 #include <unordered_map>
-#include <boost/log/trivial.hpp>
+#include "bitrl/base/bitrl_log.h"
 @endcode
 
 ## The learned policy

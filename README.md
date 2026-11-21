@@ -133,13 +133,14 @@ bitrl needs
 - a compiler that supports C++20, for example g++ 11
 - <a href="https://cmake.org/">CMake</a> 3.20 or later
 - <a href="https://www.boost.org/">Boost</a> and <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a>
+- <a href="https://github.com/gabime/spdlog">spdlog</a>, which bitsim logs with
 - <a href="https://github.com/google/googletest">GoogleTest</a>, if it is built with the tests
 
 HTTPRequest and nlohmann/json come with bitsim.
 
 ### bitsim and libtorch
 
-bitrl is built on <a href="https://github.com/pockerman/bitsim">bitsim</a>, which has to be installed first, see its
+bitrl is built on <a href="https://github.com/pockerman/bitsim">bitsim</a> 5, which has to be installed first, see its
 <a href="https://github.com/pockerman/bitsim/blob/master/doc/install.md">install page</a>. bitsim installs as the CMake
 package `bitsim`. bitrl also needs <a href="https://pytorch.org/get-started/locally/">libtorch</a>, built with the
 C++11 ABI, and TBB (`sudo apt-get install libtbb-dev`). Tell CMake where bitsim and libtorch are:
@@ -154,6 +155,29 @@ build runs out of memory on a 16 GB machine.
 
 Add the Chrono prefix to `CMAKE_PREFIX_PATH` too if bitsim was built with Chrono and Chrono is not in a system prefix.
 `ci/install_bitsim.sh` and `ci/install_libtorch.sh` do both installs the way CI does.
+
+### Logging
+
+bitrl logs with bitsim's logger, which writes with <a href="https://github.com/gabime/spdlog">spdlog</a> to standard
+error. bitrl's messages go to the logger named `bitrl`, and are written with the stream operator:
+
+```cpp
+#include "bitrl/base/bitrl_log.h"
+
+BITRL_LOG_INFO << "Episode " << episode << " reward " << reward;
+```
+
+Every logger writes info and above. To change that, call
+
+```cpp
+bitrl::log::set_level("bitrl", bitrl::log::Level::warn);  // only warnings and above from bitrl
+bitrl::log::set_level(bitrl::log::Level::debug);          // everything, from every logger
+bitrl::log::add_file_sink("training.log");                // to a file as well
+```
+
+or set the `SPDLOG_LEVEL` environment variable, `SPDLOG_LEVEL=bitrl=warn ./ppo_cartpole`, without changing the
+code. bitsim's own messages go to the logger `bitsim`; its
+<a href="https://github.com/pockerman/bitsim/blob/master/doc/install.md#logging">install page</a> has the details.
 
 ### Install
 

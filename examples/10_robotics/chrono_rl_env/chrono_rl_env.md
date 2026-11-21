@@ -189,7 +189,7 @@ DiffDriveRobotEnv::step(const action_type &/*action*/)
     if (sim_counter_ % 100 == 0)
     {
 #ifdef BITSIM_LOG
-BOOST_LOG_TRIVIAL(info)<<"Reset simulation: ";
+BITRL_LOG_INFO<<"Reset simulation: ";
 #endif
         return reset();
     }
@@ -237,7 +237,7 @@ void DiffDriveRobotEnv::simulate()
 
     auto time_step = step( action_type());
 #ifdef BITSIM_LOG
-BOOST_LOG_TRIVIAL(info)<<"At time: "<<current_time_<<" position: "<<time_step.observation();
+BITRL_LOG_INFO<<"At time: "<<current_time_<<" position: "<<time_step.observation();
 #endif
 
     // Irrlicht must finish drawing the frame

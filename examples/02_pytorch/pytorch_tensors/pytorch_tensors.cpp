@@ -2,9 +2,9 @@
 
 #ifdef USE_PYTORCH
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 
-#include <boost/log/trivial.hpp>
 #include <torch/torch.h>
 
 #include <iostream>

@@ -6,8 +6,8 @@
 #ifdef USE_CUDA
 
 #include "cubeai/base/cubeai_types.h"
+#include "bitrl/base/bitrl_log.h"
 
-#include <boost/log/trivial.hpp>
 #include <iostream>
 
 namespace exe{
@@ -33,7 +33,7 @@ int main() {
 	
 	using namespace exe;
 	
-	BOOST_LOG_TRIVIAL(info)<<"Running example...";
+	BITRL_LOG_INFO<<"Running example...";
     
 	const int ARRAY_SIZE = 64;
 	const int ARRAY_BYTES = ARRAY_SIZE * sizeof(float_t);
@@ -82,7 +82,7 @@ int main() {
 		
     cudaDeviceReset();
 	
-	BOOST_LOG_TRIVIAL(info)<<"Done...";
+	BITRL_LOG_INFO<<"Done...";
     return 0;
 }
 

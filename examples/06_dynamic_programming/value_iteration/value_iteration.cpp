@@ -2,11 +2,11 @@
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitsim/utils/io/csv_file_writer.h"
 
-#include <boost/log/trivial.hpp>
 #include <fstream>
 #include <tuple>
 #include <vector>
@@ -40,7 +40,7 @@ typedef ValueIteration<env_type> solver_type;
 int main()
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
 
     using namespace example_14;
 
@@ -49,7 +49,7 @@ int main()
     // create the environment
     env_type env(server);
 
-    BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+    BITRL_LOG_INFO << "Creating environment...";
     std::unordered_map<std::string, std::any> options;
 
     options["is_slippery"] = std::any(false);
@@ -57,7 +57,7 @@ int main()
     std::unordered_map<std::string, std::any> reset_options;
     env.make("v1", options, reset_options);
     env.reset();
-    BOOST_LOG_TRIVIAL(info) << "Done...";
+    BITRL_LOG_INFO << "Done...";
 
     ValueIterationConfig config;
     config.gamma = 0.99;
@@ -88,8 +88,8 @@ int main()
         }
     }
     algorithm.actions_after_training_ends(env);
-    BOOST_LOG_TRIVIAL(info) << "Done after " << reward.size() << " sweeps";
-    BOOST_LOG_TRIVIAL(info) << "Saving solution to " << SOLUTION_FILE;
+    BITRL_LOG_INFO << "Done after " << reward.size() << " sweeps";
+    BITRL_LOG_INFO << "Saving solution to " << SOLUTION_FILE;
 
     // save the value function into a csv file
     algorithm.save(SOLUTION_FILE);
@@ -114,6 +114,6 @@ int main()
     // build the policy
     algorithm.build_policy(env).save(POLICY);
 
-    BOOST_LOG_TRIVIAL(info) << "Finished agent training";
+    BITRL_LOG_INFO << "Finished agent training";
     return 0;
 }

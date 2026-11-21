@@ -1,6 +1,6 @@
 #include "bitrl/rl/algorithms/pg/ppo_config.h"
+#include "bitrl/base/bitrl_log.h"
 #include "bitsim/utils/io/json_file_reader.h"
-#include <boost/log/trivial.hpp>
 
 namespace bitrl
 {
@@ -23,7 +23,7 @@ std::ostream &PPOConfig::print(std::ostream &out) const
 void PPOConfig::load_from_json(const std::string &filename)
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Loading PPOConfig from path: " << filename;
+    BITRL_LOG_INFO << "Loading PPOConfig from path: " << filename;
 
     bitsim::utils::io::JSONFileReader json_reader(filename);
     json_reader.open();
@@ -31,7 +31,7 @@ void PPOConfig::load_from_json(const std::string &filename)
     // normalize_rewards = json_reader.template get_value<bool>("normalize_rewards");
     max_itrs_per_episode = json_reader.template get_value<uint_t>("max_itrs_per_episode");
     gamma = json_reader.template get_value<real_t>("gamma");
-    BOOST_LOG_TRIVIAL(info) << "Done loading PPOConfig";
+    BITRL_LOG_INFO << "Done loading PPOConfig";
 }
 
 } // namespace pg

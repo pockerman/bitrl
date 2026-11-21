@@ -40,9 +40,6 @@
 /*Use RL */
 #cmakedefine USE_RL
 
-/* We need this when linking to boost log*/
-#cmakedefine BOOST_LOG_DYN_LINK
-
 /* Whether we build with Webots support*/
 #cmakedefine USE_BITRL_WEBOTS
 

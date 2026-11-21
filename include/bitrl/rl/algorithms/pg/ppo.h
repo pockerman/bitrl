@@ -12,6 +12,7 @@
 
 #ifdef USE_PYTORCH
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/rl/algorithms/pg/a2c_monitor.h"
 #include "bitrl/rl/algorithms/pg/actor_critic_solver_base.h"
@@ -23,7 +24,6 @@
 #include <torch/torch.h>
 
 #ifdef BITRL_DEBUG
-#include <boost/log/trivial.hpp>
 #include <cassert>
 #endif
 
@@ -133,7 +133,7 @@ PPOSolver<EnvType, PolicyType, CriticType>::train_with_batch_(experience_buffer_
 {
 
 #ifdef BITRL_DEBUG
-    BOOST_LOG_TRIVIAL(info) << "PPO: Training with batch...: ";
+    BITRL_LOG_INFO << "PPO: Training with batch...: ";
 #endif
 
     // because of the way we treat the values
@@ -233,7 +233,7 @@ PPOSolver<EnvType, PolicyType, CriticType>::train_with_batch_(experience_buffer_
     this->monitor_.policy_loss_values.push_back(avg_loss);
     this->monitor_.rewards.push_back(R);
 #ifdef BITRL_DEBUG
-    BOOST_LOG_TRIVIAL(info) << "PPO: Done...: ";
+    BITRL_LOG_INFO << "PPO: Done...: ";
 #endif
     return std::make_tuple(R, avg_loss);
 }

@@ -2,11 +2,11 @@
 
 #ifdef USE_PYTORCH
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitsim/utils/io/json_file_reader.h"
 #include "bitsim/utils/iteration_counter.h"
 
-#include <boost/log/trivial.hpp>
 #include <torch/torch.h>
 
 #include <fstream>
@@ -68,7 +68,7 @@ void LogisticRegressionModelImpl::test_model(const std::string &test_set_path, u
                                              torch::Device device)
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Testing starts..." << std::endl;
+    BITRL_LOG_INFO << "Testing starts..." << std::endl;
     ;
 
     // Test the model
@@ -82,7 +82,7 @@ void LogisticRegressionModelImpl::test_model(const std::string &test_set_path, u
 
     // Number of samples in the testset
     auto num_test_samples = test_dataset.size().value();
-    BOOST_LOG_TRIVIAL(info) << "Number of test examples " << num_test_samples << std::endl;
+    BITRL_LOG_INFO << "Number of test examples " << num_test_samples << std::endl;
 
     auto test_loader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(
         std::move(test_dataset), batch_size);
@@ -105,20 +105,20 @@ void LogisticRegressionModelImpl::test_model(const std::string &test_set_path, u
         num_correct += prediction.eq(target).sum().item<int64_t>();
     }
 
-    BOOST_LOG_TRIVIAL(info) << "Testing finished..." << std::endl;
+    BITRL_LOG_INFO << "Testing finished..." << std::endl;
 
     auto test_accuracy = static_cast<double>(num_correct) / num_test_samples;
     auto test_sample_mean_loss = running_loss / num_test_samples;
-    BOOST_LOG_TRIVIAL(info) << "Testset - Loss: " << test_sample_mean_loss
-                            << ", Accuracy: " << test_accuracy;
+    BITRL_LOG_INFO << "Testset - Loss: " << test_sample_mean_loss
+                   << ", Accuracy: " << test_accuracy;
 }
 
 void LogisticRegressionModelImpl::train_model(const std::string &train_set_path, uint_t batch_size,
                                               uint_t n_epochs, real_t lr, torch::Device device)
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Training starts..." << std::endl;
-    BOOST_LOG_TRIVIAL(info) << "Training set data path: " << train_set_path;
+    BITRL_LOG_INFO << "Training starts..." << std::endl;
+    BITRL_LOG_INFO << "Training set data path: " << train_set_path;
 
     auto train_dataset =
         torch::data::datasets::MNIST(train_set_path, torch::data::datasets::MNIST::Mode::kTrain)
@@ -127,7 +127,7 @@ void LogisticRegressionModelImpl::train_model(const std::string &train_set_path,
 
     // Number of samples in the training set
     auto num_train_samples = train_dataset.size().value();
-    BOOST_LOG_TRIVIAL(info) << "Number of train examples " << num_train_samples;
+    BITRL_LOG_INFO << "Number of train examples " << num_train_samples;
 
     auto train_loader = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(
         std::move(train_dataset), batch_size);
@@ -173,12 +173,12 @@ void LogisticRegressionModelImpl::train_model(const std::string &train_set_path,
         auto sample_mean_loss = running_loss / num_train_samples;
         auto accuracy = static_cast<real_t>(num_correct) / num_train_samples;
 
-        BOOST_LOG_TRIVIAL(info) << "Epoch [" << (epoch + 1) << "/" << n_epochs
-                                << "], Trainset - Loss: " << sample_mean_loss
-                                << ", Accuracy: " << accuracy << '\n';
+        BITRL_LOG_INFO << "Epoch [" << (epoch + 1) << "/" << n_epochs
+                       << "], Trainset - Loss: " << sample_mean_loss << ", Accuracy: " << accuracy
+                       << '\n';
     }
 
-    BOOST_LOG_TRIVIAL(info) << "Training finished..." << std::endl;
+    BITRL_LOG_INFO << "Training finished..." << std::endl;
 }
 
 TORCH_MODULE(LogisticRegressionModel);
@@ -203,11 +203,11 @@ int main()
         // torch::Device device(torch::kCPU);
         if (cuda_available)
         {
-            BOOST_LOG_TRIVIAL(info) << "CUDA available. Training on GPU " << std::endl;
+            BITRL_LOG_INFO << "CUDA available. Training on GPU " << std::endl;
         }
         else
         {
-            BOOST_LOG_TRIVIAL(info) << "CUDA is not available. Training on CPU " << std::endl;
+            BITRL_LOG_INFO << "CUDA is not available. Training on CPU " << std::endl;
         }
 
         auto train_set_data_path = json_reader.template get_value<std::string>("train_data_path");

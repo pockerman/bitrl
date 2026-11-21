@@ -4,10 +4,10 @@
 #include "bitrl/base/bitrl_types.h"
 #include "bitsim/bitsim_consts.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/utils/iterative_algorithm_controller.h"
 #include "bitrl/utils/iterative_algorithm_result.h"
 
-#include <boost/log/trivial.hpp>
 #include <boost/noncopyable.hpp>
 #include <chrono>
 #include <vector>
@@ -172,7 +172,7 @@ bitrl::utils::IterativeAlgorithmResult
 RLSerialAgentTrainer<EnvType, AgentType>::train(env_type &env)
 {
 
-    BOOST_LOG_TRIVIAL(info) << " Start training on environment..."; //<<env.name;
+    BITRL_LOG_INFO << " Start training on environment..."; //<<env.name;
 
     // start timing the training
     auto start = std::chrono::steady_clock::now();
@@ -191,7 +191,7 @@ RLSerialAgentTrainer<EnvType, AgentType>::train(env_type &env)
             episode_counter % output_msg_frequency_ == 0)
         {
 
-            BOOST_LOG_TRIVIAL(info) << episode_info;
+            BITRL_LOG_INFO << episode_info;
         }
 
         total_reward_per_episode_.push_back(episode_info.episode_reward);
@@ -200,7 +200,7 @@ RLSerialAgentTrainer<EnvType, AgentType>::train(env_type &env)
 
         if (episode_info.stop_training)
         {
-            BOOST_LOG_TRIVIAL(info) << " Stopping training at index=" << episode_counter;
+            BITRL_LOG_INFO << " Stopping training at index=" << episode_counter;
 
             // assume that if we were told to stop
             // that we have converge
@@ -214,7 +214,7 @@ RLSerialAgentTrainer<EnvType, AgentType>::train(env_type &env)
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<real_t> elapsed_seconds = end - start;
 
-    BOOST_LOG_TRIVIAL(info) << " Done... ";
+    BITRL_LOG_INFO << " Done... ";
 
     auto state = itr_ctrl_.get_state();
     state.total_time = elapsed_seconds;

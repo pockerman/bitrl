@@ -1,10 +1,10 @@
 #include "bitrl/rl/policies/epsilon_greedy_policy.h"
 
 #include "bitrl/base/bitrl_config.h"
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 
 #ifdef BITRL_DEBUG
-#include <boost/log/trivial.hpp>
 #include <cassert>
 #endif
 
@@ -141,8 +141,7 @@ void EpsilonGreedyPolicy::set_eps_value(real_t eps)
     if (decay_op_ != EpsilonDecayOption::NONE)
     {
 #ifdef BITRL_DEBUG
-        BOOST_LOG_TRIVIAL(warning)
-            << "Epsilon is not update as you have set up a decay policy..." << std::endl;
+        BITRL_LOG_WARN << "Epsilon is not update as you have set up a decay policy..." << std::endl;
 #endif
         return;
     }

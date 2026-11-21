@@ -10,11 +10,11 @@
 #include "bitrl/rl/algorithms/pg/a2c_config.h"
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/envs/gymnasium/classic_control/cart_pole_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitsim/utils/io/csv_file_writer.h"
 
-#include <boost/log/trivial.hpp>
 #include <torch/torch.h>
 
 #include <filesystem>
@@ -146,7 +146,7 @@ TORCH_MODULE(CriticNet);
 int main()
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
     using namespace rl_example_11;
 
     try
@@ -162,14 +162,14 @@ int main()
         // create the environment
         env_type env(server);
 
-        BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+        BITRL_LOG_INFO << "Creating environment...";
         std::unordered_map<std::string, std::any> options;
         std::unordered_map<std::string, std::any> reset_options;
         env.make("v1", options, reset_options);
         env.reset();
 
-        BOOST_LOG_TRIVIAL(info) << "Done...";
-        BOOST_LOG_TRIVIAL(info) << "Number of actions=" << env.n_actions();
+        BITRL_LOG_INFO << "Done...";
+        BITRL_LOG_INFO << "Number of actions=" << env.n_actions();
 
         A2CConfig a2c_config;
         a2c_config.max_itrs_per_episode = 500;
@@ -227,8 +227,8 @@ int main()
                       << std::endl;
         }
 
-        BOOST_LOG_TRIVIAL(info) << "Training info...";
-        BOOST_LOG_TRIVIAL(info) << info;
+        BITRL_LOG_INFO << "Training info...";
+        BITRL_LOG_INFO << info;
 
         auto experiment_path = std::string("experiments/") + EXPERIMENT_ID;
 
@@ -296,7 +296,7 @@ int main()
 
         episode_duration_csv_writer.close();
 
-        BOOST_LOG_TRIVIAL(info) << "Finished agent training";
+        BITRL_LOG_INFO << "Finished agent training";
     }
     catch (std::exception &e)
     {

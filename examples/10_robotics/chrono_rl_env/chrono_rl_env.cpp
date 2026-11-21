@@ -13,7 +13,7 @@
 #include <chrono_irrlicht/ChVisualSystemIrrlicht.h>
 
 #ifdef BITSIM_LOG
-#include <boost/log/trivial.hpp>
+#include "bitrl/base/bitrl_log.h"
 #endif
 
 #include <filesystem>
@@ -53,7 +53,7 @@ int main()
     using namespace example14;
 
 #ifdef BITSIM_LOG
-    BOOST_LOG_TRIVIAL(info) << "Starting simulation...: ";
+    BITRL_LOG_INFO << "Starting simulation...: ";
 #endif
 
     // create the system and attach the robot to it
@@ -65,7 +65,7 @@ int main()
     system.Add(floor);
 
 #ifdef BITSIM_LOG
-    BOOST_LOG_TRIVIAL(info) << "Building robot...: ";
+    BITRL_LOG_INFO << "Building robot...: ";
 #endif
     CHRONO_DiffDriveRobot robot;
     auto path = std::filesystem::path(bitsim::consts::ROBOTS_DIR + "/bitsim_diff_drive_robot.json");
@@ -75,7 +75,7 @@ int main()
 
     auto &sensor_manager = robot.get_sensor_manager();
 #ifdef BITSIM_LOG
-    BOOST_LOG_TRIVIAL(info) << "Numner of sensors: " << sensor_manager.n_sensors();
+    BITRL_LOG_INFO << "Numner of sensors: " << sensor_manager.n_sensors();
 #endif
 
     // create the visualization system

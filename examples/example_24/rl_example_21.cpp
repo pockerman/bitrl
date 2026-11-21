@@ -9,10 +9,9 @@
 #include "cubeai/rl/algorithms/pg/a2c.h"
 #include "cubeai/rl/trainers/rl_serial_agent_trainer.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "rlenvs/envs/api_server/apiserver.h"
 #include "rlenvs/envs/gymnasium/classic_control/cart_pole_env.h"
-
-#include <boost/log/trivial.hpp>
 
 #include <iostream>
 #include <unordered_map>
@@ -119,7 +118,7 @@ typedef rlenvscpp::envs::gymnasium::CartPole env_type;
 int main()
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
     using namespace rl_example_11;
 
     try
@@ -130,13 +129,13 @@ int main()
         // create the environment
         env_type env(server);
 
-        BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+        BITRL_LOG_INFO << "Creating environment...";
         std::unordered_map<std::string, std::any> options;
 
         env.make("v1", options);
         env.reset();
-        BOOST_LOG_TRIVIAL(info) << "Done...";
-        BOOST_LOG_TRIVIAL(info) << "Number of actions=" << env.n_actions();
+        BITRL_LOG_INFO << "Done...";
+        BITRL_LOG_INFO << "Number of actions=" << env.n_actions();
 
         A2CConfig a2c_config;
         a2c_config.n_iterations_per_episode = 20;
@@ -164,9 +163,9 @@ int main()
         RLSerialAgentTrainer<env_type, solver_type> trainer(config, solver);
         auto info = trainer.train(env);
 
-        BOOST_LOG_TRIVIAL(info) << "Training info...";
-        BOOST_LOG_TRIVIAL(info) << info;
-        BOOST_LOG_TRIVIAL(info) << "Finished agent training";
+        BITRL_LOG_INFO << "Training info...";
+        BITRL_LOG_INFO << info;
+        BITRL_LOG_INFO << "Finished agent training";
     }
     catch (std::exception &e)
     {

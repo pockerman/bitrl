@@ -61,7 +61,7 @@ ENDIF()
 
 # bitsim brings Boost, Eigen and, depending on how it was built, Chrono,
 # OpenCV and MQTT. bitsim_WITH_* say which.
-FIND_PACKAGE(bitsim 4 REQUIRED)
+FIND_PACKAGE(bitsim 5 REQUIRED)
 MESSAGE(STATUS "Found bitsim ${bitsim_VERSION} in ${bitsim_DIR}")
 MESSAGE(STATUS "bitsim built with Chrono: ${bitsim_WITH_CHRONO}, OpenCV: ${bitsim_WITH_OPENCV}, MQTT: ${bitsim_WITH_MQTT}")
 
