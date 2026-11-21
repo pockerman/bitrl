@@ -11,10 +11,10 @@
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 #include "bitrl/utils/torch_adaptor.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/envs/grid_world/grid_world_env.h"
 #include "bitsim/utils/io/csv_file_writer.h"
 
-#include <boost/log/trivial.hpp>
 #include <torch/torch.h>
 
 #include <any>
@@ -123,8 +123,8 @@ int main()
     try
     {
 
-        BOOST_LOG_TRIVIAL(info) << "Starting agent training...";
-        BOOST_LOG_TRIVIAL(info) << "Number of episodes to train: " << TOTAL_EPOCHS;
+        BITRL_LOG_INFO << "Starting agent training...";
+        BITRL_LOG_INFO << "Number of episodes to train: " << TOTAL_EPOCHS;
 
         // let's create a directory where we want to
         // store all the results from running a simulation
@@ -133,7 +133,7 @@ int main()
         // set the seed for PyTorch
         torch::manual_seed(SEED);
 
-        BOOST_LOG_TRIVIAL(info) << "Creating the environment...";
+        BITRL_LOG_INFO << "Creating the environment...";
 
         // create a 4x4 grid
         auto env = env_type();
@@ -142,10 +142,10 @@ int main()
         std::unordered_map<std::string, std::any> reset_options;
         env.make("v1", options, reset_options);
 
-        BOOST_LOG_TRIVIAL(info) << "Done...";
-        BOOST_LOG_TRIVIAL(info) << "Environment name: " << env.name;
-        BOOST_LOG_TRIVIAL(info) << "Number of actions available: " << env.n_actions();
-        BOOST_LOG_TRIVIAL(info) << "Number of states available: " << env.n_states();
+        BITRL_LOG_INFO << "Done...";
+        BITRL_LOG_INFO << "Environment name: " << env.name;
+        BITRL_LOG_INFO << "Number of actions available: " << env.n_actions();
+        BITRL_LOG_INFO << "Number of states available: " << env.n_states();
 
         // the network to train for the q values
         QNet qnet;
@@ -168,7 +168,7 @@ int main()
         for (uint_t epoch = 0; epoch < TOTAL_EPOCHS; ++epoch)
         {
 
-            BOOST_LOG_TRIVIAL(info) << "Starting epoch: " << epoch;
+            BITRL_LOG_INFO << "Starting epoch: " << epoch;
 
             // for every new epoch we reset the environment
             auto time_step = env.reset();
@@ -198,7 +198,7 @@ int main()
                 auto qvals = qnet(torch_state);
                 auto action_idx = policy(qvals, bitrl::torch_tensor_value_type<float_t>());
 
-                BOOST_LOG_TRIVIAL(info) << "\tAction selected: " << action_idx << std::endl;
+                BITRL_LOG_INFO << "\tAction selected: " << action_idx << std::endl;
 
                 // step in the environment
                 time_step = env.step(action_idx);
@@ -221,7 +221,7 @@ int main()
                 auto max_q = torch::max(new_q_vals);
                 auto reward = time_step.reward();
 
-                BOOST_LOG_TRIVIAL(info) << "\tReward: " << reward;
+                BITRL_LOG_INFO << "\tReward: " << reward;
 
                 auto y = torch::tensor({reward});
                 if (reward == -1.0)
@@ -246,17 +246,17 @@ int main()
                 epoch_rewards.push_back(reward);
                 step_counter += 1;
 
-                BOOST_LOG_TRIVIAL(info) << "\tLoss at epoch: " << loss.item<real_t>();
+                BITRL_LOG_INFO << "\tLoss at epoch: " << loss.item<real_t>();
 
                 // update done
                 done = time_step.done();
                 if (done)
                 {
-                    BOOST_LOG_TRIVIAL(info) << "\tFinishing epoch at step: " << step_counter;
+                    BITRL_LOG_INFO << "\tFinishing epoch at step: " << step_counter;
                 }
             }
 
-            BOOST_LOG_TRIVIAL(info) << "Epoch finished...";
+            BITRL_LOG_INFO << "Epoch finished...";
 
             // get the epsilon
             auto eps = policy.eps_value();

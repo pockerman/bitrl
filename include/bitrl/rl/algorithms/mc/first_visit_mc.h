@@ -13,7 +13,7 @@
 #include "bitsim/utils/io/csv_file_writer.h"
 
 #ifdef CUBEAI_PRINT_DBG_MSGS
-#include <boost/log/trivial.hpp>
+#include "bitrl/base/bitrl_log.h"
 #endif
 
 #include <algorithm>
@@ -194,7 +194,7 @@ EpisodeInfo FirstVisitMCSolver<EnvType, TrajectoryGenerator, DecayLRSchedule,
 #ifdef CUBEAI_PRINT_DBG_MSGS
     if (trajectory_size == 0)
     {
-        BOOST_LOG_TRIVIAL(warning) << "Trajectory size=" << trajectory_size << std::endl;
+        BITRL_LOG_WARN << "Trajectory size=" << trajectory_size << std::endl;
     }
 #endif
 

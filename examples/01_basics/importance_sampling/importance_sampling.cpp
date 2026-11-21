@@ -1,8 +1,8 @@
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/maths/vector_math.h"
 #include "bitsim/maths/statistics/distributions/normal_dist.h"
 #include "bitsim/utils/iteration_counter.h"
-#include <boost/log/trivial.hpp>
 
 #include <algorithm>
 #include <cmath>
@@ -45,7 +45,7 @@ int main()
 
     using namespace intro_example_7;
 
-    BOOST_LOG_TRIVIAL(info) << "Starting example...";
+    BITRL_LOG_INFO << "Starting example...";
 
     // simple object to control iterations
     IterationCounter counter(ITERATIONS);
@@ -78,8 +78,8 @@ int main()
 
     auto E_I = bitrl::maths::mean(intergals.begin(), intergals.end(), true);
     auto V_I = bitrl::maths::variance(intergals.begin(), intergals.end(), true);
-    BOOST_LOG_TRIVIAL(info) << "E[I]=" << E_I;
-    BOOST_LOG_TRIVIAL(info) << "V[I]=" << V_I;
-    BOOST_LOG_TRIVIAL(info) << "Finished example...";
+    BITRL_LOG_INFO << "E[I]=" << E_I;
+    BITRL_LOG_INFO << "V[I]=" << V_I;
+    BITRL_LOG_INFO << "Finished example...";
     return 0;
 }

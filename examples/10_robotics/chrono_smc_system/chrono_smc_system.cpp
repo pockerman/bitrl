@@ -7,7 +7,7 @@
 #include "bitsim/utils/render/irrlicht_utils.h"
 
 #ifdef BITSIM_LOG
-#include <boost/log/trivial.hpp>
+#include "bitrl/base/bitrl_log.h"
 #endif
 
 #include "robot.h"
@@ -183,7 +183,7 @@ time_step_type RobotEnv::step(const action_type & /*action*/)
     if (sim_counter_ % 600 == 0)
     {
 #ifdef BITSIM_LOG
-        BOOST_LOG_TRIVIAL(info) << "Reset simulation: ";
+        BITRL_LOG_INFO << "Reset simulation: ";
 #endif
         return reset();
     }
@@ -235,8 +235,7 @@ void RobotEnv::simulate()
 
         auto time_step = step(action_type());
 #ifdef BITSIM_LOG
-        BOOST_LOG_TRIVIAL(info) << "At time: " << current_time_
-                                << " position: " << time_step.observation();
+        BITRL_LOG_INFO << "At time: " << current_time_ << " position: " << time_step.observation();
 #endif
 
         // Irrlicht must finish drawing the frame

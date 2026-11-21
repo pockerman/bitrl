@@ -12,11 +12,11 @@
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 #include "bitrl/utils/torch_adaptor.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/envs/gymnasium/box2d/lunar_lander_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitsim/utils/io/csv_file_writer.h"
 
-#include <boost/log/trivial.hpp>
 #include <torch/torch.h>
 
 #include <filesystem>
@@ -199,7 +199,7 @@ TORCH_MODULE(CriticNet);
 int main()
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
     using namespace rl_example_11;
 
     try
@@ -215,14 +215,14 @@ int main()
         // create the environment
         env_type env(server);
 
-        BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+        BITRL_LOG_INFO << "Creating environment...";
         std::unordered_map<std::string, std::any> options;
         std::unordered_map<std::string, std::any> reset_options;
         env.make("v3", options, reset_options);
         env.reset();
 
-        BOOST_LOG_TRIVIAL(info) << "Done...";
-        BOOST_LOG_TRIVIAL(info) << "Number of actions=" << env.n_actions();
+        BITRL_LOG_INFO << "Done...";
+        BITRL_LOG_INFO << "Number of actions=" << env.n_actions();
 
         PPOConfig ppo_config;
         // Gymnasium ends LunarLander after 1000 steps
@@ -259,8 +259,8 @@ int main()
 
         auto info = trainer.train(env);
 
-        BOOST_LOG_TRIVIAL(info) << "Training info...";
-        BOOST_LOG_TRIVIAL(info) << info;
+        BITRL_LOG_INFO << "Training info...";
+        BITRL_LOG_INFO << info;
 
         // land 10 times with the greedy policy, tanh of the mean, each from the
         // next seed, and write the actions of every landing to episode_<k>.csv
@@ -367,7 +367,7 @@ int main()
         }
 
         episode_duration_csv_writer.close();
-        BOOST_LOG_TRIVIAL(info) << "Finished agent training";
+        BITRL_LOG_INFO << "Finished agent training";
     }
     catch (std::exception &e)
     {

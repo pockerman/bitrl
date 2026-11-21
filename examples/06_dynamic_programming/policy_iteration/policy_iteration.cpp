@@ -1,11 +1,11 @@
 #include "bitrl/rl/algorithms/dp/policy_iteration.h"
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/rl/policies/uniform_discrete_policy.h"
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
-#include <boost/log/trivial.hpp>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -32,7 +32,7 @@ typedef FrozenLake<4> env_type;
 int main()
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
     using namespace rl_example_7;
 
     RESTRLEnvClient server(SERVER_URL, true);
@@ -41,11 +41,11 @@ int main()
     FrozenLake<4> env(server);
     std::unordered_map<std::string, std::any> options;
     std::unordered_map<std::string, std::any> reset_options;
-    BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+    BITRL_LOG_INFO << "Creating environment...";
 
     env.make("v1", options, reset_options);
     env.reset();
-    BOOST_LOG_TRIVIAL(info) << "Done...";
+    BITRL_LOG_INFO << "Done...";
 
     UniformDiscretePolicy policy(env.n_states(), env.n_actions());
 
@@ -82,13 +82,13 @@ int main()
         }
     }
     solver.actions_after_training_ends(env);
-    BOOST_LOG_TRIVIAL(info) << "Done after " << reward.size() << " sweeps";
+    BITRL_LOG_INFO << "Done after " << reward.size() << " sweeps";
 
-    BOOST_LOG_TRIVIAL(info) << "Saving solution to " << SOLUTION_FILE;
+    BITRL_LOG_INFO << "Saving solution to " << SOLUTION_FILE;
 
     // save the value function into a csv file
     solver.save(SOLUTION_FILE);
 
-    BOOST_LOG_TRIVIAL(info) << "Finished agent training";
+    BITRL_LOG_INFO << "Finished agent training";
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 
@@ -75,7 +76,7 @@ int main()
         }
     }
     algorithm.actions_after_training_ends(env);
-    BOOST_LOG_TRIVIAL(info) << "Done after " << reward.size() << " sweeps";
+    BITRL_LOG_INFO << "Done after " << reward.size() << " sweeps";
 
     // save the value function for plotting
     algorithm.save("iterative_policy_evaluation_frozen_lake.csv");

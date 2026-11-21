@@ -20,9 +20,9 @@
 #include "bitrl/rl/algorithms/utils.h"
 #include "bitrl/rl/episode_info.h"
 //#include "bitrl/data_structs/experience_buffer.h"
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/utils/torch_adaptor.h"
 
-#include <boost/log/trivial.hpp>
 #include <torch/torch.h>
 
 #include <vector>

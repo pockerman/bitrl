@@ -5,12 +5,12 @@
  * */
 
 #include "bitrl/base/bitrl_config.h"
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitsim/geometry/shapes/circle.h"
 #include "bitsim/utils/io/json_file_reader.h"
 #include "bitsim/utils/iteration_counter.h"
 
-#include <boost/log/trivial.hpp>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -36,8 +36,8 @@ int main()
     try
     {
 
-        BOOST_LOG_TRIVIAL(info) << "Running example...";
-        BOOST_LOG_TRIVIAL(info) << "Reading configuration file...";
+        BITRL_LOG_INFO << "Running example...";
+        BITRL_LOG_INFO << "Reading configuration file...";
 
         JSONFileReader json_reader(CONFIG);
         json_reader.open();
@@ -62,7 +62,7 @@ int main()
         std::uniform_real_distribution dist(0.0, SQUARE_SIDE);
         std::mt19937 gen(SEED);
 
-        BOOST_LOG_TRIVIAL(info) << "Starting computation...";
+        BITRL_LOG_INFO << "Starting computation...";
         while (counter.continue_iterations())
         {
             auto x = dist(gen);
@@ -73,19 +73,19 @@ int main()
             }
         }
 
-        BOOST_LOG_TRIVIAL(info) << "Finished computation...";
+        BITRL_LOG_INFO << "Finished computation...";
         auto area = (static_cast<real_t>(points_inside_circle) / static_cast<real_t>(N_POINTS)) *
                     std::pow(SQUARE_SIDE, 2);
-        BOOST_LOG_TRIVIAL(info) << "Circle area calculated with:" << N_POINTS << " is: " << area;
-        BOOST_LOG_TRIVIAL(info) << "Circle area: " << c.area();
+        BITRL_LOG_INFO << "Circle area calculated with:" << N_POINTS << " is: " << area;
+        BITRL_LOG_INFO << "Circle area: " << c.area();
     }
     catch (std::exception &e)
     {
-        BOOST_LOG_TRIVIAL(error) << e.what();
+        BITRL_LOG_ERROR << e.what();
     }
     catch (...)
     {
-        BOOST_LOG_TRIVIAL(error) << "Unknown exception occured";
+        BITRL_LOG_ERROR << "Unknown exception occured";
     }
 
     return 0;

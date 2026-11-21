@@ -3,11 +3,11 @@
 #include "bitrl/rl/policies/epsilon_greedy_policy.h"
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitsim/utils/io/csv_file_writer.h"
 
-#include <boost/log/trivial.hpp>
 #include <iostream>
 #include <unordered_map>
 
@@ -36,7 +36,7 @@ typedef bitrl::envs::gymnasium::CliffWorld env_type;
 int main()
 {
 
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
     using namespace rl_example_10;
 
     try
@@ -47,16 +47,16 @@ int main()
         // create the environment
         env_type env(server);
 
-        BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+        BITRL_LOG_INFO << "Creating environment...";
 
         std::unordered_map<std::string, std::any> options;
         std::unordered_map<std::string, std::any> reset_options;
         env.make("v1", options, reset_options);
         env.reset();
 
-        BOOST_LOG_TRIVIAL(info) << "Done...";
-        BOOST_LOG_TRIVIAL(info) << "Number of states=" << env.n_states();
-        BOOST_LOG_TRIVIAL(info) << "Number of actions=" << env.n_actions();
+        BITRL_LOG_INFO << "Done...";
+        BITRL_LOG_INFO << "Number of states=" << env.n_states();
+        BITRL_LOG_INFO << "Number of actions=" << env.n_actions();
 
         // create an e-greedy policy. Use the number
         // of actions as a seed. Use a constant epsilon
@@ -77,7 +77,7 @@ int main()
             trainer_config, algorithm);
 
         auto info = trainer.train(env);
-        BOOST_LOG_TRIVIAL(info) << info;
+        BITRL_LOG_INFO << info;
 
         // save the reward the agent achieved per training epoch
         auto reward = trainer.episodes_total_rewards();

@@ -2,11 +2,11 @@
 
 #ifdef USE_PYTORCH
 
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitsim/utils/io/json_file_reader.h"
 #include "bitsim/utils/iteration_counter.h"
 
-#include <boost/log/trivial.hpp>
 #include <torch/torch.h>
 
 #include <filesystem>
@@ -36,8 +36,8 @@ std::string train_model()
         auto experiment_dict = json_reader.template get_value<std::string>("experiment_dict");
         auto experiment_id = json_reader.template get_value<std::string>("experiment_id");
 
-        BOOST_LOG_TRIVIAL(info) << "Experiment directory: " << experiment_dict;
-        BOOST_LOG_TRIVIAL(info) << "Experiment id: " << experiment_id << std::endl;
+        BITRL_LOG_INFO << "Experiment directory: " << experiment_dict;
+        BITRL_LOG_INFO << "Experiment id: " << experiment_id << std::endl;
 
         const fs::path EXPERIMENT_DIR_PATH = experiment_dict + experiment_id;
 
@@ -51,21 +51,21 @@ std::string train_model()
         const auto learning_rate = json_reader.template get_value<real_t>("lr");
 
         // log the hyperparameters
-        BOOST_LOG_TRIVIAL(info) << "Input size: " << input_size;
-        BOOST_LOG_TRIVIAL(info) << "Output size: " << output_size;
-        BOOST_LOG_TRIVIAL(info) << "Max epochs: " << num_epochs;
-        BOOST_LOG_TRIVIAL(info) << "Learning rate: " << learning_rate;
+        BITRL_LOG_INFO << "Input size: " << input_size;
+        BITRL_LOG_INFO << "Output size: " << output_size;
+        BITRL_LOG_INFO << "Max epochs: " << num_epochs;
+        BITRL_LOG_INFO << "Learning rate: " << learning_rate;
 
         // figure out the device we are using
         auto cuda_available = torch::cuda::is_available();
         torch::Device device(cuda_available ? torch::kCUDA : torch::kCPU);
         if (cuda_available)
         {
-            BOOST_LOG_TRIVIAL(info) << "CUDA available. Training on GPU " << std::endl;
+            BITRL_LOG_INFO << "CUDA available. Training on GPU " << std::endl;
         }
         else
         {
-            BOOST_LOG_TRIVIAL(info) << "CUDA is not available. Training on CPU " << std::endl;
+            BITRL_LOG_INFO << "CUDA is not available. Training on CPU " << std::endl;
         }
 
         // Sample dataset
@@ -82,7 +82,7 @@ std::string train_model()
         // Optimizer
         torch::optim::SGD optimizer(model->parameters(), torch::optim::SGDOptions(learning_rate));
 
-        BOOST_LOG_TRIVIAL(info) << "Start training...";
+        BITRL_LOG_INFO << "Start training...";
 
         IterationCounter iteration_ctrl(num_epochs);
         while (iteration_ctrl.continue_iterations())
@@ -100,16 +100,16 @@ std::string train_model()
             auto current_iteration = iteration_ctrl.current_iteration_index();
             if ((current_iteration + 1) % 5 == 0)
             {
-                BOOST_LOG_TRIVIAL(info) << "Epoch [" << (current_iteration + 1) << "/" << num_epochs
-                                        << "], Loss: " << loss.item<double>(); //<< "\n";
+                BITRL_LOG_INFO << "Epoch [" << (current_iteration + 1) << "/" << num_epochs
+                               << "], Loss: " << loss.item<double>(); //<< "\n";
             }
         }
 
-        BOOST_LOG_TRIVIAL(info) << "Training finished... ";
+        BITRL_LOG_INFO << "Training finished... ";
 
         auto model_filename =
             std::string(EXPERIMENT_DIR_PATH) + std::string("/linear_regression_model.pth");
-        BOOST_LOG_TRIVIAL(info) << "Saving model at: " << model_filename << std::endl;
+        BITRL_LOG_INFO << "Saving model at: " << model_filename << std::endl;
 
         torch::save(model, model_filename);
         return model_filename;
@@ -129,7 +129,7 @@ std::string train_model()
 
 void test_model(std::string &model_filename)
 {
-    BOOST_LOG_TRIVIAL(info) << "Start testing...";
+    BITRL_LOG_INFO << "Start testing...";
     // load the json configuration
     JSONFileReader json_reader(CONFIG);
     json_reader.open();
@@ -142,11 +142,11 @@ void test_model(std::string &model_filename)
     torch::Device device(cuda_available ? torch::kCUDA : torch::kCPU);
     if (cuda_available)
     {
-        BOOST_LOG_TRIVIAL(info) << "CUDA available. Testing on GPU ";
+        BITRL_LOG_INFO << "CUDA available. Testing on GPU ";
     }
     else
     {
-        BOOST_LOG_TRIVIAL(info) << "CUDA is not available. Testing on CPU ";
+        BITRL_LOG_INFO << "CUDA is not available. Testing on CPU ";
     }
 
     torch::nn::Linear model(input_size, output_size);
@@ -165,7 +165,7 @@ void test_model(std::string &model_filename)
     // do some comparisons
     // ...
 
-    BOOST_LOG_TRIVIAL(info) << "Testing finished... ";
+    BITRL_LOG_INFO << "Testing finished... ";
 }
 
 } // namespace example

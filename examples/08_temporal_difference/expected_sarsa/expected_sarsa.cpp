@@ -1,14 +1,13 @@
 // Expected SARSA on Gymnasium's CliffWalking, with the same settings as
 // example 15's SARSA so that the two can be compared
 #include "bitrl/rl/algorithms/td/expected_sarsa.h"
+#include "bitrl/base/bitrl_log.h"
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/envs/gymnasium/toy_text/cliff_world_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 #include "bitrl/rl/policies/epsilon_greedy_policy.h"
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
 #include "bitsim/utils/io/csv_file_writer.h"
-
-#include <boost/log/trivial.hpp>
 
 #include <any>
 #include <iostream>
@@ -42,20 +41,20 @@ typedef ExpectedSarsaSolver<env_type, EpsilonGreedyPolicy> solver_type;
 int main()
 {
     using namespace example_26;
-    BOOST_LOG_TRIVIAL(info) << "Starting agent training";
+    BITRL_LOG_INFO << "Starting agent training";
 
     try
     {
         RESTRLEnvClient server(SERVER_URL, true);
         env_type env(server);
 
-        BOOST_LOG_TRIVIAL(info) << "Creating environment...";
+        BITRL_LOG_INFO << "Creating environment...";
         std::unordered_map<std::string, std::any> options;
         std::unordered_map<std::string, std::any> reset_options;
         env.make("v1", options, reset_options);
         env.reset();
-        BOOST_LOG_TRIVIAL(info) << "Number of states=" << env.n_states();
-        BOOST_LOG_TRIVIAL(info) << "Number of actions=" << env.n_actions();
+        BITRL_LOG_INFO << "Number of states=" << env.n_states();
+        BITRL_LOG_INFO << "Number of actions=" << env.n_actions();
 
         // an epsilon-greedy policy with a constant epsilon, seeded with the
         // number of actions, as in example 15
@@ -71,7 +70,7 @@ int main()
         RLSerialTrainerConfig trainer_config = {10, 2000, 1.0e-8};
         RLSerialAgentTrainer<env_type, solver_type> trainer(trainer_config, solver);
         auto info = trainer.train(env);
-        BOOST_LOG_TRIVIAL(info) << "Training info..." << info;
+        BITRL_LOG_INFO << "Training info..." << info;
 
         // the reward of every training episode
         bitsim::utils::io::CSVWriter csv_writer(REWARD_PER_ITR);
@@ -85,7 +84,7 @@ int main()
         csv_writer.close();
 
         solver.build_policy().save(POLICY);
-        BOOST_LOG_TRIVIAL(info) << "Finished agent training";
+        BITRL_LOG_INFO << "Finished agent training";
     }
     catch (std::exception &e)
     {
