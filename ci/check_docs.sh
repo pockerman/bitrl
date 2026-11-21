@@ -26,7 +26,7 @@ if [ -z "$bitsim" ]; then
 fi
 bitsim="$(cd "$bitsim" && pwd)"
 
-# The same inputs as the documentation site, bitrl_cuberl_docs, uses
+# The same inputs as the documentation site, bitsim_bitrl_docs, uses
 {
     echo "PROJECT_NAME = bitrl"
     echo "INPUT = include/bitrl examples $bitsim/src/bitsim $bitsim/examples $bitsim/doc"

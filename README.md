@@ -5,7 +5,7 @@ Connect2, multi-armed bandits, robots simulated in Chrono, and Gymnasium's envir
 and the algorithms that learn in them, from dynamic programming to proximal policy optimization. Its deep
 reinforcement learning uses <a href="https://pytorch.org/cppdocs/">libtorch</a>, the C++ API of PyTorch.
 bitrl is built on <a href="https://github.com/pockerman/bitsim">bitsim</a>, a library for robots, and the
-documentation of both is <a href="https://pockerman.github.io/bitrl_cuberl_docs/index.html">here</a>.
+documentation of both is <a href="https://pockerman.github.io/bitsim_bitrl_docs/index.html">here</a>.
 
 <table>
   <tr>
