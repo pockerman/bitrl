@@ -1,5 +1,21 @@
 # Changelog
 
+## [6.0.0](https://github.com/pockerman/bitrl/compare/v5.3.0...v6.0.0) (2026-11-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* bitrl needs bitsim 5, the first bitsim that logs with spdlog, and neither links Boost.Log nor defines BOOST_LOG_DYN_LINK any more. Code that logged with BOOST_LOG_TRIVIAL through bitrl must link Boost.Log itself or move to bitrl/base/bitrl_log.h.
+
+### Features
+
+* log with bitsim's spdlog logger instead of Boost.Log ([#211](https://github.com/pockerman/bitrl/issues/211)) ([d717718](https://github.com/pockerman/bitrl/commit/d7177184bc2ed6927e359939ceb1df3cc390ba54))
+
+
+### Documentation
+
+* link the renamed docs site ([#213](https://github.com/pockerman/bitrl/issues/213)) ([eb6a08f](https://github.com/pockerman/bitrl/commit/eb6a08f10796ce42c3a15176c4d308bce6c22c5b))
+
 ## [5.3.0](https://github.com/pockerman/bitrl/compare/v5.2.0...v5.3.0) (2026-11-21)
 
 
