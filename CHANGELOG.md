@@ -1,6 +1,11 @@
 # Changelog
 
-## [5.1.2](https://github.com/pockerman/bitrl/compare/v5.1.1...v5.1.2) (2026-11-21)
+## [5.2.0](https://github.com/pockerman/bitrl/compare/v5.1.1...v5.2.0) (2026-11-21)
+
+
+### Features
+
+* **examples:** pytorch policy network ([#204](https://github.com/pockerman/bitrl/issues/204)) ([6e6e8e8](https://github.com/pockerman/bitrl/commit/6e6e8e8d2a1a1498121aaf431d75f8ac77b46e6c))
 
 
 ### Refactoring
