@@ -68,7 +68,7 @@ jobs:
         run: ./ci/check_install.sh build "$DEPS/bitsim;$DEPS/libtorch"
 
   docs:
-    # The example pages that the documentation site, bitrl_cuberl_docs, pulls
+    # The example pages that the documentation site, bitsim_bitrl_docs, pulls
     # in from here
     name: Docs
     runs-on: ubuntu-24.04
