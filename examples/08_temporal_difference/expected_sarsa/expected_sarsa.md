@@ -52,6 +52,19 @@ steps. In the directory it runs from, the example writes
 | `reward_per_itr.csv` | the total reward of every training episode |
 | `policy.csv` | the greedy policy, the action to take in each state |
 
+## The learned policy
+
+| ![Expected SARSA on CliffWalking](expected_sarsa.gif) |
+|:--:|
+| **The greedy policy Expected SARSA learned, played in Gymnasium: return -15.** |
+
+The greedy policy of the table keeps one row away from the cliff and takes 15 steps, between SARSA and Q-learning. Like SARSA it values the policy it follows, but it averages over the actions that policy may take instead of following the one it took, which makes its estimates vary less. The
+example saves it to `policy.csv`; `examples/tools/episode_gif.py` plays it to make the GIF:
+
+@code{.sh}
+python examples/tools/episode_gif.py --env CliffWalking-v1 --policy policy.csv --out expected_sarsa.gif
+@endcode
+
 ## The driver code
 
 \include expected_sarsa/expected_sarsa.cpp

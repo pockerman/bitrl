@@ -63,6 +63,7 @@ Keeping what training learns, and logging how it went.
 - \ref bitrl_example_sarsa
 - \ref bitrl_example_q_learning
 - \ref bitrl_example_expected_sarsa
+- \ref bitrl_example_double_q_learning
 
 ## Deep reinforcement learning
 
@@ -71,6 +72,7 @@ Keeping what training learns, and logging how it went.
 - \ref bitrl_example_reinforce
 - \ref bitrl_example_reinforce_baseline
 - \ref bitrl_example_a2c
+- \ref bitrl_example_ppo_cartpole
 - \ref bitrl_example_ppo_lunar_lander
 
 ## Robotics

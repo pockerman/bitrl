@@ -28,18 +28,32 @@ visit Monte Carlo would update the value at each of them.
 
 - `TrajectoryGenerator` plays a trajectory with `bitrl::envs::create_trajectory`, picking every action with
   `RandomActionSelector`, which draws one of the four actions uniformly.
-- `ConstantLRScheduler` keeps the learning rate \f$\alpha\f$ at the solver's initial value, 0.5.
+- `InverseDecayLRScheduler` decays the learning rate from the solver's initial value, 0.5, as
+  \f$\alpha_k = 0.5 / (1 + k / 100)\f$ in episode \f$k\f$, but not below 0.001.
 - `DiscountGenerator` gives the discount of each step of the trajectory. It returns \f$1^k = 1\f$ for every
   step, so the rewards are not discounted.
 
-\ref bitrl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer" runs 10000 training episodes.
+The example runs 10000 training episodes itself, as \ref bitrl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer"
+would, so that it can write the value function every 200 episodes to `sweeps.csv`.
 
 ## What it writes
 
 At the end the example writes the value of each state to `first_visit_mc_frozen_lake.csv` in the directory it
 runs from. It estimates the same quantity as \ref bitrl_example_iterative_policy_evaluation, the value function of the uniform random
-policy, so the two can be compared. With a constant \f$\alpha = 0.5\f$ the estimates follow the latest returns
-closely and stay noisy; a learning rate that decays over the episodes averages more of them.
+policy, so the two can be compared. With a constant \f$\alpha = 0.5\f$ the estimates would follow the latest
+returns and stay noisy; with the decaying rate they average more of them and settle.
+
+| ![First visit Monte Carlo](first_visit_monte_carlo.gif) |
+|:--:|
+| **The value estimates every 200 episodes, with the greedy actions of the estimates.** |
+
+After 10000 episodes the start has an estimate of 0.017 and the cell left of the goal 0.49, against the true
+values of 0.014 and 0.44 that \ref bitrl_example_iterative_policy_evaluation computes: estimates from sampled
+returns, close but not exact. The GIF is made with
+
+@code{.sh}
+python examples/tools/value_gif.py sweeps.csv --slippery --step episode --out first_visit_monte_carlo.gif
+@endcode
 
 ## The driver code
 

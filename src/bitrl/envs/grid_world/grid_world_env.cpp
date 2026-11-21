@@ -177,7 +177,7 @@ board_state_type board::init_board(uint_t board_s, GridWorldInitType init_type)
     }
     case GridWorldInitType::PLAYER:
     {
-        build_player_mode(seed);
+        build_player_mode();
         break;
     }
     case GridWorldInitType::INVALID_TYPE:
@@ -389,59 +389,45 @@ void board::build_static_mode()
 void board::build_random_mode()
 {
 
-    // generate random index
-    std::mt19937 generator(seed);
+    std::uniform_int_distribution<int> distribution(0, static_cast<int>(board_size) - 1);
 
-    std::vector<real_t> weights(board_size, 1.0 / static_cast<real_t>(board_size));
-    std::discrete_distribution<int> distribution(weights.begin(), weights.end());
-
-    components[board_component_type::PLAYER].pos =
-        std::make_pair(distribution(generator), distribution(generator));
-    components[board_component_type::GOAL].pos =
-        std::make_pair(distribution(generator), distribution(generator));
-    components[board_component_type::PIT].pos =
-        std::make_pair(distribution(generator), distribution(generator));
-    components[board_component_type::WALL].pos =
-        std::make_pair(distribution(generator), distribution(generator));
-
-    constexpr uint_t n_retries = 20;
-    uint_t current_n_retries = 0;
-    while (!validate_board(*this) && current_n_retries++ < n_retries)
+    // place all four pieces at random until no two share a cell
+    constexpr uint_t n_retries = 1000;
+    for (uint_t retry = 0; retry < n_retries; ++retry)
     {
+        for (auto piece : {board_component_type::PLAYER, board_component_type::GOAL,
+                           board_component_type::PIT, board_component_type::WALL})
+        {
+            components[piece].pos =
+                std::make_pair(distribution(generator), distribution(generator));
+        }
 
-        // place player randomly on the grid
-        components[board_component_type::PLAYER].pos =
-            std::make_pair(distribution(generator), distribution(generator));
+        if (validate_board(*this))
+        {
+            return;
+        }
     }
 }
 
-void board::build_player_mode(const uint_t seed)
+void board::build_player_mode()
 {
 
-    // height x width x depth (number of pieces)
+    // the goal, the pit and the wall where the static mode puts them
     build_static_mode();
 
-    // generate random index
-    std::mt19937 generator(seed);
-    std::vector<real_t> weights(board_size, 1.0 / static_cast<real_t>(board_size));
-    std::discrete_distribution<int> distribution(weights.begin(), weights.end());
+    std::uniform_int_distribution<int> distribution(0, static_cast<int>(board_size) - 1);
 
-    auto x = distribution(generator);
-    auto y = distribution(generator);
-
-    // place player randmly on the grid
-    components[board_component_type::PLAYER].pos = std::pair<int, int>(x, y);
-
-    constexpr uint_t n_retries = 20;
-    uint_t current_n_retries = 0;
-    while (!validate_board(*this) && current_n_retries++ < n_retries)
+    // place the player at random until it is on a free cell
+    constexpr uint_t n_retries = 1000;
+    for (uint_t retry = 0; retry < n_retries; ++retry)
     {
+        components[board_component_type::PLAYER].pos =
+            std::make_pair(distribution(generator), distribution(generator));
 
-        x = distribution(generator);
-        y = distribution(generator);
-
-        // place player randmly on the grid
-        components[board_component_type::PLAYER].pos = std::pair<int, int>(x, y);
+        if (validate_board(*this))
+        {
+            return;
+        }
     }
 }
 

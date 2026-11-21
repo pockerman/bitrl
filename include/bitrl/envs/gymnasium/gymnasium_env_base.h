@@ -201,11 +201,10 @@ GymnasiumEnvBase<TimeStepType, SpaceType>::reset()
         return time_step_type();
     }
 
-    auto &reset_ops = this->reset_options();
-    // the seed given to make(), or the default seed of the environments
-    const uint_t seed = reset_ops.contains("seed")
-                            ? bitsim::utils::resolve<uint_t>("seed", reset_ops)
-                            : this->DEFAULT_ENV_SEED;
+    // the seed given to make(), or the default seed, on the first reset, and
+    // the next seed on every reset after it: the same seed every time would
+    // start every episode from the same state
+    const uint_t seed = this->next_reset_seed_();
 
     auto response = this->api_server_->reset(this->env_name(), this->idx(), seed, nlohmann::json());
 

@@ -78,12 +78,45 @@ environments run on the <a href="https://github.com/pockerman/bitrl-rest-api">bi
 - <a href="examples/08_temporal_difference/sarsa/sarsa.md">SARSA on ```CliffWalking```</a>
 - <a href="examples/08_temporal_difference/q_learning/q_learning.md">Q-learning on ```CliffWalking```</a>
 - <a href="examples/08_temporal_difference/expected_sarsa/expected_sarsa.md">Expected SARSA on ```CliffWalking```</a>
+- <a href="examples/08_temporal_difference/double_q_learning/double_q_learning.md">Double Q-learning on ```CliffWalking```</a>
 - <a href="examples/09_deep_rl/dqn/dqn.md">DQN on a grid world</a>
 - <a href="examples/09_deep_rl/dqn_experience_replay/dqn_experience_replay.md">DQN with experience replay</a>
 - <a href="examples/09_deep_rl/reinforce/reinforce.md">REINFORCE on ```CartPole```</a>
 - <a href="examples/09_deep_rl/reinforce_baseline/reinforce_baseline.md">REINFORCE with a baseline on ```CartPole```</a>
 - <a href="examples/09_deep_rl/a2c/a2c.md">A2C on ```CartPole```</a>
+- <a href="examples/09_deep_rl/ppo_cartpole/ppo_cartpole.md">PPO on ```CartPole```</a>
 - <a href="examples/09_deep_rl/ppo_lunar_lander/ppo_lunar_lander.md">PPO on ```LunarLanderContinuous```</a>
+
+### The algorithms at work
+
+Every algorithm example ends by showing what it learned. Each GIF links to its example.
+
+<table>
+  <tr>
+    <td width="33%" align="center"><a href="examples/05_bandits/multi_armed_bandits/multi_armed_bandits.md"><img src="examples/05_bandits/multi_armed_bandits/multi_armed_bandits.gif" alt="Thompson sampling and epsilon-greedy finding the best of five arms"></a><br>Thompson sampling and epsilon-greedy finding the best of five arms</td>
+    <td width="33%" align="center"><a href="examples/05_bandits/softmax_bandits/softmax_bandits.md"><img src="examples/05_bandits/softmax_bandits/softmax_bandits.gif" alt="A soft-max policy on ten arms"></a><br>A soft-max policy on ten arms</td>
+    <td width="33%" align="center"><a href="examples/06_dynamic_programming/iterative_policy_evaluation/iterative_policy_evaluation.md"><img src="examples/06_dynamic_programming/iterative_policy_evaluation/iterative_policy_evaluation.gif" alt="Iterative policy evaluation of the random policy on the slippery lake"></a><br>Iterative policy evaluation of the random policy on the slippery lake</td>
+  </tr>
+  <tr>
+    <td width="33%" align="center"><a href="examples/06_dynamic_programming/policy_iteration/policy_iteration.md"><img src="examples/06_dynamic_programming/policy_iteration/policy_iteration.gif" alt="Policy iteration: the optimal policy in 4 iterations"></a><br>Policy iteration: the optimal policy in 4 iterations</td>
+    <td width="33%" align="center"><a href="examples/06_dynamic_programming/value_iteration/value_iteration.md"><img src="examples/06_dynamic_programming/value_iteration/value_iteration.gif" alt="Value iteration: the values spread back from the goal in 7 sweeps"></a><br>Value iteration: the values spread back from the goal in 7 sweeps</td>
+    <td width="33%" align="center"><a href="examples/07_monte_carlo/first_visit_monte_carlo/first_visit_monte_carlo.md"><img src="examples/07_monte_carlo/first_visit_monte_carlo/first_visit_monte_carlo.gif" alt="First visit Monte Carlo estimates of the same values from sampled episodes"></a><br>First visit Monte Carlo estimates of the same values from sampled episodes</td>
+  </tr>
+  <tr>
+    <td width="33%" align="center"><a href="examples/08_temporal_difference/q_learning/q_learning.md"><img src="examples/08_temporal_difference/cliff_walking_compared.gif" alt="Q-learning, double Q-learning, expected SARSA and SARSA on CliffWalking"></a><br>Q-learning, double Q-learning, expected SARSA and SARSA on CliffWalking</td>
+    <td width="33%" align="center"><a href="examples/09_deep_rl/dqn/dqn.md"><img src="examples/09_deep_rl/dqn/dqn.gif" alt="DQN: the shortest way around the wall and the pit"></a><br>DQN: the shortest way around the wall and the pit</td>
+    <td width="33%" align="center"><a href="examples/09_deep_rl/dqn_experience_replay/dqn_experience_replay.md"><img src="examples/09_deep_rl/dqn_experience_replay/dqn_experience_replay.gif" alt="DQN with experience replay on random boards: 85 of 100 solved"></a><br>DQN with experience replay on random boards: 85 of 100 solved</td>
+  </tr>
+  <tr>
+    <td width="33%" align="center"><a href="examples/09_deep_rl/reinforce/reinforce.md"><img src="examples/09_deep_rl/reinforce/reinforce.gif" alt="REINFORCE on CartPole: 126 steps"></a><br>REINFORCE on CartPole: 126 steps</td>
+    <td width="33%" align="center"><a href="examples/09_deep_rl/reinforce_baseline/reinforce_baseline.md"><img src="examples/09_deep_rl/reinforce_baseline/reinforce_baseline.gif" alt="REINFORCE with a baseline: all 500 steps"></a><br>REINFORCE with a baseline: all 500 steps</td>
+    <td width="33%" align="center"><a href="examples/09_deep_rl/a2c/a2c.md"><img src="examples/09_deep_rl/a2c/a2c.gif" alt="A2C: all 500 steps"></a><br>A2C: all 500 steps</td>
+  </tr>
+  <tr>
+    <td width="33%" align="center"><a href="examples/09_deep_rl/ppo_cartpole/ppo_cartpole.md"><img src="examples/09_deep_rl/ppo_cartpole/ppo_cartpole.gif" alt="PPO: 339 steps"></a><br>PPO: 339 steps</td>
+    <td width="33%" align="center"><a href="examples/09_deep_rl/ppo_lunar_lander/ppo_lunar_lander.md"><img src="examples/09_deep_rl/ppo_lunar_lander/ppo_lunar_lander.gif" alt="PPO on LunarLander: 9 of 10 landings"></a><br>PPO on LunarLander: 9 of 10 landings</td>
+  </tr>
+</table>
 
 ### Robotics
 

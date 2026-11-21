@@ -22,6 +22,7 @@
 
 #include <any>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
@@ -178,9 +179,31 @@ int main()
         config.output_msg_frequency = 20;
         RLSerialAgentTrainer<env_type, solver_type> trainer(config, solver);
 
-        trainer.train(env);
-
         auto info = trainer.train(env);
+
+        // one episode with the greedy policy, the action of the largest
+        // probability, from the seed the environment resets with; its actions
+        // are for examples/tools/episode_gif.py
+        {
+            torch::NoGradGuard no_grad;
+            policy->eval();
+            std::ofstream episode("episode.csv");
+            auto time_step = env.reset();
+            // the seed the episode started from, for the GIF to start from it too
+            episode << "# seed " << env.last_reset_seed() << "\n";
+            bitrl::real_t total = 0.0;
+            for (bitrl::uint_t step = 0; step < 500 && !time_step.done(); ++step)
+            {
+                const auto state = torch::tensor(time_step.observation(), torch::kFloat32);
+                const auto action =
+                    static_cast<bitrl::uint_t>(policy->forward(state).argmax().item<int64_t>());
+                episode << action << "\n";
+                time_step = env.step(action);
+                total += time_step.reward();
+            }
+            std::cout << "The greedy policy kept the pole up for " << total << " steps"
+                      << std::endl;
+        }
         BOOST_LOG_TRIVIAL(info) << "Training info...";
         BOOST_LOG_TRIVIAL(info) << info;
 

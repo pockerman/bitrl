@@ -1,0 +1,1 @@
+bitrl_add_test(test_env_reset_seed)

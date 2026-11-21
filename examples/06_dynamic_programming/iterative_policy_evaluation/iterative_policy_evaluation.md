@@ -26,8 +26,10 @@ and rewards \f$p(s', r | s, \alpha)\f$, which \ref bitrl::envs::gymnasium::Froze
 
 The policy is a \ref bitrl::rl::policies::UniformDiscretePolicy "UniformDiscretePolicy", which picks each of the
 four actions with probability 1/4. \ref bitrl::rl::algos::dp::IterativePolicyEvalutationSolver "IterativePolicyEvalutationSolver"
-uses \f$\gamma = 1\f$ and a tolerance of \f$10^{-8}\f$, and \ref bitrl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer"
-runs one sweep per training episode, at most 10000 of them.
+uses \f$\gamma = 1\f$ and a tolerance of \f$10^{-8}\f$. The example runs the sweeps itself, at most 10000 of
+them, rather than with \ref bitrl::rl::RLSerialAgentTrainer "RLSerialAgentTrainer", so that it can write the
+value function after every sweep to `sweeps.csv`. It stops once a sweep changes no value by more than the
+tolerance, after 57 sweeps.
 
 ## The results
 
@@ -46,6 +48,17 @@ The holes and the goal have a value of 0, because the episode ends there. The on
 goal, so with \f$\gamma = 1\f$ the value of a state is the probability that the random policy gets from it to the
 goal before it falls into a hole. From the start, in the top left corner, that is only about 1.4%. The state
 to the left of the goal has the largest value, 0.44.
+
+| ![The values converging](iterative_policy_evaluation.gif) |
+|:--:|
+| **Figure 2: The value function sweep by sweep. The arrows are the greedy actions of the values.** |
+
+The values spread back from the goal one cell per sweep, and most of the 57 sweeps only refine them.
+`examples/tools/value_gif.py` draws `sweeps.csv`, with the arrows from FrozenLake's own transition model:
+
+@code{.sh}
+python examples/tools/value_gif.py sweeps.csv --slippery --out iterative_policy_evaluation.gif
+@endcode
 
 ## The driver code
 

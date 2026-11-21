@@ -8,6 +8,7 @@
 
 #include <any>
 #include <atomic>
+#include <random>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -145,9 +146,15 @@ class MultiArmedBandits final : public EnvBase<TimeStep<bool>, MultiArmedBandits
 
   private:
     ///
-    /// \brief The seed to use
+    /// \brief The seed reset() seeds the generator with
     ///
     uint_t seed_;
+
+    ///
+    /// \brief The generator every pull draws from. reset() seeds it; a new
+    /// generator for every pull would give every arm the same outcome every time
+    ///
+    std::mt19937 generator_;
 
     /**
      * Counter to count the number of instances of this

@@ -158,6 +158,26 @@ regularization that we should only use during training.
 
 ## Driver code
 
+## The learned policy
+
+| ![REINFORCE balancing the pole](reinforce.gif) |
+|:--:|
+| **The greedy policy REINFORCE learned: 126 steps.** |
+
+REINFORCE trained for 2000 episodes of at most 500 steps. The mean length of its training episodes, 250 at a
+time, went 27, 176, 218, 439, 339, 415, 484, 224: it learns, but its returns vary a lot from episode to episode,
+and it can lose much of what it learned, as in the last 250 episodes, which is what the baseline of
+\ref bitrl_example_reinforce_baseline is for.
+
+After training the example plays one episode with the greedy policy, the action of the larger probability, from
+the next seed, and writes its actions and the seed to `episode.csv`. It kept the pole up for 126 steps: the
+greedy policy is not the policy that was trained, which samples its actions, the training ended on a bad stretch,
+and a single episode from a single seed says little. `examples/tools/episode_gif.py` replays the actions in Gymnasium to make the GIF:
+
+@code{.sh}
+python examples/tools/episode_gif.py --env CartPole-v1 --actions episode.csv --fps 50 --out reinforce.gif
+@endcode
+
 \include reinforce/reinforce.cpp
 
 Running the driver above produces the following plots.

@@ -2,6 +2,8 @@
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/rl/policies/uniform_discrete_policy.h"
 #include "bitrl/rl/trainers/rl_serial_agent_trainer.h"
+#include <fstream>
+#include <vector>
 
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
@@ -50,14 +52,30 @@ int main()
 
     IterativePolicyEvalutationSolver<env_type, UniformDiscretePolicy> algorithm(config, policy);
 
-    RLSerialTrainerConfig trainer_config = {10, 10000, 1.0e-8};
-
-    RLSerialAgentTrainer<env_type,
-                         IterativePolicyEvalutationSolver<env_type, UniformDiscretePolicy>>
-        trainer(trainer_config, algorithm);
-
-    auto info = trainer.train(env);
-    std::cout << info << std::endl;
+    // the sweeps, as RLSerialAgentTrainer would run them, keeping the value
+    // function after every one in sweeps.csv, which examples/tools/value_gif.py
+    // draws
+    std::ofstream sweeps("sweeps.csv");
+    std::vector<real_t> reward;
+    algorithm.actions_before_training_begins(env);
+    for (uint_t sweep = 0; sweep < 10000; ++sweep)
+    {
+        const auto sweep_info = algorithm.on_training_episode(env, sweep);
+        reward.push_back(sweep_info.episode_reward);
+        const auto values = algorithm.value_function();
+        sweeps << sweep;
+        for (Eigen::Index s = 0; s < values.size(); ++s)
+        {
+            sweeps << "," << values[s];
+        }
+        sweeps << "\n";
+        if (sweep_info.stop_training)
+        {
+            break;
+        }
+    }
+    algorithm.actions_after_training_ends(env);
+    BOOST_LOG_TRIVIAL(info) << "Done after " << reward.size() << " sweeps";
 
     // save the value function for plotting
     algorithm.save("iterative_policy_evaluation_frozen_lake.csv");

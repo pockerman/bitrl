@@ -88,6 +88,11 @@ class IterativePolicyEvalutationSolver final : public DPSolverBase<EnvType>
     DynVec<real_t> get_value_function() const { return v_; }
 
     ///
+    /// \brief The value of every state, as the solver has it now
+    ///
+    DynVec<real_t> value_function() const { return v_; }
+
+    ///
     /// \brief get_policy
     /// \return
     ///

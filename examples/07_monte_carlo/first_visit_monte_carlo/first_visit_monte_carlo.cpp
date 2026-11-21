@@ -9,6 +9,7 @@
 #include "bitrl/envs/gymnasium/toy_text/frozen_lake_env.h"
 #include "bitrl/network/rest_rl_env_client.h"
 
+#include <fstream>
 #include <iostream>
 #include <random>
 
@@ -19,7 +20,7 @@ using bitrl::real_t;
 using bitrl::uint_t;
 using bitrl::envs::gymnasium::FrozenLake;
 using bitrl::network::RESTRLEnvClient;
-using bitrl::rl::ConstantLRScheduler;
+using bitrl::rl::InverseDecayLRScheduler;
 using bitrl::rl::RLSerialAgentTrainer;
 using bitrl::rl::RLSerialTrainerConfig;
 using bitrl::rl::algos::mc::FirstVisitMCSolver;
@@ -75,7 +76,9 @@ std::vector<real_t> DiscountGenerator::operator()(const TrajectoryType &, uint_t
 
 typedef FrozenLake<4> env_type;
 typedef TrajectoryGenerator trajectory_generator_type;
-typedef ConstantLRScheduler learning_rate_scheduler_type;
+// alpha / (1 + episode / 100), from the solver's initial 0.5: a constant learning rate
+// would keep the estimates moving with every return
+typedef InverseDecayLRScheduler learning_rate_scheduler_type;
 typedef FirstVisitMCSolverConfig solver_config_type;
 typedef DiscountGenerator discount_generator_type;
 typedef FirstVisitMCSolver<env_type, trajectory_generator_type, learning_rate_scheduler_type,
@@ -110,18 +113,32 @@ int main()
     discount_generator_type discount_generator;
     solver_type solver(config, trajectory_generator, lr_scheduler, discount_generator);
 
-    RLSerialTrainerConfig trainer_config = {10, 10000, 1.0e-8};
-    RLSerialAgentTrainer<env_type, solver_type> trainer(trainer_config, solver);
-
-    auto info = trainer.train(env);
-    std::cout << "Trainer info: " << std::endl;
-    std::cout << "\t" << info << std::endl;
+    // the episodes, as RLSerialAgentTrainer would run them, keeping the value
+    // function every 200 episodes in sweeps.csv, which
+    // examples/tools/value_gif.py draws
+    const uint_t N_EPISODES = 10000;
+    std::ofstream sweeps("sweeps.csv");
+    solver.actions_before_training_begins(env);
+    for (uint_t episode = 0; episode < N_EPISODES; ++episode)
+    {
+        const auto info = solver.on_training_episode(env, episode);
+        solver.actions_after_episode_ends(env, episode, info);
+        if ((episode + 1) % 200 == 0)
+        {
+            const auto values = solver.value_function();
+            // the episode, from 0, as the sweeps of the other examples
+            sweeps << episode;
+            for (Eigen::Index s = 0; s < values.size(); ++s)
+            {
+                sweeps << "," << values[s];
+            }
+            sweeps << "\n";
+        }
+    }
+    solver.actions_after_training_ends(env);
 
     // the value of each state under the random policy
     solver.save("first_visit_mc_frozen_lake.csv");
-
-    // save the value function for plotting
-    // algorithm.save("iterative_policy_evaluation_frozen_lake.csv");
 
     return 0;
 }

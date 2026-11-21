@@ -81,6 +81,11 @@ template <typename EnvType> class ValueIteration : public DPSolverBase<EnvType>
     void save(const std::string &filename) const;
 
     ///
+    /// \brief The value of every state, as the solver has it now
+    ///
+    DynVec<real_t> value_function() const { return v_; }
+
+    ///
     /// \brief
     ///
     bitrl::rl::policies::MaxTabularPolicy build_policy(const env_type &env) const;

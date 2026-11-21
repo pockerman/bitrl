@@ -360,3 +360,43 @@ TEST(TestGridworld, TestPLAYERMode)
 
     ASSERT_TRUE(positions.size() == 4);
 }
+
+namespace
+{
+// the start boards of n resets of a 4x4 Gridworld in the given mode
+std::vector<board_state_type> start_boards(GridWorldInitType mode, uint_t seed, uint_t n)
+{
+    bitrl::envs::grid_world::Gridworld<4> env;
+    std::unordered_map<std::string, std::any> options;
+    options["mode"] = std::any(mode);
+    options["seed"] = std::any(seed);
+    env.make("v0", options, {});
+
+    std::vector<board_state_type> boards;
+    for (uint_t i = 0; i < n; ++i)
+    {
+        boards.push_back(env.reset().observation());
+    }
+    return boards;
+}
+} // namespace
+
+TEST(TestGridworld, TestRANDOMModeNewBoardEveryReset)
+{
+    const auto boards = start_boards(GridWorldInitType::RANDOM, 42, 10);
+    const std::set<board_state_type> distinct(boards.begin(), boards.end());
+
+    // ten draws of four pieces on 16 cells: they are not all the same
+    ASSERT_GT(distinct.size(), 5u);
+
+    // and the same seed gives the same boards
+    ASSERT_EQ(boards, start_boards(GridWorldInitType::RANDOM, 42, 10));
+    ASSERT_NE(boards, start_boards(GridWorldInitType::RANDOM, 7, 10));
+}
+
+TEST(TestGridworld, TestPLAYERModeNewPlayerEveryReset)
+{
+    const auto boards = start_boards(GridWorldInitType::PLAYER, 42, 10);
+    const std::set<board_state_type> distinct(boards.begin(), boards.end());
+    ASSERT_GT(distinct.size(), 1u);
+}

@@ -86,6 +86,11 @@ class PolicyIterationSolver final : public DPSolverBase<EnvType>
     ///
     void save(const std::string &filename) const;
 
+    ///
+    /// \brief The value of every state, as the solver has it now
+    ///
+    DynVec<real_t> value_function() const { return policy_eval_.get_value_function(); }
+
   private:
     PolicyIterationConfig config_;
 
