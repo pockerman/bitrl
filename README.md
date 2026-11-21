@@ -1,70 +1,94 @@
 # bitrl
 
-_bitrl_ is a C++ library containing implementations of various reinforcement learning, filtering and planning algorithms.
-The examples, with a page for each, are listed in [examples/examples.md](examples/examples.md).
+_bitrl_ is a C++20 library for reinforcement learning. It has environments, among them grid worlds,
+Connect2, multi-armed bandits, robots simulated in Chrono, and Gymnasium's environments over a REST API,
+and the algorithms that learn in them, from dynamic programming to proximal policy optimization. Its deep
+reinforcement learning uses <a href="https://pytorch.org/cppdocs/">libtorch</a>, the C++ API of PyTorch.
+bitrl is built on <a href="https://github.com/pockerman/bitsim">bitsim</a>, a library for robots, and the
+documentation of both is <a href="https://pockerman.github.io/bitrl_cuberl_docs/index.html">here</a>.
 
 <table>
   <tr>
-    <td width="50%"><img src="examples/robotics/mcts_line_following/mcts_line_following_search.gif" alt="Monte Carlo tree search weighing the commands of a robot"></td>
-    <td width="50%"><img src="examples/robotics/mcts_line_following/mcts_line_following_lap.gif" alt="A robot planning its way around a track with Monte Carlo tree search"></td>
+    <td width="50%"><img src="examples/10_robotics/mcts_line_following/mcts_line_following_search.gif" alt="Monte Carlo tree search weighing the commands of a robot"></td>
+    <td width="50%"><img src="examples/10_robotics/mcts_line_following/mcts_line_following_lap.gif" alt="A robot planning its way around a track with Monte Carlo tree search"></td>
   </tr>
   <tr>
-    <td>Monte Carlo tree search drives bitsim's Chrono robot along a line and around boxes. Every 0.2 s it runs 400 simulations, 5 s ahead, in a fast model of the track. Each line is where one of the five commands leads; the robot takes the green one, and the wider an orange line, the more simulations tried its command. <a href="examples/robotics/mcts_line_following/mcts_line_following.md">Example</a></td>
-    <td>With nothing but those plans the robot goes once around the track in 47.7 s, without touching a box, faster than bitsim's hand written controller; each decision takes about 4 ms. <a href="examples/robotics/mcts_line_following/mcts_line_following.md">Example</a></td>
+    <td>Monte Carlo tree search drives bitsim's Chrono robot along a line and around boxes. Every 0.2 s it runs 400 simulations, 5 s ahead, in a fast model of the track. Each line is where one of the five commands leads; the robot takes the green one, and the wider an orange line, the more simulations tried its command. <a href="examples/10_robotics/mcts_line_following/mcts_line_following.md">Example</a></td>
+    <td>With nothing but those plans the robot goes once around the track in 47.7 s, without touching a box, faster than bitsim's hand written controller; each decision takes about 4 ms. <a href="examples/10_robotics/mcts_line_following/mcts_line_following.md">Example</a></td>
   </tr>
 </table>
 
-Some of the examples:
- 
+## What is in it
+
+| Area | What bitrl has |
+| ---- | -------------- |
+| Environments | grid worlds, Connect2, multi-armed bandits, GymWalk, bitsim robots in Chrono, and Gymnasium's FrozenLake, CliffWalking, Taxi, Blackjack, CartPole, MountainCar, Pendulum, Acrobot and LunarLander over the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server |
+| Dynamic programming | iterative policy evaluation, policy iteration, value iteration |
+| Monte Carlo | first visit Monte Carlo, Monte Carlo tree search |
+| Temporal difference | SARSA, Q-learning, expected SARSA, double Q-learning |
+| Policy gradients | REINFORCE, with and without a baseline, A2C, PPO |
+| Policies | epsilon-greedy with decay, soft-max, greedy and uniform tabular policies |
+| Tools | experience replay buffers, trainers, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
 
 ## Examples
 
-### Introductory
+The examples build on each other, from the basic ideas to deep reinforcement learning, and each has a page
+that explains it. They are listed in [examples/examples.md](examples/examples.md). The Gymnasium
+environments run on the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server.
 
-- <a href="examples/example_1/example_1.md">Monte Carlo integration</a>
-- <a href="examples/example_2/example_2.md">Using the PyTorch C++ API (Part 1)</a>
-- <a href="examples/example_3/example_3.md">Using the PyTorch C++ API (Part 2)</a>
-- <a href="examples/example_4/example_4.md">Using the PyTorch C++ API (Part 3)</a>
-- <a href="examples/example_6/example_6.md">Toy Markov chain</a>
-- <a href="examples/example_7/example_7.md">Importance sampling</a>
-- <a href="examples/example_8/example_8.md">Vector addition with CUDA</a>
-- <a href="examples/example_9/example_9.md">Discounted returns</a>
+### The basics
+
+- <a href="examples/01_basics/monte_carlo_integration/monte_carlo_integration.md">Monte Carlo integration</a>
+- <a href="examples/01_basics/importance_sampling/importance_sampling.md">Importance sampling</a>
+- <a href="examples/01_basics/discounted_returns/discounted_returns.md">Discounted returns</a>
+- <a href="examples/01_basics/markov_chain/markov_chain.md">A Markov chain</a>
+
+### The PyTorch C++ API
+
+- <a href="examples/02_pytorch/pytorch_tensors/pytorch_tensors.md">PyTorch tensors</a>
+- <a href="examples/02_pytorch/pytorch_linear_regression/pytorch_linear_regression.md">Training a linear model</a>
+- <a href="examples/02_pytorch/pytorch_custom_model/pytorch_custom_model.md">A custom model</a>
+- <a href="examples/02_pytorch/cuda_vector_addition/cuda_vector_addition.md">Vector addition with CUDA</a>
+
+### Experiments
+
+- <a href="examples/03_experiments/tensorboard/tensorboard.md">Logging to Tensorboard</a>
 
 ### Environments
 
-- <a href="examples/envs/grid_world/grid_world.md">A grid world</a>
-- <a href="examples/envs/connect2/connect2.md">Connect2</a>
-- <a href="examples/envs/gymnasium_part_1/gymnasium_part_1.md">Using Gymnasium environments (Part 1)</a>
-- <a href="examples/envs/gymnasium_part_2/gymnasium_part_2.md">Using Gymnasium environments (Part 2)</a>
-- <a href="examples/envs/gymnasium_part_3/gymnasium_part_3.md">Using Gymnasium environments (Part 3)</a>
-- <a href="examples/envs/gym_walk/gym_walk.md">Using GymWalk environment</a>
-- <a href="examples/envs/acrobot_vector_env/acrobot_vector_env.md">A vector environment: Acrobot</a>
-- <a href="examples/envs/tensorboard/tensorboard.md">Logging to Tensorboard</a>
+- <a href="examples/04_environments/grid_world/grid_world.md">A grid world</a>
+- <a href="examples/04_environments/connect2/connect2.md">Connect2</a>
+- <a href="examples/04_environments/gymnasium_part_1/gymnasium_part_1.md">Gymnasium environments (part 1)</a>
+- <a href="examples/04_environments/gymnasium_part_2/gymnasium_part_2.md">Gymnasium environments (part 2)</a>
+- <a href="examples/04_environments/gymnasium_part_3/gymnasium_part_3.md">Gymnasium environments (part 3)</a>
+- <a href="examples/04_environments/gym_walk/gym_walk.md">GymWalk</a>
+- <a href="examples/04_environments/acrobot_vector_env/acrobot_vector_env.md">A vector environment: Acrobot</a>
 
-### Robotics environments
+### Algorithms
+
+- <a href="examples/05_bandits/multi_armed_bandits/multi_armed_bandits.md">Multi-armed bandits: epsilon-greedy and Thompson sampling</a>
+- <a href="examples/05_bandits/softmax_bandits/softmax_bandits.md">Multi-armed bandits with a soft-max policy</a>
+- <a href="examples/06_dynamic_programming/iterative_policy_evaluation/iterative_policy_evaluation.md">Iterative policy evaluation on ```FrozenLake```</a>
+- <a href="examples/06_dynamic_programming/policy_iteration/policy_iteration.md">Policy iteration on ```FrozenLake```</a>
+- <a href="examples/06_dynamic_programming/value_iteration/value_iteration.md">Value iteration on ```FrozenLake```</a>
+- <a href="examples/07_monte_carlo/first_visit_monte_carlo/first_visit_monte_carlo.md">First visit Monte Carlo on ```FrozenLake```</a>
+- <a href="examples/08_temporal_difference/sarsa/sarsa.md">SARSA on ```CliffWalking```</a>
+- <a href="examples/08_temporal_difference/q_learning/q_learning.md">Q-learning on ```CliffWalking```</a>
+- <a href="examples/08_temporal_difference/expected_sarsa/expected_sarsa.md">Expected SARSA on ```CliffWalking```</a>
+- <a href="examples/09_deep_rl/dqn/dqn.md">DQN on a grid world</a>
+- <a href="examples/09_deep_rl/dqn_experience_replay/dqn_experience_replay.md">DQN with experience replay</a>
+- <a href="examples/09_deep_rl/reinforce/reinforce.md">REINFORCE on ```CartPole```</a>
+- <a href="examples/09_deep_rl/reinforce_baseline/reinforce_baseline.md">REINFORCE with a baseline on ```CartPole```</a>
+- <a href="examples/09_deep_rl/a2c/a2c.md">A2C on ```CartPole```</a>
+- <a href="examples/09_deep_rl/ppo_lunar_lander/ppo_lunar_lander.md">PPO on ```LunarLanderContinuous```</a>
+
+### Robotics
 
 These need _bitsim_ built with Chrono.
 
-- <a href="examples/robotics/chrono_smc_system/chrono_smc_system.md">A bitsim robot as an RL environment</a>
-- <a href="examples/robotics/chrono_rl_env/chrono_rl_env.md">Create an RL environment using Chrono</a>
-
-### Reinforcement learning
-
-- <a href="examples/example_10/example_10.md">Multi-armed bandits</a>
-- <a href="examples/example_11/example_11.md">Multi-armed bandits with a soft-max policy</a>
-- <a href="examples/example_12/example_12.md">Iterative policy evaluation on ```FrozenLake```</a>
-- <a href="examples/example_13/example_13.md">Policy iteration on ```FrozenLake```</a>
-- <a href="examples/example_14/example_14.md">Value iteration on ```FrozenLake```</a>
-- <a href="examples/example_15/example_15.md">SARSA on ```CliffWorld```</a>
-- <a href="examples/example_16/example_16.md">Q-learning on ```CliffWorld```</a>
-- <a href="examples/example_26/example_26.md">Expected SARSA on ```CliffWorld```</a>
-- <a href="examples/example_17/example_17.md">A2C on ```CartPole```</a>
-- <a href="examples/example_18/example_18.md">DQN on ```Gridworld```</a>
-- <a href="examples/example_21/example_21.md">DQN on ```Gridworld``` with experience replay</a>
-- <a href="examples/example_19/example_19.md">REINFORCE on ```CartPole```</a>
-- <a href="examples/example_23/example_23.md">REINFORCE with baseline on ```CartPole```</a>
-- <a href="examples/example_22/example_22.md">First visit Monte Carlo on ```FrozenLake```</a>
-- <a href="examples/example_25/example_25.md">PPO on ```LunarLander```</a>
+- <a href="examples/10_robotics/chrono_smc_system/chrono_smc_system.md">A Chrono system with smooth contacts</a>
+- <a href="examples/10_robotics/chrono_rl_env/chrono_rl_env.md">A Chrono robot as an environment</a>
+- <a href="examples/10_robotics/mcts_line_following/mcts_line_following.md">Following a line with Monte Carlo tree search</a>
 
 ## Installation
 

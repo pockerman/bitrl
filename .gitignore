@@ -8,3 +8,6 @@ examples/*/controllers/*/*
 !examples/*/controllers/*/*.cpp
 !examples/*/controllers/*/*.h
 !examples/*/controllers/*/Makefile
+
+# Python byte code
+__pycache__/
