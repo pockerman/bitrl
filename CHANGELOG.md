@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0](https://github.com/pockerman/bitrl/compare/v5.2.0...v5.3.0) (2026-11-21)
+
+
+### Features
+
+* **algorithms:** ppo cartpole ([#209](https://github.com/pockerman/bitrl/issues/209)) ([cc6de7b](https://github.com/pockerman/bitrl/commit/cc6de7baa8e0928961b7365c08174b154d9a9e93))
+
 ## [5.2.0](https://github.com/pockerman/bitrl/compare/v5.1.2...v5.2.0) (2026-11-21)
 
 
