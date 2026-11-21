@@ -53,6 +53,8 @@ environments run on the <a href="https://github.com/pockerman/bitrl-rest-api">bi
 
 ### Experiments
 
+- <a href="examples/03_experiments/export_policy/export_policy.md">Exporting a policy: a table to CSV, a network with libtorch</a>
+- <a href="examples/03_experiments/log_experiment/log_experiment.md">Logging an experiment: settings, episodes, results and Tensorboard</a>
 - <a href="examples/03_experiments/tensorboard/tensorboard.md">Logging to Tensorboard</a>
 
 ### Environments

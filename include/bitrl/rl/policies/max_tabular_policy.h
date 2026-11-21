@@ -93,6 +93,19 @@ class MaxTabularPolicy
     ///
     void save(const std::string &filename) const;
 
+    ///
+    /// \brief Load the state -> action map from a CSV file that save() wrote:
+    /// a state and its action per row, and lines that start with # ignored.
+    /// The states must be 0, 1, 2, ... in order
+    /// \throws std::runtime_error if the file cannot be read or is not like that
+    ///
+    void load(const std::string &filename);
+
+    ///
+    /// \brief The number of states the policy has an action for
+    ///
+    uint_t n_states() const noexcept { return state_action_map_.size(); }
+
   private:
     ///
     /// \brief The state-action map
