@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.1.2](https://github.com/pockerman/bitrl/compare/v5.1.1...v5.1.2) (2026-11-21)
+
+
+### Refactoring
+
+* **examples:** put the examples in numbered sections, and make the README about reinforcement learning ([#203](https://github.com/pockerman/bitrl/issues/203)) ([e3fc644](https://github.com/pockerman/bitrl/commit/e3fc644e2bfb02d2effd2b7e4c13b36b94b9e845))
+
+
+### Documentation
+
+* show the Monte Carlo tree search of the line following example in the README ([#201](https://github.com/pockerman/bitrl/issues/201)) ([e9c461f](https://github.com/pockerman/bitrl/commit/e9c461f3b8d56146ff7e23f6d1c124c4aebdeee9))
+
 ## [5.1.1](https://github.com/pockerman/bitrl/compare/v5.1.0...v5.1.1) (2026-11-20)
 
 
