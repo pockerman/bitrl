@@ -51,7 +51,7 @@ int main()
 
         std::unordered_map<std::string, std::any> options;
         std::unordered_map<std::string, std::any> reset_options;
-        env.make("v0", options, reset_options);
+        env.make("v1", options, reset_options);
         env.reset();
 
         BOOST_LOG_TRIVIAL(info) << "Done...";

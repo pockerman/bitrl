@@ -126,7 +126,7 @@ nlohmann::json RESTRLEnvClient::close(const std::string &env_name, const std::st
     }
 
     http::Request request{url_ + "/" + idx + "/close"};
-    const auto response = request.send("POST");
+    const auto response = request.send("POST", "", {{"Content-Type", "application/json"}});
 
     if (response.status.code != 202)
     {
@@ -176,7 +176,8 @@ nlohmann::json RESTRLEnvClient::reset(const std::string &env_name, const std::st
     request_body["options"] = options;
 
     std::cout << "Sending body request: " << request_body.dump() << std::endl;
-    const auto response = request.send("POST", request_body.dump());
+    const auto response =
+        request.send("POST", request_body.dump(), {{"Content-Type", "application/json"}});
 
     if (response.status.code != 202)
     {
@@ -209,7 +210,8 @@ nlohmann::json RESTRLEnvClient::make(const std::string &env_name, const std::str
 
     std::cout << "Sending body request: " << request_body.dump() << std::endl;
 
-    const auto response = request.send("POST", request_body.dump());
+    const auto response =
+        request.send("POST", request_body.dump(), {{"Content-Type", "application/json"}});
 
     if (response.status.code != 201)
     {
