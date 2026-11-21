@@ -48,6 +48,7 @@ environments run on the <a href="https://github.com/pockerman/bitrl-rest-api">bi
 - <a href="examples/02_pytorch/pytorch_tensors/pytorch_tensors.md">PyTorch tensors</a>
 - <a href="examples/02_pytorch/pytorch_linear_regression/pytorch_linear_regression.md">Training a linear model</a>
 - <a href="examples/02_pytorch/pytorch_custom_model/pytorch_custom_model.md">A custom model</a>
+- <a href="examples/02_pytorch/pytorch_policy_network/pytorch_policy_network.md">A policy network: sampling actions and training on their log probabilities</a>
 - <a href="examples/02_pytorch/cuda_vector_addition/cuda_vector_addition.md">Vector addition with CUDA</a>
 
 ### Experiments
