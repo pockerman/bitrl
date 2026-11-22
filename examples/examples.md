@@ -82,3 +82,11 @@ bitsim's robots, simulated with Chrono. These need bitsim built with Chrono.
 - \ref bitrl_example_chrono_smc_system
 - \ref bitrl_example_chrono_rl_env
 - \ref bitrl_example_mcts_line_following
+
+## Multi-agent
+
+Several agents in one environment, each acting on what it observes. The trainings and
+simulations that do not depend on each other run in parallel, on bitsim's thread pool.
+
+- \ref bitrl_example_multi_agent_grid_world
+- \ref bitrl_example_multi_robot_navigation
