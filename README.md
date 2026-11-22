@@ -26,7 +26,7 @@ documentation of both is <a href="https://pockerman.github.io/bitsim_bitrl_docs/
 | Dynamic programming | iterative policy evaluation, policy iteration, value iteration |
 | Monte Carlo | first visit Monte Carlo, Monte Carlo tree search |
 | Temporal difference | SARSA, Q-learning, expected SARSA, double Q-learning |
-| Multi-agent | environments where agents act at once, a trainer, and independent Q-learning |
+| Multi-agent | environments where agents act at once, a trainer, and independent Q-learning; every agent in a process or machine of its own, over MQTT |
 | Policy gradients | REINFORCE, with and without a baseline, A2C, PPO |
 | Policies | epsilon-greedy with decay, soft-max, greedy and uniform tabular policies |
 | Tools | experience replay buffers, trainers, parallel runs on bitsim's thread pool, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
@@ -136,6 +136,9 @@ These need _bitsim_ built with Chrono.
   </tr>
 </table>
 
+- <a href="examples/12_distributed_multi_agent/distributed_independent_learners/distributed_independent_learners.md">Independent learners in processes of their own</a>
+- <a href="examples/12_distributed_multi_agent/distributed_robot_navigation/distributed_robot_navigation.md">Robot controllers in processes of their own</a>
+
 ## Installation
 
 bitrl needs
@@ -217,53 +220,10 @@ cmake --build build --parallel 3
 ctest --test-dir build --output-on-failure
 ```
 
-### Documentation dependencies
-
-There are extra dependencies if you want to generate the documentation. Namely,
-
-- <a href="https://www.doxygen.nl/">Doxygen</a>
-- <a href="https://www.sphinx-doc.org/en/master/">Sphinx</a>
-- <a href="https://github.com/readthedocs/sphinx_rtd_theme">sphinx_rtd_theme</a>
-- <a href="https://github.com/breathe-doc/breathe">breathe</a>
-- <a href="https://github.com/crossnox/m2r2">m2r2</a>
-
-Note that if Doxygen is not found on your system CMake will skip this. On a Ubuntu/Debian based machine, you can install
-Doxygen using
-
-```bash
-sudo apt-get install doxygen
-```
-
-Similarly, install ```sphinx_rtd_theme``` using
-
-```bash
-pip install sphinx_rtd_theme
-```
-
-Install ```breathe``` using
-
-```bash
-pip install breathe
-```
-
-Install ```m2r2``` using
-
-```bash
-pip install m2r2
-```
 
 
-## Issues
 
-#### undefined reference to ```cudaLaunchKernelExC@libcudart.so.11.0```. 
 
-You may want to check with ```nvidia-msi``` your CUDA Version and make sure it is compatible with the PyTorch library you are linking against
-
-#### TypeError: Descriptors cannot be created directly.
-
-This issue may be occur when using the TensorBoardServer in _bitrl_.
-This issue  is related with an issue with _protobuf_. See: https://stackoverflow.com/questions/72441758/typeerror-descriptors-cannot-not-be-created-directly for 
-possible solutions.
 
 
 

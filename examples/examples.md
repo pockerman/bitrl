@@ -90,3 +90,12 @@ simulations that do not depend on each other run in parallel, on bitsim's thread
 
 - \ref bitrl_example_multi_agent_grid_world
 - \ref bitrl_example_multi_robot_navigation
+
+## Distributed multi-agent
+
+Every agent in a participant of its own, a thread, a process or a machine, meeting the others
+through bitsim's transports, MQTT for one. Every participant holds a copy of the environment, and
+only the actions travel, so the agents learn and drive exactly as they do in one process.
+
+- \ref bitrl_example_distributed_independent_learners
+- \ref bitrl_example_distributed_robot_navigation
