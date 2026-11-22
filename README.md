@@ -26,7 +26,7 @@ documentation of both is <a href="https://pockerman.github.io/bitsim_bitrl_docs/
 | Dynamic programming | iterative policy evaluation, policy iteration, value iteration |
 | Monte Carlo | first visit Monte Carlo, Monte Carlo tree search |
 | Temporal difference | SARSA, Q-learning, expected SARSA, double Q-learning |
-| Multi-agent | environments where agents act at once, a trainer, and independent Q-learning |
+| Multi-agent | environments where agents act at once, a trainer, and independent Q-learning; every agent in a process or machine of its own, over MQTT |
 | Policy gradients | REINFORCE, with and without a baseline, A2C, PPO |
 | Policies | epsilon-greedy with decay, soft-max, greedy and uniform tabular policies |
 | Tools | experience replay buffers, trainers, parallel runs on bitsim's thread pool, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
@@ -135,6 +135,9 @@ These need _bitsim_ built with Chrono.
     <td width="50%" align="center"><a href="examples/11_multi_agent/multi_robot_navigation/multi_robot_navigation.md"><img src="examples/11_multi_agent/multi_robot_navigation/multi_robot_navigation.gif" alt="Six decentralised robots cross a circle"></a><br>Six decentralised robots cross a circle without touching</td>
   </tr>
 </table>
+
+- <a href="examples/12_distributed_multi_agent/distributed_independent_learners/distributed_independent_learners.md">Independent learners in processes of their own</a>
+- <a href="examples/12_distributed_multi_agent/distributed_robot_navigation/distributed_robot_navigation.md">Robot controllers in processes of their own</a>
 
 ## Installation
 
