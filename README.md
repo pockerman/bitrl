@@ -22,13 +22,14 @@ documentation of both is <a href="https://pockerman.github.io/bitsim_bitrl_docs/
 
 | Area | What bitrl has |
 | ---- | -------------- |
-| Environments | grid worlds, Connect2, multi-armed bandits, GymWalk, bitsim robots in Chrono, and Gymnasium's FrozenLake, CliffWalking, Taxi, Blackjack, CartPole, MountainCar, Pendulum, Acrobot and LunarLander over the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server |
+| Environments | grid worlds, Connect2, multi-agent grid worlds and differential drive robots, multi-armed bandits, GymWalk, bitsim robots in Chrono, and Gymnasium's FrozenLake, CliffWalking, Taxi, Blackjack, CartPole, MountainCar, Pendulum, Acrobot and LunarLander over the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server |
 | Dynamic programming | iterative policy evaluation, policy iteration, value iteration |
 | Monte Carlo | first visit Monte Carlo, Monte Carlo tree search |
 | Temporal difference | SARSA, Q-learning, expected SARSA, double Q-learning |
+| Multi-agent | environments where agents act at once, a trainer, and independent Q-learning |
 | Policy gradients | REINFORCE, with and without a baseline, A2C, PPO |
 | Policies | epsilon-greedy with decay, soft-max, greedy and uniform tabular policies |
-| Tools | experience replay buffers, trainers, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
+| Tools | experience replay buffers, trainers, parallel runs on bitsim's thread pool, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
 
 ## Examples
 
@@ -125,6 +126,15 @@ These need _bitsim_ built with Chrono.
 - <a href="examples/10_robotics/chrono_smc_system/chrono_smc_system.md">A Chrono system with smooth contacts</a>
 - <a href="examples/10_robotics/chrono_rl_env/chrono_rl_env.md">A Chrono robot as an environment</a>
 - <a href="examples/10_robotics/mcts_line_following/mcts_line_following.md">Following a line with Monte Carlo tree search</a>
+
+### Multi-agent
+
+<table>
+  <tr>
+    <td width="50%" align="center"><a href="examples/11_multi_agent/multi_agent_grid_world/multi_agent_grid_world.md"><img src="examples/11_multi_agent/multi_agent_grid_world/multi_agent_grid_world.gif" alt="Two independent Q-learners share a corridor one cell wide"></a><br>Independent Q-learning: one agent waits while the other crosses the corridor</td>
+    <td width="50%" align="center"><a href="examples/11_multi_agent/multi_robot_navigation/multi_robot_navigation.md"><img src="examples/11_multi_agent/multi_robot_navigation/multi_robot_navigation.gif" alt="Six decentralised robots cross a circle"></a><br>Six decentralised robots cross a circle without touching</td>
+  </tr>
+</table>
 
 ## Installation
 
