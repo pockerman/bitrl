@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.1](https://github.com/pockerman/bitrl/compare/v6.0.0...v6.0.1) (2026-11-22)
+
+
+### Bug Fixes
+
+* fix multi agent bug ([#216](https://github.com/pockerman/bitrl/issues/216)) ([3d3cb71](https://github.com/pockerman/bitrl/commit/3d3cb719b562c27b22cd332261e39a50b87da8af))
+
 ## [6.0.0](https://github.com/pockerman/bitrl/compare/v5.3.0...v6.0.0) (2026-11-21)
 
 
