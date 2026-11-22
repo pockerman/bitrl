@@ -54,20 +54,20 @@ nothing, and the example runs all of them at once with `bitsim::utils::concurren
 
 @code{.cpp}
 const auto runs = parallel_map(2 * n_seeds, [=](std::size_t k) {
-    const auto observation = k < n_seeds ? GridObservation::OWN_POSITION
-                                         : GridObservation::JOINT_POSITIONS;
-    return train(observation, task_seed(1, k % n_seeds), n_episodes);
+    return train_one(k, n_seeds, n_episodes); // seed task_seed(1, k % n_seeds)
 });
 @endcode
 
 The results come back in the order of `k`, whatever order the threads finish in, so the output is
-the same on any number of threads. Every agent explores with its own random generator, seeded
+the same on any number of threads; the example also trains every team in a plain loop, to time
+one thread, and checks that both learned the same. Every agent explores with its own random generator, seeded
 with `task_seed()`; a generator shared between threads would be a data race.
 
 ## Results
 
 @code
-  32 trainings of 4000 episodes on 8 threads: 0.46 s; on one thread they would take about 1.31 s, a speed-up of 2.88
+  32 trainings of 4000 episodes in a plain loop: 1.34 s; on the 8 threads of the pool and this one: 0.43 s, a speed-up of 3.09
+  every training learned the same in both: true
 
        observation    solved   mean steps   collisions   final return
       own position         0/16           0.0            11.2           -2.53
@@ -77,8 +77,11 @@ with `task_seed()`; a generator shared between threads would be a data race.
 Over 16 seeds, no team that sees only its own position learned to cross: their greedy agents
 walk into each other in the corridor and stay stuck there until the step limit. Every team that
 sees both positions solved it in about 15 steps without a collision: one agent waits in its room
-while the other comes through. The speed-up is smaller than the number of threads because the
-laptop has four cores with two threads each, and each training is short.
+while the other comes through. The speed-up, about 3 over several runs, is smaller than the
+number of threads: the laptop has four cores with two threads each, each training takes only about
+40 ms, and `parallel_map` hands each thread a chunk of consecutive trainings, so the chunks of the
+first half, the teams that see only their own position and often play to the step limit,
+take longer than the others.
 
 | ![Independent Q-learning in the corridor](multi_agent_grid_world.gif) |
 |:--:|

@@ -15,7 +15,6 @@
 #include "bitrl/rl/multi_agent/independent_q_learning.h"
 #include "bitrl/rl/multi_agent/multi_agent_trainer.h"
 #include "bitsim/utils/concurrency/parallel.h"
-#include "bitsim/utils/concurrency/thread_pool.h"
 #include "bitsim/utils/io/print_utils.h"
 
 #include <algorithm>
@@ -35,7 +34,6 @@ using bitrl::uint_t;
 using namespace bitrl::envs::multi_agent;
 using namespace bitrl::rl::multi_agent;
 using bitsim::utils::concurrency::parallel_map;
-using bitsim::utils::concurrency::ThreadPool;
 
 // What one training gave
 struct Run
@@ -80,19 +78,13 @@ Run train(GridObservation observation, uint_t seed, uint_t n_episodes)
     return run;
 }
 
-// Train n_seeds teams of each observation on pool, run k is seed task_seed(1, k)
-std::vector<Run> train_all(uint_t n_seeds, uint_t n_episodes, ThreadPool &pool)
+// Training k of 2 n_seeds: the first n_seeds teams see their own position, the others both;
+// training k has seed task_seed(1, k % n_seeds)
+Run train_one(std::size_t k, uint_t n_seeds, uint_t n_episodes)
 {
-    return parallel_map(
-        2 * n_seeds,
-        [=](std::size_t k)
-        {
-            const auto observation =
-                k < n_seeds ? GridObservation::OWN_POSITION : GridObservation::JOINT_POSITIONS;
-            return train(observation, bitsim::utils::concurrency::task_seed(1, k % n_seeds),
-                         n_episodes);
-        },
-        pool);
+    const auto observation =
+        k < n_seeds ? GridObservation::OWN_POSITION : GridObservation::JOINT_POSITIONS;
+    return train(observation, bitsim::utils::concurrency::task_seed(1, k % n_seeds), n_episodes);
 }
 
 void summarise(const std::string &name, const std::vector<Run> &runs)
@@ -179,26 +171,33 @@ void run(uint_t n_episodes, uint_t n_seeds)
               << "one agent has to wait.\n\n";
 
     bitsim::utils::io::print_title("2. Training, in parallel");
-    // the same trainings, once on one thread and once on all of them
-    ThreadPool one_thread(1);
+    // the same trainings, once in a plain loop on this thread and once on all the threads
     auto start = std::chrono::steady_clock::now();
-    train_all(std::max<uint_t>(1, n_seeds / 4), n_episodes, one_thread);
+    std::vector<Run> serial_runs;
+    for (std::size_t k = 0; k < 2 * n_seeds; ++k)
+    {
+        serial_runs.push_back(train_one(k, n_seeds, n_episodes));
+    }
     const std::chrono::duration<real_t> serial = std::chrono::steady_clock::now() - start;
 
     start = std::chrono::steady_clock::now();
     const auto runs =
-        train_all(n_seeds, n_episodes, bitsim::utils::concurrency::default_thread_pool());
+        parallel_map(2 * n_seeds, [=](std::size_t k) { return train_one(k, n_seeds, n_episodes); });
     const std::chrono::duration<real_t> parallel = std::chrono::steady_clock::now() - start;
 
-    // the one-thread batch had a quarter of the seeds; scale it to compare
-    const real_t serial_estimate =
-        serial.count() * static_cast<real_t>(n_seeds) / std::max<uint_t>(1, n_seeds / 4);
-    std::cout << "  " << 2 * n_seeds << " trainings of " << n_episodes << " episodes on "
+    // every training has its own generators, so the threads change nothing
+    bool same = true;
+    for (std::size_t k = 0; k < runs.size(); ++k)
+    {
+        same = same && runs[k].team_returns == serial_runs[k].team_returns;
+    }
+    std::cout << "  " << 2 * n_seeds << " trainings of " << n_episodes
+              << " episodes in a plain loop: " << std::fixed << std::setprecision(2)
+              << serial.count() << " s; on the "
               << bitsim::utils::concurrency::default_thread_pool().size()
-              << " threads: " << std::fixed << std::setprecision(2) << parallel.count()
-              << " s; on one thread "
-              << "they would take about " << serial_estimate << " s, a speed-up of "
-              << serial_estimate / parallel.count() << "\n\n";
+              << " threads of the pool and this one: " << parallel.count() << " s, a speed-up of "
+              << serial.count() / parallel.count() << "\n"
+              << "  every training learned the same in both: " << std::boolalpha << same << "\n\n";
 
     const std::vector<Run> own(runs.begin(), runs.begin() + n_seeds);
     const std::vector<Run> joint(runs.begin() + n_seeds, runs.end());
