@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.1.0](https://github.com/pockerman/bitrl/compare/v7.0.0...v7.1.0) (2026-11-22)
+
+
+### Features
+
+* distributed multi agent ([#221](https://github.com/pockerman/bitrl/issues/221)) ([ee0af93](https://github.com/pockerman/bitrl/commit/ee0af932821be679156b13f4bcf26b3903f6ea96))
+
 ## [7.0.0](https://github.com/pockerman/bitrl/compare/v6.0.1...v7.0.0) (2026-11-22)
 
 
