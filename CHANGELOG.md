@@ -11,6 +11,7 @@
 ### Bug Fixes
 
 * **multi-agent:** repair IndependentQLearning after a bad merge ([#228](https://github.com/pockerman/bitrl/issues/228)) ([7be57f4](https://github.com/pockerman/bitrl/commit/7be57f47ec423aff62a88f805b5a30d47bbb77d7))
+* **multi-agent:** repair IndependentQLearning after a bad merge ([#231](https://github.com/pockerman/bitrl/issues/231)) ([921f9a0](https://github.com/pockerman/bitrl/commit/921f9a0997731efb44e2a698ea1369934eb07a31))
 
 ## [7.3.0](https://github.com/pockerman/bitrl/compare/v7.2.0...v7.3.0) (2026-11-23)
 
