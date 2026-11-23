@@ -52,7 +52,7 @@ namespace rl::algos::pg
 /// \tparam EnvType the environment of a copy; the solver trains on ParallelEnvs<EnvType>
 ///
 template <typename EnvType, typename PolicyType, typename CriticType>
-class ParallelPPOSolver final
+class ParallelPPOSolver
     : public ACSolverBase<envs::ParallelEnvs<EnvType>, PolicyType, CriticType,
                           A2CMonitor<typename EnvType::action_type, typename EnvType::state_type>,
                           PPOConfig>
@@ -84,6 +84,13 @@ class ParallelPPOSolver final
     /// \brief The return of every episode of the last round
     ///
     const std::vector<real_t> &last_returns() const noexcept { return last_returns_; }
+
+  protected:
+    ///
+    /// \brief Called after every backward pass, before the optimisers step, with the gradients
+    /// of both networks in place; DistributedPPOSolver averages them over its ranks
+    ///
+    virtual void on_gradients_() {}
 
   private:
     // what one copy played
@@ -289,6 +296,7 @@ ParallelPPOSolver<EnvType, PolicyType, CriticType>::learn_(const std::vector<Epi
         this->policy_optimizer_->zero_grad();
         this->critic_optimizer_->zero_grad();
         loss.backward();
+        on_gradients_();
         total += loss.template item<real_t>();
         this->policy_optimizer_->step();
         this->critic_optimizer_->step();
