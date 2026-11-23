@@ -27,7 +27,7 @@ documentation of both is <a href="https://pockerman.github.io/bitsim_bitrl_docs/
 | Monte Carlo | first visit Monte Carlo, Monte Carlo tree search |
 | Temporal difference | SARSA, Q-learning, expected SARSA, double Q-learning |
 | Multi-agent | environments where agents act at once, a trainer, and independent Q-learning; every agent in a process or machine of its own, over MQTT |
-| Policy gradients | REINFORCE, with and without a baseline, A2C, PPO, and PPO from several episodes at once, played by copies of the environment on threads |
+| Policy gradients | REINFORCE, with and without a baseline, A2C, PPO, PPO from several episodes at once, played by copies of the environment on threads, and PPO over several processes or machines that average their gradients |
 | Policies | epsilon-greedy with decay, soft-max, greedy and uniform tabular policies |
 | Tools | experience replay buffers, trainers, parallel runs on bitsim's thread pool, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
 
@@ -88,6 +88,7 @@ environments run on the <a href="https://github.com/pockerman/bitrl-rest-api">bi
 - <a href="examples/09_deep_rl/ppo_cartpole/ppo_cartpole.md">PPO on ```CartPole```</a>
 - <a href="examples/09_deep_rl/ppo_lunar_lander/ppo_lunar_lander.md">PPO on ```LunarLanderContinuous```</a>
 - <a href="examples/09_deep_rl/ppo_parallel_rollouts/ppo_parallel_rollouts.md">PPO from several episodes at once</a>
+- <a href="examples/09_deep_rl/ppo_distributed/ppo_distributed.md">PPO over several ranks</a>
 
 ### The algorithms at work
 
