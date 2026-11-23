@@ -4,6 +4,7 @@
 #include "bitrl/base/bitrl_types.h"
 #include "bitrl/rl/policies/epsilon_greedy_policy.h"
 #include "bitsim/utils/concurrency/parallel.h"
+#include "bitrl/rl/multi_agent/q_learning_agent.h"
 #include "bitsim/utils/io/csv_file_writer.h"
 
 #include <stdexcept>
@@ -44,6 +45,8 @@ struct IndependentQLearningConfig
 /// An agent that is done takes no actions and learns nothing more. Where the episode was cut by
 /// the step limit, the agent still bootstraps from its next observation, since it was not done.
 ///
+/// Every agent is a QLearningAgent, which can also learn on its own, in a process of its own.
+///
 /// It suits environments whose observations and actions are indices, such as
 /// bitrl::envs::multi_agent::MultiAgentGridWorld, and meets the multi_agent_learner concept of
 /// MultiAgentTrainer.
@@ -57,6 +60,7 @@ class IndependentQLearning
                          const IndependentQLearningConfig &config = {});
 
     uint_t n_agents() const noexcept { return static_cast<uint_t>(q_tables_.size()); }
+    uint_t n_agents() const noexcept { return static_cast<uint_t>(agents_.size()); }
 
     ///
     /// \brief An exploring action for every agent; agents that are done get action 0
@@ -88,6 +92,14 @@ class IndependentQLearning
     real_t epsilon() const noexcept { return policies_.front().eps_value(); }
 
     const DynMat<real_t> &q_table(uint_t agent) const { return q_tables_.at(agent); }
+    real_t epsilon() const noexcept { return agents_.front().epsilon(); }
+
+    const DynMat<real_t> &q_table(uint_t agent) const { return agents_.at(agent).q_table(); }
+
+    ///
+    /// \brief The learner of one agent
+    ///
+    const QLearningAgent &agent(uint_t agent) const { return agents_.at(agent); }
 
     ///
     /// \brief Write the Q-table of every agent to <prefix><agent>.csv, a row per state
@@ -112,6 +124,7 @@ class IndependentQLearning
     IndependentQLearningConfig config_;
     std::vector<DynMat<real_t>> q_tables_;
     std::vector<policies::EpsilonGreedyPolicy> policies_;
+    std::vector<QLearningAgent> agents_;
 };
 
 inline IndependentQLearning::IndependentQLearning(uint_t n_agents, uint_t n_states,
@@ -132,6 +145,10 @@ inline IndependentQLearning::IndependentQLearning(uint_t n_agents, uint_t n_stat
                                bitsim::utils::concurrency::task_seed(config.seed, a),
                                policies::EpsilonDecayOption::EXPONENTIAL, config.eps_min,
                                config.eps_max, config.eps_decay);
+    agents_.reserve(n_agents);
+    for (uint_t a = 0; a < n_agents; ++a)
+    {
+        agents_.emplace_back(a, n_states, n_actions, config);
     }
 }
 
@@ -145,6 +162,7 @@ IndependentQLearning::joint_action_type IndependentQLearning::act(const TimeStep
         {
             actions[a] = policies_[a](q_tables_[a].row(step.observation(a)));
         }
+        actions[a] = agents_[a].act(step);
     }
     return actions;
 }
