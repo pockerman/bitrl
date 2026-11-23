@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.0](https://github.com/pockerman/bitrl/compare/v7.4.0...v7.5.0) (2026-11-23)
+
+
+### Features
+
+* evolution strategies ([#233](https://github.com/pockerman/bitrl/issues/233)) ([cee08f5](https://github.com/pockerman/bitrl/commit/cee08f50a7690b55b9c4dde1b205a432821b1207))
+
 ## [7.4.0](https://github.com/pockerman/bitrl/compare/v7.3.0...v7.4.0) (2026-11-23)
 
 
