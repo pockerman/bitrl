@@ -22,12 +22,12 @@ documentation of both is <a href="https://pockerman.github.io/bitsim_bitrl_docs/
 
 | Area | What bitrl has |
 | ---- | -------------- |
-| Environments | grid worlds, Connect2, multi-agent grid worlds and differential drive robots, multi-armed bandits, GymWalk, bitsim robots in Chrono, and Gymnasium's FrozenLake, CliffWalking, Taxi, Blackjack, CartPole, MountainCar, Pendulum, Acrobot and LunarLander over the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server |
+| Environments | grid worlds, Connect2, CartPole without a server, multi-agent grid worlds and differential drive robots, multi-armed bandits, GymWalk, bitsim robots in Chrono, and Gymnasium's FrozenLake, CliffWalking, Taxi, Blackjack, CartPole, MountainCar, Pendulum, Acrobot and LunarLander over the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server |
 | Dynamic programming | iterative policy evaluation, policy iteration, value iteration |
 | Monte Carlo | first visit Monte Carlo, Monte Carlo tree search |
 | Temporal difference | SARSA, Q-learning, expected SARSA, double Q-learning |
 | Multi-agent | environments where agents act at once, a trainer, and independent Q-learning; every agent in a process or machine of its own, over MQTT |
-| Policy gradients | REINFORCE, with and without a baseline, A2C, PPO |
+| Policy gradients | REINFORCE, with and without a baseline, A2C, PPO, and PPO from several episodes at once, played by copies of the environment on threads |
 | Policies | epsilon-greedy with decay, soft-max, greedy and uniform tabular policies |
 | Tools | experience replay buffers, trainers, parallel runs on bitsim's thread pool, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
 
@@ -87,6 +87,7 @@ environments run on the <a href="https://github.com/pockerman/bitrl-rest-api">bi
 - <a href="examples/09_deep_rl/a2c/a2c.md">A2C on ```CartPole```</a>
 - <a href="examples/09_deep_rl/ppo_cartpole/ppo_cartpole.md">PPO on ```CartPole```</a>
 - <a href="examples/09_deep_rl/ppo_lunar_lander/ppo_lunar_lander.md">PPO on ```LunarLanderContinuous```</a>
+- <a href="examples/09_deep_rl/ppo_parallel_rollouts/ppo_parallel_rollouts.md">PPO from several episodes at once</a>
 
 ### The algorithms at work
 

@@ -74,6 +74,7 @@ Keeping what training learns, and logging how it went.
 - \ref bitrl_example_a2c
 - \ref bitrl_example_ppo_cartpole
 - \ref bitrl_example_ppo_lunar_lander
+- \ref bitrl_example_ppo_parallel_rollouts
 
 ## Robotics
 

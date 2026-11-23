@@ -174,6 +174,7 @@ IndependentQLearning::act_greedy(const TimeStepType &step) const
     joint_action_type actions(n_agents(), 0);
     for (uint_t a = 0; a < n_agents(); ++a)
     {
+        actions[a] = agents_[a].act_greedy(step);
         if (!step.done(a))
         {
             Eigen::Index best = 0;
@@ -190,6 +191,7 @@ void IndependentQLearning::update(const TimeStepType &step, const joint_action_t
 {
     for (uint_t a = 0; a < n_agents(); ++a)
     {
+        agents_[a].update(step, actions[a], next);
         if (step.done(a))
         {
             continue;
@@ -205,6 +207,9 @@ void IndependentQLearning::update(const TimeStepType &step, const joint_action_t
 
 inline void IndependentQLearning::on_episode_end(uint_t episode)
 {
+    for (auto &agent : agents_)
+    {
+        agent.on_episode_end(episode);
     for (auto &policy : policies_)
     {
         policy.on_episode(episode + 1);
@@ -217,6 +222,7 @@ inline void IndependentQLearning::save(const std::string &prefix) const
     {
         bitsim::utils::io::CSVWriter writer(prefix + std::to_string(a) + ".csv", ',');
         writer.open();
+        const auto &q = agents_[a].q_table();
         const auto &q = q_tables_[a];
         for (Eigen::Index s = 0; s < q.rows(); ++s)
         {
