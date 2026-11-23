@@ -101,3 +101,12 @@ only the actions travel, so the agents learn and drive exactly as they do in one
 
 - \ref bitrl_example_distributed_independent_learners
 - \ref bitrl_example_distributed_robot_navigation
+
+## Evolution strategies
+
+A search for the weights of a policy that needs only the returns of episodes, no gradients. The
+episodes of a generation do not depend on each other, so they run on all the threads, or on several
+ranks that exchange only the returns.
+
+- \ref bitrl_example_es_cart_pole_swing_up
+- \ref bitrl_example_es_distributed
