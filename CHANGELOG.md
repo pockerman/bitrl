@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.3.0](https://github.com/pockerman/bitrl/compare/v7.2.0...v7.3.0) (2026-11-23)
+
+
+### Features
+
+* distributed ppo ([#224](https://github.com/pockerman/bitrl/issues/224)) ([13cb054](https://github.com/pockerman/bitrl/commit/13cb054390fb78156231a4cc9fc5fc0076bff7e0))
+* parallel ppo ([#223](https://github.com/pockerman/bitrl/issues/223)) ([9687287](https://github.com/pockerman/bitrl/commit/96872879175314734608374704270cfa776856f9))
+
 ## [7.2.0](https://github.com/pockerman/bitrl/compare/v7.1.0...v7.2.0) (2026-11-23)
 
 
