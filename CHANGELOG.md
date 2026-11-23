@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.4.0](https://github.com/pockerman/bitrl/compare/v7.3.0...v7.4.0) (2026-11-23)
+
+
+### Features
+
+* evolution strategies ([#229](https://github.com/pockerman/bitrl/issues/229)) ([14d39bf](https://github.com/pockerman/bitrl/commit/14d39bf3b11522f3118c5f65a003a3ed37250964))
+
+
+### Bug Fixes
+
+* **multi-agent:** repair IndependentQLearning after a bad merge ([#228](https://github.com/pockerman/bitrl/issues/228)) ([7be57f4](https://github.com/pockerman/bitrl/commit/7be57f47ec423aff62a88f805b5a30d47bbb77d7))
+
 ## [7.3.0](https://github.com/pockerman/bitrl/compare/v7.2.0...v7.3.0) (2026-11-23)
 
 
