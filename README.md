@@ -22,12 +22,13 @@ documentation of both is <a href="https://pockerman.github.io/bitsim_bitrl_docs/
 
 | Area | What bitrl has |
 | ---- | -------------- |
-| Environments | grid worlds, Connect2, CartPole without a server, multi-agent grid worlds and differential drive robots, multi-armed bandits, GymWalk, bitsim robots in Chrono, and Gymnasium's FrozenLake, CliffWalking, Taxi, Blackjack, CartPole, MountainCar, Pendulum, Acrobot and LunarLander over the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server |
+| Environments | grid worlds, Connect2, CartPole and a cart-pole swing-up without a server, multi-agent grid worlds and differential drive robots, multi-armed bandits, GymWalk, bitsim robots in Chrono, and Gymnasium's FrozenLake, CliffWalking, Taxi, Blackjack, CartPole, MountainCar, Pendulum, Acrobot and LunarLander over the <a href="https://github.com/pockerman/bitrl-rest-api">bitrl-rest-api</a> server |
 | Dynamic programming | iterative policy evaluation, policy iteration, value iteration |
 | Monte Carlo | first visit Monte Carlo, Monte Carlo tree search |
 | Temporal difference | SARSA, Q-learning, expected SARSA, double Q-learning |
 | Multi-agent | environments where agents act at once, a trainer, and independent Q-learning; every agent in a process or machine of its own, over MQTT |
 | Policy gradients | REINFORCE, with and without a baseline, A2C, PPO, PPO from several episodes at once, played by copies of the environment on threads, and PPO over several processes or machines that average their gradients |
+| Evolution strategies | the evolution strategy of Salimans et al., with antithetic pairs, rank shaping and Adam, its episodes on threads or over processes and machines that exchange only the returns; a small network that needs no libtorch |
 | Policies | epsilon-greedy with decay, soft-max, greedy and uniform tabular policies |
 | Tools | experience replay buffers, trainers, parallel runs on bitsim's thread pool, policies saved to and loaded from files, Tensorboard logging, PyTorch distributions and optimizers |
 
@@ -140,6 +141,16 @@ These need _bitsim_ built with Chrono.
 
 - <a href="examples/12_distributed_multi_agent/distributed_independent_learners/distributed_independent_learners.md">Independent learners in processes of their own</a>
 - <a href="examples/12_distributed_multi_agent/distributed_robot_navigation/distributed_robot_navigation.md">Robot controllers in processes of their own</a>
+
+### Evolution strategies
+
+<table>
+  <tr>
+    <td width="50%" align="center"><a href="examples/13_evolution_strategies/es_cart_pole_swing_up/es_cart_pole_swing_up.md"><img src="examples/13_evolution_strategies/es_cart_pole_swing_up/es_cart_pole_swing_up.gif" alt="An evolution strategy swings a pole up and balances it"></a><br>An evolution strategy learns to swing the pole up and balance it, with a continuous force</td>
+  </tr>
+</table>
+
+- <a href="examples/13_evolution_strategies/es_distributed/es_distributed.md">Evolution strategies over several ranks</a>
 
 ## Installation
 
